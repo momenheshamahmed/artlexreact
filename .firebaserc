@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "protypefoundry"
+  },
+  "targets": {
+    "protypefoundry": {
+      "hosting": {
+        "protypebeta": [
+          "protypebeta"
+        ]
+      }
+    }
+  }
+}
