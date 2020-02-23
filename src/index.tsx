@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import {
     initializeApp,
   } from 'firebase';
-  
+import 'bootstrap/dist/css/bootstrap.min.css';
   const firebaseConfig = {
     apiKey: "AIzaSyAoDUj8-Z80SI56awjDLEreHIQrvsb2X4g",
     authDomain: "protypefoundry.firebaseapp.com",

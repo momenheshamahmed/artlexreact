@@ -13,7 +13,7 @@ export const translate = memoize(
   (key: any, config: any) => (config ? key + JSON.stringify(config) : key),
 );
 
-export const setI18nConfig = (translations: Record<Languages, Record<string, string>>, languageTag = Languages.ARABIC) => {
+export const setI18nConfig = (translations: Record<Languages, Record<string, string>>, languageTag = Languages.ENGLISH) => {
   i18n.translations = translations;
   i18n.locale = languageTag;
 };
