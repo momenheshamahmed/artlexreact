@@ -1,113 +1,93 @@
 // Packages
-import React, { useEffect, useState } from 'react';
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-} from 'react-router-dom';
-
-import {
-  Navbar,
-  Nav,
-  Button,
-} from 'react-bootstrap';
-import {
-  LinkContainer,
-} from 'react-router-bootstrap';
-
-import { useMediaQuery } from 'react-responsive';
-
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
+import styled from "styled-components";
 // Screens
-import Home from './Home/Home';
-
-import AdminRoot from './admin/root';
+import AdminRoot from "./admin/root";
+import Home from "./Home/Home";
+import CustomTypefaces from "./CustomTypefaces";
+import Blog from "./Blog";
+import Contact from "./Contact";
+import ProtypeServices from "./ProtypeServices";
 
 // Assets
-import Assets from '../assets';
-
-import './App.css';
+import Assets from "../assets";
 
 // Stores
-import { EpisodeStore } from '../stores';
-
-import { getCurrentLanguage, Languages, setCurrentLanguage } from '../utils/translation';
+import { EpisodeStore } from "../stores";
 
 const App: React.FC = () => {
+  const [direction] = useState("ltr");
 
-  const languageButton = useMediaQuery({ minDeviceWidth: 768 });
-  const [direction, setDirection] = useState('ltr');
-
+  // Styled
+  const Logo = styled.img`
+    width: 70px;
+  `
+  // Mobx
   useEffect(() => {
     EpisodeStore.watchEpisodes();
   }, []);
 
   return (
-
     <BrowserRouter>
       <Switch>
-        <Route
-          path="/admin"
-        >
+        <Route path="/admin">
           <AdminRoot />
         </Route>
-        <div
-          dir={direction}
-        >
-          <Route
-            path="/"
-          >
-            <Navbar
-
-              expand="md"
-              sticky="top"
-              bg="green"
-              variant="light"
-            >
+        <div dir={direction}>
+          <Route path="/">
+            <Navbar expand="md" fixed="top" bg="white">
+            <Container>
               <Navbar.Brand>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                  }}
-                >
-                  <img
-                    src={Assets.Images.logo}
-                    alt="Logo"
-                    style={{
-                      height: 50,
-                    }}
-                  />
-
-                </div>
+                <LinkContainer to={"/"}>
+                  <Nav.Link>
+                    <Logo src={Assets.Images.logo} alt="Logo" />
+                  </Nav.Link>
+                </LinkContainer>
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse id="basic-navbar-nav">
-                <Nav
-                  style={{
-                    marginLeft: 24,
-                    marginRight: 24,
-                  }}
-                >
-                  <LinkContainer
-                    exact
-                    to={'/'}
-                    className="nav-item"
-                    activeClassName="nav-item-active"
-                  >
-                    <Nav.Link>
-                      {'Home'}
-                    </Nav.Link>
+              <Navbar.Collapse id="responsive-navbar-nav">
+                <Nav className="ml-auto" defaultActiveKey="/">
+                  <LinkContainer to={"/typefaces"}>
+                    <Nav.Link eventKey="typefaces">{"Typefaces"}</Nav.Link>
                   </LinkContainer>
+                  <LinkContainer to={"/custom"}>
+                    <Nav.Link eventKey="custom">{"Custom"}</Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to={"/services"}>
+                    <Nav.Link eventKey="services">{"Services"}</Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to={"/blog"}>
+                    <Nav.Link eventKey="blog">{"Blog"}</Nav.Link>
+                  </LinkContainer>
+                  <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+                    <NavDropdown.Item>
+                      <LinkContainer to={"/contact"}>
+                        <Nav.Link eventKey="contact">{"Contact"}</Nav.Link>
+                      </LinkContainer>
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 </Nav>
               </Navbar.Collapse>
-
+            </Container>
             </Navbar>
             <Switch>
-
-              <Route
-                path="/"
-              >
+              <Route exact={true} path="/">
                 <Home />
+              </Route>
+              <Route path="/services">
+                <ProtypeServices />
+              </Route>
+              <Route path="/custom">
+                <CustomTypefaces />
+              </Route>
+              <Route path="/bog">
+                <Blog />
+              </Route>
+              <Route path="/contact">
+                <Contact />
               </Route>
             </Switch>
           </Route>
@@ -115,6 +95,6 @@ const App: React.FC = () => {
       </Switch>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

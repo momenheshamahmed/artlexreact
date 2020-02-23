@@ -5,9 +5,27 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.App {
+  text-align: center;
+  direction: rtl;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* New Styles */
+:root {
+  --primary: #BA3BFC;
+  --secondary: #00C6FF;
+}
+
+* {
+  box-sizing: border-box;
 }

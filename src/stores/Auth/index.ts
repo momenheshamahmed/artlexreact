@@ -1,10 +1,5 @@
-import {
-  observable, action,
-} from 'mobx';
-import {
-  auth,
-  Unsubscribe,
-} from 'firebase';
+import { observable, action } from "mobx";
+import { auth, Unsubscribe } from "firebase";
 
 class AuthStore {
   @observable isAuthenticating = true;
@@ -15,16 +10,16 @@ class AuthStore {
   @action
   syncStatus = () => {
     this.isAuthenticating = true;
-    this.authenticationSubscription = auth().onIdTokenChanged((user) => {
+    this.authenticationSubscription = auth().onIdTokenChanged(user => {
       if (!user) {
         this.isAuthenticated = false;
         this.logout();
       } else {
         this.isAuthenticated = true;
       }
-      this.isAuthenticating = false
+      this.isAuthenticating = false;
     });
-  }
+  };
 
   @action
   login = async (email: string, password: string) => {
@@ -38,7 +33,7 @@ class AuthStore {
     } catch (error) {
       return Promise.reject(error);
     }
-  }
+  };
 
   @action
   logout = async () => {
@@ -48,7 +43,7 @@ class AuthStore {
     if (this.authenticationSubscription) {
       this.authenticationSubscription();
     }
-  }
+  };
 }
 
 export default new AuthStore();

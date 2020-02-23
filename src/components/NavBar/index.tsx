@@ -1,71 +1,61 @@
-import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuIcon from '@material-ui/icons/Menu';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import React from "react";
+import AppBar from "@material-ui/core/AppBar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
+import Hidden from "@material-ui/core/Hidden";
+import IconButton from "@material-ui/core/IconButton";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import MenuIcon from "@material-ui/icons/Menu";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 import {
   makeStyles,
   useTheme,
   Theme,
-  createStyles,
-} from '@material-ui/core/styles';
-import {
-  Button,
-} from '@material-ui/core';
-import {
-  useObserver,
-} from 'mobx-react';
-import AuthStore from '../../stores/Auth';
-import {
-  useLocation,
-} from 'react-router';
-import {
-  Link,
-} from 'react-router-dom';
-import {
-  Paths,
-} from './types';
+  createStyles
+} from "@material-ui/core/styles";
+import { Button } from "@material-ui/core";
+import { useObserver } from "mobx-react";
+import AuthStore from "../../stores/Auth";
+import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
+import { Paths } from "./types";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'flex',
+      display: "flex"
     },
     drawer: {
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up("sm")]: {
         width: drawerWidth,
-        flexShrink: 0,
-      },
+        flexShrink: 0
+      }
     },
     appBar: {
-      width: '100%',
-      zIndex: theme.zIndex.drawer + 1,
+      width: "100%",
+      zIndex: theme.zIndex.drawer + 1
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      [theme.breakpoints.up('sm')]: {
-        display: 'none',
-      },
+      [theme.breakpoints.up("sm")]: {
+        display: "none"
+      }
     },
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
-      width: drawerWidth,
+      width: drawerWidth
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3),
-    },
-  }),
+      padding: theme.spacing(3)
+    }
+  })
 );
 
 interface ResponsiveDrawerProps {
@@ -76,7 +66,7 @@ interface ResponsiveDrawerProps {
   container?: Element;
 }
 
-export const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = (props) => {
+export const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = props => {
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -90,21 +80,21 @@ export const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = (props) => {
 
   const paths: Paths[] = [
     {
-      title: 'Carousel',
-      path: '/admin/carousel'
+      title: "Carousel",
+      path: "/admin/carousel"
     },
     {
-      title: 'Features',
-      path: '/admin/featured'
+      title: "Features",
+      path: "/admin/featured"
     },
     {
-      title: 'Testimonials',
-      path: '/admin/testimonial'
+      title: "Testimonials",
+      path: "/admin/testimonial"
     },
     {
-      title: 'FAQs',
-      path: '/admin/faq'
-    },
+      title: "FAQs",
+      path: "/admin/faq"
+    }
   ];
 
   const drawer = (
@@ -112,7 +102,7 @@ export const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = (props) => {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {paths.map((path) => (
+        {paths.map(path => (
           <ListItem
             button
             key={path.title}
@@ -147,7 +137,7 @@ export const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = (props) => {
           <Button
             color="inherit"
             style={{
-              marginLeft: 'auto',
+              marginLeft: "auto"
             }}
             onClick={AuthStore.logout}
           >
@@ -161,14 +151,14 @@ export const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = (props) => {
           <Drawer
             container={container}
             variant="temporary"
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            anchor={theme.direction === "rtl" ? "right" : "left"}
             open={mobileOpen}
             onClose={handleDrawerToggle}
             classes={{
-              paper: classes.drawerPaper,
+              paper: classes.drawerPaper
             }}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true // Better open performance on mobile.
             }}
           >
             {drawer}
@@ -177,7 +167,7 @@ export const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = (props) => {
         <Hidden xsDown implementation="css">
           <Drawer
             classes={{
-              paper: classes.drawerPaper,
+              paper: classes.drawerPaper
             }}
             variant="permanent"
             open
@@ -192,6 +182,6 @@ export const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = (props) => {
       </main>
     </div>
   ));
-}
+};
 
 export default ResponsiveDrawer;
