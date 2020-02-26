@@ -8,6 +8,7 @@ import { CircularProgress, Container } from "@material-ui/core";
 
 import AdminEpisodesForm from "./episodes/form";
 import AdminEpisodesTable from "./episodes";
+import MiniDrawer from "../../../components/adminComponents/Drawer";
 
 const AdminRoot = () => {
   useEffect(() => {
@@ -36,10 +37,13 @@ const AdminRoot = () => {
           <AdminEpisodesForm />
         </Route>
         <Route exact path="/admin/episodes">
+
           <AdminEpisodesTable />
         </Route>
         <Route path="/admin" exact>
+          <MiniDrawer />
           <div>Hello Admin</div>
+          <h1>Momen Hesham</h1>
         </Route>
       </Switch>
     ) : (

@@ -1,12 +1,17 @@
-export interface Font  {
+export default interface Font  {
     fontName: string;
     url: string;
     featuredCarousel: boolean;
     featuredThumbnial: boolean;
-    controls: controls
-
+    downloadUrl: string;
+    gif?: string;
+    controls: Controls;
 }
 
 interface Controls {
-    optionOne: boolean;
+    fontSize: number;
+    tracking: number;
+    lineHeight: number;
+    alignment: string;
+    openTypeFeatured: object;
 }

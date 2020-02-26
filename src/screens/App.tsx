@@ -1,16 +1,17 @@
 // Packages
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import styled from "styled-components";
 // Screens
 import AdminRoot from "./admin/root";
-import Home from "./Home/Home";
+import Home from "./Home";
 import CustomTypefaces from "./CustomTypefaces";
 import Blog from "./Blog";
 import Contact from "./Contact";
 import ProtypeServices from "./ProtypeServices";
+import TypeFacePage from "./TypeFacePage";
 
 // Assets
 import Assets from "../assets";
@@ -41,11 +42,9 @@ const App: React.FC = () => {
             <Navbar expand="md" fixed="top" bg="white">
             <Container>
               <Navbar.Brand>
-                <LinkContainer to={"/"}>
-                  <Nav.Link>
+                  <Link to="/">
                     <Logo src={Assets.Images.logo} alt="Logo" />
-                  </Nav.Link>
-                </LinkContainer>
+                  </Link>
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="responsive-navbar-nav">
@@ -83,11 +82,14 @@ const App: React.FC = () => {
               <Route path="/custom">
                 <CustomTypefaces />
               </Route>
-              <Route path="/bog">
+              <Route path="/blog">
                 <Blog />
               </Route>
               <Route path="/contact">
                 <Contact />
+              </Route>
+              <Route path="/typefacepage">
+                <TypeFacePage />
               </Route>
             </Switch>
           </Route>
