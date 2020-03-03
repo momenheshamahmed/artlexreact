@@ -38,11 +38,102 @@ const Home: React.FC = () => {
       alt: "Momen"
     }
   ];
+  const tileData = [
+    {
+      img: Assets.Images.typefaceStatic,
+      hover: Assets.Images.typefaceHover,
+      title: "Image",
+      author: "author",
+      cols: 1
+    },
+    {
+      img: Assets.Images.typefaceStatic,
+      hover: Assets.Images.typefaceHover,
+      title: "Image",
+      author: "author",
+      cols: 1
+    },
+    {
+      img: Assets.Images.typefaceStatic,
+      hover: Assets.Images.typefaceHover,
+      title: "Image",
+      author: "author",
+      cols: 1
+    },
+    {
+      img: Assets.Images.typefaceStatic,
+      hover: Assets.Images.typefaceHover,
+      title: "Image",
+      author: "author",
+      cols: 1
+    },
+    {
+      img: Assets.Images.typefaceStatic,
+      hover: Assets.Images.typefaceHover,
+      title: "Image",
+      author: "author",
+      cols: 1
+    },
+    {
+      img: Assets.Images.typefaceStatic,
+      hover: Assets.Images.typefaceHover,
+      title: "Image",
+      author: "author",
+      cols: 1
+    },
+    {
+      img: Assets.Images.typefaceStatic,
+      hover: Assets.Images.typefaceHover,
+      title: "Image",
+      author: "author",
+      cols: 1
+    },
+    {
+      img: Assets.Images.typefaceStatic,
+      hover: Assets.Images.typefaceHover,
+      title: "Image",
+      author: "author",
+      cols: 1
+    },
+    {
+      img: Assets.Images.typefaceStatic,
+      hover: Assets.Images.typefaceHover,
+      title: "Image",
+      author: "author",
+      cols: 1
+    }
+  ];
+
+  const Articles = [
+    {
+      imgSrc: Assets.Images.articleOne,
+      Title:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Nulla leo ornare tellus vitae pretium purus id."
+    },
+    {
+      imgSrc: Assets.Images.articleTwo,
+      Title: "Momen 2 "
+    },
+    {
+      imgSrc: Assets.Images.articleThree,
+      Title: "Momen 3"
+    },
+    {
+      ImgSrc: Assets.Images.articleThree,
+      Title: "Momen 3",
+      Id: "id",
+      url: "sad",
+      Img: {
+        id: "asdsa",
+        url: ""
+      }
+    }
+  ];
   return useObserver(() => (
     <div>
       <FullScreenImageComponent ImgSrc={FullScreenSrcs} />
-      <FeaturedFontsThumbnialsComponent />
-      <BlogSliderComponent />
+      <FeaturedFontsThumbnialsComponent tileData={tileData} />
+      <BlogSliderComponent Articles={Articles} />
       <TypefaceTesterComponent />
     </div>
   ));

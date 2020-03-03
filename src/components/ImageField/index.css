@@ -1,14 +1,13 @@
 .ImageField {
   cursor: pointer;
   transition: box-shadow 1s;
-  height: 240px;
-  width: 240px;
+
   border-radius: 24px;
 }
 
 .ImageField img {
-  height: 240px;
-  width: 240px;
+  height: 100px;
+  width: 100px;
   border-radius: 24px;
   object-fit: cover;
 }

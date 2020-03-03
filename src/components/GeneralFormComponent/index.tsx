@@ -33,7 +33,7 @@ const mapDataToFormData = <T extends BaseData>(data: T) => {
 
 const mapFormDataToData = <T extends BaseData>(
   formData: Record<string, string | File | null>,
-  schema: FormKeys<T>[]
+  schema: Array<FormKeys<T>>
 ): Omit<T, "key"> => {
   const data: T = generateEmptyData(schema);
   delete data.key;
@@ -49,7 +49,9 @@ const mapFormDataToData = <T extends BaseData>(
   return data;
 };
 
-const generateEmptyData = <T extends BaseData>(schema: FormKeys<T>[]): T => {
+const generateEmptyData = <T extends BaseData>(
+  schema: Array<FormKeys<T>>
+): T => {
   const data: any = {
     content: {}
   };
@@ -78,10 +80,10 @@ const generateEmptyData = <T extends BaseData>(schema: FormKeys<T>[]): T => {
 };
 
 const uploadImagesFormData = async <T extends BaseData>(
-  schema: FormKeys<T>[],
+  schema: Array<FormKeys<T>>,
   formData: Record<string, string | File | null>
 ) => {
-  const promisesArray: Promise<void>[] = [];
+  const promisesArray: Array<Promise<void>> = [];
   schema.forEach(item => {
     if (item.type === "image") {
       promisesArray.push(
@@ -91,7 +93,7 @@ const uploadImagesFormData = async <T extends BaseData>(
               const langs = Object.values(Languages).map(
                 lang => lang[0].toUpperCase() + lang.slice(1)
               );
-              const imagesArray: Promise<string>[] = [];
+              const imagesArray: Array<Promise<string>> = [];
               langs.forEach(lang => {
                 imagesArray.push(
                   new Promise(async (res, rej) => {
@@ -145,24 +147,56 @@ const imageValidationSchema = Yup.mixed()
       return value && value.size <= MAXIMUM_IMAGE_SIZE;
     }
   );
+const fileFontSize = 160 * 1024;
+const fileFontSupportedFormats = ["WOFF2", "WOFF"];
+
+const fileFontValidationSchema = Yup.object().shape({
+  file: Yup.mixed()
+    .required("A file is required")
+    .test(
+      "fileSize",
+      "File too large",
+      value => value && value.size <= fileFontSize
+    )
+    .test(
+      "fileFormat",
+      "Unsupported Format",
+      value => value && fileFontSupportedFormats.includes(value.type)
+    )
+});
 
 const generateValidationSchema = <T extends BaseData>(
-  schema: FormKeys<T>[]
+  schema: Array<FormKeys<T>>
 ) => {
   const validationSchema: any = {};
   schema.forEach(value => {
     if (value.inContent) {
       Object.values(Languages).forEach(lang => {
         const suffix = lang[0].toUpperCase() + lang.slice(1);
-        if (value.type === "image") {
-          validationSchema[value.key + suffix] = imageValidationSchema.clone();
+        // tslint:disable-next-line: no-bitwise
+        if (value.type === "image" || "WOFF2" || "WOFF") {
+          if (value.type === "image") {
+            validationSchema[
+              value.key + suffix
+            ] = imageValidationSchema.clone();
+          } else if (value.type === "WOFF2" || "WOFF") {
+            validationSchema[
+              value.key + suffix
+            ] = fileFontValidationSchema.clone();
+          }
         } else {
           validationSchema[value.key + suffix] = textValidationSchema.clone();
         }
       });
     } else {
-      if (value.type === "image") {
-        validationSchema[value.key] = imageValidationSchema.clone();
+      if (value.type === "image" || "WOFF2" || "WOFF") {
+        if (value.type === "image") {
+          validationSchema[value.key + suffix] = imageValidationSchema.clone();
+        } else if (value.type === "WOFF2" || "WOFF") {
+          validationSchema[
+            value.key + suffix
+          ] = fileFontValidationSchema.clone();
+        }
       } else {
         validationSchema[value.key] = textValidationSchema.clone();
       }
@@ -171,7 +205,9 @@ const generateValidationSchema = <T extends BaseData>(
   return Yup.object(validationSchema);
 };
 
-const generateEmptyFormData = <T extends BaseData>(schema: FormKeys<T>[]) => {
+const generateEmptyFormData = <T extends BaseData>(
+  schema: Array<FormKeys<T>>
+) => {
   const langs = Object.values(Languages);
   const emptyData: Record<string, string | File | null> = {};
   schema.forEach(schemaItem => {
@@ -228,7 +264,7 @@ const GeneralFormComponent = <T extends BaseData>(
       }}
     >
       <Formik
-        enableReinitialize
+        enableReinitialize={true}
         initialValues={initialValues}
         validationSchema={generateValidationSchema(props.formData)}
         onSubmit={async values => {
@@ -285,12 +321,12 @@ const GeneralFormComponent = <T extends BaseData>(
                         margin="normal"
                         variant="outlined"
                         placeholder={data.title}
-                        required
+                        required={true}
                         label={data.title}
                         error={(formikBag.errors as any)[data.key]}
-                        multiline
+                        multiline={true}
                         rows={12}
-                        fullWidth
+                        fullWidth={true}
                       />
                     );
                   } else {
@@ -301,7 +337,7 @@ const GeneralFormComponent = <T extends BaseData>(
                         margin="normal"
                         variant="outlined"
                         placeholder={data.title}
-                        required
+                        required={true}
                         label={data.title}
                         error={(formikBag.errors as any)[data.key]}
                       />
@@ -357,14 +393,14 @@ const GeneralFormComponent = <T extends BaseData>(
                                   margin="normal"
                                   variant="outlined"
                                   placeholder={data.title}
-                                  required
+                                  required={true}
                                   label={data.title}
                                   error={
                                     (formikBag.errors as any)[data.key + suffix]
                                   }
-                                  multiline
+                                  multiline={true}
                                   rows={12}
-                                  fullWidth
+                                  fullWidth={true}
                                 />
                               );
                             } else {
@@ -375,7 +411,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                   margin="normal"
                                   variant="outlined"
                                   placeholder={data.title}
-                                  required
+                                  required={true}
                                   label={data.title}
                                   error={
                                     (formikBag.errors as any)[data.key + suffix]

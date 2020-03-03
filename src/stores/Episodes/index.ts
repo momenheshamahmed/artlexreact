@@ -3,10 +3,10 @@ import { observable, action } from "mobx";
 import { database } from "firebase";
 
 class EpisodeStore {
-  @observable Episodes: Episode[] = [];
+  @observable public Episodes: Episode[] = [];
 
   @action
-  addEpisode = async (value: Omit<Episode, "key">): Promise<void> => {
+  public addEpisode = async (value: Omit<Episode, "key">): Promise<void> => {
     try {
       const dbRef = database().ref("/episodes");
       const newItemRef = await dbRef.push();
@@ -19,7 +19,7 @@ class EpisodeStore {
   };
 
   @action
-  editEpisode = async (
+  public editEpisode = async (
     key: string,
     value: Omit<Episode, "key">
   ): Promise<void> => {
@@ -33,7 +33,7 @@ class EpisodeStore {
   };
 
   @action
-  deleteEpisode = async (key: string): Promise<void> => {
+  public deleteEpisode = async (key: string): Promise<void> => {
     try {
       const dbRef = database().ref(`episodes/${key}`);
       await dbRef.remove();
@@ -44,9 +44,8 @@ class EpisodeStore {
   };
 
   @action
-  watchEpisodes = () => {
+  public watchEpisodes = () => {
     const dbRef = database().ref("/episodes");
-    console.warn("I am Runninb");
     dbRef.on("value", snapshot => {
       console.log(snapshot.val());
       const data: Record<string, Episode> = snapshot.val();

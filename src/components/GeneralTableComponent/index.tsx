@@ -24,17 +24,11 @@ export const GeneralTableComponent: <T extends BaseData>(
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        paddingTop: "100px"
       }}
     >
-      <Button
-        onClick={() => {
-          history.push(`${props.route}/new`);
-        }}
-        variant="contained"
-      >
-        Add New
-      </Button>
+
       <Table aria-label="simple table" className="DataTable">
         <TableHead>
           <TableRow>
@@ -89,6 +83,14 @@ export const GeneralTableComponent: <T extends BaseData>(
           })}
         </TableBody>
       </Table>
+      <Button
+        onClick={() => {
+          history.push(`${props.route}/new`);
+        }}
+        variant="contained"
+      >
+        Add New
+      </Button>
     </Container>
   );
 };

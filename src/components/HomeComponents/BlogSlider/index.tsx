@@ -16,28 +16,26 @@ import {
   DotProps
 } from "react-multi-carousel/lib/types";
 import ArticleThumbnial from "./ArticleThumbnial";
+import { Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 interface CarouselButtonGroupProps extends ButtonGroupProps {
   className?: string;
 }
-const BlogSliderComponent: React.FC = () => {
+const BlogSliderComponent: React.FC = props => {
   // *
   // *
   // Styles
   // *
   // *
-  const ContainerTester = styled(Container)`
-    position: relative;
-    padding-bottom: 4vh;
-  `;
+
   const Title = styled.h1`
     margin-bottom: 2vh;
   `;
 
-
   const ButtonGroupStyled = styled.div`
     position: absolute;
-    top: 10px;
+    top: 7px;
     right: 15px;
     display: flex;
     width: 50%;
@@ -107,11 +105,13 @@ const BlogSliderComponent: React.FC = () => {
   };
 
   return useObserver(() => (
-    <ContainerTester>
-      <Title>Blog</Title>
+    <Container className="position-relative mt-5 mb-5">
+      <Typography variant="h5" className="mb-5">
+        Blog
+      </Typography>
 
       <Carousel
-        swipeable={false}
+        swipeable={true}
         draggable={true}
         showDots={true}
         renderDotsOutside={true}
@@ -130,29 +130,16 @@ const BlogSliderComponent: React.FC = () => {
         renderButtonGroupOutside={true}
         customButtonGroup={<CarouselButtonGroup />}
       >
-
-        {[
-          {
-            imgSrc: Assets.Images.uploadPlaceholder,
-            Title: "Momen 1"
-          },
-          {
-            imgSrc: Assets.Images.uploadPlaceholder,
-            Title: "Momen 2 "
-          },
-          {
-            imgSrc: Assets.Images.uploadPlaceholder,
-            Title: "Momen 3"
-          },
-          {
-            imgSrc: Assets.Images.uploadPlaceholder,
-            Title: "Momen 3"
-          }
-        ].map(data => (
-          <ArticleThumbnial articleData={data} />
+        {props.Articles.slice(
+          0,
+          props.Articles.length >= 3 ? 3 : Assets.Images.articleThree
+        ).map(data => (
+          <Link to="articles/:id">
+            <ArticleThumbnial articleData={data} />
+          </Link>
         ))}
       </Carousel>
-    </ContainerTester>
+    </Container>
   ));
 };
 export default BlogSliderComponent;

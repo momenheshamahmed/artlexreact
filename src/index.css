@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -9,7 +9,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -25,5 +25,31 @@ code {
 }
 .react-multi-carousel-dot-list {
   position: relative !important;
-
+}
+a::-moz-selection,
+a::selection,
+input::-moz-selection,
+input::selection,
+textarea::-moz-selection,
+textarea::selection,
+h1::-moz-selection,
+h1::selection,
+h2::-moz-selection,
+h2::selection,
+h3::-moz-selection,
+h3::selection,
+h4::-moz-selection,
+h4::selection,
+h5::-moz-selection,
+h5::selection,
+h6::-moz-selection,
+h6::selection,
+p::-moz-selection,
+p::selection {
+  background: #00ff00;
+  color: black;
+}
+.MuiFormControl-root, .MuiOutlinedInput-root {
+ display: block !important;
+ width: 100% !important;
 }

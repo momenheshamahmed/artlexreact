@@ -6,6 +6,10 @@ class Images {
   public static typefaceHover = require("./typefaceHover.svg");
   public static typefaceFullscreen = require("./typefaceFullscreen.svg");
   public static typefaceFullscreenTwo = require("./typefaceFullscreenTwo.svg");
+  public static articleOne = require("./articleOne.svg");
+  public static articleTwo = require("./articleTwo.svg");
+  public static articleThree = require("./articleThree.svg");
+
 }
 
 export default Images;

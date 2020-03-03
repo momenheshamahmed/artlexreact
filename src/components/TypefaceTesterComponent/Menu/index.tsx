@@ -53,15 +53,16 @@ export default function CustomizedMenus(props) {
 
   return (
     <div>
-      <Button
+      <div
         aria-controls="customized-menu"
         aria-haspopup="true"
         variant="contained"
         color="primary"
+        className="text-center"
         onClick={handleClick}
       >
         { props.customText }
-      </Button>
+      </div>
       <StyledMenu
         id="customized-menu"
         anchorEl={anchorEl}

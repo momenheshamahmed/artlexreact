@@ -2,7 +2,7 @@ import i18n from "i18n-js";
 import memoize from "lodash.memoize";
 
 export enum Languages {
-  ARABIC = "ar",
+  // ARABIC = "ar",
   ENGLISH = "en"
 }
 

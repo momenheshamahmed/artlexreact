@@ -9,6 +9,9 @@ import { CircularProgress, Container } from "@material-ui/core";
 import AdminEpisodesForm from "./episodes/form";
 import AdminEpisodesTable from "./episodes";
 import MiniDrawer from "../../../components/adminComponents/Drawer";
+import AdminTypefacesTable from "./Typefaces";
+import AdminTypefacesForm from "./Typefaces/form";
+import { BrowserRouter } from "react-router-dom";
 
 const AdminRoot = () => {
   useEffect(() => {
@@ -28,24 +31,38 @@ const AdminRoot = () => {
         <CircularProgress />
       </Container>
     ) : AuthStore.isAuthenticated ? (
-      <Switch>
-        <Route path="/admin/login">
-          <Redirect to="/admin" />
-        </Route>
+      <BrowserRouter>
+        <Switch>
+          <Route to="/admin">
+            <Route to="/admin">
+              <MiniDrawer key="minidrawer" />
+              <div className="pt-5">
+                <Switch>
+                  <Route path="/admin/login">
+                    <Redirect to="/admin" />
+                  </Route>
 
-        <Route path="/admin/episodes/:key">
-          <AdminEpisodesForm />
-        </Route>
-        <Route exact path="/admin/episodes">
-
-          <AdminEpisodesTable />
-        </Route>
-        <Route path="/admin" exact>
-          <MiniDrawer />
-          <div>Hello Admin</div>
-          <h1>Momen Hesham</h1>
-        </Route>
-      </Switch>
+                  <Route path="/admin/episodes/:key">
+                    <AdminEpisodesForm />
+                  </Route>
+                  <Route exact={true} path="/admin/episodes">
+                    <AdminEpisodesTable />
+                  </Route>
+                  <Route path="/admin/typefaces/:key">
+                    <AdminTypefacesForm />
+                  </Route>
+                  <Route exact={true} path="/admin/typefaces">
+                    <AdminTypefacesTable />
+                  </Route>
+                  <Route exact={true} path="/admin">
+                    <Redirect to="/admin/typefaces" />
+                  </Route>
+                </Switch>
+              </div>
+            </Route>
+          </Route>
+        </Switch>
+      </BrowserRouter>
     ) : (
       <Switch>
         <Route path="/admin/login">

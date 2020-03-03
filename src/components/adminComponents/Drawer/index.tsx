@@ -29,6 +29,12 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 
+import FontDownloadIcon from "@material-ui/icons/FontDownload";
+import DescriptionIcon from '@material-ui/icons/Description';
+
+
+import styled from "styled-components";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -93,7 +99,13 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
-
+const LinkStyled = styled(Link)`
+  color: black;
+  &:hover {
+    color: black;
+    text-decoration: none;
+  }
+`;
 export default function MiniDrawer() {
   const classes = useStyles();
   const theme = useTheme();
@@ -128,7 +140,7 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap={true}>
             Protype Foundry
           </Typography>
         </Toolbar>
@@ -157,29 +169,41 @@ export default function MiniDrawer() {
         </div>
         <Divider />
         <List>
-          {["episodes", "Custom", "Contact"].map(
-            (text, index) => (
-              <Link to={text.toLowerCase()}>
-                <ListItem button key={text}>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItem>
-              </Link>
-            )
-          )}
+          <LinkStyled to="/admin/typefaces">
+            <ListItem key={"Typefaces"}>
+              <ListItemIcon>
+                <FontDownloadIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Typefaces"} />
+            </ListItem>
+          </LinkStyled>
+          <LinkStyled to="/admin/tffeatured">
+            <ListItem key={"Typefaces Featured"}>
+              <ListItemIcon>
+                <FontDownloadIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Typefaces Featured"} />
+            </ListItem>
+          </LinkStyled>
+          <LinkStyled to="/admin/tfgrid">
+            <ListItem key={"Typefaces Grid"}>
+              <ListItemIcon>
+                <FontDownloadIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Typefaces Grid"} />
+            </ListItem>
+          </LinkStyled>
         </List>
         <Divider />
         <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
+          <LinkStyled to="/admin/blog">
+            <ListItem key={"Blog"}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <DescriptionIcon />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={"Blog"} />
             </ListItem>
-          ))}
+          </LinkStyled>
         </List>
       </Drawer>
     </div>

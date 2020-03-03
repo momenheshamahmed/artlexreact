@@ -3,12 +3,10 @@ import { useObserver } from "mobx-react";
 import GeneralFormComponent from "../../../../../components/GeneralFormComponent";
 import EpisodeStore from "../../../../../stores/Episodes/index";
 import { Episode } from "../../../../../stores/Episodes/types";
-import MiniDrawer from "../../../../../components/adminComponents/Drawer";
 
 const AdminEpisodesForm: React.FC = () => {
   return useObserver(() => (
     <div>
-      <MiniDrawer />
       <GeneralFormComponent<Episode>
         addAction={EpisodeStore.addEpisode}
         editAction={EpisodeStore.editEpisode}
@@ -25,12 +23,6 @@ const AdminEpisodesForm: React.FC = () => {
             key: "imgURL",
             title: "Image",
             type: "image"
-          },
-          {
-            inContent: true,
-            key: "audioURL",
-            title: "Audio",
-            type: "audio"
           }
         ]}
       />

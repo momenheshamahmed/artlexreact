@@ -8,7 +8,7 @@ import { Typography, Button, Divider } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 import styled from "styled-components";
-import TypfaceGalleryComponent from "../../components/TypefacePageComponents/TypefaceGalleryComponent";
+import TypfaceGalleryComponent from "../../components/TypefaceGalleryComponent";
 import BuyTypefaceSection from "../../components/TypefacePageComponents/BuyTypefaceSection";
 
 const TypeFacePage: React.FC = () => {
@@ -74,7 +74,6 @@ const TypeFacePage: React.FC = () => {
             </Typography>
             <CustomButton
               variant="contained"
-              color="primary"
               className="mt-3"
               endIcon={<AddIcon />}
             >

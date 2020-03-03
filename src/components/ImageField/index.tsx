@@ -19,12 +19,11 @@ const ImageField: React.FC<Props> = props => {
       }}
       className="ImageField"
     >
+      <label htmlFor="file">File upload</label>
+
       <input
         type="file"
         accept="image/png,image/jpeg"
-        style={{
-          display: "none"
-        }}
         ref={inputRef}
         onChange={value => {
           if (value.target.files && value.target.files[0]) {
@@ -39,6 +38,7 @@ const ImageField: React.FC<Props> = props => {
           }
         }}
       />
+
       <img src={image ? image : Assets.Images.uploadPlaceholder} alt="" />
       {props.error && (
         <Typography
