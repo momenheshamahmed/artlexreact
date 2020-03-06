@@ -14,9 +14,9 @@ class StorageStore {
           reader.onload = async e => {
             if (e.target) {
               const uid = v1();
-              const extention = font.type === "font/png" ? "png" : "jpg";
+              const extention = font.type === "woff" ? "woff" : "woff2";
               const storageRef = storage().ref(
-                `typefaces//${uid}.${extention}`
+                `typefaces/${uid}.${extention}`
               );
               const result = await storageRef.put(
                 e.target.result as ArrayBuffer

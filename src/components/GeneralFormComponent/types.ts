@@ -15,9 +15,24 @@ export interface Props<T extends BaseData = BaseData> {
   editAction: (key: string, data: Omit<T, 'key'>) => Promise<void>;
 }
 
+// tslint:disable-next-line: interface-name
 export interface FormKeys<T extends Omit<BaseData, 'key'> = Omit<BaseData, 'key'>> {
   key: keyof Omit<T, 'key' | 'content'> | keyof T['content'][Languages];
   inContent?: boolean;
   title: string;
-  type: 'text' | 'textarea' | 'image' | 'WOFF' | 'WOFF2';
+  type: 'text' | 'textarea' | 'image' | 'woff' | 'woff2' | 'checkbox' | 'switch' | 'gallery' | 'date' | 'items' | 'select';
+  // tslint:disable-next-line: ban-types
+  items?: itemsInterface[];
+  switchValue?: boolean; 
+}
+
+export interface itemsInterface {
+  key: string;
+  title?: string;
+  items: itemInterface[];
+}
+export interface itemInterface {
+  key: string;
+  title: string;
+  type: string;
 }

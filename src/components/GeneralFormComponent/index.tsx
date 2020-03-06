@@ -5,11 +5,21 @@ import {
   Card,
   CardHeader,
   CardContent,
-  CircularProgress
+  CircularProgress,
+  Typography,
+  Divider,
+  Switch,
+  FormControlLabel,,,,
+  Select
+  Input
+  MenuItem
+  ListItemText,
+  Chip
 } from "@material-ui/core";
-import { Formik, Form, Field } from "formik";
-import { TextField } from "formik-material-ui";
-import ImageField from "../ImageField";
+import { Formik, Form, Field, FieldProps } from "formik";
+import { TextField, Checkbox } from "formik-material-ui";
+import ImageField from "../adminComponents/ImageField";
+import FileUploadField from "../adminComponents/FileUploadField";
 import * as Yup from "yup";
 import { useObserver } from "mobx-react";
 import StorageStore from "../../stores/Storage";
@@ -17,7 +27,59 @@ import { useParams, useHistory } from "react-router";
 import { BaseData } from "./types";
 import { Props, FormKeys } from "./types";
 import { Languages } from "../../utils/translation";
+import { useDropzone } from "react-dropzone";
+import styled from "styled-components";
+import { Row } from "react-bootstrap";
 
+const getColor = props => {
+  if (props.isDragAccept) {
+    return "#00e676";
+  }
+  if (props.isDragReject) {
+    return "#ff1744";
+  }
+  if (props.isDragActive) {
+    return "#2196f3";
+  }
+  return "#eeeeee";
+};
+
+const ContainerDropZone = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-width: 2px;
+  border-radius: 2px;
+  border-color: ${props => getColor(props)};
+  border-style: dashed;
+  background-color: #fafafa;
+  color: #bdbdbd;
+  outline: none;
+  transition: border 0.24s ease-in-out;
+`;
+
+const DropzoneWithoutKeyboard = props => {
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+    isDragReject
+  } = useDropzone({ accept: "image/*" });
+
+  return (
+    <div className="container">
+      <ContainerDropZone
+        {...getRootProps({ isDragActive, isDragAccept, isDragReject })}
+      >
+        <input {...getInputProps()} />
+        <p>Drag 'n' drop some files here, or click to select files</p>
+      </ContainerDropZone>
+    </div>
+  );
+};
 const MAXIMUM_IMAGE_SIZE = 2 * 1024 * 1024;
 
 const mapDataToFormData = <T extends BaseData>(data: T) => {
@@ -127,6 +189,54 @@ const uploadImagesFormData = async <T extends BaseData>(
   await Promise.all(promisesArray);
   return formData;
 };
+const uploadFilesFormData = async <T extends BaseData>(
+  schema: Array<FormKeys<T>>,
+  formData: Record<string, string | File | null>
+) => {
+  const promisesArray: Array<Promise<void>> = [];
+  schema.forEach(item => {
+    if (item.type === "woff" || "woff2") {
+      promisesArray.push(
+        new Promise(async (res, rej) => {
+          try {
+            if (item.inContent) {
+              const langs = Object.values(Languages).map(
+                lang => lang[0].toUpperCase() + lang.slice(1)
+              );
+              const fileArray: Array<Promise<string>> = [];
+              langs.forEach(lang => {
+                fileArray.push(
+                  new Promise(async (res, rej) => {
+                    try {
+                      formData[
+                        item.key + lang
+                      ] = await StorageStore.uploadFontFile(
+                        formData[item.key + lang]
+                      );
+                      res();
+                    } catch (error) {
+                      rej(error);
+                    }
+                  })
+                );
+              });
+              await Promise.all(fileArray);
+            } else {
+              (formData as any)[item.key] = await StorageStore.uploadFontFile(
+                (formData as any)[item.key]
+              );
+            }
+            res();
+          } catch (error) {
+            rej(error);
+          }
+        })
+      );
+    }
+  });
+  await Promise.all(promisesArray);
+  return formData;
+};
 
 const textValidationSchema = Yup.string().required();
 const imageValidationSchema = Yup.mixed()
@@ -147,23 +257,26 @@ const imageValidationSchema = Yup.mixed()
       return value && value.size <= MAXIMUM_IMAGE_SIZE;
     }
   );
-const fileFontSize = 160 * 1024;
-const fileFontSupportedFormats = ["WOFF2", "WOFF"];
+const MAXIMUM_FONT_SIZE = 2 * 2048 * 1024;
 
-const fileFontValidationSchema = Yup.object().shape({
-  file: Yup.mixed()
-    .required("A file is required")
-    .test(
-      "fileSize",
-      "File too large",
-      value => value && value.size <= fileFontSize
-    )
-    .test(
-      "fileFormat",
-      "Unsupported Format",
-      value => value && fileFontSupportedFormats.includes(value.type)
-    )
-});
+const fileFontValidationSchema = Yup.mixed()
+  .required("A file is required")
+  .test("fileFormat", "font only (woff / woff2)", (value: File | string) => {
+    if (typeof value === "string") {
+      return true;
+    }
+    return value && (value.type === "woff" || value.type === "woff2");
+  })
+  .test(
+    "fileSize",
+    "Image size must be less than 1MB",
+    (value: File | string) => {
+      if (typeof value === "string") {
+        return true;
+      }
+      return value && value.size <= MAXIMUM_FONT_SIZE;
+    }
+  );
 
 const generateValidationSchema = <T extends BaseData>(
   schema: Array<FormKeys<T>>
@@ -173,13 +286,12 @@ const generateValidationSchema = <T extends BaseData>(
     if (value.inContent) {
       Object.values(Languages).forEach(lang => {
         const suffix = lang[0].toUpperCase() + lang.slice(1);
-        // tslint:disable-next-line: no-bitwise
-        if (value.type === "image" || "WOFF2" || "WOFF") {
+        if (value.type === "image") {
           if (value.type === "image") {
             validationSchema[
               value.key + suffix
             ] = imageValidationSchema.clone();
-          } else if (value.type === "WOFF2" || "WOFF") {
+          } else if (value.type === "woff2" || "woff") {
             validationSchema[
               value.key + suffix
             ] = fileFontValidationSchema.clone();
@@ -189,13 +301,11 @@ const generateValidationSchema = <T extends BaseData>(
         }
       });
     } else {
-      if (value.type === "image" || "WOFF2" || "WOFF") {
+      if (value.type === "image") {
         if (value.type === "image") {
-          validationSchema[value.key + suffix] = imageValidationSchema.clone();
-        } else if (value.type === "WOFF2" || "WOFF") {
-          validationSchema[
-            value.key + suffix
-          ] = fileFontValidationSchema.clone();
+          validationSchema[value.key] = imageValidationSchema.clone();
+        } else if (value.type === "woff2" || "woff") {
+          validationSchema[value.key] = fileFontValidationSchema.clone();
         }
       } else {
         validationSchema[value.key] = textValidationSchema.clone();
@@ -252,6 +362,7 @@ const GeneralFormComponent = <T extends BaseData>(
     }
   }, [params, history, props.data]);
   const [isSaving, setIsSaving] = useState<boolean>(false);
+
   return useObserver(() => (
     <Container
       style={{
@@ -260,7 +371,8 @@ const GeneralFormComponent = <T extends BaseData>(
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        marginTop: "200px"
       }}
     >
       <Formik
@@ -270,7 +382,9 @@ const GeneralFormComponent = <T extends BaseData>(
         onSubmit={async values => {
           // try {
           setIsSaving(true);
-          values = await uploadImagesFormData(props.formData, values);
+          values =
+            (await uploadImagesFormData(props.formData, values)) ||
+            (await uploadFilesFormData(props.formData, values));
           const value: Omit<T, "key"> = mapFormDataToData(
             values,
             props.formData
@@ -313,6 +427,16 @@ const GeneralFormComponent = <T extends BaseData>(
                         }
                       />
                     );
+                  } else if (data.type === "woff" || "woff2") {
+                    return (
+                      <FileUploadField
+                        value={(formikBag.values as any)[data.key]}
+                        error={(formikBag.errors as any)[data.key]}
+                        setValue={value =>
+                          formikBag.setFieldValue(data.key as string, value)
+                        }
+                      />
+                    );
                   } else if (data.type === "textarea") {
                     return (
                       <Field
@@ -329,6 +453,43 @@ const GeneralFormComponent = <T extends BaseData>(
                         fullWidth={true}
                       />
                     );
+                  } else if (data.type === "checkbox") {
+                    if (data.items) {
+                      data.items.map(item => {
+                        return (
+                          // tslint:disable-next-line: jsx-key
+                          <>
+                            <h1>{item.itemName}</h1>
+                            <Field
+                              name={item.key}
+                              component={Checkbox}
+                              margin="normal"
+                              variant="outlined"
+                              placeholder={item.itemName}
+                              required={true}
+                              label={item.itemName}
+                              error={(formikBag.errors as any)[item.key]}
+                            />
+                          </>
+                        );
+                      });
+                    }
+                  } else if (data.type === "switch") {
+                    return (
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={data.switchValue}
+                            onChange={handleChange(data.switchValue)}
+                            value="checkedB"
+                            color="primary"
+                          />
+                        }
+                        label="Primary"
+                      />
+                    );
+                  } else if (data.type === "gallery") {
+                    return <DropzoneWithoutKeyboard />;
                   } else {
                     return (
                       <Field
@@ -358,70 +519,289 @@ const GeneralFormComponent = <T extends BaseData>(
                 {Object.values(Languages).map(lang => {
                   const suffix = lang[0].toUpperCase() + lang.slice(1);
                   return (
-                    <Card
-                      style={{
-                        margin: 24
-                      }}
-                    >
-                      <CardHeader title={lang} />
-                      <CardContent>
-                        {props.formData
-                          .filter(data => data.inContent)
-                          .map(data => {
-                            if (data.type === "image") {
-                              return (
-                                <ImageField
-                                  value={
-                                    (formikBag.values as any)[data.key + suffix]
-                                  }
-                                  error={
-                                    (formikBag.errors as any)[data.key + suffix]
-                                  }
-                                  setValue={value =>
-                                    formikBag.setFieldValue(
-                                      data.key + suffix,
-                                      value
-                                    )
-                                  }
-                                />
-                              );
-                            } else if (data.type === "textarea") {
-                              return (
-                                <Field
-                                  name={data.key + suffix}
-                                  component={TextField}
-                                  margin="normal"
-                                  variant="outlined"
-                                  placeholder={data.title}
-                                  required={true}
-                                  label={data.title}
-                                  error={
-                                    (formikBag.errors as any)[data.key + suffix]
-                                  }
-                                  multiline={true}
-                                  rows={12}
-                                  fullWidth={true}
-                                />
-                              );
-                            } else {
-                              return (
-                                <Field
-                                  name={data.key + suffix}
-                                  component={TextField}
-                                  margin="normal"
-                                  variant="outlined"
-                                  placeholder={data.title}
-                                  required={true}
-                                  label={data.title}
-                                  error={
-                                    (formikBag.errors as any)[data.key + suffix]
-                                  }
-                                />
-                              );
+                    // tslint:disable-next-line: jsx-key
+                    <Container className="bg-white p-5">
+                      {props.formData
+                        .filter(data => data.inContent)
+                        .map((data, key) => {
+                          if (data.type === "image") {
+                            return (
+                              <ImageField
+                                value={
+                                  (formikBag.values as any)[data.key + suffix]
+                                }
+                                error={
+                                  (formikBag.errors as any)[data.key + suffix]
+                                }
+                                setValue={value =>
+                                  formikBag.setFieldValue(
+                                    data.key + suffix,
+                                    value
+                                  )
+                                }
+                              />
+                            );
+                          } else if (data.type === "woff") {
+                            return (
+                              <div className="mb-3">
+                                <Typography variant="h6">
+                                  upload your font file "woff or woff2"
+                                </Typography>
+                                <div className="my-3">
+                                  <FileUploadField
+                                    value={(formikBag.values as any)[data.key]}
+                                    error={(formikBag.errors as any)[data.key]}
+                                    setValue={value =>
+                                      formikBag.setFieldValue(
+                                        data.key as string,
+                                        value
+                                      )
+                                    }
+                                  />
+                                </div>
+                                <Divider />
+                              </div>
+                            );
+                          } else if (data.type === "checkbox") {
+                            if (Array.isArray(data.items)) {
+                              return data.items.map(item => {
+                                return (
+                                  // tslint:disable-next-line: jsx-key
+                                  <>
+                                    <Container>
+                                      <Row className="align-middle">
+                                        <Field
+                                          name={item.key}
+                                          component={Checkbox}
+                                          margin="normal"
+                                          checked={item.value}
+                                          variant="outlined"
+                                          placeholder={item.itemName}
+                                          required={true}
+                                          label={item.itemName}
+                                          error={
+                                            (formikBag.errors as any)[item.key]
+                                          }
+                                        />
+                                        <Field name={item.key}>
+                                          {({ field, form, meta }) => (
+                                            <div>
+                                              <input
+                                                type="checkbox"
+                                                {...field}
+                                                checked={item.value}
+                                                onClick={!item.value}
+                                                placeholder={item.itemName}
+                                              />
+                                              {meta.touched && meta.error && (
+                                                <div className="error">
+                                                  {meta.error}
+                                                </div>
+                                              )}
+                                            </div>
+                                          )}
+                                        </Field>
+                                      </Row>
+                                    </Container>
+                                  </>
+                                );
+                              });
                             }
-                          })}
-                      </CardContent>
-                    </Card>
+                          } else if (data.type === "switch") {
+                            const [switchNew, setSwitch] = useState(
+                              data.switchValue
+                            );
+                            return (
+                              <FormControlLabel
+                                control={
+                                  <Switch
+                                    checked={switchNew}
+                                    onChange={(
+                                      event: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                      setSwitch(event.target.checked);
+                                      console.log(event.target.checked);
+                                    }}
+                                    value={data.title}
+                                    color="primary"
+                                  />
+                                }
+                                label={data.title}
+                              />
+                            );
+                          } else if (data.type === "textarea") {
+                            return (
+                              <Field
+                                name={data.key + suffix}
+                                component={TextField}
+                                margin="normal"
+                                variant="outlined"
+                                placeholder={data.title}
+                                required={true}
+                                label={data.title}
+                                error={(formikBag.errors as any)[data.key]}
+                                multiline={true}
+                                rows={12}
+                                fullWidth={true}
+                              />
+                            );
+                          } else if (data.type === "gallery") {
+                            return (
+                              <div className="my-3">
+                                <Divider className="mb-3"/>
+                                <Typography variant="h6" className="mb-3">Typeface in use gallery</Typography>
+                              <DropzoneWithoutKeyboard />
+                              <Divider className="mt-3"/>
+                              </div>
+                            ) 
+                          } else if (data.type === "select") {
+     
+                            return (
+                              <Field
+                              name={data.key + suffix}
+                              component={Select}
+                              multiple={true}
+                              value={['red', 'green', 'blue']}
+                              margin="normal"
+                              variant="outlined"
+                              placeholder={data.title}
+                              required={true}
+                              label={data.title}
+                              error={(formikBag.errors as any)[data.key]}
+                            >
+                                <option value="red">Red</option>
+                                <option value="green">Green</option>
+                                <option value="blue">Blue</option>
+                              </Field>
+                            );
+                          } else if (data.type === "date") {
+                            return (
+                              <Field
+                                name={data.key + suffix}
+                                component={TextField}
+                                type="date"
+                                margin="normal"
+                                variant="outlined"
+                                required={true}
+                                label={data.title}
+                                error={(formikBag.errors as any)[data.key]}
+                              />
+                            );
+                          } else if (data.type === "items") {
+                            const newItems = data.items;
+                            return (
+                              <>
+                                {newItems.map(item => {
+                                  if (item.items.length > 0) {
+                                    const [
+                                      ChildItems,
+                                      setChildItems
+                                    ] = useState(item.items);
+                                    return (
+                                      <>
+                                        {ChildItems.map(childItem => {
+                                          if (childItem.type === "image") {
+                                            return (
+                                              <ImageField
+                                                value={
+                                                  (formikBag.values as any)[
+                                                    childItem.key + suffix
+                                                  ]
+                                                }
+                                                error={
+                                                  (formikBag.errors as any)[
+                                                    childItem.key + suffix
+                                                  ]
+                                                }
+                                                setValue={value =>
+                                                  formikBag.setFieldValue(
+                                                    childItem.key,
+                                                    value + suffix
+                                                  )
+                                                }
+                                              />
+                                            );
+                                          } else if (
+                                            childItem.type === "text"
+                                          ) {
+                                            return (
+                                              <Field
+                                                name={childItem.key + suffix}
+                                                component={TextField}
+                                                margin="normal"
+                                                variant="outlined"
+                                                placeholder={childItem.title}
+                                                label={childItem.title}
+                                              />
+                                            );
+                                          }
+                                        })}
+                                        <Button
+                                          onClick={() =>
+                                            setChildItems([
+                                              ...ChildItems,
+                                              {
+                                                key: "new" + Math.random() * 10,
+                                                type: "text",
+                                                title: "texx t again"
+                                              }
+                                            ])
+                                          }
+                                        >
+                                          Add More
+                                        </Button>
+                                      </>
+                                    );
+                                  }
+                                })}
+                              </>
+                            );
+                          }
+                          // else if (data.type === "items") {
+                          //   const newItems = data.items;
+                          //   return (
+                          //     <>
+                          //       {newItems.map(item => {
+                          //         console.log(item);
+                          //         return (
+                          //           <Field
+                          //             key={item.key}
+                          //             name={item.key + suffix}
+                          //             component={TextField}
+                          //             margin="normal"
+                          //             variant="outlined"
+                          //             placeholder={item.title}
+                          //             required={true}
+                          //             label={item.title}
+                          //             error={
+                          //               (formikBag.errors as any)[
+                          //                 item.key + suffix
+                          //               ]
+                          //             }
+                          //           />
+                          //         );
+                          //       })}
+                          //     </>
+                          //   );
+                          // }
+                          else {
+                            return (
+                              <Field
+                                name={data.key + suffix}
+                                component={TextField}
+                                margin="normal"
+                                variant="outlined"
+                                placeholder={data.title}
+                                required={true}
+                                label={data.title}
+                                error={
+                                  (formikBag.errors as any)[data.key + suffix]
+                                }
+                              />
+                            );
+                          }
+                        })}
+                    </Container>
                   );
                 })}
               </div>
@@ -437,6 +817,7 @@ const GeneralFormComponent = <T extends BaseData>(
               >
                 {!isSaving ? "Save" : <CircularProgress />}
               </Button>
+              <Debug />
             </Form>
           );
         }}

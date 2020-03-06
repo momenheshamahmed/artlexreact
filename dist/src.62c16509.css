@@ -67,6 +67,20 @@ p::selection {
   object-fit: cover;
 }
 
+.ImageField {
+  cursor: pointer;
+  transition: box-shadow 1s;
+
+  border-radius: 24px;
+}
+
+.ImageField img {
+  height: 100px;
+  width: 100px;
+  border-radius: 24px;
+  object-fit: cover;
+}
+
 .DataTable > thead > tr > th {
   text-align: left;
 }

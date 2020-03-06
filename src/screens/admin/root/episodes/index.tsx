@@ -24,7 +24,6 @@ const AdminEpisodesTable: React.FC = () => {
             key: "imageURL",
             title: "Image",
             type: 'image',
-
           }
         ]}
       />

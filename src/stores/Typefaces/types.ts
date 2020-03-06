@@ -1,53 +1,60 @@
 import { Languages } from "../../utils/translation/index";
 
-// export interface Typeface {
-//   key: string;
-//   id: number;
-//   name: string;
-//   url: string;
-//   featuredOnHomeSlider: boolean;
-//   featuredOnHomeThumbnial: boolean;
-//   featuredOnHomeTester: boolean;
-// }
-
-// export interface Weight {
-//   key: string;
-//   id: number;
-//   weight: string;
-//   url: string;
-//   imgUrl: string;
-  
-// }
-
 // tslint:disable-next-line: interface-name
 export interface Typeface {
   key: string;
   id: number;
   name: string;
-  url: string;
-  gallery: TypefaceGallery[];
-  weights: TypefaceWeight[];
-  content: TypefaceContent;
+  typefaceurl: string;
+  charactersenabled: boolean;
+  content: Record<Languages, TypefaceContent>;
+  typefaceweights: Record<Languages, [TypefaceWeights]>;
+  typefaceinusegallery: Record<Languages, [TypefaceInUseGallery]>;
+  typefacelanguage: Record<Languages, [Typefacelanguages]>;
 }
 
 // tslint:disable-next-line: interface-name
 export interface TypefaceContent {
-  title: string;
-  imgURL: string;
-  audioURL: string;
-  
+  typefacename?: string;
+  description?: string;
+  family?: string;
+  familytext?: string;
+  release?: string;
+  releasedate?: string;
+  designername?: string;
+  designerlinks?: string;
+  version?: string;
+  manufuctring?: string;
+  copyright?: string;
+  date?: string;
 }
 // tslint:disable-next-line: interface-name
-
-export interface TypefaceGallery {
-  id: string;
-  title: string;
-  imgUrl: string; 
-}
-// tslint:disable-next-line: interface-name
-
-export interface TypefaceWeight {
-  title: string;
+export interface TypefaceOpenTypeFeatures {
+  featureName: string;
   imgUrl: string;
   url: string;
+}
+// tslint:disable-next-line: interface-name
+export interface TypefaceWeights {
+  fontweight: string;
+  imgUrl: string;
+  url: string;
+}
+
+// tslint:disable-next-line: interface-name
+export interface TypefaceInUseGallery {
+  title: string;
+  imgUrl: string;
+  grid: string;
+}
+// tslint:disable-next-line: interface-name
+export interface TypefacePairs {
+  title: string;
+  imgUrl: string;
+  grid: string;
+}
+// tslint:disable-next-line: interface-name
+export interface Typefacelanguages {
+  id: string;
+  name: string;
 }

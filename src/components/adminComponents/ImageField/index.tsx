@@ -4,10 +4,10 @@ import Assets from "../../../assets";
 import "./index.css";
 import { Typography } from "@material-ui/core";
 
-const ImageFieldAdmin: React.FC<Props> = props => {
-  const [images, setImages] = useState<File | string | null>(props.value);
+const ImageField: React.FC<Props> = props => {
+  const [image, setImage] = useState<File | string | null>(props.value);
   useEffect(() => {
-    setImages(props.value);
+    setImage(props.value);
   }, [props.value]);
   const inputRef = useRef(null);
   return (
@@ -17,41 +17,28 @@ const ImageFieldAdmin: React.FC<Props> = props => {
           (inputRef.current as any).click();
         }
       }}
-      className="ImageFieldAdmin"
+      className="ImageField"
     >
-      <label for="file">File upload</label>
+      <label htmlFor="file">File upload</label>
 
       <input
         type="file"
         accept="image/png,image/jpeg"
-        multiple={true}
         ref={inputRef}
         onChange={value => {
-          if (value.target.files) {
+          if (value.target.files && value.target.files[0]) {
             props.setValue(value.target.files[0]);
             const reader = new FileReader();
-            // tslint:disable-next-line: only-arrow-functions
-            reader.onload = (e) => {
+            reader.onload = function(e) {
               if (inputRef.current && e.target) {
-                setImages(e.target.result as any);
+                setImage(e.target.result as any);
               }
             };
             reader.readAsDataURL(value.target.files[0]);
           }
-
-                  }}
+        }}
       />
-      {images ? (
-        images.map(img => {
-          return (
-
-            // tslint:disable-next-line: jsx-key
-            <img src={img} alt="" />;
-          )
-        })
-      ) : (
-        <img src={Assets.Images.uploadPlaceholder} alt="" />
-      )}
+      {/* <img src={image ? image : Assets.Images.uploadPlaceholder} style={{width: "200px;"}}/> */}
       {props.error && (
         <Typography
           color="error"
@@ -67,4 +54,4 @@ const ImageFieldAdmin: React.FC<Props> = props => {
   );
 };
 
-export default ImageFieldAdmin;
+export default ImageField;
