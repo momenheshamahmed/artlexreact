@@ -36,7 +36,7 @@ const AdminRoot = () => {
           <Route to="/admin">
             <Route to="/admin">
               <MiniDrawer key="minidrawer" />
-              <div className="pt-5">
+              <div className="pt-3">
                 <Switch>
                   <Route path="/admin/login">
                     <Redirect to="/admin" />

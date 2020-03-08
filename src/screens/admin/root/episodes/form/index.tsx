@@ -13,102 +13,111 @@ const AdminEpisodesForm: React.FC = () => {
         editAction={EpisodeStore.editEpisode}
         data={EpisodeStore.Episodes}
         formData={[
-          {
-            inContent: true,
-            key: "imgUrl",
-            title: "Image Url",
-            type: "image"
-          },
-          {
-            inContent: true,
-            key: "typefacename",
-            title: "Typeface name",
-            type: "text"
-          },
-          {
-            inContent: true,
-            key: "description",
-            title: "Description",
-            type: "textarea"
-          },
-          {
-            inContent: true,
-            key: "typefacelanguages",
-            title: "Font Languages",
-            type: "textarea"
-          },
-          {
-            inContent: true,
-            key: "family",
-            title: "Family",
-            type: "text"
-          },
+          // {
+          //   inContent: true,
+          //   key: "imgUrl",
+          //   title: "Image Url",
+          //   type: "image"
+          // },
+          // {
+          //   inContent: true,
+          //   key: "typefacename",
+          //   title: "Typeface name",
+          //   type: "text"
+          // },
+          // {
+          //   inContent: true,
+          //   key: "description",
+          //   title: "Description",
+          //   type: "textarea"
+          // },
+          // {
+          //   inContent: true,
+          //   key: "typefacelanguages",
+          //   title: "Font Languages",
+          //   type: "textarea"
+          // },
+          // {
+          //   inContent: true,
+          //   key: "family",
+          //   title: "Family",
+          //   type: "text"
+          // },
 
-          {
-            inContent: true,
-            key: "releasedate",
-            title: "Release Date",
-            type: "date"
-          },
-          {
-            inContent: true,
-            key: "charactersenabled",
-            title: "Characters",
-            type: "switch",
-            switchValue: false
-          },
+          // {
+          //   inContent: true,
+          //   key: "releasedate",
+          //   title: "Release Date",
+          //   type: "date"
+          // },
+          // {
+          //   inContent: true,
+          //   key: "charactersenabled",
+          //   title: "Characters",
+          //   type: "switch",
+          //   switchValue: false
+          // },
 
-          {
-            inContent: true,
-            key: "designername",
-            title: "Designer Name",
-            type: "text"
-          },
+          // {
+          //   inContent: true,
+          //   key: "designername",
+          //   title: "Designer Name",
+          //   type: "text"
+          // },
 
-          {
-            inContent: true,
-            key: "version",
-            title: "Version",
-            type: "text"
-          },
-          {
-            inContent: true,
-            key: "manufuctring",
-            title: "manufuctring",
-            type: "text"
-          },
+          // {
+          //   inContent: true,
+          //   key: "version",
+          //   title: "Version",
+          //   type: "text"
+          // },
+          // {
+          //   inContent: true,
+          //   key: "manufuctring",
+          //   title: "manufuctring",
+          //   type: "text"
+          // },
           {
             inContent: true,
             key: "copyright",
             title: "copyright",
             type: "text"
           },
+          // {
+          //   inContent: true,
+          //   key: "editorState",
+          //   title: "copyright",
+          //   type: "editor"
+          // },
+          // {
+          //   inContent: true,
+          //   key: "fontinuse",
+          //   title: "copyright",
+          //   type: "gallery"
+          // },
+          // {
+          //   inContent: true,
+          //   key: "selectpairfonts",
+          //   title: "copyright",
+          //   type: "select"
+          // },
           {
             inContent: true,
             key: "fontinuse",
-            title: "copyright",
-            type: "gallery"
-          },
-          {
-            inContent: true,
-            key: "selectpairfonts",
-            title: "copyright",
-            type: "select"
-          },
-          {
-            inContent: true,
-            key: "fontweights",
             title: "Font Weights",
             type: "items",
             items: [
               {
-                key: "weight",
-                title: "weight",
-                items: [
-                  { key: "weight2", type: "text", title: "texxt" },
-                  // { key: "weight", type: "image", title: "texx t again" }
+                key: "weight2", type: "text", title: "texxt", items: [
+                  {
+                    key: "weight34", type: "text", title: "texxt",
+                  }
                 ]
-              }
+              },
+              { key: "weight1 ", type: "text", title: "texxt" },
+              { key: "weight3 ", type: "text", title: "texxt" },
+              { key: "weight4 ", type: "text", title: "texxt" },
+
             ]
           }
         ]}

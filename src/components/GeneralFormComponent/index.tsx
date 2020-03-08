@@ -16,9 +16,10 @@ import {
   ListItemText,
   Chip
 } from "@material-ui/core";
-import { Formik, Form, Field, FieldProps } from "formik";
+import { Formik, Form, Field, FieldProp, FieldArray } from "formik";
 import { TextField, Checkbox } from "formik-material-ui";
 import ImageField from "../adminComponents/ImageField";
+
 import FileUploadField from "../adminComponents/FileUploadField";
 import * as Yup from "yup";
 import { useObserver } from "mobx-react";
@@ -30,6 +31,10 @@ import { Languages } from "../../utils/translation";
 import { useDropzone } from "react-dropzone";
 import styled from "styled-components";
 import { Row } from "react-bootstrap";
+
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { EditorState } from 'draft-js';
 
 const getColor = props => {
   if (props.isDragAccept) {
@@ -319,14 +324,33 @@ const generateEmptyFormData = <T extends BaseData>(
   schema: Array<FormKeys<T>>
 ) => {
   const langs = Object.values(Languages);
-  const emptyData: Record<string, string | File | null> = {};
+  const emptyData: Record<string, string | File | null | any[] |> = {};
   schema.forEach(schemaItem => {
     if (schemaItem.inContent) {
       langs.forEach(lang => {
         const suffix = lang.slice(0, 1).toUpperCase() + lang.slice(1);
-        if (schemaItem.type !== "image") {
+        if (schemaItem.type === "text") {
           emptyData[(schemaItem.key as string) + suffix] = "";
-        } else {
+        }
+        else if (schemaItem.type === "items") {
+
+          // tslint:disable-next-line: prefer-const
+          let newItems = []
+          let i = 0;
+          for (i; i < schemaItem.items.length; i++) {
+            newItems.push({
+              key: schemaItem.items[i].key,
+              type: schemaItem.items[i].type,
+              title: schemaItem.items[i].title,
+            })
+          }
+          emptyData[(schemaItem.key as any) + suffix] = newItems;
+        }
+        else if (schemaItem.type === "editor") {
+
+          emptyData[(schemaItem.key + suffix as any)] = EditorState.createEmpty();
+        }
+        else {
           emptyData[(schemaItem.key as string) + suffix] = null;
         }
       });
@@ -368,11 +392,8 @@ const GeneralFormComponent = <T extends BaseData>(
       style={{
         width: "100%",
         height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: "200px"
+  
+        marginTop: "50px"
       }}
     >
       <Formik
@@ -403,6 +424,7 @@ const GeneralFormComponent = <T extends BaseData>(
         }}
       >
         {formikBag => {
+          console.log(formikBag)
           return (
             <Form
               style={{
@@ -414,97 +436,6 @@ const GeneralFormComponent = <T extends BaseData>(
                 alignItems: "flex-start"
               }}
             >
-              {props.formData
-                .filter(data => !data.inContent)
-                .map(data => {
-                  if (data.type === "image") {
-                    return (
-                      <ImageField
-                        value={(formikBag.values as any)[data.key]}
-                        error={(formikBag.errors as any)[data.key]}
-                        setValue={value =>
-                          formikBag.setFieldValue(data.key as string, value)
-                        }
-                      />
-                    );
-                  } else if (data.type === "woff" || "woff2") {
-                    return (
-                      <FileUploadField
-                        value={(formikBag.values as any)[data.key]}
-                        error={(formikBag.errors as any)[data.key]}
-                        setValue={value =>
-                          formikBag.setFieldValue(data.key as string, value)
-                        }
-                      />
-                    );
-                  } else if (data.type === "textarea") {
-                    return (
-                      <Field
-                        name={data.key}
-                        component={TextField}
-                        margin="normal"
-                        variant="outlined"
-                        placeholder={data.title}
-                        required={true}
-                        label={data.title}
-                        error={(formikBag.errors as any)[data.key]}
-                        multiline={true}
-                        rows={12}
-                        fullWidth={true}
-                      />
-                    );
-                  } else if (data.type === "checkbox") {
-                    if (data.items) {
-                      data.items.map(item => {
-                        return (
-                          // tslint:disable-next-line: jsx-key
-                          <>
-                            <h1>{item.itemName}</h1>
-                            <Field
-                              name={item.key}
-                              component={Checkbox}
-                              margin="normal"
-                              variant="outlined"
-                              placeholder={item.itemName}
-                              required={true}
-                              label={item.itemName}
-                              error={(formikBag.errors as any)[item.key]}
-                            />
-                          </>
-                        );
-                      });
-                    }
-                  } else if (data.type === "switch") {
-                    return (
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={data.switchValue}
-                            onChange={handleChange(data.switchValue)}
-                            value="checkedB"
-                            color="primary"
-                          />
-                        }
-                        label="Primary"
-                      />
-                    );
-                  } else if (data.type === "gallery") {
-                    return <DropzoneWithoutKeyboard />;
-                  } else {
-                    return (
-                      <Field
-                        name={data.key}
-                        component={TextField}
-                        margin="normal"
-                        variant="outlined"
-                        placeholder={data.title}
-                        required={true}
-                        label={data.title}
-                        error={(formikBag.errors as any)[data.key]}
-                      />
-                    );
-                  }
-                })}
               <div
                 style={{
                   width: "100%",
@@ -612,22 +543,24 @@ const GeneralFormComponent = <T extends BaseData>(
                               data.switchValue
                             );
                             return (
-                              <FormControlLabel
-                                control={
-                                  <Switch
-                                    checked={switchNew}
-                                    onChange={(
-                                      event: React.ChangeEvent<HTMLInputElement>
-                                    ) => {
-                                      setSwitch(event.target.checked);
-                                      console.log(event.target.checked);
-                                    }}
-                                    value={data.title}
-                                    color="primary"
-                                  />
-                                }
-                                label={data.title}
-                              />
+                              <Field name={data.key}>
+                                <FormControlLabel
+                                  control={
+                                    <Switch
+                                      checked={switchNew}
+                                      onChange={(
+                                        event: React.ChangeEvent<HTMLInputElement>
+                                      ) => {
+                                        setSwitch(event.target.checked);
+                                        console.log(event.target.checked);
+                                      }}
+                                      value={data.title}
+                                      color="primary"
+                                    />
+                                  }
+                                  label={data.title}
+                                />
+                              </Field>
                             );
                           } else if (data.type === "textarea") {
                             return (
@@ -648,27 +581,27 @@ const GeneralFormComponent = <T extends BaseData>(
                           } else if (data.type === "gallery") {
                             return (
                               <div className="my-3">
-                                <Divider className="mb-3"/>
+                                <Divider className="mb-3" />
                                 <Typography variant="h6" className="mb-3">Typeface in use gallery</Typography>
-                              <DropzoneWithoutKeyboard />
-                              <Divider className="mt-3"/>
+                                <DropzoneWithoutKeyboard />
+                                <Divider className="mt-3" />
                               </div>
-                            ) 
+                            )
                           } else if (data.type === "select") {
-     
+
                             return (
                               <Field
-                              name={data.key + suffix}
-                              component={Select}
-                              multiple={true}
-                              value={['red', 'green', 'blue']}
-                              margin="normal"
-                              variant="outlined"
-                              placeholder={data.title}
-                              required={true}
-                              label={data.title}
-                              error={(formikBag.errors as any)[data.key]}
-                            >
+                                name={data.key + suffix}
+                                component={Select}
+                                multiple={true}
+                                value={['red', 'green', 'blue']}
+                                margin="normal"
+                                variant="outlined"
+                                placeholder={data.title}
+                                required={true}
+                                label={data.title}
+                                error={(formikBag.errors as any)[data.key]}
+                              >
                                 <option value="red">Red</option>
                                 <option value="green">Green</option>
                                 <option value="blue">Blue</option>
@@ -687,75 +620,115 @@ const GeneralFormComponent = <T extends BaseData>(
                                 error={(formikBag.errors as any)[data.key]}
                               />
                             );
-                          } else if (data.type === "items") {
-                            const newItems = data.items;
+                          }
+                          // else if (data.type === "items") {
+                          //   const newItems = data.items;
+                          //   return (
+                          //     <>
+                          //       {newItems.map(item => {
+                          //         if (item.items.length > 0) {
+                          //           const [
+                          //             ChildItems,
+                          //             setChildItems
+                          //           ] = useState(item.items);
+                          //           return (
+                          //             <>
+                          //               {ChildItems.map((childItem, index) => {
+                          //                 if (childItem.type === "image") {
+                          //                   return (
+                          //                     <ImageField
+                          //                       value={
+                          //                         (formikBag[index].values as any)[
+                          //                           childItem.key + suffix
+                          //                         ]
+                          //                       }
+                          //                       error={
+                          //                         (formikBag[index].errors as any)[
+                          //                           childItem.key + suffix
+                          //                         ]
+                          //                       }
+                          //                       setValue={value =>
+                          //                         formikBag[index].setFieldValue(
+                          //                           childItem.key,
+                          //                           value + suffix
+                          //                         )
+                          //                       }
+                          //                     />
+                          //                   );
+                          //                 } else if (
+                          //                   childItem.type === "text"
+                          //                 ) {
+                          //                   return (
+                          //                     <Field
+                          //                       name={childItem.key + suffix}
+                          //                       component={TextField}
+                          //                       margin="normal"
+                          //                       variant="outlined"
+                          //                       placeholder={childItem.title}
+                          //                       label={childItem.title}
+
+                          //                     />
+                          //                   );
+                          //                 }
+                          //               })}
+                          //               <Button
+                          //                 onClick={() =>
+                          //                   setChildItems([
+                          //                     ...ChildItems,
+                          //                     {
+                          //                       key: "new" + Math.random() * 10,
+                          //                       type: "text",
+                          //                       title: "texx t again"
+                          //                     }
+                          //                   ])
+                          //                 }
+                          //               >
+                          //                 Add More
+                          //               </Button>
+                          //             </>
+                          //           );
+                          //         }
+                          //       })}
+                          //     </>
+                          //   );
+                          // }
+                          else if (data.type === "items") {
+                            console.log(formikBag);
+                            const dataKey = data.key + suffix;
                             return (
                               <>
-                                {newItems.map(item => {
-                                  if (item.items.length > 0) {
-                                    const [
-                                      ChildItems,
-                                      setChildItems
-                                    ] = useState(item.items);
-                                    return (
-                                      <>
-                                        {ChildItems.map(childItem => {
-                                          if (childItem.type === "image") {
-                                            return (
-                                              <ImageField
-                                                value={
-                                                  (formikBag.values as any)[
-                                                    childItem.key + suffix
-                                                  ]
-                                                }
-                                                error={
-                                                  (formikBag.errors as any)[
-                                                    childItem.key + suffix
-                                                  ]
-                                                }
-                                                setValue={value =>
-                                                  formikBag.setFieldValue(
-                                                    childItem.key,
-                                                    value + suffix
-                                                  )
-                                                }
-                                              />
-                                            );
-                                          } else if (
-                                            childItem.type === "text"
-                                          ) {
+                                <FieldArray name={dataKey}>
+                                  {({ push, remove }) => (
+                                    <React.Fragment>
+
+                                      {data.items &&
+                                        data.items.length > 0 &&
+                                        data.items.map((item, index) => {
+                                          // tslint:disable-next-line: no-shadowed-variable
+                                          const { key, type, title } = item;
+                                          if (item.type === "text") {
                                             return (
                                               <Field
-                                                name={childItem.key + suffix}
+                                                name={`${dataKey}[${index}].${key}`}
                                                 component={TextField}
                                                 margin="normal"
                                                 variant="outlined"
-                                                placeholder={childItem.title}
-                                                label={childItem.title}
+                                                placeholder={title}
+                                                required={true}
+                                                label={title}
+
                                               />
-                                            );
+                                            )
                                           }
+
                                         })}
-                                        <Button
-                                          onClick={() =>
-                                            setChildItems([
-                                              ...ChildItems,
-                                              {
-                                                key: "new" + Math.random() * 10,
-                                                type: "text",
-                                                title: "texx t again"
-                                              }
-                                            ])
-                                          }
-                                        >
-                                          Add More
-                                        </Button>
-                                      </>
-                                    );
-                                  }
-                                })}
+
+                                    </React.Fragment>
+                                  )}
+                                </FieldArray>
+
                               </>
-                            );
+                            )
                           }
                           // else if (data.type === "items") {
                           //   const newItems = data.items;
@@ -784,6 +757,22 @@ const GeneralFormComponent = <T extends BaseData>(
                           //     </>
                           //   );
                           // }
+                          else if (data.type === "editor") {
+
+                            const editor = formikBag.values[data.key + suffix];
+
+                            const [editorState, setEditorState] = useState(editor)
+                            console.log(formikBag.values[editor])
+                            return (
+
+                              <>
+                                <Typography variant="h4">EDITOR</Typography>
+                                <Editor toolbar={{ options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'remove', 'history'] }} editorState={editorState} onEditorStateChange={(e: EditorState) => {
+                                  setEditorState(e)
+                                }} />
+                              </>
+                            );
+                          }
                           else {
                             return (
                               <Field
@@ -801,6 +790,7 @@ const GeneralFormComponent = <T extends BaseData>(
                             );
                           }
                         })}
+
                     </Container>
                   );
                 })}
@@ -817,7 +807,6 @@ const GeneralFormComponent = <T extends BaseData>(
               >
                 {!isSaving ? "Save" : <CircularProgress />}
               </Button>
-              <Debug />
             </Form>
           );
         }}
