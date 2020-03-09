@@ -83,6 +83,12 @@ const AdminEpisodesForm: React.FC = () => {
             title: "copyright",
             type: "text"
           },
+          {
+            inContent: true,
+            key: "imagefield",
+            title: "image",
+            type: "gallery"
+          },
           // {
           //   inContent: true,
           //   key: "editorState",

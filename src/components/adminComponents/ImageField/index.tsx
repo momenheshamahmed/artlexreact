@@ -38,7 +38,7 @@ const ImageField: React.FC<Props> = props => {
           }
         }}
       />
-      {/* <img src={image ? image : Assets.Images.uploadPlaceholder} style={{width: "200px;"}}/> */}
+      <img src={image ? image : Assets.Images.uploadPlaceholder} style={{width: "200px;"}}/>
       {props.error && (
         <Typography
           color="error"

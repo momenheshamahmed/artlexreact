@@ -12,7 +12,7 @@ import {
 } from "formik";
 import { Container, Row, Button, Col } from "react-bootstrap";
 import { TextField } from "formik-material-ui";
-import { Stepper, Step, StepLabel, Typography } from "@material-ui/core";
+import { Stepper, Step, StepLabel, Typography, CircularProgress } from "@material-ui/core";
 import { TypefaceStore } from "../../../../../stores";
 import RUG from "react-upload-gallery";
 // Add style manually
@@ -40,7 +40,7 @@ const AdminTypefacesForm: React.FC = () => {
           console.log({ values, actions });
           alert(JSON.stringify(values, null, 2));
           actions.setSubmitting(false);
-        }}
+        }}  
         render={({ values, isSubmitting, handleBlur, setFieldValue }) => (
           <Form style={{ width: "100%" }}>
             <Field
@@ -58,8 +58,8 @@ const AdminTypefacesForm: React.FC = () => {
                 marginTop: 24,
                 marginBottom: 24
               }}
-              onClick={formikBag.submitForm}
-              variant="contained"
+              onClick={formikBag ? formikBag.submitForm : () => console.warn('here')}
+              variant="primary"
               size="large"
               disabled={isSaving}
             >
