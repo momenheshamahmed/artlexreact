@@ -85,8 +85,8 @@ const AdminEpisodesForm: React.FC = () => {
           },
           {
             inContent: true,
-            key: "imagefield",
-            title: "image",
+            key: "galleryField",
+            title: "gallery",
             type: "gallery"
           },
           // {
@@ -107,21 +107,21 @@ const AdminEpisodesForm: React.FC = () => {
           //   title: "copyright",
           //   type: "select"
           // },
-          {
-            inContent: true,
-            key: "fontinuse",
-            title: "Font Weights",
-            type: "items",
-            items: [
-              {
-               key: "weight2", type: "text", title: "texxt"
-              },
-              { key: "weight1", type: "text", title: "texxt" },
-              { key: "weight3 ", type: "image", title: "texxt" },
-              // { key: "weight4 ", type: "text", title: "texxt" },
+          // {
+          //   inContent: true,
+          //   key: "fontinuse",
+          //   title: "Font Weights",
+          //   type: "items",
+          //   items: [
+          //     {
+          //      key: "weight2", type: "text", title: "texxt"
+          //     },
+          //     { key: "weight1", type: "text", title: "texxt" },
+          //     { key: "weight3 ", type: "image", title: "texxt" },
+          //     // { key: "weight4 ", type: "text", title: "texxt" },
 
-            ]
-          }
+          //   ]
+          // }
         ]}
       />
     </div>

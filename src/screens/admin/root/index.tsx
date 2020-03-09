@@ -9,8 +9,6 @@ import { CircularProgress, Container } from "@material-ui/core";
 import AdminEpisodesForm from "./episodes/form";
 import AdminEpisodesTable from "./episodes";
 import MiniDrawer from "../../../components/adminComponents/Drawer";
-import AdminTypefacesTable from "./Typefaces";
-import AdminTypefacesForm from "./Typefaces/form";
 import { BrowserRouter } from "react-router-dom";
 
 const AdminRoot = () => {
@@ -48,15 +46,6 @@ const AdminRoot = () => {
                   <Route exact={true} path="/admin/episodes">
                     <AdminEpisodesTable />
                   </Route>
-                  <Route path="/admin/typefaces/:key">
-                    <AdminTypefacesForm />
-                  </Route>
-                  <Route exact={true} path="/admin/typefaces">
-                    <AdminTypefacesTable />
-                  </Route>
-                  <Route exact={true} path="/admin">
-                    <Redirect to="/admin/typefaces" />
-                  </Route>
                 </Switch>
               </div>
             </Route>
@@ -64,15 +53,15 @@ const AdminRoot = () => {
         </Switch>
       </BrowserRouter>
     ) : (
-      <Switch>
-        <Route path="/admin/login">
-          <AdminLogin />
-        </Route>
-        <Route>
-          <Redirect to="/admin/login" />
-        </Route>
-      </Switch>
-    )
+          <Switch>
+            <Route path="/admin/login">
+              <AdminLogin />
+            </Route>
+            <Route>
+              <Redirect to="/admin/login" />
+            </Route>
+          </Switch>
+        )
   );
 };
 

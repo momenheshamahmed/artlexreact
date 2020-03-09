@@ -67,3 +67,6 @@ node_modules/
 
 # Parcel cache files
 .cache
+
+# dist build folder
+dist/

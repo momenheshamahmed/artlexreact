@@ -33,7 +33,7 @@ const mapDataToFormData = <T extends BaseData>(data: T) => {
 };
 
 const mapFormDataToData = <T extends BaseData>(
-  formData: Record<string, string | File | null>,
+  formData: Record<string, string | File | null | (string | File | null)[]>,
   schema: Array<FormKeys<T>>
 ): Omit<T, "key"> => {
   const data: T = generateEmptyData(schema);
@@ -61,18 +61,21 @@ const generateEmptyData = <T extends BaseData>(schema: Array<FormKeys<T>>): T =>
     if (schemaItem.inContent) {
       const langs = Object.values(Languages);
       langs.forEach(lang => {
-        if (schemaItem.type !== "image") {
-          data.content[lang][schemaItem.key] = "";
-        } else {
+        if (schemaItem.type === "image") {
           data.content[lang][schemaItem.key] = null;
+        } else if (schemaItem.type === "gallery") {
+          data.content[lang][schemaItem.key] = [];
+        } else {
+          data.content[lang][schemaItem.key] = "";
         }
       });
     } else {
-      if (schemaItem.type !== "image") {
-        data[schemaItem.key] = "";
-      }
-      else {
+      if (schemaItem.type === "image") {
         data[schemaItem.key] = null;
+      } else if (schemaItem.type === "gallery") {
+        data[schemaItem.key] = [];
+      } else {
+        data[schemaItem.key] = "";
       }
     }
   });
@@ -81,7 +84,7 @@ const generateEmptyData = <T extends BaseData>(schema: Array<FormKeys<T>>): T =>
 
 const uploadImagesFormData = async <T extends BaseData>(
   schema: Array<FormKeys<T>>,
-  formData: Record<string, string | File | null>
+  formData: Record<string, string | File | null | (string | File | null)[]>
 ) => {
   const promisesArray: Array<Promise<void>> = [];
   schema.forEach(async (item) => {
@@ -101,7 +104,7 @@ const uploadImagesFormData = async <T extends BaseData>(
                       formData[
                         item.key + lang
                       ] = await StorageStore.uploadImage(
-                        formData[item.key + lang]
+                        formData[item.key + lang] as unknown as File | string | null
                       );
                       resolve();
                     } catch (error) {
@@ -128,17 +131,31 @@ const uploadImagesFormData = async <T extends BaseData>(
           const langs = Object.values(Languages).map(
             lang => lang[0].toUpperCase() + lang.slice(1)
           );
-          const imagePromisesArray = [];
-          console.warn('here')
-          langs.forEach(lang => {
-            const langImagePromiseArray = [];
+          const imagePromisesArray = Array(langs.length).fill([]);
+          langs.forEach((lang, index) => {
             (formData[item.key + lang] as unknown as any[]).forEach(value => {
-              langImagePromiseArray.push(StorageStore.uploadImage(value);
+              imagePromisesArray[index].push(StorageStore.uploadImage(value));
             });
-            imagePromisesArray.push(Promise.all(langImagePromiseArray));
           });
-          const imageArray = await Promise.all(imagePromisesArray);
-          console.warn('here', imageArray)
+          const finalImages = [];
+          const uploadImagesPromises = [];
+          imagePromisesArray.forEach((image, index) => {
+            uploadImagesPromises.push(new Promise(async (resolveArray, rejectArray) => {
+              try {
+                finalImages[index] = await Promise.all(image);
+                resolveArray();
+              } catch (error) {
+                rejectArray(error);
+              }
+            }));
+          });
+          promisesArray.push(new Promise(async (resolveBigPromise) => {
+            await Promise.all(uploadImagesPromises);
+            langs.forEach((lang, index) => {
+              formData[item.key + lang] = finalImages[index];
+            });
+            resolveBigPromise();
+          }));
         } else {
           (formData as any)[item.key] = await StorageStore.uploadImage(
             (formData as any)[item.key]
@@ -200,15 +217,17 @@ const generateValidationSchema = <T extends BaseData>(
 
 const generateEmptyFormData = <T extends BaseData>(schema: Array<FormKeys<T>>) => {
   const langs = Object.values(Languages);
-  const emptyData: Record<string, string | File | null> = {};
+  const emptyData: Record<string, string | File | null | (string | File | null)[]> = {};
   schema.forEach(schemaItem => {
     if (schemaItem.inContent) {
       langs.forEach(lang => {
         const suffix = lang.slice(0, 1).toUpperCase() + lang.slice(1);
-        if (schemaItem.type !== "image") {
-          emptyData[(schemaItem.key as string) + suffix] = "";
-        } else {
+        if (schemaItem.type === "image") {
           emptyData[(schemaItem.key as string) + suffix] = null;
+        } else if (schemaItem.type === "gallery") {
+          emptyData[(schemaItem.key as string) + suffix] = [];
+        } else {
+          emptyData[(schemaItem.key as string) + suffix] = "";
         }
       });
     } else {
