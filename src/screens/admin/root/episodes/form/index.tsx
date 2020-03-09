@@ -108,15 +108,11 @@ const AdminEpisodesForm: React.FC = () => {
             type: "items",
             items: [
               {
-                key: "weight2", type: "text", title: "texxt", items: [
-                  {
-                    key: "weight34", type: "text", title: "texxt",
-                  }
-                ]
+               key: "weight2", type: "text", title: "texxt"
               },
-              { key: "weight1 ", type: "text", title: "texxt" },
-              { key: "weight3 ", type: "text", title: "texxt" },
-              { key: "weight4 ", type: "text", title: "texxt" },
+              { key: "weight1", type: "text", title: "texxt" },
+              { key: "weight3 ", type: "image", title: "texxt" },
+              // { key: "weight4 ", type: "text", title: "texxt" },
 
             ]
           }

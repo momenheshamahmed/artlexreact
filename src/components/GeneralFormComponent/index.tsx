@@ -16,7 +16,7 @@ import {
   ListItemText,
   Chip
 } from "@material-ui/core";
-import { Formik, Form, Field, FieldProp, FieldArray } from "formik";
+import { Formik, Form, Field, FieldProp, FieldArray, ErrorMessage } from "formik";
 import { TextField, Checkbox } from "formik-material-ui";
 import ImageField from "../adminComponents/ImageField";
 
@@ -129,18 +129,17 @@ const generateEmptyData = <T extends BaseData>(
     if (schemaItem.inContent) {
       const langs = Object.values(Languages);
       langs.forEach(lang => {
-        if (schemaItem.type !== "image") {
-          data.content[lang][schemaItem.key] = "";
+        if (schemaItem.type === "image") {
+          data.content[lang][schemaItem.key] = null;
+        } else if (schemaItem.type === "items") {
+          // tslint:disable-next-line: prefer-const
+          let newItems = [];
+          schemaItem.items.forEach(val => newItems.push(val))
+          data.content[lang][schemaItem.key] = newItems;
         } else {
           data.content[lang][schemaItem.key] = null;
         }
       });
-    } else {
-      if (schemaItem.type !== "image") {
-        data[schemaItem.key] = "";
-      } else {
-        data[schemaItem.key] = null;
-      }
     }
   });
   return data as T;
@@ -242,6 +241,24 @@ const uploadFilesFormData = async <T extends BaseData>(
   await Promise.all(promisesArray);
   return formData;
 };
+const ArrayValidationSchema = Yup.object().shape({
+  items: Yup.array()
+    .of(
+      Yup.object().shape({
+        key: Yup.string()
+          .min(4, 'too short')
+          .required('Required'), // these constraints take precedence
+        type: Yup.string()
+          .min(3, 'cmon')
+          .required('Required'), // these constraints take precedence
+        title: Yup.string()
+          .min(3, 'your title')
+          .required('Required'), // these constraints take precedence
+      })
+    )
+    .required('Must have items') // these constraints are shown if and only if inner constraints are satisfied
+    .min(1, 'Minimum of 1 items'),
+});
 
 const textValidationSchema = Yup.string().required();
 const imageValidationSchema = Yup.mixed()
@@ -296,25 +313,21 @@ const generateValidationSchema = <T extends BaseData>(
             validationSchema[
               value.key + suffix
             ] = imageValidationSchema.clone();
-          } else if (value.type === "woff2" || "woff") {
+          }
+          else if (value.type === "woff2" || "woff") {
             validationSchema[
               value.key + suffix
             ] = fileFontValidationSchema.clone();
+          }
+          else if (value.type === "items") {
+            validationSchema[
+              value.key + suffix
+            ] = ArrayValidationSchema.clone();
           }
         } else {
           validationSchema[value.key + suffix] = textValidationSchema.clone();
         }
       });
-    } else {
-      if (value.type === "image") {
-        if (value.type === "image") {
-          validationSchema[value.key] = imageValidationSchema.clone();
-        } else if (value.type === "woff2" || "woff") {
-          validationSchema[value.key] = fileFontValidationSchema.clone();
-        }
-      } else {
-        validationSchema[value.key] = textValidationSchema.clone();
-      }
     }
   });
   return Yup.object(validationSchema);
@@ -324,7 +337,7 @@ const generateEmptyFormData = <T extends BaseData>(
   schema: Array<FormKeys<T>>
 ) => {
   const langs = Object.values(Languages);
-  const emptyData: Record<string, string | File | null | any[] |> = {};
+  const emptyData: Record<string, string | File | null | any[]> = {};
   schema.forEach(schemaItem => {
     if (schemaItem.inContent) {
       langs.forEach(lang => {
@@ -338,12 +351,12 @@ const generateEmptyFormData = <T extends BaseData>(
           let newItems = []
           let i = 0;
           for (i; i < schemaItem.items.length; i++) {
-            newItems.push({
-              key: schemaItem.items[i].key,
-              type: schemaItem.items[i].type,
-              title: schemaItem.items[i].title,
-            })
+            // tslint:disable-next-line: prefer-const
+            let myItemKey = schemaItem.items[i].key;
+            newItems.push(`${myItemKey + suffix}`: "")
+            newItems.pop()
           }
+          // tslint:disable-next-line: prefer-const
           emptyData[(schemaItem.key as any) + suffix] = newItems;
         }
         else if (schemaItem.type === "editor") {
@@ -354,12 +367,6 @@ const generateEmptyFormData = <T extends BaseData>(
           emptyData[(schemaItem.key as string) + suffix] = null;
         }
       });
-    } else {
-      if (schemaItem.type !== "image") {
-        emptyData[schemaItem.key as string] = "";
-      } else {
-        emptyData[schemaItem.key as string] = null;
-      }
     }
   });
   return emptyData;
@@ -392,7 +399,7 @@ const GeneralFormComponent = <T extends BaseData>(
       style={{
         width: "100%",
         height: "100%",
-  
+
         marginTop: "50px"
       }}
     >
@@ -621,80 +628,10 @@ const GeneralFormComponent = <T extends BaseData>(
                               />
                             );
                           }
-                          // else if (data.type === "items") {
-                          //   const newItems = data.items;
-                          //   return (
-                          //     <>
-                          //       {newItems.map(item => {
-                          //         if (item.items.length > 0) {
-                          //           const [
-                          //             ChildItems,
-                          //             setChildItems
-                          //           ] = useState(item.items);
-                          //           return (
-                          //             <>
-                          //               {ChildItems.map((childItem, index) => {
-                          //                 if (childItem.type === "image") {
-                          //                   return (
-                          //                     <ImageField
-                          //                       value={
-                          //                         (formikBag[index].values as any)[
-                          //                           childItem.key + suffix
-                          //                         ]
-                          //                       }
-                          //                       error={
-                          //                         (formikBag[index].errors as any)[
-                          //                           childItem.key + suffix
-                          //                         ]
-                          //                       }
-                          //                       setValue={value =>
-                          //                         formikBag[index].setFieldValue(
-                          //                           childItem.key,
-                          //                           value + suffix
-                          //                         )
-                          //                       }
-                          //                     />
-                          //                   );
-                          //                 } else if (
-                          //                   childItem.type === "text"
-                          //                 ) {
-                          //                   return (
-                          //                     <Field
-                          //                       name={childItem.key + suffix}
-                          //                       component={TextField}
-                          //                       margin="normal"
-                          //                       variant="outlined"
-                          //                       placeholder={childItem.title}
-                          //                       label={childItem.title}
 
-                          //                     />
-                          //                   );
-                          //                 }
-                          //               })}
-                          //               <Button
-                          //                 onClick={() =>
-                          //                   setChildItems([
-                          //                     ...ChildItems,
-                          //                     {
-                          //                       key: "new" + Math.random() * 10,
-                          //                       type: "text",
-                          //                       title: "texx t again"
-                          //                     }
-                          //                   ])
-                          //                 }
-                          //               >
-                          //                 Add More
-                          //               </Button>
-                          //             </>
-                          //           );
-                          //         }
-                          //       })}
-                          //     </>
-                          //   );
-                          // }
                           else if (data.type === "items") {
-                            console.log(formikBag);
                             const dataKey = data.key + suffix;
+                            console.log(formikBag.errors)
                             return (
                               <>
                                 <FieldArray name={dataKey}>
@@ -706,17 +643,39 @@ const GeneralFormComponent = <T extends BaseData>(
                                         data.items.map((item, index) => {
                                           // tslint:disable-next-line: no-shadowed-variable
                                           const { key, type, title } = item;
-                                          if (item.type === "text") {
+                                          if (type === "text") {
                                             return (
-                                              <Field
-                                                name={`${dataKey}[${index}].${key}`}
-                                                component={TextField}
-                                                margin="normal"
-                                                variant="outlined"
-                                                placeholder={title}
-                                                required={true}
-                                                label={title}
-
+                                              <>
+                                                <Field
+                                                  name={`${dataKey}[${index}].${key}`}
+                                                  component={TextField}
+                                                  margin="normal"
+                                                  variant="outlined"
+                                                  placeholder={title}
+                                                  label={title}
+                                                  required={true}
+                                                  error={(formikBag.errors as any)[dataKey]}
+                                                />
+                                                <ErrorMessage name={`${dataKey}[${index}].${key}`}>
+                                                  {msg => <div className="field-error">{msg}</div>}
+                                                </ErrorMessage>
+                                              </>
+                                            )
+                                          } else if (type === "image") {
+                                            return (
+                                              <ImageField
+                                                value={
+                                                  (formikBag.values as any)[`${dataKey}[${index}].${key}`]
+                                                }
+                                                error={
+                                                  (formikBag.errors as any)[`${dataKey}[${index}].${key}`]
+                                                }
+                                                setValue={value =>
+                                                  formikBag.setFieldValue(
+                                                    `${dataKey}[${index}].${key}`,
+                                                    value
+                                                  )
+                                                }
                                               />
                                             )
                                           }
@@ -730,39 +689,10 @@ const GeneralFormComponent = <T extends BaseData>(
                               </>
                             )
                           }
-                          // else if (data.type === "items") {
-                          //   const newItems = data.items;
-                          //   return (
-                          //     <>
-                          //       {newItems.map(item => {
-                          //         console.log(item);
-                          //         return (
-                          //           <Field
-                          //             key={item.key}
-                          //             name={item.key + suffix}
-                          //             component={TextField}
-                          //             margin="normal"
-                          //             variant="outlined"
-                          //             placeholder={item.title}
-                          //             required={true}
-                          //             label={item.title}
-                          //             error={
-                          //               (formikBag.errors as any)[
-                          //                 item.key + suffix
-                          //               ]
-                          //             }
-                          //           />
-                          //         );
-                          //       })}
-                          //     </>
-                          //   );
-                          // }
+
                           else if (data.type === "editor") {
-
                             const editor = formikBag.values[data.key + suffix];
-
                             const [editorState, setEditorState] = useState(editor)
-                            console.log(formikBag.values[editor])
                             return (
 
                               <>
