@@ -83,6 +83,8 @@ const generateEmptyData = <T extends BaseData>(
           data.content[lang][schemaItem.key] = [];
         } else if (schemaItem.type === "switch") {
           data.content[lang][schemaItem.key] = Boolean(false);
+        } else if (schemaItem.type === "date") {
+          data.content[lang][schemaItem.key] = new Date();
         } else {
           data.content[lang][schemaItem.key] = "";
         }
@@ -96,6 +98,8 @@ const generateEmptyData = <T extends BaseData>(
         data[schemaItem.key] = [];
       } else if (schemaItem.type === "switch") {
         data[schemaItem.key] = Boolean(false);
+      } else if (schemaItem.type === "date") {
+        data[schemaItem.key] = new Date();
       } else {
         data[schemaItem.key] = "";
       }
@@ -339,7 +343,11 @@ const generateValidationSchema = <T extends BaseData>(
         } else if (value.type === "woff2") {
           validationSchema[value.key + suffix] = fileValidationSchema.clone();
         } else {
-          validationSchema[value.key + suffix] = textValidationSchema.clone();
+          if(value.isRequired) {
+            validationSchema[value.key + suffix] = textValidationSchema.clone();
+          } else {
+            validationSchema[value.key] = '';
+          }
         }
       });
     } else {
@@ -350,7 +358,11 @@ const generateValidationSchema = <T extends BaseData>(
       } else if (value.type === "woff2") {
         validationSchema[value.key] = fileValidationSchema.clone();
       } else {
-        validationSchema[value.key] = textValidationSchema.clone();
+        if(value.isRequired) {
+          validationSchema[value.key] = textValidationSchema.clone();
+        } else {
+          validationSchema[value.key] = '';
+        }
       }
     }
   });
@@ -363,7 +375,7 @@ const generateEmptyFormData = <T extends BaseData>(
   const langs = Object.values(Languages);
   const emptyData: Record<
     string,
-    string | File | null | boolean | Array<string | File | null>
+    string | File | null | boolean | Array<string | File | null> | Date
   > = {};
   schema.forEach(schemaItem => {
     if (schemaItem.inContent) {
@@ -381,6 +393,8 @@ const generateEmptyFormData = <T extends BaseData>(
           emptyData[(schemaItem.key as string) + suffix] = [];
         } else if (schemaItem.type === "switch") {
           emptyData[(schemaItem.key as string) + suffix] = Boolean(false);
+        } else if (schemaItem.type === "date") {
+          emptyData[(schemaItem.key as string) + suffix] = new Date();
         } else {
           emptyData[(schemaItem.key as string) + suffix] = "";
         }
@@ -634,16 +648,18 @@ const GeneralFormComponent = <T extends BaseData>(
                                 <Divider className="mt-2" />
                               </div>
                             );
-                          } else if (data.type === "select") {
+                          } else if (data.type === "selecttypface") {
                             return (
                               <Field
                                 name={data.key + suffix}
                                 component={TextField}
                                 type="text"
                                 placeholder={data.title}
+                                required={data.isRequired}
                                 select={true}
+                                style={{ overflow: "hidden" }}
                                 variant="outlined"
-                                helperText="Please select Range"
+                                helperText="Please select Typeface"
                                 margin="normal"
                                 InputLabelProps={{
                                   shrink: true
@@ -664,16 +680,41 @@ const GeneralFormComponent = <T extends BaseData>(
                                 )}
                               </Field>
                             );
+                          } else if (data.type === "selecttypfacecategory") {
+                            return (
+                              <Field
+                                name={data.key + suffix}
+                                component={TextField}
+                                type="text"
+                                placeholder={data.title}
+                                required={data.isRequired}
+                                select={true}
+                                style={{ overflow: "hidden" }}
+                                variant="outlined"
+                                helperText="Please select Typeface"
+                                margin="normal"
+                                InputLabelProps={{
+                                  shrink: true
+                                }}
+                                label={data.title}
+                                error={
+                                  (formikBag.errors as any)[data.key + suffix]
+                                }
+                              >
+                                <MenuItem key="free" value="free">
+                                  Free
+                                </MenuItem>
+                                <MenuItem key="premium" value="premium">
+                                  Premium
+                                </MenuItem>
+                                <MenuItem key="custom" value="custom">
+                                  Custom
+                                </MenuItem>
+                              </Field>
+                            );
                           } else if (data.type === "pairfonts") {
-                            console.log(data);
                             return (
                               <FormControl>
-                                {/* <InputLabel
-                                  shrink={true}
-                                  htmlFor={data.key + suffix}
-                                >
-                                  Tags
-                                </InputLabel> */}
                                 <Typography variant="h5" className="my-2">
                                   {data.title}
                                 </Typography>
@@ -683,9 +724,9 @@ const GeneralFormComponent = <T extends BaseData>(
                                   type="text"
                                   name={data.key + suffix}
                                   select={true}
-                                  style={{overflow: "hidden"}}
+                                  style={{ overflow: "hidden" }}
                                   // label={data.title}
-                                  required={false}
+                                  required={data.isRequired}
                                   error={
                                     (formikBag.errors as any)[data.key + suffix]
                                   }
@@ -725,17 +766,18 @@ const GeneralFormComponent = <T extends BaseData>(
                                 name={data.key + suffix}
                                 margin="normal"
                                 variant="outlined"
-                                placeholder={data.title}
-                                required={true}
+                                required={data.isRequired}
                                 label={data.title}
                               />
                             );
                           } else if (data.type === "switch") {
+                            const switchName =  data.key + suffix;
+          
                             return (
                               <FormControlLabel
                                 control={
                                   <Field
-                                    name={`${data.key + suffix}`}
+                                    name={switchName}
                                     component={Switch}
                                     error={
                                       (formikBag.errors as any)[
@@ -755,7 +797,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 margin="normal"
                                 variant="outlined"
                                 placeholder={data.title}
-                                required={true}
+                                required={data.isRequired}
                                 label={data.title}
                                 error={
                                   (formikBag.errors as any)[data.key + suffix]
@@ -773,7 +815,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 margin="normal"
                                 variant="outlined"
                                 placeholder={data.title}
-                                required={true}
+                                required={data.isRequired}
                                 label={data.title}
                                 error={
                                   (formikBag.errors as any)[data.key + suffix]

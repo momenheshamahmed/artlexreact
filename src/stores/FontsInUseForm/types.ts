@@ -9,6 +9,6 @@ export interface FontInUse {
 
 // tslint:disable-next-line: interface-name
 export interface FontInUseContent {
-  title: string;
   selectField: Array<string | File | null>;
+  title: string;
 }

@@ -8,7 +8,7 @@ class FontInUseStore {
   @action
   public addFontInUse = async (value: Omit<FontInUse, "key">): Promise<void> => {
     try {
-      const dbRef = database().ref("/fontsinuse");
+      const dbRef = database().ref("/typefaces/" + value.content.en.selectField + "/fontWeights");
       const newItemRef = await dbRef.push();
       await newItemRef.set(value);
       return Promise.resolve();

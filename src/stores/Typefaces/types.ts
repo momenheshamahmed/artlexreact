@@ -10,6 +10,9 @@ export interface Typeface {
 // tslint:disable-next-line: interface-name
 export interface TypefaceContent {
   fileFont: string;
+  fileSpecimenFont: string;
+  fileUserTermsFont: string;
+  typefaceCategory: string;
   typefaceName: string;
   typefaceDescription: string;
   designerName: string;
@@ -24,6 +27,16 @@ export interface TypefaceContent {
   charactersImage: boolean;
   fontInUseField: Array<string | File | null>;
   pairfonts: Array<string | object |null>;
+  typefaceLinkFacebook: string;
+  typefaceLinkBehance: string;
+  typefaceLinkDribbble: string;
+  typefaceLinkTwitter: string;
+  typefaceLinkWebsite: string;
+  openTypeFeatureOne: boolean;
+  openTypeFeatureTwo: boolean;
+  openTypeFeatureThree: boolean;
+  openTypeFeatureFour: boolean;
+  openTypeFeatureFive: boolean;
 }
 
 // tslint:disable-next-line: interface-name

@@ -15,16 +15,16 @@ const AdminFontsInUseTable: React.FC = () => {
         tableData={[
           {
             inContent: true,
+            key: "selectField",
+            title: "select",
+            type: "selecttypface"
+          },
+          {
+            inContent: true,
             key: "title",
             title: "title",
             type: "text"
           },
-          {
-            inContent: true,
-            key: "selectField",
-            title: "select",
-            type: "select"
-          }
         ]}
       />
     </div>
