@@ -4,57 +4,61 @@ import { Languages } from "../../utils/translation/index";
 export interface Typeface {
   key: string;
   id: number;
-  name: string;
-  typefaceurl: string;
-  charactersenabled: boolean;
   content: Record<Languages, TypefaceContent>;
-  typefaceweights: Record<Languages, [TypefaceWeights]>;
-  typefaceinusegallery: Record<Languages, [TypefaceInUseGallery]>;
-  typefacelanguage: Record<Languages, [Typefacelanguages]>;
 }
 
 // tslint:disable-next-line: interface-name
 export interface TypefaceContent {
-  typefacename?: string;
-  description?: string;
-  family?: string;
-  familytext?: string;
-  release?: string;
-  releasedate?: string;
-  designername?: string;
-  designerlinks?: string;
-  version?: string;
-  manufuctring?: string;
-  copyright?: string;
-  date?: string;
-}
-// tslint:disable-next-line: interface-name
-export interface TypefaceOpenTypeFeatures {
-  featureName: string;
-  imgUrl: string;
-  url: string;
-}
-// tslint:disable-next-line: interface-name
-export interface TypefaceWeights {
-  fontweight: string;
-  imgUrl: string;
-  url: string;
+  fileFont: string;
+  typefaceName: string;
+  typefaceDescription: string;
+  designerName: string;
+  version: string;
+  manufacturing: string;
+  copyright: string;
+  releaseDate: string;
+  storeUrl: string;
+  familyStyles: string;
+  typefaceTestWords: string;
+  galleryField: Array<string | File | null>;
+  charactersImage: boolean;
+  fontInUseField: Array<string | File | null>;
+  pairfonts: Array<string | object |null>;
 }
 
 // tslint:disable-next-line: interface-name
-export interface TypefaceInUseGallery {
-  title: string;
-  imgUrl: string;
-  grid: string;
+export interface FontinuseInterface {
+  key?: string;
+  title?: string;
+  items?: Fontinuseitem[];
 }
+
 // tslint:disable-next-line: interface-name
-export interface TypefacePairs {
+export interface Fontinuseitem {
+  key: string;
   title: string;
-  imgUrl: string;
-  grid: string;
+  type: string;
 }
 // tslint:disable-next-line: interface-name
 export interface Typefacelanguages {
   id: string;
   name: string;
 }
+// imgUrl: string;
+// typefaceurl: string;
+// typefacename?: string;
+// description?: string;
+// typefacelanguages?: string;
+// charactersenabled?: boolean;
+// family?: string;
+// familytext?: string;
+// release?: string;
+// releasedate?: string;
+// designername?: string;
+// designerlinks?: string;
+// version?: string;
+// manufuctring?: string;
+// copyright?: string;
+// date?: string;
+// fontWeights?: object[];
+// fontinuse?: FontinuseInterface[];

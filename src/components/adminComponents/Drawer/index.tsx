@@ -163,8 +163,8 @@ export default function MiniDrawer() {
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
-              <ChevronLeftIcon />
-            )}
+                <ChevronLeftIcon />
+              )}
           </IconButton>
         </div>
         <Divider />
@@ -175,6 +175,22 @@ export default function MiniDrawer() {
                 <FontDownloadIcon />
               </ListItemIcon>
               <ListItemText primary={"Typefaces"} />
+            </ListItem>
+          </LinkStyled>
+          <LinkStyled to="/admin/fonts">
+            <ListItem key={"Fonts"}>
+              <ListItemIcon>
+                <FontDownloadIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Fonts"} />
+            </ListItem>
+          </LinkStyled>
+          <LinkStyled to="/admin/fontsinuse">
+            <ListItem key={"Fonts In Use"}>
+              <ListItemIcon>
+                <FontDownloadIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Fonts In Use"} />
             </ListItem>
           </LinkStyled>
           <LinkStyled to="/admin/tffeatured">

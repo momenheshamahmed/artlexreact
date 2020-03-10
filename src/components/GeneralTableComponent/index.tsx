@@ -88,6 +88,7 @@ export const GeneralTableComponent: <T extends BaseData>(
           history.push(`${props.route}/new`);
         }}
         variant="contained"
+        className="mt-4"
       >
         Add New
       </Button>

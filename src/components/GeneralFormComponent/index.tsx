@@ -5,10 +5,17 @@ import {
   Card,
   CardHeader,
   CardContent,
-  CircularProgress
+  CircularProgress,
+  MenuItem,
+  FormControlLabel,
+  Typography,
+  Divider,
+  InputLabel,
+  FormControl
 } from "@material-ui/core";
 import { Formik, Form, Field } from "formik";
-import { TextField } from "formik-material-ui";
+import { TextField, Select, Switch } from "formik-material-ui";
+import { DatePicker } from "formik-material-ui-pickers";
 import ImageField from "../adminComponents/ImageField";
 import GalleryField from "../adminComponents/GalleryField";
 import * as Yup from "yup";
@@ -18,6 +25,8 @@ import { useParams, useHistory } from "react-router";
 import { BaseData } from "./types";
 import { Props, FormKeys } from "./types";
 import { Languages } from "../../utils/translation";
+import { FontStore, TypefaceStore } from "../../stores";
+import FileField from "../adminComponents/FileField";
 
 const MAXIMUM_IMAGE_SIZE = 2 * 1024 * 1024;
 
@@ -33,7 +42,10 @@ const mapDataToFormData = <T extends BaseData>(data: T) => {
 };
 
 const mapFormDataToData = <T extends BaseData>(
-  formData: Record<string, string | File | null | (string | File | null)[]>,
+  formData: Record<
+    string,
+    string | File | null | boolean | Array<string | File | null>
+  >,
   schema: Array<FormKeys<T>>
 ): Omit<T, "key"> => {
   const data: T = generateEmptyData(schema);
@@ -50,7 +62,9 @@ const mapFormDataToData = <T extends BaseData>(
   return data;
 };
 
-const generateEmptyData = <T extends BaseData>(schema: Array<FormKeys<T>>): T => {
+const generateEmptyData = <T extends BaseData>(
+  schema: Array<FormKeys<T>>
+): T => {
   const data: any = {
     content: {}
   };
@@ -65,6 +79,10 @@ const generateEmptyData = <T extends BaseData>(schema: Array<FormKeys<T>>): T =>
           data.content[lang][schemaItem.key] = null;
         } else if (schemaItem.type === "gallery") {
           data.content[lang][schemaItem.key] = [];
+        } else if (schemaItem.type === "pairfonts") {
+          data.content[lang][schemaItem.key] = [];
+        } else if (schemaItem.type === "switch") {
+          data.content[lang][schemaItem.key] = Boolean(false);
         } else {
           data.content[lang][schemaItem.key] = "";
         }
@@ -74,6 +92,10 @@ const generateEmptyData = <T extends BaseData>(schema: Array<FormKeys<T>>): T =>
         data[schemaItem.key] = null;
       } else if (schemaItem.type === "gallery") {
         data[schemaItem.key] = [];
+      } else if (schemaItem.type === "pairfonts") {
+        data[schemaItem.key] = [];
+      } else if (schemaItem.type === "switch") {
+        data[schemaItem.key] = Boolean(false);
       } else {
         data[schemaItem.key] = "";
       }
@@ -84,10 +106,13 @@ const generateEmptyData = <T extends BaseData>(schema: Array<FormKeys<T>>): T =>
 
 const uploadImagesFormData = async <T extends BaseData>(
   schema: Array<FormKeys<T>>,
-  formData: Record<string, string | File | null | (string | File | null)[]>
+  formData: Record<
+    string,
+    string | File | null | boolean | Array<string | File | null>
+  >
 ) => {
   const promisesArray: Array<Promise<void>> = [];
-  schema.forEach(async (item) => {
+  schema.forEach(async item => {
     if (item.type === "image") {
       promisesArray.push(
         new Promise(async (res, rej) => {
@@ -104,7 +129,10 @@ const uploadImagesFormData = async <T extends BaseData>(
                       formData[
                         item.key + lang
                       ] = await StorageStore.uploadImage(
-                        formData[item.key + lang] as unknown as File | string | null
+                        (formData[item.key + lang] as unknown) as
+                          | File
+                          | string
+                          | null
                       );
                       resolve();
                     } catch (error) {
@@ -133,37 +161,117 @@ const uploadImagesFormData = async <T extends BaseData>(
           );
           const imagePromisesArray = Array(langs.length).fill([]);
           langs.forEach((lang, index) => {
-            (formData[item.key + lang] as unknown as any[]).forEach(value => {
+            ((formData[item.key + lang] as unknown) as any[]).forEach(value => {
               imagePromisesArray[index].push(StorageStore.uploadImage(value));
             });
           });
           const finalImages = [];
           const uploadImagesPromises = [];
           imagePromisesArray.forEach((image, index) => {
-            uploadImagesPromises.push(new Promise(async (resolveArray, rejectArray) => {
-              try {
-                finalImages[index] = await Promise.all(image);
-                resolveArray();
-              } catch (error) {
-                rejectArray(error);
-              }
-            }));
+            uploadImagesPromises.push(
+              new Promise(async (resolveArray, rejectArray) => {
+                try {
+                  finalImages[index] = await Promise.all(image);
+                  resolveArray();
+                } catch (error) {
+                  rejectArray(error);
+                }
+              })
+            );
           });
-          promisesArray.push(new Promise(async (resolveBigPromise) => {
-            await Promise.all(uploadImagesPromises);
-            langs.forEach((lang, index) => {
-              formData[item.key + lang] = finalImages[index];
-            });
-            resolveBigPromise();
-          }));
+          promisesArray.push(
+            new Promise(async resolveBigPromise => {
+              await Promise.all(uploadImagesPromises);
+              langs.forEach((lang, index) => {
+                formData[item.key + lang] = finalImages[index];
+              });
+              resolveBigPromise();
+            })
+          );
         } else {
           (formData as any)[item.key] = await StorageStore.uploadImage(
             (formData as any)[item.key]
           );
         }
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
+    } else if (item.type === "woff") {
+      promisesArray.push(
+        new Promise(async (res, rej) => {
+          try {
+            if (item.inContent) {
+              const langs = Object.values(Languages).map(
+                lang => lang[0].toUpperCase() + lang.slice(1)
+              );
+              const imagesArray: Array<Promise<string>> = [];
+              langs.forEach(lang => {
+                imagesArray.push(
+                  new Promise(async (resolve, reject) => {
+                    try {
+                      formData[item.key + lang] = await StorageStore.uploadFile(
+                        (formData[item.key + lang] as unknown) as
+                          | File
+                          | string
+                          | null
+                      );
+                      resolve();
+                    } catch (error) {
+                      reject(error);
+                    }
+                  })
+                );
+              });
+              await Promise.all(imagesArray);
+            } else {
+              (formData as any)[item.key] = await StorageStore.uploadFile(
+                (formData as any)[item.key]
+              );
+            }
+            res();
+          } catch (error) {
+            rej(error);
+          }
+        })
+      );
+    } else if (item.type === "woff2") {
+      promisesArray.push(
+        new Promise(async (res, rej) => {
+          try {
+            if (item.inContent) {
+              const langs = Object.values(Languages).map(
+                lang => lang[0].toUpperCase() + lang.slice(1)
+              );
+              const imagesArray: Array<Promise<string>> = [];
+              langs.forEach(lang => {
+                imagesArray.push(
+                  new Promise(async (resolve, reject) => {
+                    try {
+                      formData[item.key + lang] = await StorageStore.uploadFile(
+                        (formData[item.key + lang] as unknown) as
+                          | File
+                          | string
+                          | null
+                      );
+                      resolve();
+                    } catch (error) {
+                      reject(error);
+                    }
+                  })
+                );
+              });
+              await Promise.all(imagesArray);
+            } else {
+              (formData as any)[item.key] = await StorageStore.uploadFile(
+                (formData as any)[item.key]
+              );
+            }
+            res();
+          } catch (error) {
+            rej(error);
+          }
+        })
+      );
     }
   });
   await Promise.all(promisesArray);
@@ -189,6 +297,32 @@ const imageValidationSchema = Yup.mixed()
       return value && value.size <= MAXIMUM_IMAGE_SIZE;
     }
   );
+const getFileExtension1 = (filename: string) => {
+  return /[.]/.exec(filename) ? /[^.]+$/.exec(filename)[0] : undefined;
+};
+
+const fileValidationSchema = Yup.mixed()
+  .required()
+  .test("fileFormat", "Fonts only (woff / woff2)", (value: File | string) => {
+    if (typeof value === "string") {
+      return true;
+    }
+    return (
+      value &&
+      (getFileExtension1(value.name) === "woff" ||
+        getFileExtension1(value.name) === "woff2")
+    );
+  })
+  .test(
+    "fileSize",
+    "Font size must be less than 1MB",
+    (value: File | string) => {
+      if (typeof value === "string") {
+        return true;
+      }
+      return value && value.size <= MAXIMUM_IMAGE_SIZE;
+    }
+  );
 
 const generateValidationSchema = <T extends BaseData>(
   schema: Array<FormKeys<T>>
@@ -200,6 +334,10 @@ const generateValidationSchema = <T extends BaseData>(
         const suffix = lang[0].toUpperCase() + lang.slice(1);
         if (value.type === "image") {
           validationSchema[value.key + suffix] = imageValidationSchema.clone();
+        } else if (value.type === "woff") {
+          validationSchema[value.key + suffix] = fileValidationSchema.clone();
+        } else if (value.type === "woff2") {
+          validationSchema[value.key + suffix] = fileValidationSchema.clone();
         } else {
           validationSchema[value.key + suffix] = textValidationSchema.clone();
         }
@@ -207,6 +345,10 @@ const generateValidationSchema = <T extends BaseData>(
     } else {
       if (value.type === "image") {
         validationSchema[value.key] = imageValidationSchema.clone();
+      } else if (value.type === "woff") {
+        validationSchema[value.key] = fileValidationSchema.clone();
+      } else if (value.type === "woff2") {
+        validationSchema[value.key] = fileValidationSchema.clone();
       } else {
         validationSchema[value.key] = textValidationSchema.clone();
       }
@@ -215,17 +357,30 @@ const generateValidationSchema = <T extends BaseData>(
   return Yup.object(validationSchema);
 };
 
-const generateEmptyFormData = <T extends BaseData>(schema: Array<FormKeys<T>>) => {
+const generateEmptyFormData = <T extends BaseData>(
+  schema: Array<FormKeys<T>>
+) => {
   const langs = Object.values(Languages);
-  const emptyData: Record<string, string | File | null | (string | File | null)[]> = {};
+  const emptyData: Record<
+    string,
+    string | File | null | boolean | Array<string | File | null>
+  > = {};
   schema.forEach(schemaItem => {
     if (schemaItem.inContent) {
       langs.forEach(lang => {
         const suffix = lang.slice(0, 1).toUpperCase() + lang.slice(1);
         if (schemaItem.type === "image") {
           emptyData[(schemaItem.key as string) + suffix] = null;
+        } else if (schemaItem.type === "woff") {
+          emptyData[(schemaItem.key as string) + suffix] = null;
+        } else if (schemaItem.type === "woff2") {
+          emptyData[(schemaItem.key as string) + suffix] = null;
         } else if (schemaItem.type === "gallery") {
           emptyData[(schemaItem.key as string) + suffix] = [];
+        } else if (schemaItem.type === "pairfonts") {
+          emptyData[(schemaItem.key as string) + suffix] = [];
+        } else if (schemaItem.type === "switch") {
+          emptyData[(schemaItem.key as string) + suffix] = Boolean(false);
         } else {
           emptyData[(schemaItem.key as string) + suffix] = "";
         }
@@ -368,19 +523,27 @@ const GeneralFormComponent = <T extends BaseData>(
                 {Object.values(Languages).map(lang => {
                   const suffix = lang[0].toUpperCase() + lang.slice(1);
                   return (
-                    <Card
+                    <Container
                       key={lang}
                       style={{
-                        margin: 24
+                        margin: 24,
+                        marginTop: 50,
+                        marginLeft: 50,
+                        background: "white",
+                        padding: 20
                       }}
                     >
-                      <CardHeader title={lang} />
-                      <CardContent>
-                        {props.formData
-                          .filter(data => data.inContent)
-                          .map(data => {
-                            if (data.type === "image") {
-                              return (
+                      {props.formData
+                        .filter(data => data.inContent)
+                        .map(data => {
+                          if (data.type === "image") {
+                            return (
+                              <div className="my-3">
+                                <Divider />
+                                <Typography variant="h5" className="my-2">
+                                  {data.title}
+                                </Typography>
+
                                 <ImageField
                                   value={
                                     (formikBag.values as any)[data.key + suffix]
@@ -395,10 +558,65 @@ const GeneralFormComponent = <T extends BaseData>(
                                     )
                                   }
                                 />
-                              );
-                            }
-                            if (data.type === "gallery") {
-                              return (
+                                <Divider className="mt-2" />
+                              </div>
+                            );
+                          } else if (data.type === "woff") {
+                            return (
+                              <div className="my-3">
+                                <Divider />
+                                <Typography variant="h5" className="my-2">
+                                  {data.title}
+                                </Typography>
+                                <FileField
+                                  value={
+                                    (formikBag.values as any)[data.key + suffix]
+                                  }
+                                  error={
+                                    (formikBag.errors as any)[data.key + suffix]
+                                  }
+                                  setValue={value =>
+                                    formikBag.setFieldValue(
+                                      data.key + suffix,
+                                      value
+                                    )
+                                  }
+                                />
+                                <Divider className="mt-2" />
+                              </div>
+                            );
+                          } else if (data.type === "woff2") {
+                            return (
+                              <div className="my-3">
+                                <Divider />
+                                <Typography variant="h5" className="my-2">
+                                  {data.title}
+                                </Typography>
+
+                                <FileField
+                                  value={
+                                    (formikBag.values as any)[data.key + suffix]
+                                  }
+                                  error={
+                                    (formikBag.errors as any)[data.key + suffix]
+                                  }
+                                  setValue={value =>
+                                    formikBag.setFieldValue(
+                                      data.key + suffix,
+                                      value
+                                    )
+                                  }
+                                />
+                                <Divider className="mt-2" />
+                              </div>
+                            );
+                          } else if (data.type === "gallery") {
+                            return (
+                              <div className="my-3">
+                                <Divider />
+                                <Typography variant="h5" className="my-2">
+                                  {data.title}
+                                </Typography>
                                 <GalleryField
                                   value={
                                     (formikBag.values as any)[data.key + suffix]
@@ -413,52 +631,166 @@ const GeneralFormComponent = <T extends BaseData>(
                                     )
                                   }
                                 />
-                              );
-                            }
-                            else if (data.type === "textarea") {
-                              return (
+                                <Divider className="mt-2" />
+                              </div>
+                            );
+                          } else if (data.type === "select") {
+                            return (
+                              <Field
+                                name={data.key + suffix}
+                                component={TextField}
+                                type="text"
+                                placeholder={data.title}
+                                select={true}
+                                variant="outlined"
+                                helperText="Please select Range"
+                                margin="normal"
+                                InputLabelProps={{
+                                  shrink: true
+                                }}
+                                label={data.title}
+                                error={
+                                  (formikBag.errors as any)[data.key + suffix]
+                                }
+                              >
+                                {useObserver(() =>
+                                  TypefaceStore.Typefaces.map(val => {
+                                    return (
+                                      <MenuItem key={val.key} value={val.key}>
+                                        {val.key}
+                                      </MenuItem>
+                                    );
+                                  })
+                                )}
+                              </Field>
+                            );
+                          } else if (data.type === "pairfonts") {
+                            console.log(data);
+                            return (
+                              <FormControl>
+                                {/* <InputLabel
+                                  shrink={true}
+                                  htmlFor={data.key + suffix}
+                                >
+                                  Tags
+                                </InputLabel> */}
+                                <Typography variant="h5" className="my-2">
+                                  {data.title}
+                                </Typography>
                                 <Field
-                                  name={data.key + suffix}
-                                  component={TextField}
-                                  margin="normal"
+                                  component={Select}
                                   variant="outlined"
-                                  placeholder={data.title}
-                                  required={true}
-                                  label={data.title}
+                                  type="text"
+                                  name={data.key + suffix}
+                                  select={true}
+                                  style={{overflow: "hidden"}}
+                                  // label={data.title}
+                                  required={false}
                                   error={
                                     (formikBag.errors as any)[data.key + suffix]
                                   }
-                                  multiline={true}
-                                  rows={12}
-                                  fullWidth={true}
-                                />
-                              );
-                            } else {
-                              return (
-                                <Field
-                                  name={data.key + suffix}
-                                  component={TextField}
-                                  margin="normal"
-                                  variant="outlined"
-                                  placeholder={data.title}
-                                  required={true}
-                                  label={data.title}
-                                  error={
-                                    (formikBag.errors as any)[data.key + suffix]
-                                  }
-                                />
-                              );
-                            }
-                          })}
-                      </CardContent>
-                    </Card>
+                                  multiple={true}
+                                  inputProps={{
+                                    name: `${data.key + suffix}`,
+                                    id: `${data.key + suffix}`
+                                  }}
+                                >
+                                  <MenuItem key="noitem" value="noitem">
+                                    noitem
+                                  </MenuItem>
+                                  <MenuItem key="noitem2" value="noitem2">
+                                    noitem2
+                                  </MenuItem>
+                                  {/* {
+                                      useObserver(() =>
+                                        TypefaceStore.Typefaces.map(val => {
+                                          return (
+                                            <>
+
+                                              <MenuItem key={val.content.en.copyright} value={val.content.en.copyright}>
+                                                {val.content.en.copyright}
+                                              </MenuItem>
+                                            </>
+                                          );
+                                        })
+                                      )
+                                    } */}
+                                </Field>
+                              </FormControl>
+                            );
+                          } else if (data.type === "date") {
+                            return (
+                              <Field
+                                component={DatePicker}
+                                name={data.key + suffix}
+                                margin="normal"
+                                variant="outlined"
+                                placeholder={data.title}
+                                required={true}
+                                label={data.title}
+                              />
+                            );
+                          } else if (data.type === "switch") {
+                            return (
+                              <FormControlLabel
+                                control={
+                                  <Field
+                                    name={`${data.key + suffix}`}
+                                    component={Switch}
+                                    error={
+                                      (formikBag.errors as any)[
+                                        data.key + suffix
+                                      ]
+                                    }
+                                  />
+                                }
+                                label={data.title}
+                              />
+                            );
+                          } else if (data.type === "textarea") {
+                            return (
+                              <Field
+                                name={data.key + suffix}
+                                component={TextField}
+                                margin="normal"
+                                variant="outlined"
+                                placeholder={data.title}
+                                required={true}
+                                label={data.title}
+                                error={
+                                  (formikBag.errors as any)[data.key + suffix]
+                                }
+                                multiline={true}
+                                rows={12}
+                                fullWidth={true}
+                              />
+                            );
+                          } else {
+                            return (
+                              <Field
+                                name={data.key + suffix}
+                                component={TextField}
+                                margin="normal"
+                                variant="outlined"
+                                placeholder={data.title}
+                                required={true}
+                                label={data.title}
+                                error={
+                                  (formikBag.errors as any)[data.key + suffix]
+                                }
+                              />
+                            );
+                          }
+                        })}
+                    </Container>
                   );
                 })}
               </div>
               <Button
                 style={{
                   marginTop: 24,
-                  marginBottom: 24
+                  marginBottom: 24,
+                  marginLeft: 50
                 }}
                 onClick={formikBag.submitForm}
                 variant="contained"

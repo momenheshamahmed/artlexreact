@@ -17,7 +17,8 @@ import TypeFacePage from "./TypeFacePage";
 import Assets from "../assets";
 
 // Stores
-import { EpisodeStore } from "../stores";
+import { TypefaceStore } from "../stores";
+import { FontStore } from "../stores";
 import FooterComponent from "../components/FooterComponent/FooterComponent";
 import Typefaces from "./Typefaces";
 
@@ -30,94 +31,97 @@ const App: React.FC = () => {
   `;
   // Mobx
   useEffect(() => {
-    EpisodeStore.watchEpisodes();
+    TypefaceStore.watchTypefaces();
+    FontStore.watchFonts();
   }, []);
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/admin">
-          <AdminRoot />
-        </Route>
-        <div className="pt-5">
-          <Route path="/">
-            <Navbar expand="md" fixed="top" bg="white">
-              <Container>
-                <Navbar.Brand>
-                  <Link to="/">
-                    <Logo src={Assets.Images.logo} alt="Logo" />
-                  </Link>
-                </Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
-                  <Nav className="ml-auto" defaultActiveKey="/">
-                    <LinkContainer to={"/typefaces"}>
-                      <Nav.Link eventKey="typefaces">{"Typefaces"}</Nav.Link>
-                    </LinkContainer>
-                    <LinkContainer to={"/custom"}>
-                      <Nav.Link eventKey="custom">{"Custom"}</Nav.Link>
-                    </LinkContainer>
-                    <LinkContainer to={"/services"}>
-                      <Nav.Link eventKey="services">{"Services"}</Nav.Link>
-                    </LinkContainer>
-                    <LinkContainer to={"/blog"}>
-                      <Nav.Link eventKey="blog">{"Blog"}</Nav.Link>
-                    </LinkContainer>
-                    <NavDropdown alignRight title="Contact" id="collasible-nav-dropdown">
-                      <NavDropdown.Item>
-                        <LinkContainer to={"/contact"}>
-                          <Nav.Link eventKey="contact">
-                            {"Send us a message"}
-                          </Nav.Link>
-                        </LinkContainer>
-                      </NavDropdown.Item>
-                      <NavDropdown.Item>
-                        <LinkContainer to={"/contact"}>
-                          <Nav.Link eventKey="contact">
-                            {"Get a discount"}
-                          </Nav.Link>
-                        </LinkContainer>
-                      </NavDropdown.Item>
-                      <NavDropdown.Item>
-                        <LinkContainer to={"/contact"}>
-                          <Nav.Link eventKey="contact">
-                            {"Request custom font"}
-                          </Nav.Link>
-                        </LinkContainer>
-                      </NavDropdown.Item>
-                    </NavDropdown>
-                  </Nav>
-                </Navbar.Collapse>
-              </Container>
-            </Navbar>
-            <Switch>
-              <Route exact={true} path="/">
-                <Home />
-              </Route>
-              <Route path="/typefaces">
-                <Typefaces />
-              </Route>
-              <Route path="/services">
-                <ProtypeServices />
-              </Route>
-              <Route path="/custom">
-                <CustomTypefaces />
-              </Route>
-              <Route path="/blog">
-                <Blog />
-              </Route>
-              <Route path="/contact">
-                <Contact />
-              </Route>
-              <Route path="/typefacepage">
-                <TypeFacePage />
-              </Route>
-            </Switch>
+
+      <BrowserRouter>
+        <Switch>
+          <Route path="/admin">
+            <AdminRoot />
           </Route>
-          <FooterComponent />
-        </div>
-      </Switch>
-    </BrowserRouter>
+          <div className="pt-5">
+            <Route path="/">
+              <Navbar expand="md" fixed="top" bg="white">
+                <Container>
+                  <Navbar.Brand>
+                    <Link to="/">
+                      <Logo src={Assets.Images.logo} alt="Logo" />
+                    </Link>
+                  </Navbar.Brand>
+                  <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                  <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="ml-auto" defaultActiveKey="/">
+                      <LinkContainer to={"/typefaces"}>
+                        <Nav.Link eventKey="typefaces">{"Typefaces"}</Nav.Link>
+                      </LinkContainer>
+                      <LinkContainer to={"/custom"}>
+                        <Nav.Link eventKey="custom">{"Custom"}</Nav.Link>
+                      </LinkContainer>
+                      <LinkContainer to={"/services"}>
+                        <Nav.Link eventKey="services">{"Services"}</Nav.Link>
+                      </LinkContainer>
+                      <LinkContainer to={"/blog"}>
+                        <Nav.Link eventKey="blog">{"Blog"}</Nav.Link>
+                      </LinkContainer>
+                      <NavDropdown alignRight={true} title="Contact" id="collasible-nav-dropdown">
+                        <NavDropdown.Item>
+                          <LinkContainer to={"/contact"}>
+                            <Nav.Link eventKey="contact">
+                              {"Send us a message"}
+                            </Nav.Link>
+                          </LinkContainer>
+                        </NavDropdown.Item>
+                        <NavDropdown.Item>
+                          <LinkContainer to={"/contact"}>
+                            <Nav.Link eventKey="contact">
+                              {"Get a discount"}
+                            </Nav.Link>
+                          </LinkContainer>
+                        </NavDropdown.Item>
+                        <NavDropdown.Item>
+                          <LinkContainer to={"/contact"}>
+                            <Nav.Link eventKey="contact">
+                              {"Request custom font"}
+                            </Nav.Link>
+                          </LinkContainer>
+                        </NavDropdown.Item>
+                      </NavDropdown>
+                    </Nav>
+                  </Navbar.Collapse>
+                </Container>
+              </Navbar>
+              <Switch>
+                <Route exact={true} path="/">
+                  <Home />
+                </Route>
+                <Route path="/typefaces">
+                  <Typefaces />
+                </Route>
+                <Route path="/services">
+                  <ProtypeServices />
+                </Route>
+                <Route path="/custom">
+                  <CustomTypefaces />
+                </Route>
+                <Route path="/blog">
+                  <Blog />
+                </Route>
+                <Route path="/contact">
+                  <Contact />
+                </Route>
+                <Route path="/typefacepage">
+                  <TypeFacePage />
+                </Route>
+              </Switch>
+            </Route>
+            <FooterComponent />
+          </div>
+        </Switch>
+      </BrowserRouter>
+
   );
 };
 

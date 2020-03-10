@@ -2,67 +2,87 @@ import React, { useRef, useState, useEffect } from "react";
 import { Props } from "./types";
 import Assets from "../../../assets";
 import "./index.css";
-import { Typography } from "@material-ui/core";
+import { Typography, Button } from "@material-ui/core";
 
-const GalleryField: React.FC<Props> = props => {
-  const [images, setImages] = useState<(File | string | null)[]>(props.value);
+const GalleryField: React.FC<Props> = (props) => {
+  const [images, setImages] = useState<Array<File | string | null>>(props.value);
   useEffect(() => {
-    setImages(props.value);
+    const processImages = async () => {
+      const processedImages = [];
+      const promisesArray = props.value.map((image, index) => {
+        return new Promise(res => {
+          if (typeof image === "string") {
+            processedImages[index] = (image);
+            res();
+          } else {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              if (inputRef.current && e.target) {
+                processedImages[index] = (e.target.result as any);
+                res();
+              }
+            };
+            reader.readAsDataURL(image);
+          }
+        });
+      });
+      await Promise.all(promisesArray);
+      setImages(processedImages);
+    }
+    processImages();
   }, [props.value]);
   const inputRef = useRef(null);
   return (
     <div
-      onClick={() => {
-        if (inputRef.current) {
-          (inputRef.current as any).click();
-        }
-      }}
+      // onClick={() => {
+      //   if (inputRef.current) {
+      //     (inputRef.current as any).click();
+      //   }
+      // }}
       className="ImageField"
     >
-      <label htmlFor="file">File upload</label>
 
       <input
         type="file"
-        multiple
+        multiple={true}
         accept="image/png,image/jpeg"
+        id="fileInputGallery"
+        style={{display: 'none'}}
         ref={inputRef}
         onChange={value => {
           if (value.target.files && value.target.files[0]) {
             const numOfFiles = value.target.files.length;
             const filesArray = [];
-            const imagesArray = [];
             for (let i = 0; i < numOfFiles; i++) {
               filesArray.push(value.target.files[i]);
             }
-            console.warn(numOfFiles)
-            console.warn(filesArray)
-            props.setValue(filesArray);
-            filesArray.forEach(file => {
-              if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                  if (inputRef.current && e.target) {
-                    imagesArray.push(e.target.result as any);
-                    if (imagesArray.length === numOfFiles) {
-                      setImages(imagesArray);
-                    }
-                  }
-                };
-                reader.readAsDataURL(file);
-              }
-            })
+            props.setValue(props.value.concat(filesArray));
           }
         }}
       />
+      <Button id="button" variant="outlined" fullWidth={true} onClick={() => document.getElementById('button').addEventListener('click', () => {
+        document.getElementById('fileInputGallery').click()
+      })}>
+        upload files
+      </Button>
       <div>
         {
-          images ? 
-          
-          images.map(image => (
-            <img src={image ? image : Assets.Images.uploadPlaceholder} style={{width: "200px;"}}/>
-          ))
-          : 
-          null 
+          images ?
+
+            images.map((image, index) => (
+              <>
+                <img src={image ? image : Assets.Images.uploadPlaceholder} style={{ width: "200px" }} />
+                <Button
+                  onClick={() => {
+                    const a = props.value.slice(0);
+                    a.splice(index, 1);
+                    props.setValue(a);
+                  }}
+                >X</Button>
+              </>
+            ))
+            :
+            null
         }
       </div>
       {props.error && (

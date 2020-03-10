@@ -6,10 +6,14 @@ import AuthStore from "../../../stores/Auth";
 import AdminLogin from "../login";
 import { CircularProgress, Container } from "@material-ui/core";
 
-import AdminEpisodesForm from "./episodes/form";
-import AdminEpisodesTable from "./episodes";
+import AdminTypefacesForm from "./typefaces/form";
+import AdminTypefacesTable from "./typefaces";
 import MiniDrawer from "../../../components/adminComponents/Drawer";
 import { BrowserRouter } from "react-router-dom";
+import AdminFontsForm from "./FontsForm/form";
+import AdminFontsTable from "./FontsForm";
+import AdminFontsInUseTable from "./FontsInUseForm";
+import AdminFontsInUseForm from "./FontsInUseForm/form";
 
 const AdminRoot = () => {
   useEffect(() => {
@@ -39,12 +43,24 @@ const AdminRoot = () => {
                   <Route path="/admin/login">
                     <Redirect to="/admin" />
                   </Route>
-
-                  <Route path="/admin/episodes/:key">
-                    <AdminEpisodesForm />
+                  <Route path="/admin/typefaces/:key">
+                    <AdminTypefacesForm />
                   </Route>
-                  <Route exact={true} path="/admin/episodes">
-                    <AdminEpisodesTable />
+                  <Route exact={true} path="/admin/typefaces">
+                    <AdminTypefacesTable />
+                  </Route>
+
+                  <Route path="/admin/fonts/:key">
+                    <AdminFontsForm />
+                  </Route>
+                  <Route exact={true} path="/admin/fonts">
+                    <AdminFontsTable />
+                  </Route>
+                  <Route path="/admin/fontsinuse/:key">
+                    <AdminFontsInUseForm />
+                  </Route>
+                  <Route exact={true} path="/admin/fontsinuse">
+                    <AdminFontsInUseTable />
                   </Route>
                 </Switch>
               </div>

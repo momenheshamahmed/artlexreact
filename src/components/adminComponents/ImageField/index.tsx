@@ -1,35 +1,39 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Props } from "./types";
-import Assets from "../../../assets";
 import "./index.css";
-import { Typography } from "@material-ui/core";
+import { Typography, Button } from "@material-ui/core";
+import styled from "styled-components";
 
 const ImageField: React.FC<Props> = props => {
   const [image, setImage] = useState<File | string | null>(props.value);
+  const styledImage = styled.img`
+    display: (${props => props.src !== null ? 'inline' : 'none' });
+  `;
   useEffect(() => {
     setImage(props.value);
   }, [props.value]);
   const inputRef = useRef(null);
   return (
     <div
-      onClick={() => {
-        if (inputRef.current) {
-          (inputRef.current as any).click();
-        }
-      }}
+      // onClick={() => {
+      //   if (inputRef.current) {
+      //     (inputRef.current as any).click();
+      //   }
+      // }}
       className="ImageField"
     >
-      <label htmlFor="file">File upload</label>
 
       <input
         type="file"
         accept="image/png,image/jpeg"
+        id="uploadImageInput"
+        style={{ display: 'none' }}
         ref={inputRef}
         onChange={value => {
           if (value.target.files && value.target.files[0]) {
             props.setValue(value.target.files[0]);
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
               if (inputRef.current && e.target) {
                 setImage(e.target.result as any);
               }
@@ -38,7 +42,14 @@ const ImageField: React.FC<Props> = props => {
           }
         }}
       />
-      <img src={image ? image : Assets.Images.uploadPlaceholder} style={{width: "200px;"}}/>
+      <div>
+        <Button id="buttonImageField" variant="outlined" fullWidth={true} onClick={() => {
+          document.getElementById('uploadImageInput').click()
+        }}>
+          Upload Image
+      </Button>
+        <img src={image ? image : null } style={{ display: image ? "inline" : "none", marginTop: '20px', marginBottom: '20px' }} />
+      </div>
       {props.error && (
         <Typography
           color="error"

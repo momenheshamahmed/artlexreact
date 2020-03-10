@@ -12,7 +12,6 @@ export class RichEditorExample extends React.Component {
   handleKeyCommand = command => {
     const { editorState } = this.props;
     console.log(editorState)
-    console.log("momen momen")
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
       this.onChange(newState);
