@@ -669,15 +669,25 @@ const GeneralFormComponent = <T extends BaseData>(
                                   (formikBag.errors as any)[data.key + suffix]
                                 }
                               >
-                                {useObserver(() =>
+                                {/* {useObserver(() =>
                                   TypefaceStore.Typefaces.map(val => {
                                     return (
+                                      TypefaceStore.Typefaces.length > 0 ? 
+                                      
                                       <MenuItem key={val.key} value={val.key}>
-                                        {val.key}
+                                        {val.content.en.typefaceName}
                                       </MenuItem>
+                                      :
+                                      <MenuItem key="noitems" value="noitems" disabled={true}>
+                                        Please go and typefaces first!
+                                      </MenuItem>
+
                                     );
                                   })
-                                )}
+                                )} */}
+                                       <MenuItem key="noitems" value="noitems" disabled={true}>
+                                        Please go and typefaces first!
+                                      </MenuItem>
                               </Field>
                             );
                           } else if (data.type === "selecttypfacecategory") {

@@ -14,15 +14,34 @@ const AdminFontsForm: React.FC = () => {
         formData={[
           {
             inContent: true,
-            key: "selectField",
+            key: "selectTypeface",
             title: "Select",
-            type: "selecttypface"
+            type: "selecttypface",
+            isRequired: true
           },
           {
             inContent: true,
-            key: "title",
-            title: "Title",
-            type: "text"
+            key: "fontWeight",
+            title: "Font Weight",
+            type: "text",
+            isRequired: true
+
+          },
+          {
+            inContent: true,
+            key: "fontImage",
+            title: "Font Image",
+            type: "image",
+            isRequired: true
+
+          },
+          {
+            inContent: true,
+            key: "fontUrl",
+            title: "Font Url",
+            type: "text",
+            isRequired: true
+
           },
         ]}
       />

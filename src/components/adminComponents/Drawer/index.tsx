@@ -193,7 +193,7 @@ export default function MiniDrawer() {
               <ListItemText primary={"Fonts In Use"} />
             </ListItem>
           </LinkStyled>
-          <LinkStyled to="/admin/tffeatured">
+          <LinkStyled to="/admin/fontsfeaturedfullscreen">
             <ListItem key={"Typefaces Featured"}>
               <ListItemIcon>
                 <FontDownloadIcon />
@@ -201,12 +201,20 @@ export default function MiniDrawer() {
               <ListItemText primary={"Typefaces Featured"} />
             </ListItem>
           </LinkStyled>
-          <LinkStyled to="/admin/tfgrid">
+          <LinkStyled to="/admin/fontsfeaturedgrid">
             <ListItem key={"Typefaces Grid"}>
               <ListItemIcon>
                 <FontDownloadIcon />
               </ListItemIcon>
               <ListItemText primary={"Typefaces Grid"} />
+            </ListItem>
+          </LinkStyled>
+          <LinkStyled to="/admin/fontsfeaturedtester">
+            <ListItem key={"Typefaces Tester"}>
+              <ListItemIcon>
+                <FontDownloadIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Typefaces Tester"} />
             </ListItem>
           </LinkStyled>
         </List>

@@ -12,17 +12,6 @@ const AdminTypefacesForm: React.FC = () => {
         editAction={TypefaceStore.editTypeface}
         data={TypefaceStore.Typefaces}
         formData={[
-          // designerName: string;
-          // version: string;
-          // manufacturing: string;
-          // copyright: string;
-          // releaseDate: string;
-          // {
-          //   inContent: true,
-          //   key: "fileFont",
-          //   title: "File Font",
-          //   type: "woff"
-          // },
           {
             inContent: true,
             key: "typefaceName",

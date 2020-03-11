@@ -1,15 +1,13 @@
 import { Languages } from "../../utils/translation/index";
 
 // tslint:disable-next-line: interface-name
-export interface FontInUse {
+export interface FontFeaturedTester {
   key: string;
   id: number;
-  content: Record<Languages, FontInUseContent>;
+  content: Record<Languages, FontFeaturedTesterContent>;
 }
 
 // tslint:disable-next-line: interface-name
-export interface FontInUseContent {
+export interface FontFeaturedTesterContent {
   selectTypeface: Array<string | File | null>;
-  imageGrid: string;
-
 }

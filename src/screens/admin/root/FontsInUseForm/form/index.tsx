@@ -15,22 +15,19 @@ const AdminFontsInUseForm: React.FC = () => {
         formData={[
           {
             inContent: true,
-            key: "selectField",
-            title: "Select",
-            type: "select"
+            key: "selectTypeface",
+            title: "Select Typeface",
+            type: "selecttypface",
+            isRequired: true
           },
           {
             inContent: true,
-            key: "title",
-            title: "Title",
-            type: "text"
+            key: "imageGrid",
+            title: "Grid Number",
+            type: "text",
+            isRequired: true
           },
-          {
-            inContent: true,
-            key: "title",
-            title: "Title",
-            type: "text"
-          },
+
         ]}
       />
     </div>

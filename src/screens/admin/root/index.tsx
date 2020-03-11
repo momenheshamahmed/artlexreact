@@ -14,6 +14,12 @@ import AdminFontsForm from "./FontsForm/form";
 import AdminFontsTable from "./FontsForm";
 import AdminFontsInUseTable from "./FontsInUseForm";
 import AdminFontsInUseForm from "./FontsInUseForm/form";
+import AdminFontsFeaturedFullscreenForm from "./FontsFeaturedFullScreen/form";
+import AdminFontsFeaturedGridTable from "./FontsFeaturedGrid";
+import AdminFontsFeaturedGridForm from "./FontsFeaturedGrid/form";
+import AdminFontsFeaturedFullscreenTable from "./FontsFeaturedFullScreen";
+import AdminFontsFeaturedTesterForm from "./FontsFeaturedTester/form";
+import AdminFontsFeaturedTesterTable from "./FontsFeaturedTester";
 
 const AdminRoot = () => {
   useEffect(() => {
@@ -62,6 +68,24 @@ const AdminRoot = () => {
                   <Route exact={true} path="/admin/fontsinuse">
                     <AdminFontsInUseTable />
                   </Route>
+                  <Route path="/admin/fontsfeaturedfullscreen/:key">
+                    <AdminFontsFeaturedFullscreenForm />
+                  </Route>
+                  <Route exact={true} path="/admin/fontsfeaturedfullscreen">
+                    <AdminFontsFeaturedFullscreenTable />
+                  </Route>
+                  <Route path="/admin/fontsfeaturedgrid/:key">
+                    <AdminFontsFeaturedGridForm />
+                  </Route>
+                  <Route exact={true} path="/admin/fontsfeaturedgrid">
+                    <AdminFontsFeaturedGridTable />
+                  </Route>
+                  <Route path="/admin/fontsfeaturedtester/:key">
+                    <AdminFontsFeaturedTesterForm />
+                  </Route>
+                  <Route exact={true} path="/admin/fontsfeaturedtester">
+                    <AdminFontsFeaturedTesterTable />
+                  </Route>
                 </Switch>
               </div>
             </Route>
@@ -69,15 +93,15 @@ const AdminRoot = () => {
         </Switch>
       </BrowserRouter>
     ) : (
-          <Switch>
-            <Route path="/admin/login">
-              <AdminLogin />
-            </Route>
-            <Route>
-              <Redirect to="/admin/login" />
-            </Route>
-          </Switch>
-        )
+      <Switch>
+        <Route path="/admin/login">
+          <AdminLogin />
+        </Route>
+        <Route>
+          <Redirect to="/admin/login" />
+        </Route>
+      </Switch>
+    )
   );
 };
 
