@@ -15,16 +15,10 @@ const AdminFontsFeaturedTesterTable: React.FC = () => {
         tableData={[
           {
             inContent: true,
-            key: "selectField",
-            title: "select",
+            key: "selectTypeface",
+            title: "Select Your Typeface",
             type: "selecttypface"
-          },
-          {
-            inContent: true,
-            key: "title",
-            title: "title",
-            type: "text"
-          },
+          }
         ]}
       />
     </div>

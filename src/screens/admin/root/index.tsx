@@ -20,6 +20,10 @@ import AdminFontsFeaturedGridForm from "./FontsFeaturedGrid/form";
 import AdminFontsFeaturedFullscreenTable from "./FontsFeaturedFullScreen";
 import AdminFontsFeaturedTesterForm from "./FontsFeaturedTester/form";
 import AdminFontsFeaturedTesterTable from "./FontsFeaturedTester";
+import AdminBlogForm from "./Blog/form";
+import AdminBlogTable from "./Blog";
+import AdminBlogFeaturedArticlesForm from "./BlogFeaturedArticles/form";
+import AdminBlogFeaturedArticlesTable from "./BlogFeaturedArticles";
 
 const AdminRoot = () => {
   useEffect(() => {
@@ -85,6 +89,18 @@ const AdminRoot = () => {
                   </Route>
                   <Route exact={true} path="/admin/fontsfeaturedtester">
                     <AdminFontsFeaturedTesterTable />
+                  </Route>
+                  <Route path="/admin/blog/:key">
+                    <AdminBlogForm />
+                  </Route>
+                  <Route exact={true} path="/admin/blog">
+                    <AdminBlogTable />
+                  </Route>
+                  <Route path="/admin/blogfeaturedarticle/:key">
+                    <AdminBlogFeaturedArticlesForm />
+                  </Route>
+                  <Route exact={true} path="/admin/blogfeaturedarticle">
+                    <AdminBlogFeaturedArticlesTable />
                   </Route>
                 </Switch>
               </div>

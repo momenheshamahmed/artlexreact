@@ -228,6 +228,14 @@ export default function MiniDrawer() {
               <ListItemText primary={"Blog"} />
             </ListItem>
           </LinkStyled>
+          <LinkStyled to="/admin/blogfeaturedarticle">
+            <ListItem key={"Featured Article"}>
+              <ListItemIcon>
+                <DescriptionIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Featured Article"} />
+            </ListItem>
+          </LinkStyled>
         </List>
       </Drawer>
     </div>
