@@ -56,7 +56,7 @@ const TypefaceTesterComponent: React.FC = () => {
       <Row>
         <Col>
           <TextAreaContainer>
-            <TextArea readOnly={true}>
+            <TextArea>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </TextArea>
             <TypefaceControls>

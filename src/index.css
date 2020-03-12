@@ -5,6 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-left: 0 !important;
+  height: 100%;
+  width: 100%;
   overflow-x: hidden;
 }
 
@@ -15,8 +18,6 @@ code {
 
 .App {
   text-align: center;
-  direction: rtl;
-  overflow: hidden;
   width: 100%;
 }
 

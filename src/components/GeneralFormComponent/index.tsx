@@ -37,6 +37,7 @@ import ReactHtmlParser, {
   convertNodeToElement,
   htmlparser2
 } from "react-html-parser";
+import ArticlesComponent from "../adminComponents/ArticlesComponent";
 
 const MAXIMUM_IMAGE_SIZE = 2 * 1024 * 1024;
 
@@ -94,7 +95,7 @@ const generateEmptyData = <T extends BaseData>(
         } else if (schemaItem.type === "switch") {
           data.content[lang][schemaItem.key] = Boolean(false);
         } else if (schemaItem.type === "RichTextField") {
-          data.content[lang][schemaItem.key] = EditorState.createEmpty();
+          data.content[lang][schemaItem.key] = [];
         } else {
           data.content[lang][schemaItem.key] = "";
         }
@@ -109,7 +110,7 @@ const generateEmptyData = <T extends BaseData>(
       } else if (schemaItem.type === "switch") {
         data[schemaItem.key] = Boolean(false);
       } else if (schemaItem.type === "RichTextField") {
-        data[schemaItem.key] = EditorState.createEmpty();
+        data[schemaItem.key] = [];
       } else {
         data[schemaItem.key] = "";
       }
@@ -403,10 +404,8 @@ const generateEmptyFormData = <T extends BaseData>(
           emptyData[(schemaItem.key as string) + suffix] = [];
         } else if (schemaItem.type === "switch") {
           emptyData[(schemaItem.key as string) + suffix] = Boolean(false);
-        } else if (schemaItem.type === "date") {
-          emptyData[
-            (schemaItem.key as string) + suffix
-          ] = EditorState.createEmpty();
+        } else if (schemaItem.type === "RichTextField") {
+          emptyData[(schemaItem.key as string) + suffix] = [];
         } else {
           emptyData[(schemaItem.key as string) + suffix] = "";
         }
@@ -660,8 +659,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 <Divider className="mt-2" />
                               </div>
                             );
-                          } 
-                          else if (data.type === "selecttypface") {
+                          } else if (data.type === "selecttypface") {
                             return (
                               <Field
                                 name={data.key + suffix}
@@ -707,8 +705,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 </MenuItem>
                               </Field>
                             );
-                          } 
-                          else if (data.type === "selectarticle") {
+                          } else if (data.type === "selectarticle") {
                             return (
                               <Field
                                 name={data.key + suffix}
@@ -731,25 +728,25 @@ const GeneralFormComponent = <T extends BaseData>(
                               >
                                 {useObserver(() =>
                                   TypefaceStore.Typefaces.map(val => {
-                                    return (
-                                      TypefaceStore.Typefaces.length > 0 ? 
-                                      
+                                    return TypefaceStore.Typefaces.length >
+                                      0 ? (
                                       <MenuItem key={val.key} value={val.key}>
                                         {val.content.en.typefaceName}
                                       </MenuItem>
-                                      :
-                                      <MenuItem key="noitems" value="noitems" disabled={true}>
+                                    ) : (
+                                      <MenuItem
+                                        key="noitems"
+                                        value="noitems"
+                                        disabled={true}
+                                      >
                                         Please go and typefaces first!
                                       </MenuItem>
-
                                     );
                                   })
                                 )}
-
                               </Field>
                             );
-                          } 
-                          else if (data.type === "selecttypfacecategory") {
+                          } else if (data.type === "selecttypfacecategory") {
                             return (
                               <Field
                                 name={data.key + suffix}
@@ -888,70 +885,56 @@ const GeneralFormComponent = <T extends BaseData>(
                               />
                             );
                           } else if (data.type === "RichTextField") {
-                            const config = {
-                              options: [
-                                "inline",
-                                "blockType",
-                                "fontSize",
-                                "list",
-                                "textAlign",
-                                "colorPicker",
-                                "link",
-                                "history"
-                              ]
-                            };
-                            const [editorState, setEditorState] = useState(
-                              EditorState.createEmpty()
-                            );
-                            let myHtml = stateToHTML(
-                              editorState.getCurrentContent()
-                            );
-                            const [count, setCount] = useState(3);
-                            const newBlogs = [];
-                            for (let i = 0; i <= count; i++) {
-                              newBlogs.push({
+                            const dataKEY = data.key + suffix;
+
+                            // let myHtml = stateToHTML(
+                            //   editorState.getCurrentContent()
+                            // );
+                            const [counter, setCounter] = useState({
+                              count: 3
+                            });
+
+                            const [articles, setArticles] = useState([]);
+                            const dummyArticles = [];
+
+                            for (let i = 0; i <= counter.count; i++) {
+                              dummyArticles.push({
                                 inContent: true,
-                                key: `richEditor${i}`,
+                                key: `richEditor[${i}]${suffix}`,
                                 title: "Write Your Content",
                                 type: "RichTextField",
-                                isRequired: true
+                                isRequired: true,
+                                ["editor" + i]: EditorState.createEmpty(),
+                                ["setEditor" + i]: EditorState.createEmpty()
                               });
-                              console.log(newBlogs);
                             }
+
                             return (
                               <>
-                                {newBlogs.map((val, index) => {
+                                {dummyArticles.map((val, index) => {
                                   return (
-                                    <Field
-                                      name={val.key + suffix + index}
-                                      required={data.isRequired}
-                                      key={val.key + suffix + index}
-                                    >
-                                      {({ field, form, meta }) => (
-                                        <>
-                                          <Editor
-                                            {...field}
-                                            editorState={editorState}
-                                            onEditorStateChange={(e: any) => {
-                                              setEditorState(e);
-                                              formikBag.values[
-                                                data.key + suffix
-                                              ] = editorState;
-                                            }}
-                                            toolbar={config}
-                                            handlePastedText={() => false}
-                                          />
-
-                                          {meta.touched && meta.error && (
-                                            <div className="error">
-                                              {meta.error}
-                                            </div>
-                                          )}
-                                        </>
-                                      )}
-                                    </Field>
+                                    // tslint:disable-next-line: jsx-key
+                                    <ArticlesComponent
+                                      value={
+                                        (formikBag.values as any)[
+                                          data.key + suffix
+                                        ]
+                                      }
+                                      error={
+                                        (formikBag.errors as any)[
+                                          data.key + suffix
+                                        ]
+                                      }
+                                      setValue={value =>
+                                        formikBag.setFieldValue(
+                                          data.key + suffix,
+                                          value
+                                        )
+                                      }
+                                    />
                                   );
                                 })}
+
                                 <Button variant="outlined" fullWidth={true}>
                                   Add More
                                 </Button>
@@ -960,6 +943,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 {/* {ReactHtmlParser(myHtml)} */}
                               </>
                             );
+                            console.log(formikBag.values);
                           } else if (data.type === "textarea") {
                             return (
                               <Field

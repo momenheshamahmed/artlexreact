@@ -12,6 +12,7 @@ const FullScreenImageComponent: React.FC<Props> = props => {
   const FullScreenImage = styled.div`
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
     background-image: url(${customprops => customprops.urlImage});
     background-repeat: no-repeat;
     background-position: center;
