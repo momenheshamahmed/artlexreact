@@ -8,7 +8,7 @@ class FontFeaturedFullscreenStore {
   @action
   public addFontFeaturedFullscreen = async (value: Omit<FontFeaturedFullscreen, "key">): Promise<void> => {
     try {
-      const dbRef = database().ref("/typefaces/" + value.content.en.selectField + "/fontWeights");
+      const dbRef = database().ref("/typefacesfeaturedfullscreen/");
       const newItemRef = await dbRef.push();
       await newItemRef.set(value);
       return Promise.resolve();

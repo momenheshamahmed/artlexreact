@@ -4,12 +4,12 @@ import styled from "styled-components";
 import { Container, Row, Col, Collapse } from "react-bootstrap";
 import TypfaceGalleryComponent from "../TypefaceGalleryComponent";
 
-import TypefaceTesterHeaderComponent from "./TypefaceTesterHeaderComponent
+import TypefaceTesterHeaderComponent from "./TypefaceTesterHeaderComponent";
 import TypefaceControlsComponent from "./TypefaceControlsComponent";
 
 // Assets
 
-const TypefaceTesterComponent: React.FC = () => {
+const TypefaceTesterComponent: React.FC = (props) => {
 
 
   // const handleFontSizeChaning = (event: any, newValue: number | number[]) => {
@@ -48,19 +48,20 @@ const TypefaceTesterComponent: React.FC = () => {
   //
   //
   //
+  console.log("here", props.typeface.key)
   return useObserver(() => (
     <TesterContainer>
       <Row>
-        <TypefaceTesterHeaderComponent />
+        <TypefaceTesterHeaderComponent goto={props.typeface.key}/>
       </Row>
       <Row>
         <Col>
           <TextAreaContainer>
             <TextArea>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              { props.typeface.content.en.typefaceTestWords }
             </TextArea>
             <TypefaceControls>
-              <TypefaceControlsComponent />
+              <TypefaceControlsComponent controls={props.typeface.content.en}/>
             </TypefaceControls>
           </TextAreaContainer>
         </Col>

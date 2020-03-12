@@ -88,6 +88,8 @@ const generateEmptyData = <T extends BaseData>(
       langs.forEach(lang => {
         if (schemaItem.type === "image") {
           data.content[lang][schemaItem.key] = null;
+        } else if (schemaItem.type === "image2") {
+          data.content[lang][schemaItem.key] = null;
         } else if (schemaItem.type === "gallery") {
           data.content[lang][schemaItem.key] = [];
         } else if (schemaItem.type === "pairfonts") {
@@ -102,6 +104,8 @@ const generateEmptyData = <T extends BaseData>(
       });
     } else {
       if (schemaItem.type === "image") {
+        data[schemaItem.key] = null;
+      } else if (schemaItem.type === "image2") {
         data[schemaItem.key] = null;
       } else if (schemaItem.type === "gallery") {
         data[schemaItem.key] = [];
@@ -129,6 +133,46 @@ const uploadImagesFormData = async <T extends BaseData>(
   const promisesArray: Array<Promise<void>> = [];
   schema.forEach(async item => {
     if (item.type === "image") {
+      promisesArray.push(
+        new Promise(async (res, rej) => {
+          try {
+            if (item.inContent) {
+              const langs = Object.values(Languages).map(
+                lang => lang[0].toUpperCase() + lang.slice(1)
+              );
+              const imagesArray: Array<Promise<string>> = [];
+              langs.forEach(lang => {
+                imagesArray.push(
+                  new Promise(async (resolve, reject) => {
+                    try {
+                      formData[
+                        item.key + lang
+                      ] = await StorageStore.uploadImage(
+                        (formData[item.key + lang] as unknown) as
+                          | File
+                          | string
+                          | null
+                      );
+                      resolve();
+                    } catch (error) {
+                      reject(error);
+                    }
+                  })
+                );
+              });
+              await Promise.all(imagesArray);
+            } else {
+              (formData as any)[item.key] = await StorageStore.uploadImage(
+                (formData as any)[item.key]
+              );
+            }
+            res();
+          } catch (error) {
+            rej(error);
+          }
+        })
+      );
+    } else if (item.type === "image2") {
       promisesArray.push(
         new Promise(async (res, rej) => {
           try {
@@ -349,6 +393,8 @@ const generateValidationSchema = <T extends BaseData>(
         const suffix = lang[0].toUpperCase() + lang.slice(1);
         if (value.type === "image") {
           validationSchema[value.key + suffix] = imageValidationSchema.clone();
+        } else if (value.type === "image2") {
+          validationSchema[value.key + suffix] = imageValidationSchema.clone();
         } else if (value.type === "woff") {
           validationSchema[value.key + suffix] = fileValidationSchema.clone();
         } else if (value.type === "woff2") {
@@ -363,6 +409,8 @@ const generateValidationSchema = <T extends BaseData>(
       });
     } else {
       if (value.type === "image") {
+        validationSchema[value.key] = imageValidationSchema.clone();
+      } else if (value.type === "image2") {
         validationSchema[value.key] = imageValidationSchema.clone();
       } else if (value.type === "woff") {
         validationSchema[value.key] = fileValidationSchema.clone();
@@ -393,6 +441,8 @@ const generateEmptyFormData = <T extends BaseData>(
       langs.forEach(lang => {
         const suffix = lang.slice(0, 1).toUpperCase() + lang.slice(1);
         if (schemaItem.type === "image") {
+          emptyData[(schemaItem.key as string) + suffix] = null;
+        } else if (schemaItem.type === "image2") {
           emptyData[(schemaItem.key as string) + suffix] = null;
         } else if (schemaItem.type === "woff") {
           emptyData[(schemaItem.key as string) + suffix] = null;
@@ -582,6 +632,8 @@ const GeneralFormComponent = <T extends BaseData>(
                                       value
                                     )
                                   }
+                                  idButton={data.key + suffix}
+                                  idInput={`${data.key}`}
                                 />
                                 <Divider className="mt-2" />
                               </div>
@@ -680,29 +732,31 @@ const GeneralFormComponent = <T extends BaseData>(
                                   (formikBag.errors as any)[data.key + suffix]
                                 }
                               >
-                                {/* {useObserver(() =>
+                                {useObserver(() =>
                                   TypefaceStore.Typefaces.map(val => {
-                                    return (
-                                      TypefaceStore.Typefaces.length > 0 ? 
-                                      
+                                    return TypefaceStore.Typefaces.length >
+                                      0 ? (
                                       <MenuItem key={val.key} value={val.key}>
                                         {val.content.en.typefaceName}
                                       </MenuItem>
-                                      :
-                                      <MenuItem key="noitems" value="noitems" disabled={true}>
+                                    ) : (
+                                      <MenuItem
+                                        key="noitems"
+                                        value="noitems"
+                                        disabled={true}
+                                      >
                                         Please go and typefaces first!
                                       </MenuItem>
-
                                     );
                                   })
-                                )} */}
-                                <MenuItem
+                                )}
+                                {/* <MenuItem
                                   key="noitems"
                                   value="noitems"
                                   disabled={true}
                                 >
                                   Please go and typefaces first!
-                                </MenuItem>
+                                </MenuItem> */}
                               </Field>
                             );
                           } else if (data.type === "selectarticle") {
@@ -908,7 +962,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 ["setEditor" + i]: EditorState.createEmpty()
                               });
                             }
-
+                            console.log(formikBag)
                             return (
                               <>
                                 {dummyArticles.map((val, index) => {

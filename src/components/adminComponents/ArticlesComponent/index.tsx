@@ -5,8 +5,9 @@ import { EditorState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-const ArticlesComponent: React.FC<Props> = (props) => {
+const ArticlesComponent: React.FC<Props> = props => {
   const [editors, setEditors] = useState<Array<string | null>>(props.value);
+  const [editor, setEditor] = useState(EditorState.createEmpty());
   useEffect(() => {
     const processEditors = async () => {
       const processedEditors = [];
@@ -31,8 +32,10 @@ const ArticlesComponent: React.FC<Props> = (props) => {
   return useObserver(() => (
     <>
       <Editor
-        editorState={}
-        onEditorStateChange={(e: any) => {}}
+        editorState={editor}
+        onEditorStateChange={(e: any) => {
+          setEditor(e);
+        }}
         toolbar={config}
         handlePastedText={() => false}
       />

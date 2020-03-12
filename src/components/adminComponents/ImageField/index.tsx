@@ -26,7 +26,7 @@ const ImageField: React.FC<Props> = props => {
       <input
         type="file"
         accept="image/png,image/jpeg"
-        id="uploadImageInput"
+        id={props.idInput}
         style={{ display: 'none' }}
         ref={inputRef}
         onChange={value => {
@@ -43,8 +43,8 @@ const ImageField: React.FC<Props> = props => {
         }}
       />
       <div>
-        <Button id="buttonImageField" variant="outlined" fullWidth={true} onClick={() => {
-          document.getElementById('uploadImageInput').click()
+        <Button id={`${props.idButton}`} variant="outlined" fullWidth={true} onClick={() => {
+          document.getElementById(`${props.idInput}`).click()
         }}>
           Upload Image
       </Button>

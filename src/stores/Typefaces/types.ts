@@ -32,46 +32,17 @@ export interface TypefaceContent {
   typefaceLinkDribbble: string;
   typefaceLinkTwitter: string;
   typefaceLinkWebsite: string;
-  openTypeFeatureOne: boolean;
-  openTypeFeatureTwo: boolean;
-  openTypeFeatureThree: boolean;
-  openTypeFeatureFour: boolean;
-  openTypeFeatureFive: boolean;
-}
+  standardLigatures: boolean;
+  contextuaLalternates: boolean;
+  discretionLigatures: boolean;
+  swash: boolean;
+  fractions: boolean;
+  stylisticOne: boolean;
+  stylisticTwo: boolean;
+  stylisticThree: boolean;
+  stylisticFour: boolean;
+  stylisticFive: boolean;
+  stylisticSix: boolean;
+  stylisticSeven: boolean;
 
-// tslint:disable-next-line: interface-name
-export interface FontinuseInterface {
-  key?: string;
-  title?: string;
-  items?: Fontinuseitem[];
 }
-
-// tslint:disable-next-line: interface-name
-export interface Fontinuseitem {
-  key: string;
-  title: string;
-  type: string;
-}
-// tslint:disable-next-line: interface-name
-export interface Typefacelanguages {
-  id: string;
-  name: string;
-}
-// imgUrl: string;
-// typefaceurl: string;
-// typefacename?: string;
-// description?: string;
-// typefacelanguages?: string;
-// charactersenabled?: boolean;
-// family?: string;
-// familytext?: string;
-// release?: string;
-// releasedate?: string;
-// designername?: string;
-// designerlinks?: string;
-// version?: string;
-// manufuctring?: string;
-// copyright?: string;
-// date?: string;
-// fontWeights?: object[];
-// fontinuse?: FontinuseInterface[];

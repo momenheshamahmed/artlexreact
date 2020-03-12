@@ -19,6 +19,27 @@ const AdminFontsFeaturedGridForm: React.FC = () => {
             title: "Select Typeface",
             type: "selecttypface",
             isRequired: true
+          },
+          {
+            inContent: true,
+            key: "sortTypeface",
+            title: "Sorting",
+            type: "text",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "coverImageGrid",
+            title: "Cover Image",
+            type: "image",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "hooooverImageGrid2",
+            title: "On Hover image",
+            type: "image",
+            isRequired: true
           }
         ]}
       />

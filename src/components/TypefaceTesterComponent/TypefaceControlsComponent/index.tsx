@@ -2,7 +2,8 @@ import React, { useRef, useState } from "react";
 import { useObserver } from "mobx-react";
 import styled from "styled-components";
 import { Container, Row, Col, Collapse } from "react-bootstrap";
-import CustomizedMenus from "../Menu";
+import MenuOpenTypeFeatures from "../MenuOpenTypeFeatures";
+import MenuAlign from "../MenuAlign";
 
 import {
   Slider,
@@ -17,42 +18,115 @@ import FormatAlignCenterIcon from "@material-ui/icons/FormatAlignCenter";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import TypfaceGalleryComponent from "../../TypefaceGalleryComponent";
 
-const TypefaceControlsComponent: React.FC = () => {
+const TypefaceControlsComponent: React.FC = props => {
   const [myFontSize, setFontSize] = useState(90);
   const [myLineHeight, setLineHeight] = useState(90);
   const [myletterSpacing, setLetterSpacing] = useState(1);
   const [open, setOpen] = useState(true);
-
+  let valueFontSize = 50;
   const CustomSlider = withStyles({
     root: {
       color: "#171717",
-      height: 2,
-      padding: "15px 0"
+      padding: "15px 0",
+      height: 50
     },
     thumb: {
       height: 20,
       width: 20,
       backgroundColor: "#00FF00",
-      marginTop: -10,
+      marginTop: 7,
       marginLeft: -8
     },
     track: {
-      height: 2
+      height: 2,
+      marginTop: 40
     },
     rail: {
       height: 2,
       opacity: 0.5,
-      backgroundColor: "#CACACA"
+      backgroundColor: "#CACACA",
+      marginTop: 40
     }
   })(Slider);
 
-  const ValueLabelComponent = props => {
+  const ValueLabelComponentFontSize = props => {
+    // tslint:disable-next-line: no-shadowed-variable
+    const { children, open, value } = props;
+    valueFontSize = value;
+    console.log(valueFontSize)
+    return (
+      <>
+        <Row>
+          <Col>
+            <Typography>Font Size</Typography>
+          </Col>
+          <Col>
+            <Typography className="text-right font-weight-bold">
+              {value}
+            </Typography>
+          </Col>
+        </Row>
+        <Tooltip
+          open={open}
+          enterTouchDelay={0}
+          placement="bottom"
+          title={value}
+        >
+          {children}
+        </Tooltip>
+      </>
+    );
+  };
+  const ValueLabelComponentLineHeight = props => {
     // tslint:disable-next-line: no-shadowed-variable
     const { children, open, value } = props;
     return (
-      <Tooltip open={open} enterTouchDelay={0} placement="top" title={value}>
-        {children}
-      </Tooltip>
+      <>
+        <Row>
+          <Col>
+            <Typography>Line height</Typography>
+          </Col>
+          <Col>
+            <Typography className="text-right font-weight-bold">
+              {value}
+            </Typography>
+          </Col>
+        </Row>
+        <Tooltip
+          open={open}
+          enterTouchDelay={0}
+          placement="bottom"
+          title={value}
+        >
+          {children}
+        </Tooltip>
+      </>
+    );
+  };
+  const ValueLabelComponentTraicking = props => {
+    // tslint:disable-next-line: no-shadowed-variable
+    const { children, open, value } = props;
+    return (
+      <>
+        <Row>
+          <Col>
+            <Typography>Tracking</Typography>
+          </Col>
+          <Col>
+            <Typography className="text-right font-weight-bold">
+              {value}
+            </Typography>
+          </Col>
+        </Row>
+        <Tooltip
+          open={open}
+          enterTouchDelay={0}
+          placement="bottom"
+          title={value}
+        >
+          {children}
+        </Tooltip>
+      </>
     );
   };
   const CustomButton = styled(Button)`
@@ -68,63 +142,34 @@ const TypefaceControlsComponent: React.FC = () => {
       <Container>
         <Row>
           <Col md={3}>
-            <Row>
-              <Col>
-                <Typography>Font Size</Typography>
-              </Col>
-              <Col>
-                <Typography className="text-right font-weight-bold">
-                  {myFontSize}
-                </Typography>
-              </Col>
-            </Row>
             <CustomSlider
               aria-label="Font Size"
-              defaultValue={60}
-              ValueLabelComponent={ValueLabelComponent}
+              defaultValue={valueFontSize}
+              // value={typeof valueFontSize === "number" ? valueFontSize : 0}
+              ValueLabelComponent={ValueLabelComponentFontSize}
             />
           </Col>
 
           <Col md={3}>
-            <Row>
-              <Col>
-                <Typography>Line Height</Typography>
-              </Col>
-              <Col>
-                <Typography className="text-right font-weight-bold">
-                  {myLineHeight}
-                </Typography>
-              </Col>
-            </Row>
             <CustomSlider
-              aria-label="Font Size"
-              defaultValue={60}
-              ValueLabelComponent={ValueLabelComponent}
+              aria-label="Line Height"
+              ValueLabelComponent={ValueLabelComponentLineHeight}
             />
           </Col>
           <Col md={3}>
-            <Row>
-              <Col>
-                <Typography>Leading</Typography>
-              </Col>
-              <Col>
-                <Typography className="text-right font-weight-bold">
-                  {myletterSpacing}
-                </Typography>
-              </Col>
-            </Row>
             <CustomSlider
-              aria-label="Font Size"
+              aria-label="Tracking"
               defaultValue={60}
-              ValueLabelComponent={ValueLabelComponent}
+              ValueLabelComponent={ValueLabelComponentTraicking}
             />
           </Col>
 
           <Col md={1}>
-            <CustomizedMenus customText={<FormatAlignCenterIcon />} />
+            <MenuAlign customText={<FormatAlignCenterIcon />} />
           </Col>
           <Col md={1}>
-            <CustomizedMenus
+            <MenuOpenTypeFeatures
+              openTypeFeatures={props.controls}
               customText={
                 <svg
                   width="24"
@@ -142,9 +187,10 @@ const TypefaceControlsComponent: React.FC = () => {
             />
           </Col>
           <Col md={1}>
-            <CustomizedMenus customText={<GetAppIcon />} />
+            <Typography>D</Typography>
           </Col>
-
+        </Row>
+        <Row>
           <Col md={12} className="text-center">
             <CustomButton
               onClick={() => setOpen(!open)}

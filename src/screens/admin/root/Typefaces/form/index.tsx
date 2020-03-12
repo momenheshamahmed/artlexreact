@@ -14,6 +14,13 @@ const AdminTypefacesForm: React.FC = () => {
         formData={[
           {
             inContent: true,
+            key: "fileFont",
+            title: "Typeface File",
+            type: "woff",
+            isRequired: true
+          },
+          {
+            inContent: true,
             key: "typefaceName",
             title: "Typeface Name",
             type: "text",
@@ -148,40 +155,89 @@ const AdminTypefacesForm: React.FC = () => {
           },
           {
             inContent: true,
-            key: "openTypeFeatureOne",
-            title: "Open Type Feature One",
+            key: "standardLigatures",
+            title: "Standard Ligatures",
             type: "switch",
             isRequired: false
           },
 
           {
             inContent: true,
-            key: "openTypeFeatureTwo",
-            title: "Open Type Feature Two",
+            key: "contextuaLalternates",
+            title: "contextual alternates",
             type: "switch",
             isRequired: false
           },
           {
             inContent: true,
-            key: "openTypeFeatureThree",
-            title: "Open Type Feature Three",
+            key: "discretionLigatures",
+            title: "discretion ligatures",
             type: "switch",
             isRequired: false
           },
           {
             inContent: true,
-            key: "openTypeFeatureFour",
-            title: "Open Type Feature Four",
+            key: "swash",
+            title: "swash",
             type: "switch",
             isRequired: false
           },
           {
             inContent: true,
-            key: "openTypeFeatureFive",
-            title: "Open Type Feature Five",
+            key: "fractions",
+            title: "fractions",
             type: "switch",
             isRequired: false
           },
+          {
+            inContent: true,
+            key: "stylisticOne",
+            title: "Stylistic 1",
+            type: "switch",
+            isRequired: false
+          },
+          {
+            inContent: true,
+            key: "stylisticTwo",
+            title: "Stylistic 2",
+            type: "switch",
+            isRequired: false
+          },
+          {
+            inContent: true,
+            key: "stylisticThree",
+            title: "Stylistic 3",
+            type: "switch",
+            isRequired: false
+          },
+          {
+            inContent: true,
+            key: "stylisticFour",
+            title: "Stylistic 4",
+            type: "switch",
+            isRequired: false
+          },
+          {
+            inContent: true,
+            key: "stylisticFive",
+            title: "Stylistic 5",
+            type: "switch",
+            isRequired: false
+          },
+          {
+            inContent: true,
+            key: "stylisticSix",
+            title: "Stylistic 6",
+            type: "switch",
+            isRequired: false
+          },
+          {
+            inContent: true,
+            key: "stylisticSeven",
+            title: "Stylistic 7",
+            type: "switch",
+            isRequired: false
+          }
         ]}
       />
     </div>

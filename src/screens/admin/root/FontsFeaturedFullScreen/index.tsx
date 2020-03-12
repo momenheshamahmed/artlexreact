@@ -17,14 +17,8 @@ const AdminFontsFeaturedFullscreenTable: React.FC = () => {
             inContent: true,
             key: "selectField",
             title: "select",
-            type: "selecttypface"
-          },
-          {
-            inContent: true,
-            key: "title",
-            title: "title",
             type: "text"
-          },
+          }
         ]}
       />
     </div>

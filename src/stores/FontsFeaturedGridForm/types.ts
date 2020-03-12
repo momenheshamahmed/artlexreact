@@ -10,4 +10,7 @@ export interface FontFeaturedGrid {
 // tslint:disable-next-line: interface-name
 export interface FontFeaturedGridContent {
   selectTypeface: Array<string | File | null>;
+  sortTypeface: string;
+  coverImageGrid: string;
+  hooooverImageGrid2: string;
 }

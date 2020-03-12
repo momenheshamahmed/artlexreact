@@ -8,7 +8,7 @@ class FontFeaturedTesterStore {
   @action
   public addFontFeaturedTester = async (value: Omit<FontFeaturedTester, "key">): Promise<void> => {
     try {
-      const dbRef = database().ref("/typefaces/" + value.content.en.selectField + "/fontWeights");
+      const dbRef = database().ref("/typefacesfeaturedtesterhome/");
       const newItemRef = await dbRef.push();
       await newItemRef.set(value);
       return Promise.resolve();
@@ -24,7 +24,7 @@ class FontFeaturedTesterStore {
     value: Omit<FontFeaturedTester, "key">
   ): Promise<void> => {
     try {
-      const dbRef = database().ref(`FontsFeaturedTester/${key}`);
+      const dbRef = database().ref(`typefacesfeaturedtesterhome/${key}`);
       await dbRef.set(value);
       return Promise.resolve();
     } catch (error) {
@@ -35,7 +35,7 @@ class FontFeaturedTesterStore {
   @action
   public deleteFontFeaturedTester = async (key: string): Promise<void> => {
     try {
-      const dbRef = database().ref(`FontsFeaturedTester/${key}`);
+      const dbRef = database().ref(`typefacesfeaturedtesterhome/${key}`);
       await dbRef.remove();
       return Promise.resolve();
     } catch (error) {
@@ -45,7 +45,7 @@ class FontFeaturedTesterStore {
 
   @action
   public watchFontsFeaturedTester = () => {
-    const dbRef = database().ref("/FontsFeaturedTester");
+    const dbRef = database().ref("/typefacesfeaturedtesterhome");
     dbRef.on("value", snapshot => {
       const data: Record<string, FontFeaturedTester> = snapshot.val();
       if (data) {

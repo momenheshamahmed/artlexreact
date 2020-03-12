@@ -18,13 +18,7 @@ const AdminFontsFeaturedGridTable: React.FC = () => {
             key: "selectField",
             title: "select",
             type: "selecttypface"
-          },
-          {
-            inContent: true,
-            key: "title",
-            title: "title",
-            type: "text"
-          },
+          }
         ]}
       />
     </div>

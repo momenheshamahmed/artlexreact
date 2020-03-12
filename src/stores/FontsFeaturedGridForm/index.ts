@@ -8,7 +8,7 @@ class FontFeaturedGridStore {
   @action
   public addFontFeaturedGrid = async (value: Omit<FontFeaturedGrid, "key">): Promise<void> => {
     try {
-      const dbRef = database().ref("/typefaces/" + value.content.en.selectField + "/fontWeights");
+      const dbRef = database().ref("/typefacesfeaturedgrid/");
       const newItemRef = await dbRef.push();
       await newItemRef.set(value);
       return Promise.resolve();
@@ -24,7 +24,7 @@ class FontFeaturedGridStore {
     value: Omit<FontFeaturedGrid, "key">
   ): Promise<void> => {
     try {
-      const dbRef = database().ref(`FontsFeaturedGrid/${key}`);
+      const dbRef = database().ref(`typefacesfeaturedgrid/${key}`);
       await dbRef.set(value);
       return Promise.resolve();
     } catch (error) {
@@ -35,7 +35,7 @@ class FontFeaturedGridStore {
   @action
   public deleteFontFeaturedGrid = async (key: string): Promise<void> => {
     try {
-      const dbRef = database().ref(`FontsFeaturedGrid/${key}`);
+      const dbRef = database().ref(`typefacesfeaturedgrid/${key}`);
       await dbRef.remove();
       return Promise.resolve();
     } catch (error) {
@@ -45,7 +45,7 @@ class FontFeaturedGridStore {
 
   @action
   public watchFontsFeaturedGrid = () => {
-    const dbRef = database().ref("/FontsFeaturedGrid");
+    const dbRef = database().ref("/typefacesfeaturedgrid");
     dbRef.on("value", snapshot => {
       const data: Record<string, FontFeaturedGrid> = snapshot.val();
       if (data) {

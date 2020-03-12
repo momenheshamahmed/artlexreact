@@ -45,7 +45,7 @@ const App: React.FC = () => {
 
         <Route path="/">
           <Navbar expand="md" fixed="top" bg="white">
-            <Container>
+            <Container fluid={true}>
               <Navbar.Brand>
                 <Link to="/">
                   <Logo src={Assets.Images.logo} alt="Logo" />
@@ -119,7 +119,7 @@ const App: React.FC = () => {
             <Route path="/contact">
               <Contact />
             </Route>
-            <Route path="/typefaces/typeface">
+            <Route path={`/typefaces/:typefaceId`}>
               <TypeFacePage />
             </Route>
           </Switch>
