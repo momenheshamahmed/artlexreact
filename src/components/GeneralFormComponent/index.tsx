@@ -940,64 +940,50 @@ const GeneralFormComponent = <T extends BaseData>(
                             );
                           } else if (data.type === "RichTextField") {
                             const dataKEY = data.key + suffix;
-
-                            // let myHtml = stateToHTML(
-                            //   editorState.getCurrentContent()
-                            // );
-                            const [counter, setCounter] = useState({
-                              count: 3
-                            });
-
-                            const [articles, setArticles] = useState([]);
-                            const dummyArticles = [];
-
-                            for (let i = 0; i <= counter.count; i++) {
-                              dummyArticles.push({
-                                inContent: true,
-                                key: `richEditor[${i}]${suffix}`,
-                                title: "Write Your Content",
-                                type: "RichTextField",
-                                isRequired: true,
-                                ["editor" + i]: EditorState.createEmpty(),
-                                ["setEditor" + i]: EditorState.createEmpty()
-                              });
-                            }
-                            console.log(formikBag)
+                            console.log(formikBag.values);
+                            const [editorState, setEditorState] = useState(
+                              EditorState.createEmpty()
+                            );
                             return (
                               <>
-                                {dummyArticles.map((val, index) => {
-                                  return (
-                                    // tslint:disable-next-line: jsx-key
-                                    <ArticlesComponent
-                                      value={
-                                        (formikBag.values as any)[
-                                          data.key + suffix
-                                        ]
-                                      }
-                                      error={
-                                        (formikBag.errors as any)[
-                                          data.key + suffix
-                                        ]
-                                      }
-                                      setValue={value =>
-                                        formikBag.setFieldValue(
-                                          data.key + suffix,
-                                          value
-                                        )
-                                      }
-                                    />
-                                  );
-                                })}
+                                <Editor
+                                  editorState={editorState}
+                                  onEditorStateChange={(e: any) => {
+                                    setEditorState(e);
+                                    formikBag.setFieldValue(
+                                      data.key + suffix,
+                                      e
+                                    );
+                                    console.log(formikBag.values);
+                                  }}
+                                />
+                                {/* <ArticlesComponent
+                                  value={
+                                    (formikBag.values as any)[data.key + suffix]
+                                  }
+                                  error={
+                                    (formikBag.errors as any)[data.key + suffix]
+                                  }
+                                  setValue={value =>
+                                    formikBag.setFieldValue(
+                                      data.key + suffix,
+                                      value
+                                    )
+                                  }
+                                /> */}
 
-                                <Button variant="outlined" fullWidth={true}>
-                                  Add More
+                                <Button
+                                  onClick={() => {
+                                    console.log(formikBag.values);
+                                  }}
+                                >
+                                  Console
                                 </Button>
                                 {/* Export & Rendering HTML */}
                                 {/* {myHtml} */}
                                 {/* {ReactHtmlParser(myHtml)} */}
                               </>
                             );
-                            console.log(formikBag.values);
                           } else if (data.type === "textarea") {
                             return (
                               <Field
