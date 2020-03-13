@@ -37,7 +37,6 @@ import ReactHtmlParser, {
   convertNodeToElement,
   htmlparser2
 } from "react-html-parser";
-import ArticlesComponent from "../adminComponents/ArticlesComponent";
 
 const MAXIMUM_IMAGE_SIZE = 2 * 1024 * 1024;
 
@@ -939,7 +938,6 @@ const GeneralFormComponent = <T extends BaseData>(
                               />
                             );
                           } else if (data.type === "RichTextField") {
-                            const dataKEY = data.key + suffix;
                             console.log(formikBag.values);
                             const [editorState, setEditorState] = useState(
                               EditorState.createEmpty()
@@ -957,28 +955,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                     console.log(formikBag.values);
                                   }}
                                 />
-                                {/* <ArticlesComponent
-                                  value={
-                                    (formikBag.values as any)[data.key + suffix]
-                                  }
-                                  error={
-                                    (formikBag.errors as any)[data.key + suffix]
-                                  }
-                                  setValue={value =>
-                                    formikBag.setFieldValue(
-                                      data.key + suffix,
-                                      value
-                                    )
-                                  }
-                                /> */}
-
-                                <Button
-                                  onClick={() => {
-                                    console.log(formikBag.values);
-                                  }}
-                                >
-                                  Console
-                                </Button>
+               
                                 {/* Export & Rendering HTML */}
                                 {/* {myHtml} */}
                                 {/* {ReactHtmlParser(myHtml)} */}
