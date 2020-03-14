@@ -1,167 +1,29 @@
 import React, { useRef, useState } from "react";
 import { useObserver } from "mobx-react";
-import styled from "styled-components";
-import { Container, Row, Col, Collapse } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import MenuOpenTypeFeatures from "../MenuOpenTypeFeatures";
 import MenuAlign from "../MenuAlign";
 
-import {
-  Slider,
-  Tooltip,
-  Typography,
-  Button,
-  withStyles
-} from "@material-ui/core";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import { Typography } from "@material-ui/core";
 import FormatAlignCenterIcon from "@material-ui/icons/FormatAlignCenter";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import TypfaceGalleryComponent from "../../TypefaceGalleryComponent";
+import TypfaceCustomSliderComponent from "../CustomSliderTypefaces";
 
 const TypefaceControlsComponent: React.FC = props => {
-  const [myFontSize, setFontSize] = useState(90);
-  const [myLineHeight, setLineHeight] = useState(90);
-  const [myletterSpacing, setLetterSpacing] = useState(1);
-  const [open, setOpen] = useState(true);
-  let valueFontSize = 50;
-  const CustomSlider = withStyles({
-    root: {
-      color: "#171717",
-      padding: "15px 0",
-      height: 50
-    },
-    thumb: {
-      height: 20,
-      width: 20,
-      backgroundColor: "#00FF00",
-      marginTop: 7,
-      marginLeft: -8
-    },
-    track: {
-      height: 2,
-      marginTop: 40
-    },
-    rail: {
-      height: 2,
-      opacity: 0.5,
-      backgroundColor: "#CACACA",
-      marginTop: 40
-    }
-  })(Slider);
-
-  const ValueLabelComponentFontSize = props => {
-    // tslint:disable-next-line: no-shadowed-variable
-    const { children, open, value } = props;
-    valueFontSize = value;
-    console.log(valueFontSize)
-    return (
-      <>
-        <Row>
-          <Col>
-            <Typography>Font Size</Typography>
-          </Col>
-          <Col>
-            <Typography className="text-right font-weight-bold">
-              {value}
-            </Typography>
-          </Col>
-        </Row>
-        <Tooltip
-          open={open}
-          enterTouchDelay={0}
-          placement="bottom"
-          title={value}
-        >
-          {children}
-        </Tooltip>
-      </>
-    );
-  };
-  const ValueLabelComponentLineHeight = props => {
-    // tslint:disable-next-line: no-shadowed-variable
-    const { children, open, value } = props;
-    return (
-      <>
-        <Row>
-          <Col>
-            <Typography>Line height</Typography>
-          </Col>
-          <Col>
-            <Typography className="text-right font-weight-bold">
-              {value}
-            </Typography>
-          </Col>
-        </Row>
-        <Tooltip
-          open={open}
-          enterTouchDelay={0}
-          placement="bottom"
-          title={value}
-        >
-          {children}
-        </Tooltip>
-      </>
-    );
-  };
-  const ValueLabelComponentTraicking = props => {
-    // tslint:disable-next-line: no-shadowed-variable
-    const { children, open, value } = props;
-    return (
-      <>
-        <Row>
-          <Col>
-            <Typography>Tracking</Typography>
-          </Col>
-          <Col>
-            <Typography className="text-right font-weight-bold">
-              {value}
-            </Typography>
-          </Col>
-        </Row>
-        <Tooltip
-          open={open}
-          enterTouchDelay={0}
-          placement="bottom"
-          title={value}
-        >
-          {children}
-        </Tooltip>
-      </>
-    );
-  };
-  const CustomButton = styled(Button)`
-    background: transparent !important;
-    color: black !important;
-    box-shadow: none !important;
-    & span svg {
-      margin-left: 0.5rem !important;
-    }
-  `;
   return useObserver(() => (
     <>
-      <Container>
+      <Container fluid={true}>
         <Row>
           <Col md={3}>
-            <CustomSlider
-              aria-label="Font Size"
-              defaultValue={valueFontSize}
-              // value={typeof valueFontSize === "number" ? valueFontSize : 0}
-              ValueLabelComponent={ValueLabelComponentFontSize}
-            />
+            <TypfaceCustomSliderComponent name="Font Size" />
           </Col>
 
           <Col md={3}>
-            <CustomSlider
-              aria-label="Line Height"
-              ValueLabelComponent={ValueLabelComponentLineHeight}
-            />
+            <TypfaceCustomSliderComponent name="Leading" />
           </Col>
           <Col md={3}>
-            <CustomSlider
-              aria-label="Tracking"
-              defaultValue={60}
-              ValueLabelComponent={ValueLabelComponentTraicking}
-            />
+            <TypfaceCustomSliderComponent name="Line Height" />
           </Col>
 
           <Col md={1}>
@@ -191,24 +53,8 @@ const TypefaceControlsComponent: React.FC = props => {
           </Col>
         </Row>
         <Row>
-          <Col md={12} className="text-center">
-            <CustomButton
-              onClick={() => setOpen(!open)}
-              aria-controls="example-collapse-text"
-              aria-expanded={open}
-              variant="contained"
-              className="mt-3"
-              endIcon={open ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
-            >
-              FONT GALLERY
-            </CustomButton>
-          </Col>
+          <TypfaceGalleryComponent />
         </Row>
-        <Collapse in={open}>
-          <div id="example-collapse-text" className="mt-3">
-            <TypfaceGalleryComponent />
-          </div>
-        </Collapse>
       </Container>
     </>
   ));

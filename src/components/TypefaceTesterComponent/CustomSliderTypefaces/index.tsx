@@ -2,27 +2,59 @@ import React, { useRef } from "react";
 import { useObserver } from "mobx-react";
 import styled from "styled-components";
 import { Row, Col } from "react-bootstrap";
-import { Typography } from "@material-ui/core";
+import { Typography, Slider, withStyles } from "@material-ui/core";
+import OneTypefaceStore from "../../../stores/Typeface/index";
 
-const TypfaceGalleryComponent: React.FC = () => {
+const CustomSlider = withStyles({
+  root: {
+    color: "#171717",
+    padding: "5px 0",
+    marginBottom: 10
+  },
+  thumb: {
+    height: 20,
+    width: 20,
+    backgroundColor: "#00FF00",
+    marginTop: 0,
+    marginLeft: -8
+  },
+  track: {
+    height: 2,
+    marginTop: 10
+  },
+  rail: {
+    height: 2,
+    opacity: 0.5,
+    backgroundColor: "#CACACA",
+    marginTop: 10
+  }
+})(Slider);
+
+const TypfaceCustomSliderComponent: React.FC = props => {
+  const [value, setValue] = React.useState<
+    number | string | Array<number | string>
+  >(30);
+  const handleSliderChange = (event: any, newValue: number | number[]) => {
+    setValue(newValue);
+    OneTypefaceStore.momenHesham(newValue)
+  };
   return useObserver(() => (
     <>
       <Row>
         <Col>
-          <Typography>Leading</Typography>
+          <Typography>{props.name}</Typography>
         </Col>
         <Col>
           <Typography className="text-right font-weight-bold">
-            {myletterSpacing}
+            {value}
           </Typography>
         </Col>
       </Row>
       <CustomSlider
-        aria-label="Font Size"
-        defaultValue={60}
-        ValueLabelComponent={ValueLabelComponent}
+        value={typeof value === "number" ? value : 0}
+        onChange={handleSliderChange}
       />
     </>
   ));
 };
-export default TypfaceGalleryComponent;
+export default TypfaceCustomSliderComponent;

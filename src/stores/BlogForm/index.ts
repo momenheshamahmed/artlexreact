@@ -3,17 +3,18 @@ import { observable, action } from "mobx";
 import { database } from "firebase";
 
 class BlogStore {
-  @observable public Blog: Blog[] = [];
+  @observable public Blogs: Blog[] = [];
 
   @action
   public addBlog = async (value: Omit<Blog, "key">): Promise<void> => {
     try {
-      const dbRef = database().ref("/typefaces/" + value.content.en.selectField + "/fontWeights");
+      const dbRef = database().ref("/blog");
       const newItemRef = await dbRef.push();
       await newItemRef.set(value);
       return Promise.resolve();
     } catch (error) {
       alert("Sorry an error occured");
+      console.log(error)
       return Promise.reject();
     }
   };
@@ -24,7 +25,7 @@ class BlogStore {
     value: Omit<Blog, "key">
   ): Promise<void> => {
     try {
-      const dbRef = database().ref(`Blog/${key}`);
+      const dbRef = database().ref(`blog/${value.content.en.articleCategory}/${key}`);
       await dbRef.set(value);
       return Promise.resolve();
     } catch (error) {
@@ -35,7 +36,7 @@ class BlogStore {
   @action
   public deleteBlog = async (key: string): Promise<void> => {
     try {
-      const dbRef = database().ref(`Blog/${key}`);
+      const dbRef = database().ref(`blog/${key}`);
       await dbRef.remove();
       return Promise.resolve();
     } catch (error) {
@@ -44,8 +45,8 @@ class BlogStore {
   };
 
   @action
-  public watchBlog = () => {
-    const dbRef = database().ref("/Blog");
+  public watchBlogs = () => {
+    const dbRef = database().ref("/blog");
     dbRef.on("value", snapshot => {
       const data: Record<string, Blog> = snapshot.val();
       if (data) {
@@ -55,7 +56,7 @@ class BlogStore {
             key: entry[0]
           };
         });
-        this.Blog = mappedData;
+        this.Blogs = mappedData;
       }
     });
   };

@@ -8,13 +8,12 @@ import BlogStore from "../../../../../stores/BlogForm/index";
 import { Blog } from "../../../../../stores/BlogForm/types";
 
 const AdminBlogForm: React.FC = () => {
-  const editorState = EditorState.createEmpty();
   return useObserver(() => (
     <div>
       <GeneralFormComponent<Blog>
         addAction={BlogStore.addBlog}
         editAction={BlogStore.editBlog}
-        data={BlogStore.Blog}
+        data={BlogStore.Blogs}
         formData={[
           {
             inContent: true,
@@ -25,9 +24,9 @@ const AdminBlogForm: React.FC = () => {
           },
           {
             inContent: true,
-            key: "image1",
-            title: "Your Cover Image",
-            type: "image",
+            key: "gridNumber",
+            title: "Grid Number",
+            type: "text",
             isRequired: true
           },
           {
@@ -35,6 +34,13 @@ const AdminBlogForm: React.FC = () => {
             key: "articleCategory",
             title: "Article Category",
             type: "selectarticlecategory",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "image1",
+            title: "Your Cover Image",
+            type: "image",
             isRequired: true
           },
           {

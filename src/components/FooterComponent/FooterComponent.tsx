@@ -10,7 +10,7 @@ import { Typography } from "@material-ui/core";
 
 const FooterComponent: React.FC = () => {
   return useObserver(() => (
-    <Container className="mt-5 py-5">
+    <Container fluid={true}={true} className="mt-5 py-5">
       <Row>
         <Col md="3">
           <img src={Assets.Images.logo} />

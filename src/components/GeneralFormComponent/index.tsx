@@ -25,7 +25,7 @@ import { useParams, useHistory } from "react-router";
 import { BaseData } from "./types";
 import { Props, FormKeys } from "./types";
 import { Languages } from "../../utils/translation";
-import { FontStore, TypefaceStore } from "../../stores";
+import { FontStore, TypefaceStore, BlogStore } from "../../stores";
 import FileField from "../adminComponents/FileField";
 
 import { EditorState } from "draft-js";
@@ -96,7 +96,7 @@ const generateEmptyData = <T extends BaseData>(
         } else if (schemaItem.type === "switch") {
           data.content[lang][schemaItem.key] = Boolean(false);
         } else if (schemaItem.type === "RichTextField") {
-          data.content[lang][schemaItem.key] = [];
+          data.content[lang][schemaItem.key] = EditorState.createEmpty();
         } else {
           data.content[lang][schemaItem.key] = "";
         }
@@ -113,7 +113,7 @@ const generateEmptyData = <T extends BaseData>(
       } else if (schemaItem.type === "switch") {
         data[schemaItem.key] = Boolean(false);
       } else if (schemaItem.type === "RichTextField") {
-        data[schemaItem.key] = [];
+        data[schemaItem.key] = EditorState.createEmpty();
       } else {
         data[schemaItem.key] = "";
       }
@@ -454,7 +454,9 @@ const generateEmptyFormData = <T extends BaseData>(
         } else if (schemaItem.type === "switch") {
           emptyData[(schemaItem.key as string) + suffix] = Boolean(false);
         } else if (schemaItem.type === "RichTextField") {
-          emptyData[(schemaItem.key as string) + suffix] = [];
+          emptyData[
+            (schemaItem.key as string) + suffix
+          ] = EditorState.createEmpty();
         } else {
           emptyData[(schemaItem.key as string) + suffix] = "";
         }
@@ -780,11 +782,11 @@ const GeneralFormComponent = <T extends BaseData>(
                                 }
                               >
                                 {useObserver(() =>
-                                  TypefaceStore.Typefaces.map(val => {
-                                    return TypefaceStore.Typefaces.length >
+                                  BlogStore.Blogs.map(val => {
+                                    return BlogStore.Blogs.length >
                                       0 ? (
                                       <MenuItem key={val.key} value={val.key}>
-                                        {val.content.en.typefaceName}
+                                        {val.content.en.title}
                                       </MenuItem>
                                     ) : (
                                       <MenuItem
@@ -950,15 +952,18 @@ const GeneralFormComponent = <T extends BaseData>(
                                     setEditorState(e);
                                     formikBag.setFieldValue(
                                       data.key + suffix,
-                                      e
+                                      stateToHTML(
+                                        editorState.getCurrentContent()
+                                      )
+                                      
                                     );
-                                    console.log(formikBag.values);
                                   }}
                                 />
-               
+
                                 {/* Export & Rendering HTML */}
                                 {/* {myHtml} */}
-                                {/* {ReactHtmlParser(myHtml)} */}
+                                {/* {stateToHTML(editorState.getCurrentContent())} */}
+                                {/* { ReactHtmlParser(myHtml) } */}
                               </>
                             );
                           } else if (data.type === "textarea") {

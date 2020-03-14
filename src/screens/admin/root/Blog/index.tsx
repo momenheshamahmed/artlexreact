@@ -9,16 +9,22 @@ const AdminBlogTable: React.FC = () => {
   return useObserver(() => (
     <div>
       <GeneralTableComponent<Blog>
-        data={BlogStore.Blog}
+        data={BlogStore.Blogs}
         deleteAction={BlogStore.deleteBlog}
         route={"/admin/blog"}
         tableData={[
           {
             inContent: true,
-            key: "selectTypeface",
-            title: "Select Your Typeface",
-            type: "selecttypface"
-          }
+            key: "title",
+            title: "Title",
+            type: "text"
+          },
+          {
+            inContent: true,
+            key: "articleCategory",
+            title: "Article Category",
+            type: "text"
+          },
         ]}
       />
     </div>

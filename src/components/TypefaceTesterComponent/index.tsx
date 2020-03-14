@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useObserver } from "mobx-react";
 import styled from "styled-components";
 import { Container, Row, Col, Collapse } from "react-bootstrap";
@@ -6,20 +6,22 @@ import TypfaceGalleryComponent from "../TypefaceGalleryComponent";
 
 import TypefaceTesterHeaderComponent from "./TypefaceTesterHeaderComponent";
 import TypefaceControlsComponent from "./TypefaceControlsComponent";
+import TypfaceCustomSliderComponent from "./CustomSliderTypefaces";
+import OneTypefaceStore from "../../stores/Typeface/index";
 
-// Assets
-
-const TypefaceTesterComponent: React.FC = (props) => {
-
-
-  // const handleFontSizeChaning = (event: any, newValue: number | number[]) => {
-  //   setFontSize(newValue);
-  // };
-  //
-  //
+const TypefaceTesterComponent: React.FC = props => {
+  // Assets
   // STYLES
   //
   //
+  let fontSIZEFROMSTORE = OneTypefaceStore.TypefaceState;
+  const [fontSizeFStore, setFontSizeFStore] = useState(20);
+  useEffect(() => {
+    setFontSizeFStore(fontSIZEFROMSTORE);
+    console.log(fontSIZEFROMSTORE);
+    console.log(typeof fontSizeFStore);
+  }, [fontSIZEFROMSTORE]);
+
   const TesterContainer = styled(Container)`
     margin-top: 4vh;
     margin-bottom: 4vh;
@@ -33,7 +35,8 @@ const TypefaceTesterComponent: React.FC = (props) => {
     width: 100%;
     height: 200px;
     border: none;
-  
+    font-size: ${props => `${props.fontSize}px`};
+
     overflow: hidden;
   `;
   const TypefaceControls = styled.div`
@@ -48,25 +51,28 @@ const TypefaceTesterComponent: React.FC = (props) => {
   //
   //
   //
-  console.log("here", props.typeface.key)
+  console.log("here", props.typeface.key);
   return useObserver(() => (
-    <TesterContainer>
+    <TesterContainer fluid={true}>
       <Row>
-        <TypefaceTesterHeaderComponent goto={props.typeface.key}/>
+        <TypefaceTesterHeaderComponent goto={props.typeface.key} />
       </Row>
       <Row>
         <Col>
           <TextAreaContainer>
-            <TextArea>
-              { props.typeface.content.en.typefaceTestWords }
+            <TextArea
+              fontSize={
+                typeof fontSizeFStore === "number" ? fontSizeFStore : 20
+              }
+            >
+              {props.typeface.content.en.typefaceTestWords}
             </TextArea>
             <TypefaceControls>
-              <TypefaceControlsComponent controls={props.typeface.content.en}/>
+              <TypefaceControlsComponent controls={props.typeface.content.en} />
             </TypefaceControls>
           </TextAreaContainer>
         </Col>
       </Row>
-
     </TesterContainer>
   ));
 };

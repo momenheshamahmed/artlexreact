@@ -17,8 +17,7 @@ import TypeFacePage from "./TypeFacePage";
 import Assets from "../assets";
 
 // Stores
-import { TypefaceStore } from "../stores";
-import { FontStore } from "../stores";
+import { TypefaceStore, BlogStore, FontStore, TypefaceStoreState } from "../stores";
 import FooterComponent from "../components/FooterComponent/FooterComponent";
 import Typefaces from "./Typefaces";
 import ArticlePage from "./ArticlePage";
@@ -34,6 +33,8 @@ const App: React.FC = () => {
   useEffect(() => {
     TypefaceStore.watchTypefaces();
     FontStore.watchFonts();
+    BlogStore.watchBlogs();
+    TypefaceStoreState.getFontSize();
   }, []);
 
   return (

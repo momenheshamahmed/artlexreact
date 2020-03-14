@@ -10,6 +10,7 @@ export interface Blog {
 // tslint:disable-next-line: interface-name
 export interface BlogContent {
   title: string;
+  gridNumber: string;
   image1: string;
   articleCategory: string;
   richEditor1: string;

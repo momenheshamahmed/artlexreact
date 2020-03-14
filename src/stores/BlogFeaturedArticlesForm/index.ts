@@ -8,7 +8,7 @@ class BlogFeaturedArticleStore {
   @action
   public addBlogFeaturedArticle = async (value: Omit<BlogFeaturedArticle, "key">): Promise<void> => {
     try {
-      const dbRef = database().ref("/typefaces/" + value.content.en.selectField + "/fontWeights");
+      const dbRef = database().ref("/blogfeaturedarticles/");
       const newItemRef = await dbRef.push();
       await newItemRef.set(value);
       return Promise.resolve();
@@ -24,7 +24,7 @@ class BlogFeaturedArticleStore {
     value: Omit<BlogFeaturedArticle, "key">
   ): Promise<void> => {
     try {
-      const dbRef = database().ref(`BlogFeaturedArticles/${key}`);
+      const dbRef = database().ref(`blogfeaturedarticles/${key}`);
       await dbRef.set(value);
       return Promise.resolve();
     } catch (error) {
@@ -35,7 +35,7 @@ class BlogFeaturedArticleStore {
   @action
   public deleteBlogFeaturedArticle = async (key: string): Promise<void> => {
     try {
-      const dbRef = database().ref(`BlogFeaturedArticles/${key}`);
+      const dbRef = database().ref(`blogfeaturedarticles/${key}`);
       await dbRef.remove();
       return Promise.resolve();
     } catch (error) {
@@ -45,7 +45,7 @@ class BlogFeaturedArticleStore {
 
   @action
   public watchBlogFeaturedArticles = () => {
-    const dbRef = database().ref("/BlogFeaturedArticles");
+    const dbRef = database().ref("/blogfeaturedarticles");
     dbRef.on("value", snapshot => {
       const data: Record<string, BlogFeaturedArticle> = snapshot.val();
       if (data) {

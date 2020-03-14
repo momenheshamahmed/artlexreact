@@ -19,6 +19,7 @@ const CustomTypefaces: React.FC = () => {
   ];
   const [open, setOpen] = useState(false);
   const [openTwo, setOpenTwo] = useState(false);
+  const [openThree, setOpenThree] = useState(false);
 
   const CustomtRow = styled(Row)`
     padding: 30px;
@@ -31,6 +32,24 @@ const CustomTypefaces: React.FC = () => {
     &:hover {
       background: ${!open ? "#000" : "#F7F7F7"};
       color: ${!open ? "#fff" : "#000"};
+    }
+  `;
+  const ContactItemTwo = styled(CustomtRow)`
+    border-bottom: 1px black solid;
+    cursor: pointer;
+    background: ${openTwo ? "#F7F7F7" : "#fff"};
+    &:hover {
+      background: ${!openTwo ? "#000" : "#F7F7F7"};
+      color: ${!openTwo ? "#fff" : "#000"};
+    }
+  `;
+  const ContactItemThree = styled(CustomtRow)`
+    border-bottom: 1px black solid;
+    cursor: pointer;
+    background: ${openThree ? "#F7F7F7" : "#fff"};
+    &:hover {
+      background: ${!openThree ? "#000" : "#F7F7F7"};
+      color: ${!openThree ? "#fff" : "#000"};
     }
   `;
   const initialValues: MyFormValues = { firstName: "" };
@@ -89,7 +108,7 @@ const CustomTypefaces: React.FC = () => {
           </Collapse>
         </Row>
         <Row>
-          <ContactItem
+          <ContactItemTwo
             onClick={() => setOpenTwo(!openTwo)}
             aria-controls="example-collapse-text"
             aria-expanded={openTwo}
@@ -101,8 +120,33 @@ const CustomTypefaces: React.FC = () => {
               {" "}
               <AddIcon />
             </Col>
-          </ContactItem>
+          </ContactItemTwo>
           <Collapse in={openTwo}>
+            <Container>
+              <CustomtRow>
+                Anim pariatur cliche reprehenderit, enim eiusmod high life
+                accusamus terry richardson ad squid. Nihil anim keffiyeh
+                helvetica, craft beer labore wes anderson cred nesciunt sapiente
+                ea proident.
+              </CustomtRow>
+            </Container>
+          </Collapse>
+        </Row>
+        <Row>
+          <ContactItemThree
+            onClick={() => setOpenThree(!openThree)}
+            aria-controls="example-collapse-text"
+            aria-expanded={openThree}
+          >
+            <Col>
+              <Typography>ask for a proposal</Typography>
+            </Col>
+            <Col className="text-right">
+              {" "}
+              <AddIcon />
+            </Col>
+          </ContactItemThree>
+          <Collapse in={openThree}>
             <Container>
               <CustomtRow>
                 Anim pariatur cliche reprehenderit, enim eiusmod high life
