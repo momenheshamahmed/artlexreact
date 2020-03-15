@@ -9,6 +9,7 @@ export interface Typeface {
 
 // tslint:disable-next-line: interface-name
 export interface TypefaceContent {
+  websiteInternalURL: string;
   fileFont: string;
   fileSpecimenFont: string;
   fileUserTermsFont: string;

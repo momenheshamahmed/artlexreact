@@ -3,8 +3,7 @@ import { useObserver } from "mobx-react";
 import styled from "styled-components";
 import { Row, Col } from "react-bootstrap";
 import { Typography, Slider, withStyles } from "@material-ui/core";
-import OneTypefaceStore from "../../../stores/Typeface/index";
-
+  
 const CustomSlider = withStyles({
   root: {
     color: "#171717",
@@ -30,16 +29,16 @@ const CustomSlider = withStyles({
   }
 })(Slider);
 
-const TypfaceCustomSliderComponent: React.FC = props => {
+const TypfaceCustomSliderComponent: React.FC = (props) => {
   const [value, setValue] = React.useState<
     number | string | Array<number | string>
   >(30);
   const handleSliderChange = (event: any, newValue: number | number[]) => {
     setValue(newValue);
-    OneTypefaceStore.momenHesham(newValue)
+    props.onChildClick(value)
   };
   return useObserver(() => (
-    <>
+    <div>
       <Row>
         <Col>
           <Typography>{props.name}</Typography>
@@ -54,7 +53,7 @@ const TypfaceCustomSliderComponent: React.FC = props => {
         value={typeof value === "number" ? value : 0}
         onChange={handleSliderChange}
       />
-    </>
+    </div>
   ));
 };
 export default TypfaceCustomSliderComponent;

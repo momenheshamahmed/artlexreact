@@ -114,7 +114,7 @@ const App: React.FC = () => {
             <Route exact={true} path="/blog">
               <Blog />
             </Route>
-            <Route path="/blog/article">
+            <Route path={`/blog/:articleId`}>
               <ArticlePage />
             </Route>
             <Route path="/contact">

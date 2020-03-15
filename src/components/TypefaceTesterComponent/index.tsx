@@ -51,11 +51,11 @@ const TypefaceTesterComponent: React.FC = props => {
   //
   //
   //
-  console.log("here", props.typeface.key);
+
   return useObserver(() => (
     <TesterContainer fluid={true}>
       <Row>
-        <TypefaceTesterHeaderComponent goto={props.typeface.key} />
+        <TypefaceTesterHeaderComponent goto={props.typeface.key ? props.typeface.key : "/"} />
       </Row>
       <Row>
         <Col>
@@ -65,10 +65,13 @@ const TypefaceTesterComponent: React.FC = props => {
                 typeof fontSizeFStore === "number" ? fontSizeFStore : 20
               }
             >
-              {props.typeface.content.en.typefaceTestWords}
+              {props.typeface.content.en.typefaceTestWords
+                ? props.typeface.content.en.typefaceTestWords
+                : "lorem ipsum"
+                }
             </TextArea>
             <TypefaceControls>
-              <TypefaceControlsComponent controls={props.typeface.content.en} />
+              <TypefaceControlsComponent controls={props.typeface.content.en ? props.typeface.content.en : null} />
             </TypefaceControls>
           </TextAreaContainer>
         </Col>

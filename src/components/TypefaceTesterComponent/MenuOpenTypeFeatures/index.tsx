@@ -99,7 +99,7 @@ export default function MenuOpenTypeFeatures(props) {
         className="text-center"
         onClick={handleClick}
       >
-        {props.customText}
+        {props.customText ? props.customText : "text here icon"}
       </div>
       <StyledMenu
         id="customized-menu"
@@ -122,12 +122,7 @@ export default function MenuOpenTypeFeatures(props) {
             // stylisticSeven: boolean;
             //  */}
         <StyledMenuItem
-          style={{
-            display: props.openTypeFeatures.standardLigatures
-              ? "inherit"
-              : "none"
-          }}
-        >
+          style={{}}>
           <FormControlLabel
             control={
               <GreenCheckbox

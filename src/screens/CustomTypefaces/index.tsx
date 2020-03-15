@@ -1,6 +1,6 @@
 import React from "react";
 import { useObserver } from "mobx-react";
-import FullScreenImageComponent from "../../components/FullScreenImageComponent";
+import FullScreenImageComponent from "../../components/CustomTypefacesCompnents/FullScreenImageComponent";
 import Assets from "../../assets/index";
 
 const CustomTypefaces: React.FC = () => {

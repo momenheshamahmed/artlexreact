@@ -14,6 +14,13 @@ const AdminTypefacesForm: React.FC = () => {
         formData={[
           {
             inContent: true,
+            key: "websiteInternalURL",
+            title: "Internal ID",
+            type: "text",
+            isRequired: true
+          },
+          {
+            inContent: true,
             key: "fileFont",
             title: "Typeface File",
             type: "woff",

@@ -7,7 +7,7 @@ import Font from "./types";
 import BlogSliderComponent from "../../components/HomeComponents/BlogSlider";
 import FeaturedFontsThumbnialsComponent from "../../components/HomeComponents/FeaturedFontsThumbnials";
 import TypefaceTesterComponent from "../../components/TypefaceTesterComponent";
-import FullScreenImageComponent from "../../components/FullScreenImageComponent";
+import FullScreenImageComponent from "../../components/HomeComponents/FullScreenImageComponent";
 
 const Home: React.FC = () => {
   const H1 = styled.h1`
@@ -134,7 +134,7 @@ const Home: React.FC = () => {
       <FullScreenImageComponent ImgSrc={FullScreenSrcs} />
       <FeaturedFontsThumbnialsComponent tileData={tileData} />
       <BlogSliderComponent Articles={Articles} />
-      <TypefaceTesterComponent />
+      {/* <TypefaceTesterComponent /> */}
     </div>
   ));
 };

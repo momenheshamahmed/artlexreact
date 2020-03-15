@@ -10,6 +10,16 @@ import AddIcon from "@material-ui/icons/Add";
 import { Formik, Form, Field } from "formik";
 import { TextField } from "formik-material-ui";
 
+import sgMail from "@sendgrid/mail";
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const msg = {
+  to: "test@example.com",
+  from: "test@example.com",
+  subject: "Sending with Twilio SendGrid is Fun",
+  text: "and easy to do anywhere, even with Node.js",
+  html: "<strong>and easy to do anywhere, even with Node.js</strong>"
+};
 const CustomTypefaces: React.FC = () => {
   const FullScreenSrcs = [
     {
@@ -100,6 +110,19 @@ const CustomTypefaces: React.FC = () => {
                         type="email"
                         label="Email"
                       />
+                      <Button
+                        style={{
+                          marginTop: 24,
+                          marginBottom: 24,
+                          marginLeft: 50
+                        }}
+                        onClick={() => sgMail.send(msg)}
+                        variant="contained"
+                        size="large"
+                        fullWidth
+                      >
+                        send
+                      </Button>
                     </Form>
                   )}
                 />

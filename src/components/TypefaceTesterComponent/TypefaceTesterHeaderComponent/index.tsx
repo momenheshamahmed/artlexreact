@@ -7,7 +7,6 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { Link } from "react-router-dom";
 
 const TypefaceTesterHeaderComponent: React.FC = props => {
-  console.log(props.goto)
   return useObserver(() => (
     <>
       <Col>
@@ -16,7 +15,7 @@ const TypefaceTesterHeaderComponent: React.FC = props => {
 
       <Col className="text-right">
         <Typography variant="body1">
-          <Link to={`/typefaces/${props.goto}`}>
+          <Link to={props.goto ? `/typefaces/${props.goto}` : '/'}>
             SEE SPECIMEN <ArrowForwardIcon />
           </Link>
         </Typography>

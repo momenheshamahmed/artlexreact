@@ -10,6 +10,7 @@
     "@material-ui/icons": "4.5.1",
     "@material-ui/pickers": "^3.2.10",
     "@reach/router": "^1.2.1",
+    "@sendgrid/mail": "^6.5.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",

@@ -17,6 +17,13 @@ const AdminBlogForm: React.FC = () => {
         formData={[
           {
             inContent: true,
+            key: "articleInternalURL",
+            title: "Article Internal URL",
+            type: "text",
+            isRequired: true
+          },
+          {
+            inContent: true,
             key: "title",
             title: "title",
             type: "text",

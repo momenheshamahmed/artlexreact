@@ -9,6 +9,7 @@ export interface Blog {
 
 // tslint:disable-next-line: interface-name
 export interface BlogContent {
+  articleInternalURL: string;
   title: string;
   gridNumber: string;
   image1: string;

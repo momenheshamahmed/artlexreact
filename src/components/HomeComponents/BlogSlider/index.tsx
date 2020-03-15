@@ -134,9 +134,7 @@ const BlogSliderComponent: React.FC = props => {
           0,
           props.Articles.length >= 3 ? 3 : Assets.Images.articleThree
         ).map(data => (
-          <Link to="articles/:id">
-            <ArticleThumbnial articleData={data} />
-          </Link>
+          <ArticleThumbnial articleData={data} />
         ))}
       </Carousel>
     </Container>

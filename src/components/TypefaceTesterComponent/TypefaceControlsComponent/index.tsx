@@ -11,27 +11,39 @@ import TypfaceGalleryComponent from "../../TypefaceGalleryComponent";
 import TypfaceCustomSliderComponent from "../CustomSliderTypefaces";
 
 const TypefaceControlsComponent: React.FC = props => {
+  const onSliderChange = evt => {
+    console.log(evt.target.value);
+  };
+
+  const [color, setColor] = useState('');
+  function handleChildClick(Newcolor) {
+    setColor(Newcolor);
+    console.log(color )
+  }
   return useObserver(() => (
     <>
       <Container fluid={true}>
         <Row>
           <Col md={3}>
-            <TypfaceCustomSliderComponent name="Font Size" />
+            <TypfaceCustomSliderComponent
+              onChange={handleChildClick}
+              name="Font Size"
+            />
           </Col>
 
-          <Col md={3}>
+          {/* <Col md={3}>
             <TypfaceCustomSliderComponent name="Leading" />
           </Col>
           <Col md={3}>
             <TypfaceCustomSliderComponent name="Line Height" />
-          </Col>
+          </Col> */}
 
           <Col md={1}>
             <MenuAlign customText={<FormatAlignCenterIcon />} />
           </Col>
           <Col md={1}>
             <MenuOpenTypeFeatures
-              openTypeFeatures={props.controls}
+              openTypeFeatures={props.controls ? props.controls : null}
               customText={
                 <svg
                   width="24"
@@ -49,7 +61,7 @@ const TypefaceControlsComponent: React.FC = props => {
             />
           </Col>
           <Col md={1}>
-            <Typography>D</Typography>
+            <Typography onClick={onSliderChange}>D</Typography>
           </Col>
         </Row>
         <Row>

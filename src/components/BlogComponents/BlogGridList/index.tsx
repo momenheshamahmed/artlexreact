@@ -12,6 +12,7 @@ import classes from "*.module.css";
 import { Link } from "react-router-dom";
 // Assets
 import Assets from "../../../assets/index";
+import { BlogStore } from "../../../stores";
 
 const BlogGridList: React.FC = () => {
   const screenSize = useMediaQuery("(max-width:700px)");
@@ -92,6 +93,7 @@ const BlogGridList: React.FC = () => {
   const ContainerBlogGrid = styled(Container)`
     padding-top: 5vh;
     padding-bottom: 5vh;
+    margin-top: 10vh;
   `;
   const CustomImg = styled.div`
     position: relative;
@@ -104,8 +106,8 @@ const BlogGridList: React.FC = () => {
     /* background-image: linear-gradient(rgba(245, 246, 252, 0.52)),  ; */
     background-image: url(${props => `'${props.src}'`});
     &:hover {
-      background:linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, .5)),
-    url(${props => `'${props.hover}'`});;
+      /* background:linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, .5)),
+    url(${props => `'${props.hover}'`});; */
       -webkit-line-clamp: 3;
     }
   `;
@@ -144,46 +146,60 @@ const BlogGridList: React.FC = () => {
         rows={screenSize ? 1 : 4}
       >
         {screenSize
-          ? tileData.slice(0, 2).map(tile => (
+          ? BlogStore.Blogs.slice(0, 2).map(tile => (
               <GridListTile
-                key={tile.img}
-                cols={screenSize ? 1 : tile.cols || 1}
-                rows={screenSize ? 1 : tile.cols || 1}
+                key={tile.key}
+                cols={screenSize ? 1 : tile.content.en.gridNumber || 1}
+                rows={screenSize ? 1 : tile.content.en.gridNumber || 1}
               >
-                <Link to="/blog/article">
+                <Link
+                  to={{
+                    pathname: `/blog/${tile.content.en.articleInternalURL}`,
+                    state: {
+                      documentId: tile.key
+                    }
+                  }}
+                >
                   <CustomImg
-                    src={tile.img}
-                    hover={tile.hover}
-                    alt={tile.title}
+                    src={tile.content.en.image1}
+                    // hover={tile.content.en.image1}
+                    alt={tile.content.en.title}
                     ref={imgSrcHover}
                   >
                     <CustomTitle variant="h5">
-                      MOMEN
-                      HESHAAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaam
+                      {tile.content.en.title}
                     </CustomTitle>
                     <CustomTag variant="body2">Tag</CustomTag>
                   </CustomImg>
                 </Link>
               </GridListTile>
             ))
-          : tileData.slice(0, 6).map(tile => (
+          : BlogStore.Blogs.slice(0, 6).map(tile => (
               <GridListTile
-                key={tile.img}
-                cols={screenSize ? 1 : tile.cols || 1}
-                rows={screenSize ? 1 : tile.cols || 1}
+                key={tile.key}
+                cols={screenSize ? 1 : tile.content.en.gridNumber || 1}
+                rows={screenSize ? 1 : tile.content.en.gridNumber || 1}
               >
-                <Link to="/">
+                <Link
+                  to={{
+                    pathname: `/blog/${tile.content.en.articleInternalURL}`,
+                    state: {
+                      documentId: tile
+                    }
+                  }}
+                >
                   <CustomImg
-                    src={tile.img}
-                    hover={tile.hover}
-                    alt={tile.title}
+                    src={tile.content.en.image1}
+                    // hover={tile.hover}
+                    alt={tile.content.en.title}
                     ref={imgSrcHover}
                   >
                     <CustomTitle variant="h5">
-                      MOMEN
-                      HESHAAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaam
+                      {tile.content.en.title}
                     </CustomTitle>
-                    <CustomTag variant="body2">Tag</CustomTag>
+                    <CustomTag variant="body2">
+                      {tile.content.en.articleCategory}
+                    </CustomTag>
                   </CustomImg>
                 </Link>
               </GridListTile>
