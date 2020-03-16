@@ -29,6 +29,7 @@ const App: React.FC = () => {
   const Logo = styled.img`
     width: 70px;
   `;
+
   // Mobx
   useEffect(() => {
     TypefaceStore.watchTypefaces();
@@ -61,9 +62,9 @@ const App: React.FC = () => {
                   <LinkContainer to={"/custom"}>
                     <Nav.Link eventKey="custom">{"Custom"}</Nav.Link>
                   </LinkContainer>
-                  <LinkContainer to={"/services"}>
+                  {/* <LinkContainer to={"/services"}>
                     <Nav.Link eventKey="services">{"Services"}</Nav.Link>
-                  </LinkContainer>
+                  </LinkContainer> */}
                   <LinkContainer to={"/blog"}>
                     <Nav.Link eventKey="blog">{"Blog"}</Nav.Link>
                   </LinkContainer>

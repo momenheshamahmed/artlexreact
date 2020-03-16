@@ -24,6 +24,8 @@ import AdminBlogForm from "./Blog/form";
 import AdminBlogTable from "./Blog";
 import AdminBlogFeaturedArticlesForm from "./BlogFeaturedArticles/form";
 import AdminBlogFeaturedArticlesTable from "./BlogFeaturedArticles";
+import AdminCustomTypefacesTable from "./CustomTypefaces";
+import AdminCustomTypefacesForm from "./CustomTypefaces/form";
 
 const AdminRoot = () => {
   useEffect(() => {
@@ -58,6 +60,12 @@ const AdminRoot = () => {
                   </Route>
                   <Route exact={true} path="/admin/typefaces">
                     <AdminTypefacesTable />
+                  </Route>
+                  <Route path="/admin/customtypefaces/:key">
+                    <AdminCustomTypefacesForm />
+                  </Route>
+                  <Route exact={true} path="/admin/customtypefaces">
+                    <AdminCustomTypefacesTable />
                   </Route>
 
                   <Route path="/admin/fonts/:key">

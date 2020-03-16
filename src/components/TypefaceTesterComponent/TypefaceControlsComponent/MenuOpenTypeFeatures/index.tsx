@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Menu, { MenuProps } from "@material-ui/core/Menu";
@@ -67,8 +67,14 @@ export default function MenuOpenTypeFeatures(props) {
   ) => {
     const newValues = { ...state, [name]: event.target.checked };
     setState(newValues);
-    props.onChange(newValues);
+    props.onChange(state);
+
   };
+  // useEffect(() => {
+  
+  //   props.onChange(state);
+
+  // }[state])
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {

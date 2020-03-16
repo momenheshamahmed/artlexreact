@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useObserver } from "mobx-react";
 import styled from "styled-components";
 import { Row, Col } from "react-bootstrap";
 import { Typography, Slider, withStyles } from "@material-ui/core";
-  
+
 const CustomSlider = withStyles({
   root: {
     color: "#171717",
@@ -32,12 +32,16 @@ interface Props {
   name: string;
   onChange: (value: number) => void;
 }
-const CustomSliderTypefaces: React.FC<Props> = (props) => {
+const CustomSliderTypefaces: React.FC<Props> = props => {
   const [value, setValue] = useState<number>(30);
   const handleSliderChange = (event: any, newValue: number) => {
     setValue(newValue);
-    props.onChange(value)
+    props.onChange(value);
+
   };
+  // useEffect(() => {
+  //   props.onChange(value);
+  // }, [value]);
   return useObserver(() => (
     <div>
       <Row>

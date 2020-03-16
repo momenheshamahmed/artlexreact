@@ -39,6 +39,7 @@ const TypefaceTesterComponent: React.FC = props => {
   `;
   const onControlsChange = (newValues) => {
     setControls(newValues);
+    console.log('hereee', controls)
   }
 
   //

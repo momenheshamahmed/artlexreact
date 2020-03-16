@@ -220,6 +220,17 @@ export default function MiniDrawer() {
         </List>
         <Divider />
         <List>
+          <LinkStyled to="/admin/customtypefaces">
+            <ListItem key={"customtypefaces"}>
+              <ListItemIcon>
+                <FontDownloadIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Custom Typefaces"} />
+            </ListItem>
+          </LinkStyled>
+        </List>
+        <Divider />
+        <List>
           <LinkStyled to="/admin/blog">
             <ListItem key={"Blog"}>
               <ListItemIcon>

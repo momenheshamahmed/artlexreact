@@ -54,3 +54,7 @@ p::selection {
  display: block !important;
  width: 100% !important;
 }
+
+.dropdown-item.active, .dropdown-item:active {
+  background: white !important;
+}

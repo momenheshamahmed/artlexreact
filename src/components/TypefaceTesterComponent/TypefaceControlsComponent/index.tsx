@@ -38,7 +38,14 @@ const TypefaceControlsComponent: React.FC = props => {
     setLineHeight(newLineHeight);
   };
   const onControlsChange = (newValues) => {
-    props.onControlsChange(newValues);
+    const [newMap, setNewMap] = useState({})
+    setNewMap({
+      fontSize,
+      // leading: leading,
+      // lineHeight: lineHeight,
+      // openTypeFeatures: newValues
+    })
+    props.onControlsChange(newMap);
   }
   return useObserver(() => (
     <>
