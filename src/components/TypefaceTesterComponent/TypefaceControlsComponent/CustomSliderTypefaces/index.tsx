@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import { useObserver } from "mobx-react";
 import styled from "styled-components";
 import { Row, Col } from "react-bootstrap";
@@ -28,14 +28,15 @@ const CustomSlider = withStyles({
     marginTop: 10
   }
 })(Slider);
-
-const TypfaceCustomSliderComponent: React.FC = (props) => {
-  const [value, setValue] = React.useState<
-    number | string | Array<number | string>
-  >(30);
-  const handleSliderChange = (event: any, newValue: number | number[]) => {
+interface Props {
+  name: string;
+  onChange: (value: number) => void;
+}
+const CustomSliderTypefaces: React.FC<Props> = (props) => {
+  const [value, setValue] = useState<number>(30);
+  const handleSliderChange = (event: any, newValue: number) => {
     setValue(newValue);
-    props.onChildClick(value)
+    props.onChange(value)
   };
   return useObserver(() => (
     <div>
@@ -56,4 +57,4 @@ const TypfaceCustomSliderComponent: React.FC = (props) => {
     </div>
   ));
 };
-export default TypfaceCustomSliderComponent;
+export default CustomSliderTypefaces;

@@ -65,7 +65,9 @@ export default function MenuOpenTypeFeatures(props) {
   const handleChange = (name: string) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setState({ ...state, [name]: event.target.checked });
+    const newValues = { ...state, [name]: event.target.checked };
+    setState(newValues);
+    props.onChange(newValues);
   };
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -108,19 +110,6 @@ export default function MenuOpenTypeFeatures(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {/* // standardLigatures: boolean;
-            // contextuaLalternates: boolean;
-            // discretionLigatures: boolean;
-            // swash: boolean;
-            // fractions: boolean;
-            // stylisticOne: boolean;
-            // stylisticTwo: boolean;
-            // stylisticThree: boolean;
-            // stylisticFour: boolean;
-            // stylisticFive: boolean;
-            // stylisticSix: boolean;
-            // stylisticSeven: boolean;
-            //  */}
         <StyledMenuItem
           style={{}}>
           <FormControlLabel

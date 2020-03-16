@@ -6,21 +6,13 @@ import TypfaceGalleryComponent from "../TypefaceGalleryComponent";
 
 import TypefaceTesterHeaderComponent from "./TypefaceTesterHeaderComponent";
 import TypefaceControlsComponent from "./TypefaceControlsComponent";
-import TypfaceCustomSliderComponent from "./CustomSliderTypefaces";
-import OneTypefaceStore from "../../stores/Typeface/index";
 
 const TypefaceTesterComponent: React.FC = props => {
   // Assets
   // STYLES
   //
   //
-  let fontSIZEFROMSTORE = OneTypefaceStore.TypefaceState;
-  const [fontSizeFStore, setFontSizeFStore] = useState(20);
-  useEffect(() => {
-    setFontSizeFStore(fontSIZEFROMSTORE);
-    console.log(fontSIZEFROMSTORE);
-    console.log(typeof fontSizeFStore);
-  }, [fontSIZEFROMSTORE]);
+  const [controls, setControls] = useState({});
 
   const TesterContainer = styled(Container)`
     margin-top: 4vh;
@@ -45,6 +37,9 @@ const TypefaceTesterComponent: React.FC = props => {
     background: #f7f7f7;
     padding: 20px 0;
   `;
+  const onControlsChange = (newValues) => {
+    setControls(newValues);
+  }
 
   //
   //
@@ -64,6 +59,7 @@ const TypefaceTesterComponent: React.FC = props => {
               fontSize={
                 typeof fontSizeFStore === "number" ? fontSizeFStore : 20
               }
+              {...controls}
             >
               {props.typeface.content.en.typefaceTestWords
                 ? props.typeface.content.en.typefaceTestWords
@@ -71,7 +67,7 @@ const TypefaceTesterComponent: React.FC = props => {
                 }
             </TextArea>
             <TypefaceControls>
-              <TypefaceControlsComponent controls={props.typeface.content.en ? props.typeface.content.en : null} />
+              <TypefaceControlsComponent onControlsChange={onControlsChange} controls={props.typeface.content.en ? props.typeface.content.en : null} />
             </TypefaceControls>
           </TextAreaContainer>
         </Col>

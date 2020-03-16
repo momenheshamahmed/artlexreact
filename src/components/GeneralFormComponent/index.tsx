@@ -28,10 +28,19 @@ import { Languages } from "../../utils/translation";
 import { FontStore, TypefaceStore, BlogStore } from "../../stores";
 import FileField from "../adminComponents/FileField";
 
-import { EditorState } from "draft-js";
+import {
+  EditorState,
+  ContentState,
+  convertToRaw,
+  convertFromRaw,
+  RawDraftContentState,
+  convertFromHTML
+} from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { stateToHTML } from "draft-js-export-html";
+
+const EMPTY_HTML = "<p></p>";
 
 const MAXIMUM_IMAGE_SIZE = 2 * 1024 * 1024;
 
@@ -91,7 +100,13 @@ const generateEmptyData = <T extends BaseData>(
         } else if (schemaItem.type === "switch") {
           data.content[lang][schemaItem.key] = Boolean(false);
         } else if (schemaItem.type === "RichTextField") {
-          data.content[lang][schemaItem.key] = EditorState.createEmpty();
+          data.content[lang][schemaItem.key] = JSON.stringify(
+            convertToRaw(
+              ContentState.createFromBlockArray(
+                convertFromHTML(EMPTY_HTML).contentBlocks
+              )
+            )
+          );
         } else {
           data.content[lang][schemaItem.key] = "";
         }
@@ -108,7 +123,13 @@ const generateEmptyData = <T extends BaseData>(
       } else if (schemaItem.type === "switch") {
         data[schemaItem.key] = Boolean(false);
       } else if (schemaItem.type === "RichTextField") {
-        data[schemaItem.key] = EditorState.createEmpty();
+        data[schemaItem.key] = JSON.stringify(
+          convertToRaw(
+            ContentState.createFromBlockArray(
+              convertFromHTML(EMPTY_HTML).contentBlocks
+            )
+          )
+        );
       } else {
         data[schemaItem.key] = "";
       }
@@ -449,9 +470,14 @@ const generateEmptyFormData = <T extends BaseData>(
         } else if (schemaItem.type === "switch") {
           emptyData[(schemaItem.key as string) + suffix] = Boolean(false);
         } else if (schemaItem.type === "RichTextField") {
-          emptyData[
-            (schemaItem.key as string) + suffix
-          ] = EditorState.createEmpty();
+          console.log(ContentState);
+          emptyData[(schemaItem.key as string) + suffix] = JSON.stringify(
+            convertToRaw(
+              ContentState.createFromBlockArray(
+                convertFromHTML(EMPTY_HTML).contentBlocks
+              )
+            )
+          );
         } else {
           emptyData[(schemaItem.key as string) + suffix] = "";
         }
@@ -475,6 +501,10 @@ const GeneralFormComponent = <T extends BaseData>(
   const [initialValues, setInitialValues] = useState(
     generateEmptyFormData(props.formData)
   );
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  useEffect(() => {
+    setEditorState(EditorState.createEmpty());
+  }, []);
   useEffect(() => {
     if (params && params.key) {
       if (params.key !== "new") {
@@ -778,8 +808,7 @@ const GeneralFormComponent = <T extends BaseData>(
                               >
                                 {useObserver(() =>
                                   BlogStore.Blogs.map(val => {
-                                    return BlogStore.Blogs.length >
-                                      0 ? (
+                                    return BlogStore.Blogs.length > 0 ? (
                                       <MenuItem key={val.key} value={val.key}>
                                         {val.content.en.title}
                                       </MenuItem>
@@ -935,22 +964,31 @@ const GeneralFormComponent = <T extends BaseData>(
                               />
                             );
                           } else if (data.type === "RichTextField") {
-                            console.log(formikBag.values);
+                            console.warn(
+                              "focus3",
+                              formikBag.values[data.key + suffix]
+                            );
                             const [editorState, setEditorState] = useState(
                               EditorState.createEmpty()
                             );
                             return (
                               <>
                                 <Editor
-                                  editorState={editorState}
-                                  onEditorStateChange={(e: any) => {
-                                    setEditorState(e);
+                                  // editorState={editorState}
+                                  // initialContentState={convertFromRaw(formikBag.values[data.key + suffix])}
+                                  // editorState={EditorState.createWithContent(JSON.parse(formikBag.values[data.key + suffix]))}
+                                  editorState={EditorState.createWithContent(convertFromRaw(JSON.parse(
+                                    formikBag.values[data.key + suffix]
+                                  )))}
+                                  initialContentState={JSON.parse(
+                                    formikBag.values[data.key + suffix]
+                                  )}
+                                  onContentStateChange={(
+                                    contentState: RawDraftContentState
+                                  ) => {
                                     formikBag.setFieldValue(
                                       data.key + suffix,
-                                      stateToHTML(
-                                        editorState.getCurrentContent()
-                                      )
-                                      
+                                      JSON.stringify(contentState)
                                     );
                                   }}
                                 />

@@ -1,48 +1,73 @@
 import React, { useRef, useState } from "react";
 import { useObserver } from "mobx-react";
 import { Container, Row, Col } from "react-bootstrap";
-import MenuOpenTypeFeatures from "../MenuOpenTypeFeatures";
-import MenuAlign from "../MenuAlign";
+import MenuOpenTypeFeatures from "./MenuOpenTypeFeatures";
+import MenuAlign from "./MenuAlign";
 
 import { Typography } from "@material-ui/core";
 import FormatAlignCenterIcon from "@material-ui/icons/FormatAlignCenter";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import TypfaceGalleryComponent from "../../TypefaceGalleryComponent";
-import TypfaceCustomSliderComponent from "../CustomSliderTypefaces";
+
+import CustomSliderTypefaces from "./CustomSliderTypefaces";
+import CustomLeadingSliderTypefaces from "./CustomLeadingSliderTypefaces";
+import CustomLineHeightSliderTypefaces from "./CustomLineHeightSliderTypefaces";
 
 const TypefaceControlsComponent: React.FC = props => {
-  const onSliderChange = evt => {
+  const onFontSizeSliderChange = evt => {
+    console.log(evt.target.value);
+  };
+  const onLeadingSliderChange = evt => {
+    console.log(evt.target.value);
+  };
+  const onLineHeightSliderChange = evt => {
     console.log(evt.target.value);
   };
 
-  const [color, setColor] = useState('');
-  function handleChildClick(Newcolor) {
-    setColor(Newcolor);
-    console.log(color )
+  const [fontSize, setFontSize] = useState<number>(30);
+  const [leading, setLeading] = useState<number>(30);
+  const [lineHeight, setLineHeight] = useState<number>(30);
+
+  function handleFontSizeChange(newFontSize) {
+    setFontSize(newFontSize);
+  };
+  function handleLeadingeChange(newLeading) {
+    setLeading(newLeading);
+  };
+  function handleLineHeighteChange(newLineHeight) {
+    setLineHeight(newLineHeight);
+  };
+  const onControlsChange = (newValues) => {
+    props.onControlsChange(newValues);
   }
   return useObserver(() => (
     <>
       <Container fluid={true}>
         <Row>
           <Col md={3}>
-            <TypfaceCustomSliderComponent
-              onChange={handleChildClick}
+            <CustomSliderTypefaces
+              onChange={handleFontSizeChange}
               name="Font Size"
             />
           </Col>
-
-          {/* <Col md={3}>
-            <TypfaceCustomSliderComponent name="Leading" />
+          <Col md={3}>
+            <CustomSliderTypefaces
+              onChange={handleLeadingeChange}
+              name="Font Size"
+            />
           </Col>
           <Col md={3}>
-            <TypfaceCustomSliderComponent name="Line Height" />
-          </Col> */}
-
+            <CustomSliderTypefaces
+              onChange={handleLineHeighteChange}
+              name="Font Size"
+            />
+          </Col>
           <Col md={1}>
             <MenuAlign customText={<FormatAlignCenterIcon />} />
           </Col>
           <Col md={1}>
             <MenuOpenTypeFeatures
+            onChange={onControlsChange}
               openTypeFeatures={props.controls ? props.controls : null}
               customText={
                 <svg
@@ -61,7 +86,7 @@ const TypefaceControlsComponent: React.FC = props => {
             />
           </Col>
           <Col md={1}>
-            <Typography onClick={onSliderChange}>D</Typography>
+            <Typography>D</Typography>
           </Col>
         </Row>
         <Row>

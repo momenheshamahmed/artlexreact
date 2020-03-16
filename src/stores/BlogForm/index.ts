@@ -25,7 +25,7 @@ class BlogStore {
     value: Omit<Blog, "key">
   ): Promise<void> => {
     try {
-      const dbRef = database().ref(`blog/${value.content.en.articleCategory}/${key}`);
+      const dbRef = database().ref(`blog/${key}`);
       await dbRef.set(value);
       return Promise.resolve();
     } catch (error) {
