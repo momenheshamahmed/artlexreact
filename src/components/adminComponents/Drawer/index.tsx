@@ -30,8 +30,7 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 
 import FontDownloadIcon from "@material-ui/icons/FontDownload";
-import DescriptionIcon from '@material-ui/icons/Description';
-
+import DescriptionIcon from "@material-ui/icons/Description";
 
 import styled from "styled-components";
 
@@ -163,8 +162,8 @@ export default function MiniDrawer() {
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
-                <ChevronLeftIcon />
-              )}
+              <ChevronLeftIcon />
+            )}
           </IconButton>
         </div>
         <Divider />
@@ -226,6 +225,22 @@ export default function MiniDrawer() {
                 <FontDownloadIcon />
               </ListItemIcon>
               <ListItemText primary={"Custom Typefaces"} />
+            </ListItem>
+          </LinkStyled>
+          <LinkStyled to="/admin/customfontsfeaturedfullscreen">
+            <ListItem key={"Custom Typefaces Featured"}>
+              <ListItemIcon>
+                <FontDownloadIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Custom Typefaces Featured"} />
+            </ListItem>
+          </LinkStyled>
+          <LinkStyled to="/admin/customfontsfeaturedgrid">
+            <ListItem key={"Custom Typefaces Grid"}>
+              <ListItemIcon>
+                <FontDownloadIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Custom Typefaces Grid"} />
             </ListItem>
           </LinkStyled>
         </List>

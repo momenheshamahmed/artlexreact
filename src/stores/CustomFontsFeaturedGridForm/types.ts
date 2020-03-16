@@ -1,14 +1,16 @@
 import { Languages } from "../../utils/translation/index";
 
 // tslint:disable-next-line: interface-name
-export interface CustomFonsFeaturedFullScreen {
+export interface CustomFontFeaturedGrid {
   key: string;
   id: number;
-  content: Record<Languages, FontFeaturedFullscreenContent>;
+  content: Record<Languages, FontFeaturedGridContent>;
 }
 
 // tslint:disable-next-line: interface-name
-export interface FontFeaturedFullscreenContent {
+export interface FontFeaturedGridContent {
   selectTypeface: Array<string | File | null>;
-  coverImage: string;
+  sortTypeface: string;
+  coverImageGrid: string;
+  hooooverImageGrid2: string;
 }

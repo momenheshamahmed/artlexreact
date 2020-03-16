@@ -7,6 +7,8 @@ import FontStoreInstance from "./FontsForm";
 import FontsInUseStoreInstance from "./FontsInUseForm";
 import FontsFeaturedFullScreenStoreInstance from "./FontsFeaturedFullScreenForm";
 import FontsFeaturedGridStoreInstance from "./FontsFeaturedGridForm";
+import CustomFontsFeaturedFullScreenStoreInstance from "./CustomFontsFeaturedFullScreenForm";
+import CustomFontsFeaturedGridStoreInstance from "./CustomFontsFeaturedGridForm";
 import BlogStoreInstance from "./BlogForm";
 import BlogFeaturedArticlesStoreInstance from "./BlogFeaturedArticlesForm";
 
@@ -18,6 +20,8 @@ export const FontStore = FontStoreInstance;
 export const FontsInUseStore = FontsInUseStoreInstance;
 export const FontsFeaturedFullScreenStore = FontsFeaturedFullScreenStoreInstance;
 export const FontsFeaturedGridStore = FontsFeaturedGridStoreInstance;
+export const CustomFontsFeaturedFullScreenStore = CustomFontsFeaturedFullScreenStoreInstance;
+export const CustomFontsFeaturedGridStore = CustomFontsFeaturedGridStoreInstance;
 export const BlogStore = BlogStoreInstance;
 export const BlogFeaturedArticlesStore = BlogFeaturedArticlesStoreInstance;
 export const StorageStore = StorageStoreInstance;

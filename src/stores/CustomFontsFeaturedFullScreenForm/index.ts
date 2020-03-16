@@ -1,12 +1,12 @@
-import { CustomFonsFeaturedFullScreen } from "./types";
+import { FontFeaturedFullscreen } from "./types";
 import { observable, action } from "mobx";
 import { database } from "firebase";
 
 class FontFeaturedFullscreenStore {
-  @observable public CustomFontsFeaturedFullScreen: CustomFonsFeaturedFullScreen[] = [];
+  @observable public FontsFeaturedFullscreen: FontFeaturedFullscreen[] = [];
 
   @action
-  public addFontFeaturedFullscreen = async (value: Omit<CustomFonsFeaturedFullScreen, "key">): Promise<void> => {
+  public addFontFeaturedFullscreen = async (value: Omit<FontFeaturedFullscreen, "key">): Promise<void> => {
     try {
       const dbRef = database().ref("/typefacesfeaturedfullscreen/");
       const newItemRef = await dbRef.push();
@@ -21,10 +21,10 @@ class FontFeaturedFullscreenStore {
   @action
   public editFontFeaturedFullscreen = async (
     key: string,
-    value: Omit<CustomFonsFeaturedFullScreen, "key">
+    value: Omit<FontFeaturedFullscreen, "key">
   ): Promise<void> => {
     try {
-      const dbRef = database().ref(`CustomFontsFeaturedFullScreen/${key}`);
+      const dbRef = database().ref(`FontsFeaturedFullscreen/${key}`);
       await dbRef.set(value);
       return Promise.resolve();
     } catch (error) {
@@ -35,7 +35,7 @@ class FontFeaturedFullscreenStore {
   @action
   public deleteFontFeaturedFullscreen = async (key: string): Promise<void> => {
     try {
-      const dbRef = database().ref(`CustomFontsFeaturedFullScreen/${key}`);
+      const dbRef = database().ref(`FontsFeaturedFullscreen/${key}`);
       await dbRef.remove();
       return Promise.resolve();
     } catch (error) {
@@ -45,17 +45,17 @@ class FontFeaturedFullscreenStore {
 
   @action
   public watchFontsFeaturedFullscreen = () => {
-    const dbRef = database().ref("/CustomFontsFeaturedFullScreen");
+    const dbRef = database().ref("/FontsFeaturedFullscreen");
     dbRef.on("value", snapshot => {
-      const data: Record<string, CustomFonsFeaturedFullScreen> = snapshot.val();
+      const data: Record<string, FontFeaturedFullscreen> = snapshot.val();
       if (data) {
-        const mappedData: CustomFonsFeaturedFullScreen[] = Object.entries(data).map(entry => {
+        const mappedData: FontFeaturedFullscreen[] = Object.entries(data).map(entry => {
           return {
             ...entry[1],
             key: entry[0]
           };
         });
-        this.CustomFontsFeaturedFullScreen = mappedData;
+        this.FontsFeaturedFullscreen = mappedData;
       }
     });
   };

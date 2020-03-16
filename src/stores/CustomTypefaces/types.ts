@@ -10,7 +10,6 @@ export interface CustomTypeface {
 // tslint:disable-next-line: interface-name
 export interface CustomTypefaceContent {
   websiteInternalURL: string;
-  fileFont: string;
   fileSpecimenFont: string;
   fileUserTermsFont: string;
   CustomTypefaceCategory: string;
@@ -33,17 +32,6 @@ export interface CustomTypefaceContent {
   CustomTypefaceLinkDribbble: string;
   CustomTypefaceLinkTwitter: string;
   CustomTypefaceLinkWebsite: string;
-  standardLigatures: boolean;
-  contextuaLalternates: boolean;
-  discretionLigatures: boolean;
-  swash: boolean;
-  fractions: boolean;
-  stylisticOne: boolean;
-  stylisticTwo: boolean;
-  stylisticThree: boolean;
-  stylisticFour: boolean;
-  stylisticFive: boolean;
-  stylisticSix: boolean;
-  stylisticSeven: boolean;
+
 
 }

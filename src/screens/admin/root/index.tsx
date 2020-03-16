@@ -26,6 +26,10 @@ import AdminBlogFeaturedArticlesForm from "./BlogFeaturedArticles/form";
 import AdminBlogFeaturedArticlesTable from "./BlogFeaturedArticles";
 import AdminCustomTypefacesTable from "./CustomTypefaces";
 import AdminCustomTypefacesForm from "./CustomTypefaces/form";
+import AdminCustomFontsFeaturedFullscreenForm from "./CustomFontsFeaturedFullScreen/form";
+import AdminCustomFontsFeaturedFullscreenTable from "./CustomFontsFeaturedFullScreen";
+import AdminCustomFontsFeaturedGridForm from "./CustomFontsFeaturedGrid/form";
+import AdminCustomFontsFeaturedGridTable from "./CustomFontsFeaturedGrid";
 
 const AdminRoot = () => {
   useEffect(() => {
@@ -91,6 +95,18 @@ const AdminRoot = () => {
                   </Route>
                   <Route exact={true} path="/admin/fontsfeaturedgrid">
                     <AdminFontsFeaturedGridTable />
+                  </Route>
+                  <Route path="/admin/customfontsfeaturedfullscreen/:key">
+                    <AdminCustomFontsFeaturedFullscreenForm />
+                  </Route>
+                  <Route exact={true} path="/admin/customfontsfeaturedfullscreen">
+                    <AdminCustomFontsFeaturedFullscreenTable />
+                  </Route>
+                  <Route path="/admin/customfontsfeaturedgrid/:key">
+                    <AdminCustomFontsFeaturedGridForm />
+                  </Route>
+                  <Route exact={true} path="/admin/customfontsfeaturedgrid">
+                    <AdminCustomFontsFeaturedGridTable />
                   </Route>
                   <Route path="/admin/fontsfeaturedtester/:key">
                     <AdminFontsFeaturedTesterForm />

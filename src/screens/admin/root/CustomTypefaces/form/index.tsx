@@ -21,28 +21,14 @@ const AdminCustomTypefacesForm: React.FC = () => {
           },
           {
             inContent: true,
-            key: "fileFont",
-            title: "CustomTypeface File",
-            type: "woff",
-            isRequired: true
-          },
-          {
-            inContent: true,
-            key: "typefaceName",
+            key: "CustomTypefaceName",
             title: "CustomTypeface Name",
             type: "text",
             isRequired: true
           },
           {
             inContent: true,
-            key: "typefaceCategory",
-            title: "CustomTypeface Category",
-            type: "selecttypfacecategory",
-            isRequired: true
-          },
-          {
-            inContent: true,
-            key: "typefaceDescription",
+            key: "CustomTypefaceDescription",
             title: "CustomTypeface Description",
             type: "text",
             isRequired: true
@@ -98,7 +84,7 @@ const AdminCustomTypefacesForm: React.FC = () => {
           },
           {
             inContent: true,
-            key: "typefaceTestWords",
+            key: "CustomTypefaceTestWords",
             title: "Tester Words",
             type: "textarea",
             isRequired: true
@@ -124,127 +110,42 @@ const AdminCustomTypefacesForm: React.FC = () => {
             type: "pairfonts",
             isRequired: false
           },
-
           {
             inContent: true,
-            key: "typefaceLinkFacebook",
+            key: "CustomTypefaceLinkFacebook",
             title: "Designer Facebook",
             type: "text",
             isRequired: false
           },
           {
             inContent: true,
-            key: "typefaceLinkBehance",
+            key: "CustomTypefaceLinkBehance",
             title: "Designer Behance",
             type: "text",
             isRequired: false
           },
           {
             inContent: true,
-            key: "typefaceLinkDribbble",
+            key: "CustomTypefaceLinkDribbble",
             title: "Designer Dribbble",
             type: "text",
             isRequired: false
           },
           {
             inContent: true,
-            key: "typefaceLinkTwitter",
+            key: "CustomTypefaceLinkTwitter",
             title: "Designer Twitter",
             type: "text",
             isRequired: false
           },
           {
             inContent: true,
-            key: "typefaceLinkWebsite",
+            key: "CustomTypefaceLinkWebsite",
             title: "Designer Website",
             type: "text",
             isRequired: false
           },
-          {
-            inContent: true,
-            key: "standardLigatures",
-            title: "Standard Ligatures",
-            type: "switch",
-            isRequired: false
-          },
-
-          {
-            inContent: true,
-            key: "contextuaLalternates",
-            title: "contextual alternates",
-            type: "switch",
-            isRequired: false
-          },
-          {
-            inContent: true,
-            key: "discretionLigatures",
-            title: "discretion ligatures",
-            type: "switch",
-            isRequired: false
-          },
-          {
-            inContent: true,
-            key: "swash",
-            title: "swash",
-            type: "switch",
-            isRequired: false
-          },
-          {
-            inContent: true,
-            key: "fractions",
-            title: "fractions",
-            type: "switch",
-            isRequired: false
-          },
-          {
-            inContent: true,
-            key: "stylisticOne",
-            title: "Stylistic 1",
-            type: "switch",
-            isRequired: false
-          },
-          {
-            inContent: true,
-            key: "stylisticTwo",
-            title: "Stylistic 2",
-            type: "switch",
-            isRequired: false
-          },
-          {
-            inContent: true,
-            key: "stylisticThree",
-            title: "Stylistic 3",
-            type: "switch",
-            isRequired: false
-          },
-          {
-            inContent: true,
-            key: "stylisticFour",
-            title: "Stylistic 4",
-            type: "switch",
-            isRequired: false
-          },
-          {
-            inContent: true,
-            key: "stylisticFive",
-            title: "Stylistic 5",
-            type: "switch",
-            isRequired: false
-          },
-          {
-            inContent: true,
-            key: "stylisticSix",
-            title: "Stylistic 6",
-            type: "switch",
-            isRequired: false
-          },
-          {
-            inContent: true,
-            key: "stylisticSeven",
-            title: "Stylistic 7",
-            type: "switch",
-            isRequired: false
-          }
+ 
         ]}
       />
     </div>

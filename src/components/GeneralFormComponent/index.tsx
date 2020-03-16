@@ -25,7 +25,7 @@ import { useParams, useHistory } from "react-router";
 import { BaseData } from "./types";
 import { Props, FormKeys } from "./types";
 import { Languages } from "../../utils/translation";
-import { FontStore, TypefaceStore, BlogStore } from "../../stores";
+import { FontStore, TypefaceStore, BlogStore, CustomTypefaceStore } from "../../stores";
 import FileField from "../adminComponents/FileField";
 
 import {
@@ -737,7 +737,8 @@ const GeneralFormComponent = <T extends BaseData>(
                                 <Divider className="mt-2" />
                               </div>
                             );
-                          } else if (data.type === "selecttypface") {
+                          } 
+                          else if (data.type === "selecttypface") {
                             return (
                               <Field
                                 name={data.key + suffix}
@@ -776,16 +777,52 @@ const GeneralFormComponent = <T extends BaseData>(
                                     );
                                   })
                                 )}
-                                {/* <MenuItem
-                                  key="noitems"
-                                  value="noitems"
-                                  disabled={true}
-                                >
-                                  Please go and typefaces first!
-                                </MenuItem> */}
                               </Field>
                             );
-                          } else if (data.type === "selectarticle") {
+                          } 
+                          else if (data.type === "selectcustomtypface") {
+                            return (
+                              <Field
+                                name={data.key + suffix}
+                                component={TextField}
+                                type="text"
+                                placeholder={data.title}
+                                required={data.isRequired}
+                                select={true}
+                                style={{ overflow: "hidden" }}
+                                variant="outlined"
+                                helperText="Please select Typeface"
+                                margin="normal"
+                                InputLabelProps={{
+                                  shrink: true
+                                }}
+                                label={data.title}
+                                error={
+                                  (formikBag.errors as any)[data.key + suffix]
+                                }
+                              >
+                                {useObserver(() =>
+                                  CustomTypefaceStore.CustomTypefaces.map(val => {
+                                    return TypefaceStore.Typefaces.length >
+                                      0 ? (
+                                      <MenuItem key={val.key} value={val}>
+                                        {val.content.en.CustomTypefaceName}
+                                      </MenuItem>
+                                    ) : (
+                                      <MenuItem
+                                        key="noitems"
+                                        value="noitems"
+                                        disabled={true}
+                                      >
+                                        Please go and typefaces first!
+                                      </MenuItem>
+                                    );
+                                  })
+                                )}
+                              </Field>
+                            );
+                          } 
+                          else if (data.type === "selectarticle") {
                             return (
                               <Field
                                 name={data.key + suffix}
@@ -852,9 +889,9 @@ const GeneralFormComponent = <T extends BaseData>(
                                 <MenuItem key="premium" value="premium">
                                   Premium
                                 </MenuItem>
-                                <MenuItem key="custom" value="custom">
+                                {/* <MenuItem key="custom" value="custom">
                                   Custom
-                                </MenuItem>
+                                </MenuItem> */}
                               </Field>
                             );
                           } else if (data.type === "selectarticlecategory") {
@@ -910,39 +947,26 @@ const GeneralFormComponent = <T extends BaseData>(
                                     id: `${data.key + suffix}`
                                   }}
                                 >
-                                  <MenuItem key="noitem" value="noitem">
-                                    noitem
-                                  </MenuItem>
-                                  <MenuItem key="noitem2" value="noitem2">
-                                    noitem2
-                                  </MenuItem>
-                                  {/* {
-                                      useObserver(() =>
-                                        TypefaceStore.Typefaces.map(val => {
-                                          return (
-                                            <>
-
-                                              <MenuItem key={val.content.en.copyright} value={val.content.en.copyright}>
-                                                {val.content.en.copyright}
-                                              </MenuItem>
-                                            </>
-                                          );
-                                        })
-                                      )
-                                    } */}
+                                  {useObserver(() =>
+                                    TypefaceStore.Typefaces.map(val => {
+                                      return TypefaceStore.Typefaces.length >
+                                        0 ? (
+                                        <MenuItem key={val.key} value={val}>
+                                          {val.content.en.typefaceName}
+                                        </MenuItem>
+                                      ) : (
+                                        <MenuItem
+                                          key="noitems"
+                                          value="noitems"
+                                          disabled={true}
+                                        >
+                                          Please go and typefaces first!
+                                        </MenuItem>
+                                      );
+                                    })
+                                  )}
                                 </Field>
                               </FormControl>
-                            );
-                          } else if (data.type === "date") {
-                            return (
-                              <Field
-                                component={DatePicker}
-                                name={data.key + suffix}
-                                margin="normal"
-                                variant="outlined"
-                                required={data.isRequired}
-                                label={data.title}
-                              />
                             );
                           } else if (data.type === "switch") {
                             const switchName = data.key + suffix;
@@ -964,10 +988,6 @@ const GeneralFormComponent = <T extends BaseData>(
                               />
                             );
                           } else if (data.type === "RichTextField") {
-                            console.warn(
-                              "focus3",
-                              formikBag.values[data.key + suffix]
-                            );
                             const [editorState, setEditorState] = useState(
                               EditorState.createEmpty()
                             );
@@ -977,9 +997,13 @@ const GeneralFormComponent = <T extends BaseData>(
                                   // editorState={editorState}
                                   // initialContentState={convertFromRaw(formikBag.values[data.key + suffix])}
                                   // editorState={EditorState.createWithContent(JSON.parse(formikBag.values[data.key + suffix]))}
-                                  editorState={EditorState.createWithContent(convertFromRaw(JSON.parse(
-                                    formikBag.values[data.key + suffix]
-                                  )))}
+                                  editorState={EditorState.createWithContent(
+                                    convertFromRaw(
+                                      JSON.parse(
+                                        formikBag.values[data.key + suffix]
+                                      )
+                                    )
+                                  )}
                                   initialContentState={JSON.parse(
                                     formikBag.values[data.key + suffix]
                                   )}

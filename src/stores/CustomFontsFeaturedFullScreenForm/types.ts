@@ -1,7 +1,7 @@
 import { Languages } from "../../utils/translation/index";
 
 // tslint:disable-next-line: interface-name
-export interface CustomFonsFeaturedFullScreen {
+export interface FontFeaturedFullscreen {
   key: string;
   id: number;
   content: Record<Languages, FontFeaturedFullscreenContent>;
