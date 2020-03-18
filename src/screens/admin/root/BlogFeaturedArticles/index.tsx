@@ -11,13 +11,13 @@ const AdminBlogFeaturedArticlesTable: React.FC = () => {
       <GeneralTableComponent<BlogFeaturedArticle>
         data={BlogFeaturedArticlesStore.BlogFeaturedArticles}
         deleteAction={BlogFeaturedArticlesStore.deleteBlogFeaturedArticle}
-        route={"/admin/blogfeaturedarticle"}
+        route={"/admin/blogfeaturedarticles"}
         tableData={[
           {
             inContent: true,
-            key: "selectArticle",
+            key: "selectArticle.content.en.title",
             title: "Select Your Typeface",
-            type: "selectarticle"
+            type: "text"
           }
         ]}
       />

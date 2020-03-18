@@ -36,13 +36,13 @@ const FeaturedFontsThumbnialsComponent: React.FC = props => {
           ? props.tileData.slice(0, 2).map(tile => (
               <GridListTile
                 key={tile.img}
-                cols={screenSize ? 1 : tile.cols || 1}
+                cols={screenSize ? 1 : tile.content.en.gridNumber || 1}
               >
                 <Link to="/">
                   <CustomImg
-                    src={tile.img}
-                    hover={tile.hover}
-                    alt={tile.title}
+                    src={tile.content.en.coverImageGrid}
+                    hover={tile.content.en.hooooverImageGrid2}
+                    alt={tile.content.en.selectTypeface.content.en.typefaceName}
                     ref={imgSrcHover}
                   />
                 </Link>
@@ -51,13 +51,13 @@ const FeaturedFontsThumbnialsComponent: React.FC = props => {
           : props.tileData.slice(0, 6).map(tile => (
               <GridListTile
                 key={tile.img}
-                cols={screenSize ? 1 : tile.cols || 1}
+                cols={screenSize ? 1 : tile.content.en.gridNumber || 1}
               >
                 <Link to="/">
                   <CustomImg
-                    src={tile.img}
-                    hover={tile.hover}
-                    alt={tile.title}
+                    src={tile.content.en.coverImageGrid}
+                    hover={tile.content.en.hooooverImageGrid2}
+                    alt={tile.content.en.selectTypeface.content.en.typefaceName}
                     ref={imgSrcHover}
                   />
                 </Link>

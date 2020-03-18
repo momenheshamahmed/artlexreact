@@ -11,6 +11,7 @@ import styled from "styled-components";
 import TypfaceGalleryComponent from "../../components/TypefaceGalleryComponent";
 import BuyTypefaceSection from "../../components/TypefacePageComponents/BuyTypefaceSection";
 
+
 const TypeFacePage: React.FC = () => {
   const sectionRefs = [useRef(null), useRef(null), useRef(null)];
   const activeSection = useScrollSpy({

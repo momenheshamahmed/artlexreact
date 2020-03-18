@@ -9,7 +9,7 @@ const AdminFontsFeaturedFullscreenTable: React.FC = () => {
   return useObserver(() => (
     <div>
       <GeneralTableComponent<FontFeaturedFullscreen>
-        data={FontsFeaturedFullscreenStore.FontsFeaturedFullscreen}
+        data={FontsFeaturedFullscreenStore.FontsFeaturedFullScreen}
         deleteAction={FontsFeaturedFullscreenStore.deleteFontFeaturedFullscreen}
         route={"/admin/fontsfeaturedfullscreen"}
         tableData={[

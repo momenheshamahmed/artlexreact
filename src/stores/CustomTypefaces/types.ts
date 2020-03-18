@@ -24,7 +24,7 @@ export interface CustomTypefaceContent {
   familyStyles: string;
   CustomTypefaceTestWords: string;
   galleryField: Array<string | File | null>;
-  charactersImage: boolean;
+  coverImage: boolean;
   fontInUseField: Array<string | File | null>;
   pairfonts: Array<string | object |null>;
   CustomTypefaceLinkFacebook: string;

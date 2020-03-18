@@ -16,79 +16,7 @@ import { BlogStore } from "../../../stores";
 
 const BlogGridList: React.FC = () => {
   const screenSize = useMediaQuery("(max-width:700px)");
-  const tileData = [
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 2,
-      rows: 1
-    },
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 1,
-      rows: 2
-    },
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 3,
-      rows: 1
-    },
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 1,
-      rows: 3
-    },
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 1,
-      rows: 1
-    },
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 4,
-      rows: 1
-    },
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 1,
-      rows: 2
-    },
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 4,
-      rows: 2
-    },
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 1
-    }
-  ];
+ 
 
   const ContainerBlogGrid = styled(Container)`
     padding-top: 5vh;
@@ -184,7 +112,7 @@ const BlogGridList: React.FC = () => {
                   to={{
                     pathname: `/blog/${tile.content.en.articleInternalURL}`,
                     state: {
-                      documentId: tile
+                      documentId: tile.key
                     }
                   }}
                 >

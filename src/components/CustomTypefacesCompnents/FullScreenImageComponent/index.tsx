@@ -42,14 +42,14 @@ const FullScreenImageComponent: React.FC<Props> = props => {
     <>
       {props.ImgSrc.slice(0, 2).map(image => {
         return (
-          <Link to="/" key={image.alt}>
-            <FullScreenImage urlImage={image.url}>
+          <Link to="/" key={image.key}>
+            <FullScreenImage urlImage={image.content.en.coverImage}>
               <CustomButton
                 variant="contained"
                 className="mt-3"
                 endIcon={<ArrowForwardIcon />}
               >
-                Add to Cart
+                View Custom Font
               </CustomButton>
             </FullScreenImage>
           </Link>

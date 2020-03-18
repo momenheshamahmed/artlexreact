@@ -11,6 +11,7 @@ export interface FontFeaturedGrid {
 export interface FontFeaturedGridContent {
   selectTypeface: Array<string | File | null>;
   sortTypeface: string;
+  gridNumber: string;
   coverImageGrid: string;
   hooooverImageGrid2: string;
 }

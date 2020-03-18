@@ -2,15 +2,15 @@ import React from "react";
 import { useObserver } from "mobx-react";
 import GeneralFormComponent from "../../../../../components/GeneralFormComponent";
 
-import FontsFeaturedFullscreenStore from "../../../../../stores/FontsFeaturedFullscreenForm/index";
-import { CustomFonsFeaturedFullScreen } from "../../../../../stores/FontsFeaturedFullscreenForm/types";
+import FontsFeaturedFullscreenStore from "../../../../../stores/CustomFontsFeaturedFullscreenForm/index";
+import { CustomFontFeaturedFullScreen } from "../../../../../stores/CustomFontsFeaturedFullscreenForm/types";
 
 const AdminCustomFontsFeaturedFullscreenForm: React.FC = () => {
   return useObserver(() => (
     <div>
-      <GeneralFormComponent<CustomFonsFeaturedFullScreen>
-        addAction={FontsFeaturedFullscreenStore.addFontFeaturedFullscreen}
-        editAction={FontsFeaturedFullscreenStore.editFontFeaturedFullscreen}
+      <GeneralFormComponent<CustomFontFeaturedFullScreen>
+        addAction={FontsFeaturedFullscreenStore.addCustomFontFeaturedFullScreen}
+        editAction={FontsFeaturedFullscreenStore.editCustomFontFeaturedFullScreen}
         data={FontsFeaturedFullscreenStore.CustomFontsFeaturedFullScreen}
         formData={[
           {

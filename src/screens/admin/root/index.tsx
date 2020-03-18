@@ -51,6 +51,9 @@ const AdminRoot = () => {
     ) : AuthStore.isAuthenticated ? (
       <BrowserRouter>
         <Switch>
+          {/* <Route to="/admin">
+            <Redirect to="/admin/typefaces" />
+          </Route> */}
           <Route to="/admin">
             <Route to="/admin">
               <MiniDrawer key="minidrawer" />
@@ -99,7 +102,10 @@ const AdminRoot = () => {
                   <Route path="/admin/customfontsfeaturedfullscreen/:key">
                     <AdminCustomFontsFeaturedFullscreenForm />
                   </Route>
-                  <Route exact={true} path="/admin/customfontsfeaturedfullscreen">
+                  <Route
+                    exact={true}
+                    path="/admin/customfontsfeaturedfullscreen"
+                  >
                     <AdminCustomFontsFeaturedFullscreenTable />
                   </Route>
                   <Route path="/admin/customfontsfeaturedgrid/:key">
@@ -120,10 +126,10 @@ const AdminRoot = () => {
                   <Route exact={true} path="/admin/blog">
                     <AdminBlogTable />
                   </Route>
-                  <Route path="/admin/blogfeaturedarticle/:key">
+                  <Route path="/admin/blogfeaturedarticles/:key">
                     <AdminBlogFeaturedArticlesForm />
                   </Route>
-                  <Route exact={true} path="/admin/blogfeaturedarticle">
+                  <Route exact={true} path="/admin/blogfeaturedarticles">
                     <AdminBlogFeaturedArticlesTable />
                   </Route>
                 </Switch>

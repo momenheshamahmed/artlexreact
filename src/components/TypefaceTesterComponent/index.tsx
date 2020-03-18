@@ -13,7 +13,7 @@ const TypefaceTesterComponent: React.FC = props => {
   //
   //
   const [controls, setControls] = useState({});
-
+  console.log(controls);
   const TesterContainer = styled(Container)`
     margin-top: 4vh;
     margin-bottom: 4vh;

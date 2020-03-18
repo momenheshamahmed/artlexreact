@@ -9,6 +9,9 @@ import ReactHtmlParser, {
   convertNodeToElement,
   htmlparser2
 } from "react-html-parser";
+import { stateToHTML } from "draft-js-export-html";
+import { convertFromHTML, ContentState, convertFromRaw } from "draft-js";
+
 const StyledImg = styled.div`
   width: 100%;
   height: 40vh;
@@ -17,29 +20,29 @@ const StyledImg = styled.div`
   background-color: black;
 `;
 const ArticlePage: React.FC = props => {
-  // const [data, setData] = useState(null);
-  // let dummData;
-
-  let { articleId } = useParams();
+  const [data, setData] = useState(null);
   let { state } = useLocation();
-  // console.log(articleId);
-  // console.log(state.documentId);
-  // const dbRef = database().ref("/blog/" + state.documentId);
 
-  // useEffect(() => {
-  //   dbRef.on("value", snapshot => {
-  //     dummData = snapshot.val();
-  //     setData(dummData);
-  //   });
-  // }, [data]);
+  useEffect(() => {
+    if (state.documentId != null) {
+      const dbRef = database().ref("/blog/" + state.documentId);
+      dbRef.on("value", snapshot => {
+        setData(snapshot.val());
+      });
+    } else {
+      console.log("no data :( ");
+    }
+  }, [state.documentId]);
+
   return useObserver(() => (
     <Container className="pt-5 mt-5" fluid={true}>
-      {state != null ? (
+      {data != null ? (
         <>
-          <StyledImg imgSrc={state.content.en.image1} />
+          <StyledImg imgSrc={data.content.en.image1} />
           <Container>
-            <h1>{state.content.en.title}</h1>
-            {ReactHtmlParser(state.content.en.richEditor1)}
+            <h1>{data.content.en.title}</h1>
+            {/* {JSON.parse(data.content.en.richEditor1)} */}
+            {/* {mycontentstate} */}
           </Container>
         </>
       ) : (

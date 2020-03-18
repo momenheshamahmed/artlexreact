@@ -5,28 +5,21 @@ import Assets from "../../assets/index";
 import { Button, Collapse, Row, Container, Col } from "react-bootstrap";
 import styled from "styled-components";
 import { Typography } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
 
-import { Formik, Form, Field } from "formik";
+import AddIcon from "@material-ui/icons/Add";
+import { Formik, Form, Field, FormikHelpers, FormikProps  } from "formik";
 import { TextField } from "formik-material-ui";
 
-import sgMail from "@sendgrid/mail";
+import * as emailjs from 'emailjs-com'
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-const msg = {
-  to: "test@example.com",
-  from: "test@example.com",
-  subject: "Sending with Twilio SendGrid is Fun",
-  text: "and easy to do anywhere, even with Node.js",
-  html: "<strong>and easy to do anywhere, even with Node.js</strong>"
-};
+interface IFormValues {
+  firstName: string
+  email: string
+  message: string
+}
+
+
 const CustomTypefaces: React.FC = () => {
-  const FullScreenSrcs = [
-    {
-      url: `${Assets.Images.typefaceFullscreen}`,
-      alt: "Momen"
-    }
-  ];
   const [open, setOpen] = useState(false);
   const [openTwo, setOpenTwo] = useState(false);
   const [openThree, setOpenThree] = useState(false);
@@ -63,10 +56,30 @@ const CustomTypefaces: React.FC = () => {
     }
   `;
   const initialValues: MyFormValues = { firstName: "" };
+  const [emailSent, setEmailSent] = useState(false)
+  const FullScreenSrcs = [
+    {
+      url: `${Assets.Images.typefaceFullscreen}`,
+      alt: "Momen"
+    }
+  ];
+  const FullScreenImage = styled.div`
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-image: url(${props => props.urlImage});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    text-align: right;
+    padding: 10vh;
 
+  `;
+    
   return useObserver(() => (
     <>
-      <FullScreenImageComponent ImgSrc={FullScreenSrcs} />
+      <FullScreenImage urlImage={Assets.Images.typefaceFullscreen} />
       <Container className="my-5">
         <Row>
           <ContactItem
@@ -85,11 +98,33 @@ const CustomTypefaces: React.FC = () => {
             <Container>
               <CustomtRow>
                 <Formik
-                  initialValues={initialValues}
-                  onSubmit={(values, actions) => {
-                    alert(JSON.stringify(values, null, 2));
-                    actions.setSubmitting(false);
-                  }}
+       initialValues={{ firstName: "", email: "", message: "" }}
+       onSubmit={(values: IFormValues, actions: FormikHelpers<IFormValues>) => {
+         actions.setSubmitting(true)
+         setTimeout(() => {
+           emailjs.send(
+             "gmail" // Email service as defined in EmailJS setting
+             "template_fQRMbBug", // Email template ID provided by EmailJS
+             {
+               from_name: values.firstName,
+               to_name: "momenheshamzaza@gmail.com",
+               reply_to: values.email,
+               message_html: values.message,
+             },
+             "user_PTCm89pSOkpRGXWRjnRuB" // EmailJS user ID
+           )
+           .then(() => {
+               setEmailSent(true)
+               actions.setSubmitting(false)
+               actions.resetForm()
+             })
+           .catch(() => {
+               actions.setSubmitting(false)
+               alert('Error sending email...')
+             })
+         }, 1000)
+        }}
+
                   render={formikBag => (
                     <Form style={{ width: "100%" }}>
                       <Field
@@ -110,16 +145,21 @@ const CustomTypefaces: React.FC = () => {
                         type="email"
                         label="Email"
                       />
+                      <Field
+                        component={TextField}
+                        margin="normal"
+                        variant="outlined"
+                        fullWidth={true}
+                        name="message"
+                        type="textarea"
+                        label="message"
+                      />
                       <Button
-                        style={{
-                          marginTop: 24,
-                          marginBottom: 24,
-                          marginLeft: 50
-                        }}
-                        onClick={() => sgMail.send(msg)}
+                        // onClick={() => sgMail.send(msg)}
                         variant="contained"
                         size="large"
-                        fullWidth
+                        fullWidth={true}
+                        type="submit"
                       >
                         send
                       </Button>

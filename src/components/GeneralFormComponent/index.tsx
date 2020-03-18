@@ -38,7 +38,6 @@ import {
 } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { stateToHTML } from "draft-js-export-html";
 
 const EMPTY_HTML = "<p></p>";
 

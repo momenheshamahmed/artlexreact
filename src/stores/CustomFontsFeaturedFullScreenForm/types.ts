@@ -1,14 +1,14 @@
 import { Languages } from "../../utils/translation/index";
 
 // tslint:disable-next-line: interface-name
-export interface FontFeaturedFullscreen {
+export interface CustomFontFeaturedFullScreen {
   key: string;
   id: number;
-  content: Record<Languages, FontFeaturedFullscreenContent>;
+  content: Record<Languages, CustomFontFeaturedFullscreenContent>;
 }
 
 // tslint:disable-next-line: interface-name
-export interface FontFeaturedFullscreenContent {
+export interface CustomFontFeaturedFullscreenContent {
   selectTypeface: Array<string | File | null>;
   coverImage: string;
 }

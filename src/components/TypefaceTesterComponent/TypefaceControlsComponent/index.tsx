@@ -24,32 +24,36 @@ const TypefaceControlsComponent: React.FC = props => {
     console.log(evt.target.value);
   };
 
+  const [controls, setControls] = useState({});
   const [fontSize, setFontSize] = useState<number>(30);
   const [leading, setLeading] = useState<number>(30);
   const [lineHeight, setLineHeight] = useState<number>(30);
 
   function handleFontSizeChange(newFontSize) {
     setFontSize(newFontSize);
-  };
+    // setControls({ ...controls, newFontSize });
+  }
   function handleLeadingeChange(newLeading) {
     setLeading(newLeading);
-  };
+    // setControls({ ...controls, newLeading });
+  }
   function handleLineHeighteChange(newLineHeight) {
     setLineHeight(newLineHeight);
-  };
-  const onControlsChange = (newValues) => {
-    const [newMap, setNewMap] = useState({})
-    setNewMap({
-      fontSize,
-      // leading: leading,
-      // lineHeight: lineHeight,
-      // openTypeFeatures: newValues
-    })
-    props.onControlsChange(newMap);
+    // setControls({ ...controls, newLineHeight });
   }
+
+  const onChangeopenTypeFeatures = openTypeFeatures => {
+    setControls({ ...controls, openTypeFeatures });
+  };
+
+  const onControlsChange = newValues => {
+    setControls({ ...controls, newValues });
+    props.onControlsChange(controls);
+  };
+  
   return useObserver(() => (
     <>
-      <Container fluid={true}>
+      <Container fluid={true} onChange={onControlsChange}>
         <Row>
           <Col md={3}>
             <CustomSliderTypefaces
@@ -74,7 +78,7 @@ const TypefaceControlsComponent: React.FC = props => {
           </Col>
           <Col md={1}>
             <MenuOpenTypeFeatures
-            onChange={onControlsChange}
+              onChange={onChangeopenTypeFeatures}
               openTypeFeatures={props.controls ? props.controls : null}
               customText={
                 <svg

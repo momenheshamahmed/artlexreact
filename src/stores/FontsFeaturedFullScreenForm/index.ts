@@ -1,14 +1,14 @@
-import { CustomFonsFeaturedFullScreen } from "./types";
+import { FontFeaturedFullScreen } from "./types";
 import { observable, action } from "mobx";
 import { database } from "firebase";
 
 class FontFeaturedFullscreenStore {
-  @observable public CustomFontsFeaturedFullScreen: CustomFonsFeaturedFullScreen[] = [];
+  @observable public FontsFeaturedFullScreen: FontFeaturedFullScreen[] = [];
 
   @action
-  public addFontFeaturedFullscreen = async (value: Omit<CustomFonsFeaturedFullScreen, "key">): Promise<void> => {
+  public addFontFeaturedFullscreen = async (value: Omit<FontFeaturedFullScreen, "key">): Promise<void> => {
     try {
-      const dbRef = database().ref("/typefacesfeaturedfullscreen/");
+      const dbRef = database().ref("/fontsfeaturedfullscreen/");
       const newItemRef = await dbRef.push();
       await newItemRef.set(value);
       return Promise.resolve();
@@ -21,10 +21,10 @@ class FontFeaturedFullscreenStore {
   @action
   public editFontFeaturedFullscreen = async (
     key: string,
-    value: Omit<CustomFonsFeaturedFullScreen, "key">
+    value: Omit<FontFeaturedFullScreen, "key">
   ): Promise<void> => {
     try {
-      const dbRef = database().ref(`CustomFontsFeaturedFullScreen/${key}`);
+      const dbRef = database().ref(`fontsfeaturedfullscreen/${key}`);
       await dbRef.set(value);
       return Promise.resolve();
     } catch (error) {
@@ -35,7 +35,7 @@ class FontFeaturedFullscreenStore {
   @action
   public deleteFontFeaturedFullscreen = async (key: string): Promise<void> => {
     try {
-      const dbRef = database().ref(`CustomFontsFeaturedFullScreen/${key}`);
+      const dbRef = database().ref(`fontsfeaturedfullscreen/${key}`);
       await dbRef.remove();
       return Promise.resolve();
     } catch (error) {
@@ -45,17 +45,18 @@ class FontFeaturedFullscreenStore {
 
   @action
   public watchFontsFeaturedFullscreen = () => {
-    const dbRef = database().ref("/CustomFontsFeaturedFullScreen");
+    const dbRef = database().ref("/fontsfeaturedfullscreen");
     dbRef.on("value", snapshot => {
-      const data: Record<string, CustomFonsFeaturedFullScreen> = snapshot.val();
+      const data: Record<string, FontFeaturedFullScreen> = snapshot.val();
       if (data) {
-        const mappedData: CustomFonsFeaturedFullScreen[] = Object.entries(data).map(entry => {
+        const mappedData: FontFeaturedFullScreen[] = Object.entries(data).map(entry => {
           return {
             ...entry[1],
             key: entry[0]
           };
         });
-        this.CustomFontsFeaturedFullScreen = mappedData;
+        // console.log(mappedData)
+        this.FontsFeaturedFullScreen = mappedData;
       }
     });
   };

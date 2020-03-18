@@ -16,7 +16,7 @@ const AdminBlogFeaturedArticlesForm: React.FC = () => {
           {
             inContent: true,
             key: "selectArticle",
-            title: "Select Typeface",
+            title: "Select Article",
             type: "selectarticle",
             isRequired: true
           }

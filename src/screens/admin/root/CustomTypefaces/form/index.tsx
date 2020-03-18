@@ -70,13 +70,6 @@ const AdminCustomTypefacesForm: React.FC = () => {
           },
           {
             inContent: true,
-            key: "storeUrl",
-            title: "Store Url",
-            type: "text",
-            isRequired: true
-          },
-          {
-            inContent: true,
             key: "familyStyles",
             title: "Family Styles Number",
             type: "text",
@@ -98,8 +91,8 @@ const AdminCustomTypefacesForm: React.FC = () => {
           },
           {
             inContent: true,
-            key: "charactersImage",
-            title: "characters",
+            key: "coverImage",
+            title: "Cover Image",
             type: "image",
             isRequired: true
           },
@@ -144,8 +137,7 @@ const AdminCustomTypefacesForm: React.FC = () => {
             title: "Designer Website",
             type: "text",
             isRequired: false
-          },
- 
+          }
         ]}
       />
     </div>

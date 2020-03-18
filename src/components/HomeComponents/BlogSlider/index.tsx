@@ -19,6 +19,7 @@ import ArticleThumbnial from "./ArticleThumbnial";
 import { Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
+// tslint:disable-next-line: interface-name
 interface CarouselButtonGroupProps extends ButtonGroupProps {
   className?: string;
 }
@@ -76,7 +77,6 @@ const BlogSliderComponent: React.FC = props => {
       slidesToSlide: 1 // optional, default to 1.
     }
   };
-
   const CarouselButtonGroup = ({
     next,
     previous
@@ -105,11 +105,10 @@ const BlogSliderComponent: React.FC = props => {
   };
 
   return useObserver(() => (
-    <Container className="position-relative mt-5 mb-5">
+    <Container fluid={true} className="position-relative mt-5 mb-5">
       <Typography variant="h5" className="mb-5">
         Blog
       </Typography>
-
       <Carousel
         swipeable={true}
         draggable={true}
@@ -130,12 +129,11 @@ const BlogSliderComponent: React.FC = props => {
         renderButtonGroupOutside={true}
         customButtonGroup={<CarouselButtonGroup />}
       >
-        {props.Articles.slice(
-          0,
-          props.Articles.length >= 3 ? 3 : Assets.Images.articleThree
-        ).map(data => (
-          <ArticleThumbnial articleData={data} />
-        ))}
+        {props.Articles.slice(0, props.Articles.length >= 0 ? 3 : 12).map(
+          data => (
+            <ArticleThumbnial articleData={data} />
+          )
+        )}
       </Carousel>
     </Container>
   ));

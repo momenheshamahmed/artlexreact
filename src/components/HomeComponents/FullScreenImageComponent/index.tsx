@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useObserver } from "mobx-react";
 import { Link } from "react-router-dom";
 
@@ -38,23 +38,34 @@ const FullScreenImageComponent: React.FC<Props> = props => {
       margin-left: 0.5rem !important;
     }
   `;
+
+  const [propsPasstoState, setpropsPasstoState] = useState({});
+
+  useEffect(() => {
+    setpropsPasstoState(props.ImgSrc.content.en.selectTypeface);
+  }, [props.ImgSrc]);
+
   return useObserver(() => (
     <>
-      {props.ImgSrc.slice(0, 2).map(image => {
-        return (
-          <Link to="/" key={image.alt}>
-            <FullScreenImage urlImage={image.url}>
-              <CustomButton
-                variant="contained"
-                className="mt-3"
-                endIcon={<ArrowForwardIcon />}
-              >
-                Add to Cart
-              </CustomButton>
-            </FullScreenImage>
-          </Link>
-        );
-      })}
+      <Link
+        to={{
+          pathname: `/typefaces/${props.ImgSrc.content.en.selectTypeface.content.en.websiteInternalURL}`,
+          state: {
+            documentId: props.ImgSrc.key
+          }
+        }}
+        key={props.ImgSrc.key}
+      >
+        <FullScreenImage urlImage={props.ImgSrc.content.en.coverImage}>
+          <CustomButton
+            variant="contained"
+            className="mt-3"
+            endIcon={<ArrowForwardIcon />}
+          >
+            Add to Cart
+          </CustomButton>
+        </FullScreenImage>
+      </Link>
     </>
   ));
 };

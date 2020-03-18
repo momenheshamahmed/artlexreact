@@ -22,6 +22,13 @@ const AdminFontsFeaturedGridForm: React.FC = () => {
           },
           {
             inContent: true,
+            key: "gridNumber",
+            title: "Grid Number",
+            type: "text",
+            isRequired: true
+          },
+          {
+            inContent: true,
             key: "sortTypeface",
             title: "Sorting",
             type: "text",

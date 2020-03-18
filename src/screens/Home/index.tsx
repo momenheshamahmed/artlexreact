@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useObserver } from "mobx-react";
 import { Container, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
@@ -8,132 +8,41 @@ import BlogSliderComponent from "../../components/HomeComponents/BlogSlider";
 import FeaturedFontsThumbnialsComponent from "../../components/HomeComponents/FeaturedFontsThumbnials";
 import TypefaceTesterComponent from "../../components/TypefaceTesterComponent";
 import FullScreenImageComponent from "../../components/HomeComponents/FullScreenImageComponent";
+import {
+  CustomFontsFeaturedFullScreenStore,
+  FontsFeaturedFullScreenStore,
+  FontsFeaturedGridStore,
+  CustomFontsFeaturedGridStore,
+  BlogFeaturedArticlesStore
+} from "../../stores";
 
 const Home: React.FC = () => {
-  const H1 = styled.h1`
-    font-size: 1.5em;
-    text-align: center;
-    color: palevioletred;
-  `;
-
-  const Fonts: Font = [
-    {
-      fontName: "Momen",
-      url: "momen",
-      coverUrl: "test",
-      featuredCarousel: false,
-      featuredThumbnial: false,
-      controls: {
-        optionOne: false
-      }
-    }
-  ];
-  const FullScreenSrcs = [
-    {
-      url: `${Assets.Images.typefaceFullscreen}`,
-      alt: "Momen"
-    },
-    {
-      url: `${Assets.Images.typefaceFullscreenTwo}`,
-      alt: "Momen"
-    }
-  ];
-  const tileData = [
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 1
-    },
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 1
-    },
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 1
-    },
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 1
-    },
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 1
-    },
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 1
-    },
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 1
-    },
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 1
-    },
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
-      cols: 1
-    }
-  ];
-
-  const Articles = [
-    {
-      imgSrc: Assets.Images.articleOne,
-      Title:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Nulla leo ornare tellus vitae pretium purus id."
-    },
-    {
-      imgSrc: Assets.Images.articleTwo,
-      Title: "Momen 2 "
-    },
-    {
-      imgSrc: Assets.Images.articleThree,
-      Title: "Momen 3"
-    },
-    {
-      ImgSrc: Assets.Images.articleThree,
-      Title: "Momen 3",
-      Id: "id",
-      url: "sad",
-      Img: {
-        id: "asdsa",
-        url: ""
-      }
-    }
-  ];
+  console.log("here", BlogFeaturedArticlesStore.BlogFeaturedArticles);
   return useObserver(() => (
     <div>
-      <FullScreenImageComponent ImgSrc={FullScreenSrcs} />
-      <FeaturedFontsThumbnialsComponent tileData={tileData} />
-      <BlogSliderComponent Articles={Articles} />
+      {FontsFeaturedFullScreenStore.FontsFeaturedFullScreen.map(val => {
+        return <FullScreenImageComponent key={val.key} ImgSrc={val} />;
+      })}
+      {CustomFontsFeaturedFullScreenStore.CustomFontsFeaturedFullScreen.map(
+        val => {
+          return <FullScreenImageComponent key={val.key} ImgSrc={val} />;
+        }
+      )}
+
+      {/* <FeaturedFontsThumbnialsComponent tileData={tileData} /> */}
+      <FeaturedFontsThumbnialsComponent
+        tileData={
+          FontsFeaturedGridStore.FontsFeaturedGrid &&
+          CustomFontsFeaturedGridStore.CustomFontsFeaturedGrid
+        }
+      />
+      <FeaturedFontsThumbnialsComponent
+        tileData={CustomFontsFeaturedGridStore.CustomFontsFeaturedGrid}
+      />
+      <BlogSliderComponent
+        Articles={BlogFeaturedArticlesStore.BlogFeaturedArticles}
+      />
+
       {/* <TypefaceTesterComponent /> */}
     </div>
   ));

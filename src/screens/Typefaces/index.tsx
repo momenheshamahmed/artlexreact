@@ -7,7 +7,7 @@ import { TypefaceStore } from "../../stores";
 
 const Typefaces: React.FC = () => {
   return useObserver(() => (
-    <Container fluid className="pt-5">
+    <Container fluid={true} className="pt-5">
       {
         TypefaceStore.Typefaces.map(val => 
           <TypefaceTesterComponent typeface={val} key={val.key} />

@@ -51,18 +51,25 @@ const ArticleThumbnial: React.FC = props => {
   `;
   return useObserver(() => (
     <Article>
-      <CustomImg ImgSrc={props.articleData.imgSrc} alt="" />
+      <CustomImg
+        ImgSrc={props.articleData.content.en.selectArticle.content.en.image1}
+        alt=""
+      />
       <Link
         to={{
-          pathname: `/blog/${1}`,
-          // state: {
-          //   documentId: tile.key
-          // }
+          pathname: `/blog/${props.articleData.content.en.selectArticle.content.en.articleInternalURL}`,
+          state: {
+            data: props.articleData
+          }
         }}
       >
-        <CustomTitle variant="h5">{props.articleData.Title}</CustomTitle>
+        <CustomTitle variant="h5">
+          {props.articleData.content.en.selectArticle.content.en.title}
+        </CustomTitle>
       </Link>
-      <CustomTag variant="body2">Tag</CustomTag>
+      <CustomTag variant="body2">
+        {props.articleData.content.en.selectArticle.content.en.articleCategory}
+      </CustomTag>
     </Article>
   ));
 };
