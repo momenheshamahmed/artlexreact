@@ -26,7 +26,7 @@ const FeaturedFontsThumbnialsComponent: React.FC = props => {
   const imgSrcHover = useRef<HTMLImageElement>(null);
 
   return useObserver(() => (
-    <Container className="my-5">
+    <Container fluid className="my-5">
       <GridList
         cellHeight={300}
         className={classes.gridList}
