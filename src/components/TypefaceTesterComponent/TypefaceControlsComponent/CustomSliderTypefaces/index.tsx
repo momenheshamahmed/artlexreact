@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { useObserver } from "mobx-react";
 import styled from "styled-components";
 import { Row, Col } from "react-bootstrap";
@@ -28,20 +28,23 @@ const CustomSlider = withStyles({
     marginTop: 10
   }
 })(Slider);
+
 interface Props {
   name: string;
   onChange: (value: number) => void;
 }
+
 const CustomSliderTypefaces: React.FC<Props> = props => {
   const [value, setValue] = useState<number>(30);
   const handleSliderChange = (event: any, newValue: number) => {
     setValue(newValue);
-    props.onChange(value);
-
   };
-  // useEffect(() => {
-  //   props.onChange(value);
-  // }, [value]);
+  // props.onChange(value);
+
+  useLayoutEffect(() => {
+    props.onChange(value);
+  }, [value]);
+
   return useObserver(() => (
     <div>
       <Row>

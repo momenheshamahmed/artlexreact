@@ -26,12 +26,10 @@ export interface CustomTypefaceContent {
   galleryField: Array<string | File | null>;
   coverImage: boolean;
   fontInUseField: Array<string | File | null>;
-  pairfonts: Array<string | object |null>;
+  pairfonts: Array<string | object | null>;
   CustomTypefaceLinkFacebook: string;
   CustomTypefaceLinkBehance: string;
   CustomTypefaceLinkDribbble: string;
   CustomTypefaceLinkTwitter: string;
   CustomTypefaceLinkWebsite: string;
-
-
 }

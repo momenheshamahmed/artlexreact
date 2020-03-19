@@ -47,7 +47,13 @@ const App: React.FC = () => {
   const Logo = styled.img`
     width: 70px;
   `;
-
+  const LinkStyled = styled(Link)`
+  color: black;
+  &:hover {
+    color: black;
+    text-decoration: none;
+  }
+`;
   // Mobx
   useEffect(() => {
     TypefaceStore.watchTypefaces();
@@ -61,13 +67,7 @@ const App: React.FC = () => {
     BlogStore.watchBlogs();
     BlogFeaturedArticlesStore.watchBlogFeaturedArticles();
   }, []);
-  const LinkStyled = styled(Link)`
-    color: black;
-    &:hover {
-      color: black;
-      text-decoration: none;
-    }
-  `;
+
   return (
     <BrowserRouter>
       <Switch>

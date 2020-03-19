@@ -10,36 +10,22 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import TypfaceGalleryComponent from "../../TypefaceGalleryComponent";
 
 import CustomSliderTypefaces from "./CustomSliderTypefaces";
-import CustomLeadingSliderTypefaces from "./CustomLeadingSliderTypefaces";
-import CustomLineHeightSliderTypefaces from "./CustomLineHeightSliderTypefaces";
 
 const TypefaceControlsComponent: React.FC = props => {
-  const onFontSizeSliderChange = evt => {
-    console.log(evt.target.value);
-  };
-  const onLeadingSliderChange = evt => {
-    console.log(evt.target.value);
-  };
-  const onLineHeightSliderChange = evt => {
-    console.log(evt.target.value);
-  };
-
   const [controls, setControls] = useState({});
-  const [fontSize, setFontSize] = useState<number>(30);
-  const [leading, setLeading] = useState<number>(30);
-  const [lineHeight, setLineHeight] = useState<number>(30);
-
+  let fonttSize = 20;
+  let leading: 20;
+  let lineHeight = 20;
   function handleFontSizeChange(newFontSize) {
-    setFontSize(newFontSize);
-    // setControls({ ...controls, newFontSize });
+    fonttSize = newFontSize;
+    console.log("new fonnt", fonttSize);
+    props.onControlsChange(fonttSize);
   }
   function handleLeadingeChange(newLeading) {
-    setLeading(newLeading);
-    // setControls({ ...controls, newLeading });
+    leading = newLeading;
   }
   function handleLineHeighteChange(newLineHeight) {
-    setLineHeight(newLineHeight);
-    // setControls({ ...controls, newLineHeight });
+    lineHeight = newLineHeight;
   }
 
   const onChangeopenTypeFeatures = openTypeFeatures => {
@@ -47,10 +33,11 @@ const TypefaceControlsComponent: React.FC = props => {
   };
 
   const onControlsChange = newValues => {
-    setControls({ ...controls, newValues });
+    setControls({ ...controls, fonttSize, leading, lineHeight });
     props.onControlsChange(controls);
+    console.log("new value", controls);
   };
-  
+
   return useObserver(() => (
     <>
       <Container fluid={true} onChange={onControlsChange}>

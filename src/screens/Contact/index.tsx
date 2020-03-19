@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useObserver } from "mobx-react";
-import FullScreenImageComponent from "../../components/FullScreenImageComponent";
 import Assets from "../../assets/index";
-import { Button, Collapse, Row, Container, Col } from "react-bootstrap";
+import { Collapse, Row, Container, Col } from "react-bootstrap";
 import styled from "styled-components";
-import { Typography } from "@material-ui/core";
+import { Button, Typography, withStyles } from "@material-ui/core";
 
 import AddIcon from "@material-ui/icons/Add";
 import { Formik, Form, Field, FormikHelpers, FormikProps  } from "formik";
@@ -55,14 +54,70 @@ const CustomTypefaces: React.FC = () => {
       color: ${!openThree ? "#fff" : "#000"};
     }
   `;
-  const initialValues: MyFormValues = { firstName: "" };
-  const [emailSent, setEmailSent] = useState(false)
-  const FullScreenSrcs = [
-    {
-      url: `${Assets.Images.typefaceFullscreen}`,
-      alt: "Momen"
-    }
-  ];
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: 'black',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'black',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: '#757575',
+      },
+      '&:hover fieldset': {
+        borderColor: '#000',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#757575',
+      },
+    },
+  },
+})(TextField);
+const CustomButton = withStyles({
+  root: {
+    boxShadow: 'none',
+    textTransform: 'none',
+    fontSize: 18,
+    padding: '12px 24px',
+    border: '1px solid',
+    lineHeight: 1.5,
+    color: "white",
+    backgroundColor: '#000',
+    borderColor: '#000',
+    textTransform: "uppercase",
+    marginTop: 15,  
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:hover': {
+      backgroundColor: '#000',
+      borderColor: '#000',
+      boxShadow: 'none',
+    },
+    '&:active': {
+      boxShadow: 'none',
+      backgroundColor: 'green',
+      borderColor: 'green',
+    },
+    '&:focus': {
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
+    },
+  },
+})(Button);
+
+const [emailSent, setEmailSent] = useState(false)
+
   const FullScreenImage = styled.div`
     width: 100vw;
     height: 100vh;
@@ -128,7 +183,7 @@ const CustomTypefaces: React.FC = () => {
                   render={formikBag => (
                     <Form style={{ width: "100%" }}>
                       <Field
-                        component={TextField}
+                        component={CssTextField}
                         margin="normal"
                         variant="outlined"
                         fullWidth={true}
@@ -137,7 +192,7 @@ const CustomTypefaces: React.FC = () => {
                         label="Momen Hesham"
                       />
                       <Field
-                        component={TextField}
+                        component={CssTextField}
                         margin="normal"
                         variant="outlined"
                         fullWidth={true}
@@ -146,7 +201,7 @@ const CustomTypefaces: React.FC = () => {
                         label="Email"
                       />
                       <Field
-                        component={TextField}
+                        component={CssTextField}
                         margin="normal"
                         variant="outlined"
                         fullWidth={true}
@@ -154,15 +209,13 @@ const CustomTypefaces: React.FC = () => {
                         type="textarea"
                         label="message"
                       />
-                      <Button
-                        // onClick={() => sgMail.send(msg)}
+                      <CustomButton
                         variant="contained"
-                        size="large"
                         fullWidth={true}
                         type="submit"
                       >
                         send
-                      </Button>
+                      </CustomButton>
                     </Form>
                   )}
                 />
