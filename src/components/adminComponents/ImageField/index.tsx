@@ -7,7 +7,7 @@ import styled from "styled-components";
 const ImageField: React.FC<Props> = props => {
   const [image, setImage] = useState<File | string | null>(props.value);
   const styledImage = styled.img`
-    display: (${props => props.src !== null ? 'inline' : 'none' });
+    display: (${props => (props.src !== null ? "inline" : "none")});
   `;
   useEffect(() => {
     setImage(props.value);
@@ -22,18 +22,17 @@ const ImageField: React.FC<Props> = props => {
       // }}
       className="ImageField"
     >
-
       <input
         type="file"
         accept="image/png,image/jpeg"
         id={props.idInput}
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
         ref={inputRef}
         onChange={value => {
           if (value.target.files && value.target.files[0]) {
             props.setValue(value.target.files[0]);
             const reader = new FileReader();
-            reader.onload = function (e) {
+            reader.onload = function(e) {
               if (inputRef.current && e.target) {
                 setImage(e.target.result as any);
               }
@@ -43,12 +42,24 @@ const ImageField: React.FC<Props> = props => {
         }}
       />
       <div>
-        <Button id={`${props.idButton}`} variant="outlined" fullWidth={true} onClick={() => {
-          document.getElementById(`${props.idInput}`).click()
-        }}>
+        <Button
+          id={`${props.idButton}`}
+          variant="outlined"
+          fullWidth={true}
+          onClick={() => {
+            document.getElementById(`${props.idInput}`).click();
+          }}
+        >
           Upload Image
-      </Button>
-        <img src={image ? image : null } style={{ display: image ? "inline" : "none", marginTop: '20px', marginBottom: '20px' }} />
+        </Button>
+        <img
+          src={image ? image : null}
+          style={{
+            display: image ? "inline" : "none",
+            marginTop: "20px",
+            marginBottom: "20px"
+          }}
+        />
       </div>
       {props.error && (
         <Typography

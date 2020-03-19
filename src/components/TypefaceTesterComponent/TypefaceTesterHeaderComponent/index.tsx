@@ -15,7 +15,12 @@ const TypefaceTesterHeaderComponent: React.FC = props => {
 
       <Col className="text-right">
         <Typography variant="body1">
-          <Link to={props.goto ? `/typefaces/${props.goto}` : '/'}>
+          <Link
+            to={{
+              pathname: props.goto ? `/typefaces/${props.goto}` : "/",
+              state: { fontId: props.key }
+            }}
+          >
             SEE SPECIMEN <ArrowForwardIcon />
           </Link>
         </Typography>

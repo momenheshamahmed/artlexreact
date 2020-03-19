@@ -26,43 +26,42 @@ const FeaturedFontsThumbnialsComponent: React.FC = props => {
   const imgSrcHover = useRef<HTMLImageElement>(null);
 
   return useObserver(() => (
-    <Container fluid className="my-5">
+    <Container fluid={true} className="my-5">
       <GridList
         cellHeight={300}
         className={classes.gridList}
         cols={screenSize ? 1 : 3}
       >
-        {screenSize
-          ? props.tileData.slice(0, 2).map(tile => (
-              <GridListTile
-                key={tile.img}
-                cols={screenSize ? 1 : tile.content.en.gridNumber || 1}
-              >
-                <Link to="/">
-                  <CustomImg
-                    src={tile.content.en.coverImageGrid}
-                    hover={tile.content.en.hooooverImageGrid2}
-                    alt={tile.content.en.selectTypeface.content.en.typefaceName}
-                    ref={imgSrcHover}
-                  />
-                </Link>
-              </GridListTile>
-            ))
-          : props.tileData.slice(0, 6).map(tile => (
-              <GridListTile
-                key={tile.img}
-                cols={screenSize ? 1 : tile.content.en.gridNumber || 1}
-              >
-                <Link to="/">
-                  <CustomImg
-                    src={tile.content.en.coverImageGrid}
-                    hover={tile.content.en.hooooverImageGrid2}
-                    alt={tile.content.en.selectTypeface.content.en.typefaceName}
-                    ref={imgSrcHover}
-                  />
-                </Link>
-              </GridListTile>
-            ))}
+        {props.fontsFeatured.map(tile => (
+          <GridListTile
+            key={tile.img}
+            cols={screenSize ? 1 : tile.content.en.gridNumber || 1}
+          >
+            <Link to="/">
+              <CustomImg
+                src={tile.content.en.coverImageGrid}
+                hover={tile.content.en.hooooverImageGrid2}
+                alt={tile.content.en.selectTypeface.content.en.typefaceName}
+                ref={imgSrcHover}
+              />
+            </Link>
+          </GridListTile>
+        ))}
+        {props.customFontsFeatured.map(tile => (
+          <GridListTile
+            key={tile.img}
+            cols={screenSize ? 1 : tile.content.en.gridNumber || 1}
+          >
+            <Link to="/">
+              <CustomImg
+                src={tile.content.en.coverImageGrid}
+                hover={tile.content.en.hooooverImageGrid2}
+                alt={tile.content.en.selectTypeface.content.en.typefaceName}
+                ref={imgSrcHover}
+              />
+            </Link>
+          </GridListTile>
+        ))}
       </GridList>
     </Container>
   ));

@@ -731,6 +731,9 @@ const GeneralFormComponent = <T extends BaseData>(
                                       data.key + suffix,
                                       value
                                     )
+                                    idButton={data.key + suffix}
+                                    idInput={`${data.key}`}
+  
                                   }
                                 />
                                 <Divider className="mt-2" />

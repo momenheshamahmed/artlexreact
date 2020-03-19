@@ -48,12 +48,12 @@ const App: React.FC = () => {
     width: 70px;
   `;
   const LinkStyled = styled(Link)`
-  color: black;
-  &:hover {
     color: black;
-    text-decoration: none;
-  }
-`;
+    &:hover {
+      color: black;
+      text-decoration: none;
+    }
+  `;
   // Mobx
   useEffect(() => {
     TypefaceStore.watchTypefaces();
@@ -76,7 +76,7 @@ const App: React.FC = () => {
         </Route>
 
         <Route path="/">
-          <Navbar expand="md" fixed="top" bg="white">
+          <Navbar expand="md" fixed="top" bg="white" className="py-4">
             <Container fluid={true}>
               <Navbar.Brand>
                 <Link to="/">
@@ -106,7 +106,14 @@ const App: React.FC = () => {
                     <NavDropdown.Item>
                       <LinkContainer to={"/contact"}>
                         <Nav.Link eventKey="contact">
-                          {"Send us a message"}
+                          <LinkStyled
+                            to={{
+                              pathname: "/contact",
+                              state: { contactIs: "sendessmessgae" }
+                            }}
+                          >
+                            {"Send us a message"}
+                          </LinkStyled>
                         </Nav.Link>
                       </LinkContainer>
                     </NavDropdown.Item>
@@ -127,7 +134,14 @@ const App: React.FC = () => {
                     <NavDropdown.Item>
                       <LinkContainer to={"/contact"}>
                         <Nav.Link eventKey="contact">
-                          {"Request custom font"}
+                          <LinkStyled
+                            to={{
+                              pathname: "/contact",
+                              state: { contactIs: "requestcustomfont" }
+                            }}
+                          >
+                            {"Request custom font"}
+                          </LinkStyled>
                         </Nav.Link>
                       </LinkContainer>
                     </NavDropdown.Item>
@@ -138,30 +152,32 @@ const App: React.FC = () => {
           </Navbar>
           <Suspense fallback={<h1>loading route …</h1>}>
             <Switch>
-              <Route exact={true} path="/">
-                <Home />
-              </Route>
-              <Route exact={true} path="/typefaces">
-                <Typefaces />
-              </Route>
-              <Route path="/services">
-                <ProtypeServices />
-              </Route>
-              <Route path="/custom">
-                <CustomTypefaces />
-              </Route>
-              <Route exact={true} path="/blog">
-                <Blog />
-              </Route>
-              <Route path={`/blog/:articleId`}>
-                <ArticlePage />
-              </Route>
-              <Route path="/contact">
-                <Contact />
-              </Route>
-              <Route path={`/typefaces/:typefaceId`}>
-                <TypeFacePage />
-              </Route>
+              <div className="mt-5">
+                <Route exact={true} path="/">
+                  <Home />
+                </Route>
+                <Route exact={true} path="/typefaces">
+                  <Typefaces />
+                </Route>
+                <Route path="/services">
+                  <ProtypeServices />
+                </Route>
+                <Route path="/custom">
+                  <CustomTypefaces />
+                </Route>
+                <Route exact={true} path="/blog">
+                  <Blog />
+                </Route>
+                <Route path={`/blog/:articleId`}>
+                  <ArticlePage />
+                </Route>
+                <Route path="/contact">
+                  <Contact />
+                </Route>
+                <Route path={`/typefaces/:typefaceId`}>
+                  <TypeFacePage />
+                </Route>
+              </div>
             </Switch>
           </Suspense>
           <FooterComponent />

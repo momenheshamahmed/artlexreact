@@ -28,14 +28,6 @@ const ArticlePage: React.FC = props => {
       const dbRef = database().ref("/blog/" + state.documentId);
       dbRef.on("value", snapshot => {
         setData(snapshot.val());
-        let dataRaw = convertFromRaw(
-          JSON.parse(snapshot.val().content.en.richEditor1)
-        );
-        let datanotRaw = stateToHTML(dataRaw);
-        let datanotRaw2 = ReactHtmlParser(datanotRaw);
-        console.log("Content Raw", dataRaw);
-        console.log("Content state", datanotRaw);
-        console.log("Content Raw 2", datanotRaw2);
       });
     } else {
       console.log("no data :( ");

@@ -7,7 +7,6 @@ import Font from "./types";
 import BlogSliderComponent from "../../components/HomeComponents/BlogSlider";
 import FeaturedFontsThumbnialsComponent from "../../components/HomeComponents/FeaturedFontsThumbnials";
 import TypefaceTesterComponent from "../../components/TypefaceTesterComponent";
-import FullScreenImageComponent from "../../components/HomeComponents/FullScreenImageComponent";
 import {
   CustomFontsFeaturedFullScreenStore,
   FontsFeaturedFullScreenStore,
@@ -16,28 +15,98 @@ import {
   BlogFeaturedArticlesStore
 } from "../../stores";
 
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import { Link } from "react-router-dom";
+import { Button } from "@material-ui/core";
+
+//   Styles
+const FullScreenImage = styled.div`
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-image: url(${customprops => customprops.urlImage});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  text-align: right;
+  padding: 10vh;
+  &:hover button {
+    transform: translateX(0vh);
+    transition: 1s;
+  }
+`;
+const CustomButton = styled(Button)`
+  background: #00ff00 !important;
+  border-radius: 100px !important;
+  color: black !important;
+  font-size: 2rem;
+  font-weight: bold;
+  transform: translateX(70vh);
+  transition: 1s;
+
+  & span svg {
+    margin-left: 0.5rem !important;
+  }
+`;
+
 const Home: React.FC = () => {
-  console.log("here", BlogFeaturedArticlesStore.BlogFeaturedArticles);
   return useObserver(() => (
     <div>
       {FontsFeaturedFullScreenStore.FontsFeaturedFullScreen.map(val => {
-        return <FullScreenImageComponent key={val.key} ImgSrc={val} />;
+        return (
+          <Link
+            to={{
+              pathname: `/typefaces/${val.content.en.selectTypeface.content.en.websiteInternalURL}`,
+              state: {
+                documentId: val.key
+              }
+            }}
+            key={val.key}
+          >
+            <FullScreenImage urlImage={val.content.en.coverImage}>
+              <CustomButton
+                variant="contained"
+                className="mt-3"
+                endIcon={<ArrowForwardIcon />}
+              >
+                View Typeface
+              </CustomButton>
+            </FullScreenImage>
+          </Link>
+        );
       })}
       {CustomFontsFeaturedFullScreenStore.CustomFontsFeaturedFullScreen.map(
         val => {
-          return <FullScreenImageComponent key={val.key} ImgSrc={val} />;
+          return (
+            <Link
+              to={{
+                pathname: `/typefaces/${val.content.en.selectTypeface.content.en.websiteInternalURL}`,
+                state: {
+                  documentId: val.key
+                }
+              }}
+              key={val.key}
+            >
+              <FullScreenImage urlImage={val.content.en.coverImage}>
+                <CustomButton
+                  variant="contained"
+                  className="mt-3"
+                  endIcon={<ArrowForwardIcon />}
+                >
+                  View Typeface
+                </CustomButton>
+              </FullScreenImage>
+            </Link>
+          );
         }
       )}
 
-      {/* <FeaturedFontsThumbnialsComponent tileData={tileData} /> */}
       <FeaturedFontsThumbnialsComponent
-        tileData={
-          FontsFeaturedGridStore.FontsFeaturedGrid &&
+        fontsFeatured={FontsFeaturedGridStore.FontsFeaturedGrid}
+        customFontsFeatured={
           CustomFontsFeaturedGridStore.CustomFontsFeaturedGrid
         }
-      />
-      <FeaturedFontsThumbnialsComponent
-        tileData={CustomFontsFeaturedGridStore.CustomFontsFeaturedGrid}
       />
       <BlogSliderComponent
         Articles={BlogFeaturedArticlesStore.BlogFeaturedArticles}

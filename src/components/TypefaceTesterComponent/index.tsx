@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useObserver } from "mobx-react";
 import styled from "styled-components";
-import { Container, Row, Col, Collapse } from "react-bootstrap";
+import { Container, Row, Col, Collapse, Form } from "react-bootstrap";
 import TypfaceGalleryComponent from "../TypefaceGalleryComponent";
 
 import TypefaceTesterHeaderComponent from "./TypefaceTesterHeaderComponent";
 import TypefaceControlsComponent from "./TypefaceControlsComponent";
-
-import { Typography, Slider, withStyles } from "@material-ui/core";
-
+import TextAreaComponent from "./TextAreaComponent";
 const TesterContainer = styled(Container)`
   margin-top: 4vh;
   margin-bottom: 4vh;
@@ -18,14 +16,7 @@ const TextAreaContainer = styled.div`
   height: auto;
   position: relative;
 `;
-const TextArea = styled.textarea`
-  width: 100%;
-  height: 200px;
-  border: none;
-  font-size: ${props => `${props.fontSize}px`};
 
-  overflow: hidden;
-`;
 const TypefaceControls = styled.div`
   height: auto;
   width: 100%;
@@ -38,37 +29,30 @@ const TypefaceTesterComponent: React.FC = props => {
     fontSize: 20,
     leading: 50,
     lineHeight: 30
-
-  }
-  const onControlsChange = newValues => {
-    // setControls(newValues);
-    controls.fontSize = newValues;
-    
-    console.log("hereee controls", newValues);
   };
-
-  //
-  //
-  //
-  //
-  //
   const [fontSize, setFontSize] = useState<number>(30);
-
+  function onControlsChange(newValues) {
+    setFontSize(newValues);
+  }
   return useObserver(() => (
     <TesterContainer fluid={true}>
       <Row>
         <TypefaceTesterHeaderComponent
-          goto={props.typeface.key ? props.typeface.key : "/"}
+          goto={
+            props.typeface.content.en.typefaceLinkWebsite
+              ? props.typeface.content.en.typefaceLinkWebsite
+              : "/"
+          }
+          key={props.typeface.key}
         />
       </Row>
       <Row>
         <Col>
           <TextAreaContainer>
-            <TextArea fontSize={typeof controls.fontSize === "number" ? controls.fontSize : 20}>
-              {props.typeface.content.en.typefaceTestWords
-                ? props.typeface.content.en.typefaceTestWords
-                : "lorem ipsum"}
-            </TextArea>
+            <TextAreaComponent
+              words={props.typeface.content.en.typefaceTestWords}
+              fontSize={fontSize}
+            />
             <TypefaceControls>
               <TypefaceControlsComponent
                 onControlsChange={onControlsChange}

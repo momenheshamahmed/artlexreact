@@ -11,7 +11,6 @@ import styled from "styled-components";
 import TypfaceGalleryComponent from "../../components/TypefaceGalleryComponent";
 import BuyTypefaceSection from "../../components/TypefacePageComponents/BuyTypefaceSection";
 
-
 const TypeFacePage: React.FC = () => {
   const sectionRefs = [useRef(null), useRef(null), useRef(null)];
   const activeSection = useScrollSpy({
@@ -27,7 +26,7 @@ const TypeFacePage: React.FC = () => {
     }
   `;
   return useObserver(() => (
-    <Container className="pt-5">
+    <Container fluid className="pt-5">
       <nav className="App-navigation">
         <span
           className={
@@ -58,7 +57,7 @@ const TypeFacePage: React.FC = () => {
         </span>
       </nav>
 
-      <Container className="mt-5 mb-5">
+      <Container fluid className="mt-5 mb-5">
         <Row>
           <Col md={2}>
             <Typography variant="h6" component="h6">
@@ -87,21 +86,21 @@ const TypeFacePage: React.FC = () => {
           </Col>
         </Row>
       </Container>
-      <div className="mt-5 mb-5">
+      <Container fluid className="mt-5 mb-5">
         <TypfaceGalleryComponent key="TypfaceGalleryComponent" />
-      </div>
+      </Container>
       <Divider />
-      <div className="mt-5 mb-5">
+      <Container fluid className="mt-5 mb-5">
         <BuyTypefaceSection key="BuyTypefaceSection" />
-      </div>
+      </Container>
       <Divider />
-      <div ref={sectionRefs[0]} className="mt-5 mb-5">
+      <Container fluid ref={sectionRefs[0]} className="mt-5 mb-5">
         <FontInUseComponent />
-      </div>
+      </Container>
       <Divider />
-      <div ref={sectionRefs[1]} className="mt-5 mb-5">
+      <Container fluid ref={sectionRefs[1]} className="mt-5 mb-5">
         <PairFontsComponent />
-      </div>
+      </Container>
     </Container>
   ));
 };

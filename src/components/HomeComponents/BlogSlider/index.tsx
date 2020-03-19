@@ -105,6 +105,7 @@ const BlogSliderComponent: React.FC = props => {
   };
 
   return useObserver(() => (
+
     <Container fluid={true} className="position-relative mt-5 mb-5">
       <Typography variant="h5" className="mb-5">
         Blog
@@ -129,7 +130,7 @@ const BlogSliderComponent: React.FC = props => {
         renderButtonGroupOutside={true}
         customButtonGroup={<CarouselButtonGroup />}
       >
-        {props.Articles.slice(0, props.Articles.length >= 0 ? 3 : 12).map(
+        {props.Articles.map(
           data => (
             <ArticleThumbnial articleData={data} />
           )

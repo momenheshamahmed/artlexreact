@@ -21,17 +21,17 @@ const FullScreenImageComponent: React.FC<Props> = props => {
     text-align: right;
     padding: 10vh;
     &:hover button {
-      transform: translateX(-15vh);
+      transform: translateX(0vh);
       transition: 1s;
     }
   `;
   const CustomButton = styled(Button)`
-    background: #fff !important;
+    background: #00ff00 !important;
     border-radius: 100px !important;
     color: black !important;
     font-size: 2rem;
     font-weight: bold;
-    transform: translateX(60vh);
+    transform: translateX(70vh);
     transition: 1s;
 
     & span svg {
@@ -42,7 +42,15 @@ const FullScreenImageComponent: React.FC<Props> = props => {
     <>
       {props.ImgSrc.slice(0, 2).map(image => {
         return (
-          <Link to="/" key={image.key}>
+          <Link
+            to={{
+              pathname: `/custom/${image.content.en.websiteInternalURL}`,
+              state: {
+                documentId: image.key
+              }
+            }}
+            key={image.key}
+          >
             <FullScreenImage urlImage={image.content.en.coverImage}>
               <CustomButton
                 variant="contained"

@@ -16,7 +16,6 @@ import { BlogStore } from "../../../stores";
 
 const BlogGridList: React.FC = () => {
   const screenSize = useMediaQuery("(max-width:700px)");
- 
 
   const ContainerBlogGrid = styled(Container)`
     padding-top: 5vh;

@@ -4,21 +4,23 @@ import Assets from "../../../assets";
 import "./index.css";
 import { Typography, Button } from "@material-ui/core";
 
-const GalleryField: React.FC<Props> = (props) => {
-  const [images, setImages] = useState<Array<File | string | null>>(props.value);
+const GalleryField: React.FC<Props> = props => {
+  const [images, setImages] = useState<Array<File | string | null>>(
+    props.value
+  );
   useEffect(() => {
     const processImages = async () => {
       const processedImages = [];
       const promisesArray = props.value.map((image, index) => {
         return new Promise(res => {
           if (typeof image === "string") {
-            processedImages[index] = (image);
+            processedImages[index] = image;
             res();
           } else {
             const reader = new FileReader();
-            reader.onload = function (e) {
+            reader.onload = function(e) {
               if (inputRef.current && e.target) {
-                processedImages[index] = (e.target.result as any);
+                processedImages[index] = e.target.result as any;
                 res();
               }
             };
@@ -28,7 +30,7 @@ const GalleryField: React.FC<Props> = (props) => {
       });
       await Promise.all(promisesArray);
       setImages(processedImages);
-    }
+    };
     processImages();
   }, [props.value]);
   const inputRef = useRef(null);
@@ -41,13 +43,12 @@ const GalleryField: React.FC<Props> = (props) => {
       // }}
       className="ImageField"
     >
-
       <input
         type="file"
         multiple={true}
         accept="image/png,image/jpeg"
-        id="fileInputGallery"
-        style={{display: 'none'}}
+        id={props.idInput}
+        style={{ display: "none" }}
         ref={inputRef}
         onChange={value => {
           if (value.target.files && value.target.files[0]) {
@@ -60,30 +61,36 @@ const GalleryField: React.FC<Props> = (props) => {
           }
         }}
       />
-      <Button id="button" variant="outlined" fullWidth={true} onClick={() => document.getElementById('button').addEventListener('click', () => {
-        document.getElementById('fileInputGallery').click()
-      })}>
+      <Button
+        id={`${props.idButton}`}
+        variant="outlined"
+        fullWidth={true}
+        onClick={() => {
+          document.getElementById(`${props.idInput}`).click();
+        }}
+      >
         upload files
       </Button>
       <div>
-        {
-          images ?
-
-            images.map((image, index) => (
+        {images
+          ? images.map((image, index) => (
               <>
-                <img src={image ? image : Assets.Images.uploadPlaceholder} style={{ width: "200px" }} />
+                <img
+                  src={image ? image : Assets.Images.uploadPlaceholder}
+                  style={{ width: "200px" }}
+                />
                 <Button
                   onClick={() => {
                     const a = props.value.slice(0);
                     a.splice(index, 1);
                     props.setValue(a);
                   }}
-                >X</Button>
+                >
+                  X
+                </Button>
               </>
             ))
-            :
-            null
-        }
+          : null}
       </div>
       {props.error && (
         <Typography
