@@ -57,6 +57,13 @@ const AdminBlogForm: React.FC = () => {
             type: "RichTextField",
             isRequired: true
           }
+          {
+            inContent: true,
+            key: "relatedArticles",
+            title: "Select Related Articles",
+            type: "relatedarticles",
+            isRequired: true
+          }
         ]}
       />
     </div>

@@ -32,4 +32,5 @@ export interface CustomTypefaceContent {
   CustomTypefaceLinkDribbble: string;
   CustomTypefaceLinkTwitter: string;
   CustomTypefaceLinkWebsite: string;
+  specimenFile: Array<string | File | null>;
 }

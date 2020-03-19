@@ -77,13 +77,6 @@ const AdminCustomTypefacesForm: React.FC = () => {
           },
           {
             inContent: true,
-            key: "CustomTypefaceTestWords",
-            title: "Tester Words",
-            type: "textarea",
-            isRequired: true
-          },
-          {
-            inContent: true,
             key: "galleryField",
             title: "Gallery",
             type: "gallery",
@@ -94,6 +87,13 @@ const AdminCustomTypefacesForm: React.FC = () => {
             key: "coverImage",
             title: "Cover Image",
             type: "image",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "specimenFile",
+            title: "specimenFile",
+            type: "pdf",
             isRequired: true
           },
           {

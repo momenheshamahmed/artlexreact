@@ -38,6 +38,7 @@ import {
 } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import PdfFileField from "../adminComponents/PdfFileField";
 
 const EMPTY_HTML = "<p></p>";
 
@@ -94,9 +95,14 @@ const generateEmptyData = <T extends BaseData>(
           data.content[lang][schemaItem.key] = null;
         } else if (schemaItem.type === "gallery") {
           data.content[lang][schemaItem.key] = [];
-        } else if (schemaItem.type === "pairfonts") {
+        } 
+        else if (schemaItem.type === "pairfonts") {
           data.content[lang][schemaItem.key] = [];
-        } else if (schemaItem.type === "switch") {
+        } 
+        else if (schemaItem.type === "relatedarticles") {
+          data.content[lang][schemaItem.key] = [];
+        } 
+        else if (schemaItem.type === "switch") {
           data.content[lang][schemaItem.key] = Boolean(false);
         } else if (schemaItem.type === "RichTextField") {
           data.content[lang][schemaItem.key] = JSON.stringify(
@@ -117,9 +123,14 @@ const generateEmptyData = <T extends BaseData>(
         data[schemaItem.key] = null;
       } else if (schemaItem.type === "gallery") {
         data[schemaItem.key] = [];
-      } else if (schemaItem.type === "pairfonts") {
+      }
+       else if (schemaItem.type === "pairfonts") {
         data[schemaItem.key] = [];
-      } else if (schemaItem.type === "switch") {
+      } 
+       else if (schemaItem.type === "relatedarticles") {
+        data[schemaItem.key] = [];
+      } 
+      else if (schemaItem.type === "switch") {
         data[schemaItem.key] = Boolean(false);
       } else if (schemaItem.type === "RichTextField") {
         data[schemaItem.key] = JSON.stringify(
@@ -269,7 +280,8 @@ const uploadImagesFormData = async <T extends BaseData>(
       } catch (error) {
         console.error(error);
       }
-    } else if (item.type === "woff") {
+    } 
+    else if (item.type === "woff") {
       promisesArray.push(
         new Promise(async (res, rej) => {
           try {
@@ -307,7 +319,47 @@ const uploadImagesFormData = async <T extends BaseData>(
           }
         })
       );
-    } else if (item.type === "woff2") {
+    } 
+    else if (item.type === "pdf") {
+      promisesArray.push(
+        new Promise(async (res, rej) => {
+          try {
+            if (item.inContent) {
+              const langs = Object.values(Languages).map(
+                lang => lang[0].toUpperCase() + lang.slice(1)
+              );
+              const imagesArray: Array<Promise<string>> = [];
+              langs.forEach(lang => {
+                imagesArray.push(
+                  new Promise(async (resolve, reject) => {
+                    try {
+                      formData[item.key + lang] = await StorageStore.uploadPdfFile(
+                        (formData[item.key + lang] as unknown) as
+                          | File
+                          | string
+                          | null
+                      );
+                      resolve();
+                    } catch (error) {
+                      reject(error);
+                    }
+                  })
+                );
+              });
+              await Promise.all(imagesArray);
+            } else {
+              (formData as any)[item.key] = await StorageStore.uploadPdfFile(
+                (formData as any)[item.key]
+              );
+            }
+            res();
+          } catch (error) {
+            rej(error);
+          }
+        })
+      );
+    } 
+    else if (item.type === "woff2") {
       promisesArray.push(
         new Promise(async (res, rej) => {
           try {
@@ -396,6 +448,27 @@ const fileValidationSchema = Yup.mixed()
       return value && value.size <= MAXIMUM_IMAGE_SIZE;
     }
   );
+const pdfFileValidationSchema = Yup.mixed()
+  .required()
+  .test("fileFormat", "files only (pdf)", (value: File | string) => {
+    if (typeof value === "string") {
+      return true;
+    }
+    return (
+      value &&
+      (getFileExtension1(value.name) === "pdf")
+    );
+  })
+  .test(
+    "fileSize",
+    "Font size must be less than 1MB",
+    (value: File | string) => {
+      if (typeof value === "string") {
+        return true;
+      }
+      return value && value.size <= MAXIMUM_IMAGE_SIZE;
+    }
+  );
 
 const generateValidationSchema = <T extends BaseData>(
   schema: Array<FormKeys<T>>
@@ -409,9 +482,14 @@ const generateValidationSchema = <T extends BaseData>(
           validationSchema[value.key + suffix] = imageValidationSchema.clone();
         } else if (value.type === "image2") {
           validationSchema[value.key + suffix] = imageValidationSchema.clone();
-        } else if (value.type === "woff") {
+        } 
+        else if (value.type === "woff") {
           validationSchema[value.key + suffix] = fileValidationSchema.clone();
-        } else if (value.type === "woff2") {
+        }
+        else if (value.type === "pdf") {
+          validationSchema[value.key + suffix] = pdfFileValidationSchema.clone();
+        }
+         else if (value.type === "woff2") {
           validationSchema[value.key + suffix] = fileValidationSchema.clone();
         } else {
           if (value.isRequired) {
@@ -426,9 +504,15 @@ const generateValidationSchema = <T extends BaseData>(
         validationSchema[value.key] = imageValidationSchema.clone();
       } else if (value.type === "image2") {
         validationSchema[value.key] = imageValidationSchema.clone();
-      } else if (value.type === "woff") {
+      } 
+      else if (value.type === "woff") {
         validationSchema[value.key] = fileValidationSchema.clone();
-      } else if (value.type === "woff2") {
+      }
+      else if (value.type === "pdf") {
+        validationSchema[value.key] = pdfFileValidationSchema.clone();
+      }
+       else if (value.type === "woff2") 
+      {
         validationSchema[value.key] = fileValidationSchema.clone();
       } else {
         if (value.isRequired) {
@@ -458,15 +542,25 @@ const generateEmptyFormData = <T extends BaseData>(
           emptyData[(schemaItem.key as string) + suffix] = null;
         } else if (schemaItem.type === "image2") {
           emptyData[(schemaItem.key as string) + suffix] = null;
-        } else if (schemaItem.type === "woff") {
+        }
+         else if (schemaItem.type === "woff") {
           emptyData[(schemaItem.key as string) + suffix] = null;
-        } else if (schemaItem.type === "woff2") {
+        } 
+         else if (schemaItem.type === "pdf") {
+          emptyData[(schemaItem.key as string) + suffix] = null;
+        } 
+        else if (schemaItem.type === "woff2") {
           emptyData[(schemaItem.key as string) + suffix] = null;
         } else if (schemaItem.type === "gallery") {
           emptyData[(schemaItem.key as string) + suffix] = [];
-        } else if (schemaItem.type === "pairfonts") {
+        } 
+        else if (schemaItem.type === "pairfonts") {
           emptyData[(schemaItem.key as string) + suffix] = [];
-        } else if (schemaItem.type === "switch") {
+        } 
+        else if (schemaItem.type === "relatedarticles") {
+          emptyData[(schemaItem.key as string) + suffix] = [];
+        } 
+        else if (schemaItem.type === "switch") {
           emptyData[(schemaItem.key as string) + suffix] = Boolean(false);
         } else if (schemaItem.type === "RichTextField") {
           console.log(ContentState);
@@ -663,7 +757,8 @@ const GeneralFormComponent = <T extends BaseData>(
                                 <Divider className="mt-2" />
                               </div>
                             );
-                          } else if (data.type === "woff") {
+                          } 
+                          else if (data.type === "woff") {
                             return (
                               <div className="my-3">
                                 <Divider />
@@ -687,7 +782,36 @@ const GeneralFormComponent = <T extends BaseData>(
                                 <Divider className="mt-2" />
                               </div>
                             );
-                          } else if (data.type === "woff2") {
+                          } 
+                          else if (data.type === "pdf") {
+                            return (
+                              <div className="my-3">
+                                <Divider />
+                                <Typography variant="h5" className="my-2">
+                                  {data.title}
+                                </Typography>
+                                <PdfFileField
+                                  value={
+                                    (formikBag.values as any)[data.key + suffix]
+                                  }
+                                  error={
+                                    (formikBag.errors as any)[data.key + suffix]
+                                  }
+                                  setValue={value =>
+                                    formikBag.setFieldValue(
+                                      data.key + suffix,
+                                      value
+                                    )
+                                  }
+                                  idButton={data.key + suffix}
+                                  idInput={`${data.key}`}
+
+                                />
+                                <Divider className="mt-2" />
+                              </div>
+                            );
+                          } 
+                          else if (data.type === "woff2") {
                             return (
                               <div className="my-3">
                                 <Divider />
@@ -733,7 +857,6 @@ const GeneralFormComponent = <T extends BaseData>(
                                     )
                                     idButton={data.key + suffix}
                                     idInput={`${data.key}`}
-  
                                   }
                                 />
                                 <Divider className="mt-2" />
@@ -925,7 +1048,8 @@ const GeneralFormComponent = <T extends BaseData>(
                                 </MenuItem>
                               </Field>
                             );
-                          } else if (data.type === "pairfonts") {
+                          } 
+                          else if (data.type === "pairfonts") {
                             return (
                               <FormControl>
                                 <Typography variant="h5" className="my-2">
@@ -970,7 +1094,54 @@ const GeneralFormComponent = <T extends BaseData>(
                                 </Field>
                               </FormControl>
                             );
-                          } else if (data.type === "switch") {
+                          } 
+                          else if (data.type === "relatedarticles") {
+                            return (
+                              <FormControl>
+                                <Typography variant="h5" className="my-2">
+                                  {data.title}
+                                </Typography>
+                                <Field
+                                  component={Select}
+                                  variant="outlined"
+                                  type="text"
+                                  name={data.key + suffix}
+                                  select={true}
+                                  style={{ overflow: "hidden" }}
+                                  // label={data.title}
+                                  required={data.isRequired}
+                                  error={
+                                    (formikBag.errors as any)[data.key + suffix]
+                                  }
+                                  multiple={true}
+                                  inputProps={{
+                                    name: `${data.key + suffix}`,
+                                    id: `${data.key + suffix}`
+                                  }}
+                                >
+                                  {useObserver(() =>
+                                    BlogStore.Blogs.map(val => {
+                                      return BlogStore.Blogs.length >
+                                        0 ? (
+                                        <MenuItem key={val.key} value={val}>
+                                          {val.content.en.title}
+                                        </MenuItem>
+                                      ) : (
+                                        <MenuItem
+                                          key="noitems"
+                                          value="noitems"
+                                          disabled={true}
+                                        >
+                                          Please go and add articles first!
+                                        </MenuItem>
+                                      );
+                                    })
+                                  )}
+                                </Field>
+                              </FormControl>
+                            );
+                          } 
+                          else if (data.type === "switch") {
                             const switchName = data.key + suffix;
 
                             return (

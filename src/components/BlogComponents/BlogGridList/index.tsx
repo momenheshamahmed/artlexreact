@@ -65,72 +65,41 @@ const BlogGridList: React.FC = () => {
   const imgSrcHover = useRef<HTMLImageElement>(null);
 
   return useObserver(() => (
-    <ContainerBlogGrid>
+    <ContainerBlogGrid fluid={true}>
       <GridList
         cellHeight={200}
         className={classes.gridList}
         cols={screenSize ? 1 : 4}
         rows={screenSize ? 1 : 4}
       >
-        {screenSize
-          ? BlogStore.Blogs.slice(0, 2).map(tile => (
-              <GridListTile
-                key={tile.key}
-                cols={screenSize ? 1 : tile.content.en.gridNumber || 1}
-                rows={screenSize ? 1 : tile.content.en.gridNumber || 1}
+        {BlogStore.Blogs.map(tile => (
+          <GridListTile
+            key={tile.key}
+            cols={screenSize ? 1 : tile.content.en.gridNumber || 1}
+            rows={screenSize ? 1 : tile.content.en.gridNumber || 1}
+          >
+            <Link
+              to={{
+                pathname: `/blog/${tile.content.en.articleInternalURL}`,
+                state: {
+                  documentId: tile.key
+                }
+              }}
+            >
+              <CustomImg
+                src={tile.content.en.image1}
+                // hover={tile.hover}
+                alt={tile.content.en.title}
+                ref={imgSrcHover}
               >
-                <Link
-                  to={{
-                    pathname: `/blog/${tile.content.en.articleInternalURL}`,
-                    state: {
-                      documentId: tile.key
-                    }
-                  }}
-                >
-                  <CustomImg
-                    src={tile.content.en.image1}
-                    // hover={tile.content.en.image1}
-                    alt={tile.content.en.title}
-                    ref={imgSrcHover}
-                  >
-                    <CustomTitle variant="h5">
-                      {tile.content.en.title}
-                    </CustomTitle>
-                    <CustomTag variant="body2">Tag</CustomTag>
-                  </CustomImg>
-                </Link>
-              </GridListTile>
-            ))
-          : BlogStore.Blogs.slice(0, 6).map(tile => (
-              <GridListTile
-                key={tile.key}
-                cols={screenSize ? 1 : tile.content.en.gridNumber || 1}
-                rows={screenSize ? 1 : tile.content.en.gridNumber || 1}
-              >
-                <Link
-                  to={{
-                    pathname: `/blog/${tile.content.en.articleInternalURL}`,
-                    state: {
-                      documentId: tile.key
-                    }
-                  }}
-                >
-                  <CustomImg
-                    src={tile.content.en.image1}
-                    // hover={tile.hover}
-                    alt={tile.content.en.title}
-                    ref={imgSrcHover}
-                  >
-                    <CustomTitle variant="h5">
-                      {tile.content.en.title}
-                    </CustomTitle>
-                    <CustomTag variant="body2">
-                      {tile.content.en.articleCategory}
-                    </CustomTag>
-                  </CustomImg>
-                </Link>
-              </GridListTile>
-            ))}
+                <CustomTitle variant="h5">{tile.content.en.title}</CustomTitle>
+                <CustomTag variant="body2">
+                  {tile.content.en.articleCategory}
+                </CustomTag>
+              </CustomImg>
+            </Link>
+          </GridListTile>
+        ))}
       </GridList>
     </ContainerBlogGrid>
   ));

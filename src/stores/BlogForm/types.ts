@@ -15,4 +15,5 @@ export interface BlogContent {
   image1: string;
   articleCategory: string;
   richEditor1: string;
+  relatedArticles: Array<string | object |null>;
 }

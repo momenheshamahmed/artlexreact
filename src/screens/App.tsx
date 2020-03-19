@@ -39,6 +39,7 @@ import {
 import FooterComponent from "../components/FooterComponent/FooterComponent";
 import Typefaces from "./Typefaces";
 import ArticlePage from "./ArticlePage";
+import CustomTypeFacePage from "./CustomTypeFacePage";
 
 const App: React.FC = () => {
   const [direction] = useState("ltr");
@@ -159,10 +160,10 @@ const App: React.FC = () => {
                 <Route exact={true} path="/typefaces">
                   <Typefaces />
                 </Route>
-                <Route path="/services">
+                <Route exact={true} path="/services">
                   <ProtypeServices />
                 </Route>
-                <Route path="/custom">
+                <Route exact={true} path="/custom">
                   <CustomTypefaces />
                 </Route>
                 <Route exact={true} path="/blog">
@@ -171,16 +172,21 @@ const App: React.FC = () => {
                 <Route path={`/blog/:articleId`}>
                   <ArticlePage />
                 </Route>
-                <Route path="/contact">
+                <Route exact={true} path="/contact">
                   <Contact />
                 </Route>
                 <Route path={`/typefaces/:typefaceId`}>
                   <TypeFacePage />
                 </Route>
+                <Route path={`/custom/:customTypefaceId`}>
+                  <CustomTypeFacePage />
+                </Route>
               </div>
             </Switch>
           </Suspense>
-          <FooterComponent />
+          <Container fluid>
+            <FooterComponent />
+          </Container>
         </Route>
       </Switch>
     </BrowserRouter>

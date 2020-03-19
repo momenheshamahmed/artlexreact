@@ -1,9 +1,10 @@
 export interface Props {
-  value: Array<string | File | null>;
+  value: string | File | null;
   error: string | undefined;
-  setValue: (value: Array<string | File>) => void;
+  setValue: (value: string | File) => void;
   idInput: string;
   idButton: string;
+
 }
 
 export interface ImageData {

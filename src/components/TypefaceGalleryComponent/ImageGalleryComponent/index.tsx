@@ -7,7 +7,6 @@ const ImageGalleryComponent: React.FC = props => {
   // Styles
   // *
   // *
-
   const CustomImg = styled.div`
     width: 400px;
     height: 400px;

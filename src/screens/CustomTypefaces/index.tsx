@@ -4,16 +4,7 @@ import FullScreenImageComponent from "../../components/CustomTypefacesCompnents/
 import Assets from "../../assets/index";
 import { CustomTypefaceStore } from "../../stores";
 const CustomTypefaces: React.FC = () => {
-  const FullScreenSrcs = [
-    {
-      url: `${Assets.Images.typefaceFullscreen}`,
-      alt: "Momen"
-    },
-    {
-      url: `${Assets.Images.typefaceFullscreenTwo}`,
-      alt: "Momen"
-    }
-  ];
+
   return useObserver(() => (
     <>
       <FullScreenImageComponent ImgSrc={CustomTypefaceStore.CustomTypefaces} />

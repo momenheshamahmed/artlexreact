@@ -8,7 +8,7 @@ class CustomTypefacestore {
   @action
   public addTypeface = async (value: Omit<CustomTypeface, "key">): Promise<void> => {
     try {
-      const dbRef = database().ref("/CustomTypefaces");
+      const dbRef = database().ref("/customtypefaces");
       const newItemRef = await dbRef.push();
       await newItemRef.set(value);
       return Promise.resolve();
@@ -24,7 +24,7 @@ class CustomTypefacestore {
     value: Omit<CustomTypeface, "key">
   ): Promise<void> => {
     try {
-      const dbRef = database().ref(`CustomTypefaces/${key}`);
+      const dbRef = database().ref(`customtypefaces/${key}`);
       await dbRef.set(value);
       return Promise.resolve();
     } catch (error) {
@@ -35,7 +35,7 @@ class CustomTypefacestore {
   @action
   public deleteTypeface = async (key: string): Promise<void> => {
     try {
-      const dbRef = database().ref(`CustomTypefaces/${key}`);
+      const dbRef = database().ref(`customtypefaces/${key}`);
       await dbRef.remove();
       return Promise.resolve();
     } catch (error) {
@@ -45,7 +45,7 @@ class CustomTypefacestore {
 
   @action
   public watchCustomTypefaces = () => {
-    const dbRef = database().ref("/CustomTypefaces");
+    const dbRef = database().ref("/customtypefaces");
     dbRef.on("value", snapshot => {
       const data: Record<string, CustomTypeface> = snapshot.val();
       if (data) {
