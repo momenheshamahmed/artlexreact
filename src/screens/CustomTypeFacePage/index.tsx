@@ -17,6 +17,7 @@ import { useLocation } from "react-router-dom";
 import { database } from "firebase";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import AddIcon from "@material-ui/icons/Add";
+import GridListComponent from "../../components/GridListComponent";
 
 const CustomButton = styled(Button)`
   background: #00ff00 !important;
@@ -119,202 +120,201 @@ const CustomTypeFacePage: React.FC = () => {
   `;
   return useObserver(() => (
     <Container fluid={true} className="pt-5">
-      <FullScreenImage urlImage={Assets.Images.typefaceFullscreen} />
-
-      <Container
-        fluid={true}
-        sticky="top"
-        className="sticky-top bg-white py-4 text-center"
-        expand="lg"
-        style={{ top: "100px", boxShadow: "0px 4px 25px rgba(0, 0, 0, 0.05)" }}
-      >
-        <Row>
-          <Col>
-            <Typography
-              className={
-                activeSection === 0
-                  ? "App-navigation-item App-navigation-item--active"
-                  : "App-navigation-item"
-              }
-            >
-              Gallery
-            </Typography>
-          </Col>
-          <Col>
-            <Typography
-              className={
-                activeSection === 1
-                  ? "App-navigation-item App-navigation-item--active"
-                  : "App-navigation-item"
-              }
-            >
-              Font In Use
-            </Typography>
-          </Col>
-          <Col>
-            <Typography
-              className={
-                activeSection === 2
-                  ? "App-navigation-item App-navigation-item--active"
-                  : "App-navigation-item"
-              }
-            >
-              Pair Fonts
-            </Typography>
-          </Col>
-          <Col>
-            <Typography
-              className={
-                activeSection === 3
-                  ? "App-navigation-item App-navigation-item--active"
-                  : "App-navigation-item"
-              }
-            >
-              Info
-            </Typography>
-          </Col>
-        </Row>
-      </Container>
-
-      <Container ref={sectionRefs[0]} fluid={true} className="mt-5 mb-5 py-5">
-        <Row>
-          <Col md={2}>
-            <Typography variant="h6" component="h6">
-              IBM BLEX
-            </Typography>
-          </Col>
-
-          <Col md={8}>
-            <Typography>
-              Mr. Banks was first born as a set of bold numerals for a custom
-              project, a few years back. But because they were so handsome we
-              had to update them with letters that matched them. This typeface
-              is perfect for branding or editorial projects.
-            </Typography>
-            <CustomButton
-              variant="contained"
-              className="mt-3"
-              endIcon={<ArrowForwardIcon />}
-            >
-              Contact Us
-            </CustomButton>
-          </Col>
-          <Col md={2}>
-            <Typography>Family</Typography>
-            <Typography>Family</Typography>
-          </Col>
-        </Row>
-      </Container>
-      <Container fluid={true}>
-        <Carousel
-          swipeable={true}
-          draggable={true}
-          showDots={false}
-          responsive={responsive}
-          ssr={true} // means to render carousel on server-side.
-          infinite={true}
-          autoPlaySpeed={500}
-          keyBoardControl={true}
-          customTransition="all .5"
-          transitionDuration={500}
-          containerClass="carousel-container"
-          removeArrowOnDeviceType={["tablet", "mobile"]}
-        >
-          {[
-            {
-              imgSrc: Assets.Images.articleOne,
-              Title: "Momen 1"
-            },
-            {
-              imgSrc: Assets.Images.articleTwo,
-              Title: "Momen 2 "
-            },
-            {
-              imgSrc: Assets.Images.articleThree,
-              Title: "Momen 3"
-            }
-          ].map(data => (
-            <ImageGalleryComponent key={data.Title} imgData={data} />
-          ))}
-        </Carousel>
-      </Container>
-      <Divider className="mt-5" />
-      <Container fluid={true} ref={sectionRefs[1]} className="mt-5 mb-5">
-        <FontInUseComponent />
-      </Container>
-      <Divider />
-      <Container fluid={true} ref={sectionRefs[2]} className="mt-5 mb-5">
-        <PairFontsComponent />
-      </Container>
-      <Container fluid={true} ref={sectionRefs[3]} className="my-5">
-        <Container fluid={true}>
-          <ContactItem
-            onClick={() => setOpen(!open)}
-            aria-controls="example-collapse-text"
-            aria-exfluid={true}
-            d={open}
-          >
-            <Col>
-              <Typography>Send us a message</Typography>
-            </Col>
-            <Col className="text-right">
-              <AddIcon />
-            </Col>
-          </ContactItem>
-          <Collapse in={open}>
-            <Container>
-              <CustomtRow>
-                Anim pariatur cliche reprehenderit, enim eiusmod high life
-                accusamus terry richardson ad squid. Nihil anim keffiyeh
-                helvetica, craft beer labore wes anderson cred nesciunt sapiente
-                ea proident.
-              </CustomtRow>
-            </Container>
-          </Collapse>
-        </Container>
-        <Container fluid={true}>
-          <ContactItemTwo
-            onClick={() => setOpenTwo(!openTwo)}
-            aria-controls="example-collapse-text"
+      {data != null ? (
+        <>
+          <FullScreenImage urlImage={data.content.en.coverImage} />
+          <Container
             fluid={true}
-            a-expanded={openTwo}
+            sticky="top"
+            className="sticky-top bg-white py-4 text-center"
+            expand="lg"
+            style={{
+              top: "100px",
+              boxShadow: "0px 4px 25px rgba(0, 0, 0, 0.05)"
+            }}
           >
-            <Col>
-              <Typography>ask for a proposal</Typography>
-            </Col>
-            <Col className="text-right">
-              {" "}
-              <AddIcon />
-            </Col>
-          </ContactItemTwo>
-          <Collapse in={openTwo}>
-            <Container>
-              <CustomtRow>
-                Anim pariatur cliche reprehenderit, enim eiusmod high life
-                accusamus terry richardson ad squid. Nihil anim keffiyeh
-                helvetica, craft beer labore wes anderson cred nesciunt sapiente
-                ea proident.
-              </CustomtRow>
-            </Container>
-          </Collapse>
-        </Container>
-        <Container fluid={true}>
-          <ContactItemThree
-            // onClick={() => setOpenThree(!openThree)}
-            aria-controls="example-collapse-text"
+            <Row>
+              <Col>
+                <Typography
+                  className={
+                    activeSection === 0
+                      ? "App-navigation-item App-navigation-item--active"
+                      : "App-navigation-item"
+                  }
+                >
+                  Gallery
+                </Typography>
+              </Col>
+              <Col>
+                <Typography
+                  className={
+                    activeSection === 1
+                      ? "App-navigation-item App-navigation-item--active"
+                      : "App-navigation-item"
+                  }
+                >
+                  Font In Use
+                </Typography>
+              </Col>
+              <Col>
+                <Typography
+                  className={
+                    activeSection === 2
+                      ? "App-navigation-item App-navigation-item--active"
+                      : "App-navigation-item"
+                  }
+                >
+                  Pair Fonts
+                </Typography>
+              </Col>
+              <Col>
+                <Typography
+                  className={
+                    activeSection === 3
+                      ? "App-navigation-item App-navigation-item--active"
+                      : "App-navigation-item"
+                  }
+                >
+                  Info
+                </Typography>
+              </Col>
+            </Row>
+          </Container>
+
+          <Container
+            ref={sectionRefs[0]}
             fluid={true}
-            aria-expanded={openThree}
+            className="mt-5 mb-5 py-5"
           >
-            <Col>
-              <Typography>ask for a proposal</Typography>
-            </Col>
-            <Col className="text-right">
-              {" "}
-              <GetAppIcon />
-            </Col>
-          </ContactItemThree>
-        </Container>
-      </Container>
+            <Row>
+              <Col md={2}>
+                <Typography variant="h6" component="h6">
+                  {data.content.en.CustomTypefaceName}
+                </Typography>
+              </Col>
+
+              <Col md={8}>
+                <Typography>
+                  Mr. Banks was first born as a set of bold numerals for a
+                  custom project, a few years back. But because they were so
+                  handsome we had to update them with letters that matched them.
+                  This typeface is perfect for branding or editorial projects.
+                </Typography>
+                <CustomButton
+                  variant="contained"
+                  className="mt-3"
+                  endIcon={<ArrowForwardIcon />}
+                >
+                  Contact Us
+                </CustomButton>
+              </Col>
+              <Col md={2}>
+                <Typography>Family</Typography>
+                <Typography>Family</Typography>
+              </Col>
+            </Row>
+          </Container>
+          <Container fluid={true}>
+            <Carousel
+              swipeable={true}
+              draggable={true}
+              showDots={false}
+              responsive={responsive}
+              ssr={true} // means to render carousel on server-side.
+              infinite={true}
+              autoPlaySpeed={500}
+              keyBoardControl={true}
+              customTransition="all .5"
+              transitionDuration={500}
+              containerClass="carousel-container"
+              removeArrowOnDeviceType={["tablet", "mobile"]}
+            >
+              {data.content.en.galleryField.map(data => (
+                <ImageGalleryComponent key={data} imgData={data} />
+              ))}
+            </Carousel>
+          </Container>
+          <Divider className="mt-5" />
+          <Container fluid={true} ref={sectionRefs[1]} className="mt-5 mb-5">
+            <GridListComponent />
+          </Container>
+          <Divider />
+          <Container fluid={true} ref={sectionRefs[2]} className="mt-5 mb-5">
+            <PairFontsComponent data={data.content.en.pairfonts} />
+          </Container>
+          <Container fluid={true} ref={sectionRefs[3]} className="my-5">
+            <Container fluid={true}>
+              <ContactItem
+                onClick={() => setOpen(!open)}
+                aria-controls="example-collapse-text"
+                aria-exfluid={true}
+                d={open}
+              >
+                <Col>
+                  <Typography>Send us a message</Typography>
+                </Col>
+                <Col className="text-right">
+                  <AddIcon />
+                </Col>
+              </ContactItem>
+              <Collapse in={open}>
+                <Container>
+                  <CustomtRow>
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life
+                    accusamus terry richardson ad squid. Nihil anim keffiyeh
+                    helvetica, craft beer labore wes anderson cred nesciunt
+                    sapiente ea proident.
+                  </CustomtRow>
+                </Container>
+              </Collapse>
+            </Container>
+            <Container fluid={true}>
+              <ContactItemTwo
+                onClick={() => setOpenTwo(!openTwo)}
+                aria-controls="example-collapse-text"
+                fluid={true}
+                a-expanded={openTwo}
+              >
+                <Col>
+                  <Typography>ask for a proposal</Typography>
+                </Col>
+                <Col className="text-right">
+                  {" "}
+                  <AddIcon />
+                </Col>
+              </ContactItemTwo>
+              <Collapse in={openTwo}>
+                <Container>
+                  <CustomtRow>
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life
+                    accusamus terry richardson ad squid. Nihil anim keffiyeh
+                    helvetica, craft beer labore wes anderson cred nesciunt
+                    sapiente ea proident.
+                  </CustomtRow>
+                </Container>
+              </Collapse>
+            </Container>
+            <Container fluid={true}>
+              <ContactItemThree
+                // onClick={() => setOpenThree(!openThree)}
+                aria-controls="example-collapse-text"
+                fluid={true}
+                aria-expanded={openThree}
+              >
+                <Col>
+                  <Typography>ask for a proposal</Typography>
+                </Col>
+                <Col className="text-right">
+                  {" "}
+                  <GetAppIcon />
+                </Col>
+              </ContactItemThree>
+            </Container>
+          </Container>
+        </>
+      ) : (
+        <h1>loading ..</h1>
+      )}
     </Container>
   ));
 };

@@ -2,16 +2,16 @@ import React from "react";
 import { useObserver } from "mobx-react";
 import GeneralFormComponent from "../../../../../components/GeneralFormComponent";
 
-import FontsInUseStore from "../../../../../stores/FontsInUseForm/index";
-import { FontInUse } from "../../../../../stores/FontsInUseForm/types";
+import CustomFontsInUseStore from "../../../../../stores/CustomFontsInUseForm/index";
+import { CustomFontInUse } from "../../../../../stores/CustomFontsInUseForm/types";
 
-const AdminFontsInUseForm: React.FC = () => {
+const AdminCustomFontsInUseForm: React.FC = () => {
   return useObserver(() => (
     <div>
-      <GeneralFormComponent<FontInUse>
-        addAction={FontsInUseStore.addFontInUse}
-        editAction={FontsInUseStore.editFontInUse}
-        data={FontsInUseStore.FontsInUse}
+      <GeneralFormComponent<CustomFontInUse>
+        addAction={CustomFontsInUseStore.addCustomFontInUse}
+        editAction={CustomFontsInUseStore.editCustomFontInUse}
+        data={CustomFontsInUseStore.CustomFontsInUse}
         formData={[
           {
             inContent: true,
@@ -41,4 +41,4 @@ const AdminFontsInUseForm: React.FC = () => {
   ));
 };
 
-export default AdminFontsInUseForm;
+export default AdminCustomFontsInUseForm;

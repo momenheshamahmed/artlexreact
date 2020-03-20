@@ -227,6 +227,14 @@ export default function MiniDrawer() {
               <ListItemText primary={"Custom Typefaces"} />
             </ListItem>
           </LinkStyled>
+          <LinkStyled to="/admin/customfontsinuse">
+            <ListItem key={"Custom Fonts In Use"}>
+              <ListItemIcon>
+                <FontDownloadIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Custom Fonts In Use"} />
+            </ListItem>
+          </LinkStyled>
           <LinkStyled to="/admin/customfontsfeaturedfullscreen">
             <ListItem key={"Custom Typefaces Featured"}>
               <ListItemIcon>

@@ -18,7 +18,7 @@ const ImageGalleryComponent: React.FC = props => {
 
   return useObserver(() => (
     <>
-      <CustomImg ImgSrc={props.imgData.imgSrc} alt="" />
+      <CustomImg ImgSrc={props.imgData} alt="" />
     </>
   ));
 };

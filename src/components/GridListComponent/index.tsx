@@ -10,9 +10,9 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 // Assets
-import Assets from "../../../assets/index";
+import Assets from "../../assets/index";
 
-const FontInUseComponent: React.FC = () => {
+const GridListComponent: React.FC = () => {
   const screenSize = useMediaQuery("(max-width:700px)");
   const tileData = [
     {
@@ -59,31 +59,21 @@ const FontInUseComponent: React.FC = () => {
       img: Assets.Images.typefaceStatic,
       hover: Assets.Images.typefaceHover,
       title: "Image",
-      author: "author",
       cols: 2,
-      rows: 1
     },
     {
       img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
       title: "Image",
-      author: "author",
       cols: 2,
+    },
+    {
+      img: Assets.Images.typefaceStatic,
+      title: "Image",
       rows: 2
     },
     {
       img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
       title: "Image",
-      author: "author",
-      cols: 2,
-      rows: 2
-    },
-    {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
-      title: "Image",
-      author: "author",
       cols: 1
     }
   ];
@@ -94,9 +84,7 @@ const FontInUseComponent: React.FC = () => {
     width: 100%;
     height: 100%;
     background: url(${props => props.src});
-    &:hover {
-      background: url(${props => props.hover});
-    }
+
   `;
   const imgSrcHover = useRef<HTMLImageElement>(null);
 
@@ -110,40 +98,17 @@ const FontInUseComponent: React.FC = () => {
         cols={screenSize ? 1 : 6}
         spacing={15}
       >
-        {screenSize
-          ? tileData.slice(0, 2).map(tile => (
-              <GridListTile
-                key={tile.img}
-                cols={screenSize ? 1 : tile.cols || 1}
-              >
-                <Link to="/">
-                  <CustomImg
-                    src={tile.img}
-                    hover={tile.hover}
-                    alt={tile.title}
-                    ref={imgSrcHover}
-                  />
-                </Link>
-              </GridListTile>
-            ))
-          : tileData.slice(0, 6).map(tile => (
-              <GridListTile
-                key={tile.img}
-                cols={screenSize ? 1 : tile.cols || 1}
-                rows={screenSize ? 1 : tile.rows || 1}
-              >
-                <Link to="/">
-                  <CustomImg
-                    src={tile.img}
-                    hover={tile.hover}
-                    alt={tile.title}
-                    ref={imgSrcHover}
-                  />
-                </Link>
-              </GridListTile>
-            ))}
+        {tileData.slice(0, 2).map(tile => (
+          <GridListTile key={tile.img} cols={screenSize ? 1 : tile.cols || 1}>
+            <CustomImg
+              src={tile.img}
+              alt={tile.title}
+              ref={imgSrcHover}
+            />
+          </GridListTile>
+        ))}
       </GridList>
     </>
   ));
 };
-export default FontInUseComponent;
+export default GridListComponent;

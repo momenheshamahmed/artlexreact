@@ -1,14 +1,14 @@
 import { Languages } from "../../utils/translation/index";
 
 // tslint:disable-next-line: interface-name
-export interface FontInUse {
+export interface CustomFontInUse {
   key: string;
   id: number;
-  content: Record<Languages, FontInUseContent>;
+  content: Record<Languages, CustomFontInUseContent>;
 }
 
 // tslint:disable-next-line: interface-name
-export interface FontInUseContent {
+export interface CustomFontInUseContent {
   selectTypeface: Array<string | File | null>;
   imageGrid: string;
   imageInUse: string;

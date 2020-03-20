@@ -82,7 +82,6 @@ const PairFontsComponent: React.FC = () => {
     },
     {
       img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
       title: "Image",
       author: "author",
       cols: 1
@@ -95,19 +94,13 @@ const PairFontsComponent: React.FC = () => {
     width: 100%;
     height: 100%;
     background: url(${props => props.src});
-    &:hover {
-      background: url(${props => props.hover});
-    }
+
   `;
   const imgSrcHover = useRef<HTMLImageElement>(null);
 
   return useObserver(() => (
     <>
-      <Typography
-        variant="h6"
-        component="h6"
-        className="mb-3 mt-3"
-      >
+      <Typography variant="h6" component="h6" className="mb-3 mt-3">
         PAIR FONTS
       </Typography>
       <GridList
@@ -116,37 +109,17 @@ const PairFontsComponent: React.FC = () => {
         cols={screenSize ? 1 : 6}
         spacing={15}
       >
-        {screenSize
-          ? tileData.slice(0, 2).map(tile => (
-              <GridListTile
-                key={tile.img}
-                cols={screenSize ? 1 : tile.cols || 1}
-              >
-                <Link to="/">
-                  <CustomImg
-                    src={tile.img}
-                    hover={tile.hover}
-                    alt={tile.title}
-                    ref={imgSrcHover}
-                  />
-                </Link>
-              </GridListTile>
-            ))
-          : tileData.slice(0, 6).map(tile => (
-              <GridListTile
-                key={tile.img}
-                cols={screenSize ? 1 : tile.cols || 1}
-              >
-                <Link to="/">
-                  <CustomImg
-                    src={tile.img}
-                    hover={tile.hover}
-                    alt={tile.title}
-                    ref={imgSrcHover}
-                  />
-                </Link>
-              </GridListTile>
-            ))}
+        {tileData.map(tile => (
+          <GridListTile key={tile.img} cols={screenSize ? 1 : tile.cols || 1}>
+            <Link to="/">
+              <CustomImg
+                src={tile.img}
+                alt={tile.title}
+                ref={imgSrcHover}
+              />
+            </Link>
+          </GridListTile>
+        ))}
       </GridList>
     </>
   ));

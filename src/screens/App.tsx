@@ -169,22 +169,22 @@ const App: React.FC = () => {
                 <Route exact={true} path="/blog">
                   <Blog />
                 </Route>
-                <Route path={`/blog/:articleId`}>
+                <Route exact={true} path={`/blog/:articleId`}>
                   <ArticlePage />
                 </Route>
                 <Route exact={true} path="/contact">
                   <Contact />
                 </Route>
-                <Route path={`/typefaces/:typefaceId`}>
+                <Route exact={true} path={`/typefaces/:typefaceId`}>
                   <TypeFacePage />
                 </Route>
-                <Route path={`/custom/:customTypefaceId`}>
+                <Route exact={true} path={`/custom/:customTypefaceId`}>
                   <CustomTypeFacePage />
                 </Route>
               </div>
             </Switch>
           </Suspense>
-          <Container fluid>
+          <Container fluid={true}>
             <FooterComponent />
           </Container>
         </Route>

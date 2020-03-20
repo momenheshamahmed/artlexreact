@@ -10,6 +10,8 @@ import AdminTypefacesForm from "./typefaces/form";
 import AdminTypefacesTable from "./typefaces";
 import MiniDrawer from "../../../components/adminComponents/Drawer";
 import { BrowserRouter } from "react-router-dom";
+import AdminCustomFontsInUseForm from "./CustomFontsInUseForm/form";
+import AdminCustomFontsInUseTable from "./CustomFontsInUseForm";
 
 const AdminFontsForm = lazy(() => import("./FontsForm/form"));
 const AdminFontsTable = lazy(() => import("./FontsForm"));
@@ -113,6 +115,12 @@ const AdminRoot = () => {
                     </Route>
                     <Route exact={true} path="/admin/fontsinuse">
                       <AdminFontsInUseTable />
+                    </Route>
+                    <Route path="/admin/customfontsinuse/:key">
+                      <AdminCustomFontsInUseForm />
+                    </Route>
+                    <Route exact={true} path="/admin/customfontsinuse">
+                      <AdminCustomFontsInUseTable />
                     </Route>
                     <Route path="/admin/fontsfeaturedfullscreen/:key">
                       <AdminFontsFeaturedFullscreenForm />

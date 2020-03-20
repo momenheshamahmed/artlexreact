@@ -1,12 +1,12 @@
-import { FontInUse } from "./types";
+import { CustomFontInUse } from "./types";
 import { observable, action } from "mobx";
 import { database } from "firebase";
 
-class FontInUseStore {
-  @observable public FontsInUse: FontInUse[] = [];
+class CustomFontInUseStore {
+  @observable public CustomFontsInUse: CustomFontInUse[] = [];
 
   @action
-  public addFontInUse = async (value: Omit<FontInUse, "key">): Promise<void> => {
+  public addCustomFontInUse = async (value: Omit<CustomFontInUse, "key">): Promise<void> => {
     try {
       const dbRef = database().ref("/fontinuse" + value.content.en.selectTypeface.content.en);
       const newItemRef = await dbRef.push();
@@ -19,9 +19,9 @@ class FontInUseStore {
   };
 
   @action
-  public editFontInUse = async (
+  public editCustomFontInUse = async (
     key: string,
-    value: Omit<FontInUse, "key">
+    value: Omit<CustomFontInUse, "key">
   ): Promise<void> => {
     try {
       const dbRef = database().ref(`fontsinuse/${key}`);
@@ -33,7 +33,7 @@ class FontInUseStore {
   };
 
   @action
-  public deleteFontInUse = async (key: string): Promise<void> => {
+  public deleteCustomFontInUse = async (key: string): Promise<void> => {
     try {
       const dbRef = database().ref(`fontsinuse/${key}`);
       await dbRef.remove();
@@ -44,21 +44,21 @@ class FontInUseStore {
   };
 
   @action
-  public watchFontsInUse = () => {
+  public watchCustomFontsInUse = () => {
     const dbRef = database().ref("/fontsinuse");
     dbRef.on("value", snapshot => {
-      const data: Record<string, FontInUse> = snapshot.val();
+      const data: Record<string, CustomFontInUse> = snapshot.val();
       if (data) {
-        const mappedData: FontInUse[] = Object.entries(data).map(entry => {
+        const mappedData: CustomFontInUse[] = Object.entries(data).map(entry => {
           return {
             ...entry[1],
             key: entry[0]
           };
         });
-        this.FontsInUse = mappedData;
+        this.CustomFontsInUse = mappedData;
       }
     });
   };
 }
 
-export default new FontInUseStore();
+export default new CustomFontInUseStore();
