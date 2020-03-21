@@ -27,6 +27,16 @@ const CustomButton = styled(Button)`
     margin-left: 1.5rem !important;
   }
 `;
+const CustomTag = styled(Typography)`
+  background: #000;
+  color: white;
+  padding: 1rem 2rem;
+  margin: 0 0.2rem !important;
+  border-radius: 100px;
+  &:nth-child(0) {
+    margin-left: 0 !important;
+  }
+`;
 const CustomTypeFacePage: React.FC = () => {
   const [data, setData] = useState(null);
   let { state } = useLocation();
@@ -251,20 +261,50 @@ const CustomTypeFacePage: React.FC = () => {
                 d={open}
               >
                 <Col>
-                  <Typography>Send us a message</Typography>
+                  <Typography>Credits</Typography>
                 </Col>
                 <Col className="text-right">
                   <AddIcon />
                 </Col>
               </ContactItem>
               <Collapse in={open}>
-                <Container>
+                <Container fluid={true}>
                   <CustomtRow>
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life
-                    accusamus terry richardson ad squid. Nihil anim keffiyeh
-                    helvetica, craft beer labore wes anderson cred nesciunt
-                    sapiente ea proident.
+                    <Col>
+                      <Typography>Typeface Name</Typography>
+                    </Col>
+                    <Col className="text-right">
+                      <Typography>Name</Typography>
+                    </Col>
                   </CustomtRow>
+                  <Divider />
+                  <CustomtRow>
+                    <Col>
+                      <Typography>Typeface Name</Typography>
+                    </Col>
+                    <Col className="text-right">
+                      <Typography>Name</Typography>
+                    </Col>
+                  </CustomtRow>
+                  <Divider />
+                  <CustomtRow>
+                    <Col>
+                      <Typography>Typeface Name</Typography>
+                    </Col>
+                    <Col className="text-right">
+                      <Typography>Name</Typography>
+                    </Col>
+                  </CustomtRow>
+                  <Divider />
+                  <CustomtRow>
+                    <Col>
+                      <Typography>Typeface Name</Typography>
+                    </Col>
+                    <Col className="text-right">
+                      <Typography>Name</Typography>
+                    </Col>
+                  </CustomtRow>
+                  <Divider />
                 </Container>
               </Collapse>
             </Container>
@@ -276,7 +316,7 @@ const CustomTypeFacePage: React.FC = () => {
                 a-expanded={openTwo}
               >
                 <Col>
-                  <Typography>ask for a proposal</Typography>
+                  <Typography>SUPPORTED LANGUAGES</Typography>
                 </Col>
                 <Col className="text-right">
                   {" "}
@@ -284,12 +324,20 @@ const CustomTypeFacePage: React.FC = () => {
                 </Col>
               </ContactItemTwo>
               <Collapse in={openTwo}>
-                <Container>
+                <Container fluid={true}>
                   <CustomtRow>
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life
-                    accusamus terry richardson ad squid. Nihil anim keffiyeh
-                    helvetica, craft beer labore wes anderson cred nesciunt
-                    sapiente ea proident.
+                    <CustomTag variant="body2">
+                      Language
+                    </CustomTag>
+                    <CustomTag variant="body2">
+                      Language
+                    </CustomTag>
+                    <CustomTag variant="body2">
+                      Language
+                    </CustomTag>
+                    <CustomTag variant="body2">
+                      Language
+                    </CustomTag>
                   </CustomtRow>
                 </Container>
               </Collapse>

@@ -37,7 +37,14 @@ const FeaturedFontsThumbnialsComponent: React.FC = props => {
             key={tile.img}
             cols={screenSize ? 1 : tile.content.en.gridNumber || 1}
           >
-            <Link to="/">
+            <Link
+              to={{
+                pathname: `/typefaces/${tile.content.en.typefaceLinkWebsite}`,
+                state: {
+                  documentId: tile.key
+                }
+              }}
+            >
               <CustomImg
                 src={tile.content.en.coverImageGrid}
                 hover={tile.content.en.hooooverImageGrid2}
@@ -52,7 +59,14 @@ const FeaturedFontsThumbnialsComponent: React.FC = props => {
             key={tile.img}
             cols={screenSize ? 1 : tile.content.en.gridNumber || 1}
           >
-            <Link to="/">
+            <Link
+              to={{
+                pathname: `/custom/${tile.content.en.typefaceLinkWebsite}`,
+                state: {
+                  documentId: tile.key
+                }
+              }}
+            >
               <CustomImg
                 src={tile.content.en.coverImageGrid}
                 hover={tile.content.en.hooooverImageGrid2}

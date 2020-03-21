@@ -10,15 +10,15 @@ import AddIcon from "@material-ui/icons/Add";
 
 const BuyTypefaceComponent: React.FC = () => {
   const BuyFontContainer = styled(Container)`
-    background: #F7F7F7;
+    background: #f7f7f7;
     padding: 2rem;
   `;
   const TextAndButton = styled(Row)`
-  align-items: center;
-  `
+    align-items: center;
+  `;
   const WeightPreview = styled(Col)`
-  height: 100%;
-  `
+    height: 100%;
+  `;
   const CustomButton = styled(Button)`
     background: #00ff00 !important;
     border-radius: 100px !important;
@@ -28,7 +28,7 @@ const BuyTypefaceComponent: React.FC = () => {
     }
   `;
   return useObserver(() => (
-    <BuyFontContainer>
+    <BuyFontContainer fluid>
       {/* <Row>
         <Col>
           <Typography variant="subtitle1" component="subtitle1">
@@ -46,7 +46,6 @@ const BuyTypefaceComponent: React.FC = () => {
           <CustomButton
             variant="contained"
             color="primary"
-            
             endIcon={<AddIcon />}
           >
             Add to Cart

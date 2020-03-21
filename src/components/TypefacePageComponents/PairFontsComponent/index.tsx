@@ -84,7 +84,7 @@ const PairFontsComponent: React.FC = () => {
       img: Assets.Images.typefaceStatic,
       title: "Image",
       author: "author",
-      cols: 1
+      cols: 4
     }
   ];
 

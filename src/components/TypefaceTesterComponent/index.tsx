@@ -31,8 +31,8 @@ const TypefaceTesterComponent: React.FC = props => {
     lineHeight: 30
   };
   const [fontSize, setFontSize] = useState<number>(30);
-  function onControlsChange(newValues) {
-    setFontSize(newValues);
+  function onControlsChange(name, newValues) {
+    setFontSize({[name]: newValues});
   }
   return useObserver(() => (
     <TesterContainer fluid={true}>

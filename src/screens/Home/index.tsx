@@ -15,6 +15,8 @@ import {
   BlogFeaturedArticlesStore
 } from "../../stores";
 
+import { database } from "firebase";
+
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
@@ -49,8 +51,22 @@ const CustomButton = styled(Button)`
     margin-left: 0.5rem !important;
   }
 `;
-
 const Home: React.FC = () => {
+  const [featuredFonts, setFeaturedFonts] = useState(null);
+  useEffect(() => {
+    FontsFeaturedFullScreenStore.FontsFeaturedFullScreen.map(val => {
+      const adbRef = database()
+        .ref("/typefaces/")
+        .child(`${val.content.en.selectTypeface.key}`)
+        // .orderByChild("key")
+        // .equalTo(`${val.content.en.selectTypeface.key}`);
+      // adbRef.child(val.content.en.selectTypeface.key);
+      adbRef.on("value", snapshot => {
+        console.log("u in home", snapshot.val());
+      });
+    });
+  }, [FontsFeaturedFullScreenStore.FontsFeaturedFullScreen]);
+
   return useObserver(() => (
     <div>
       {FontsFeaturedFullScreenStore.FontsFeaturedFullScreen.map(val => {

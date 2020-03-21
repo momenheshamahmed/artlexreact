@@ -8,7 +8,6 @@ import {
   useMediaQuery,
   Typography
 } from "@material-ui/core";
-import classes from "*.module.css";
 import { Link } from "react-router-dom";
 // Assets
 import Assets from "../../../assets/index";
@@ -68,7 +67,6 @@ const BlogGridList: React.FC = () => {
     <ContainerBlogGrid fluid={true}>
       <GridList
         cellHeight={200}
-        className={classes.gridList}
         cols={screenSize ? 1 : 4}
         rows={screenSize ? 1 : 4}
       >

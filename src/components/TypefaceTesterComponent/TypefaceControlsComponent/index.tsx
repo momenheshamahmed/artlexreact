@@ -16,6 +16,7 @@ const TypefaceControlsComponent: React.FC = props => {
   let fonttSize = 20;
   let leading: 20;
   let lineHeight = 20;
+  
   function handleFontSizeChange(newFontSize) {
     fonttSize = newFontSize;
     console.log("new fonnt", fonttSize);

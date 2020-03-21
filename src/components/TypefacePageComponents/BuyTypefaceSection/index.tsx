@@ -10,15 +10,11 @@ import BuyTypefaceComponent from "./BuyTypefaceComponent";
 const BuyTypefaceSection: React.FC = () => {
   return useObserver(() => (
     <>
-      <Typography
-        variant="h6"
-        component="h6"
-        className="mb-3 mt-3"
-      >
+      <Typography variant="h6" component="h6" className="mb-3 mt-3">
         Buy Typeface Now
       </Typography>
       <BuyTypefaceComponent />
-   </>
+    </>
   ));
 };
 export default BuyTypefaceSection;

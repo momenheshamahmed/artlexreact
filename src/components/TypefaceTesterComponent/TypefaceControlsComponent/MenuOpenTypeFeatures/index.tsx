@@ -65,8 +65,7 @@ export default function MenuOpenTypeFeatures(props) {
   const handleChange = (name: string) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const newValues = { ...state, [name]: event.target.checked };
-    setState(newValues);
+    setState({ ...state, [name]: event.target.checked });
     props.onChange(state);
 
   };
@@ -84,9 +83,7 @@ export default function MenuOpenTypeFeatures(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const CustomButton = styled.div`
-    background: red;
-  `;
+
   const GreenCheckbox = withStyles({
     root: {
       color: "#000",

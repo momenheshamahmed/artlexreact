@@ -9,7 +9,12 @@ class Images {
   public static articleOne = require("./articleOne.svg");
   public static articleTwo = require("./articleTwo.svg");
   public static articleThree = require("./articleThree.svg");
-
+  public static facebook = require("./facebook.svg");
+  public static twitter = require("./twitter.svg");
+  public static instagram= require("./instagram.svg");
+  public static linkedin = require("./linkedin.svg");
+  public static pinterest = require("./pinterest.svg");
+  public static behance = require("./behance.svg");
 }
 
 export default Images;
