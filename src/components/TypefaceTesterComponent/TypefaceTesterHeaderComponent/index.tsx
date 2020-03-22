@@ -21,7 +21,7 @@ const TypefaceTesterHeaderComponent: React.FC = props => {
               state: { fontId: props.key }
             }}
           >
-            SEE SPECIMEN <ArrowForwardIcon />
+            Go To Font <ArrowForwardIcon />
           </Link>
         </Typography>
       </Col>

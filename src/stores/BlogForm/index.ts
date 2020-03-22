@@ -8,7 +8,7 @@ class BlogStore {
   @action
   public addBlog = async (value: Omit<Blog, "key">): Promise<void> => {
     try {
-      const dbRef = database().ref("/blog");
+      const dbRef = database().ref("/blog/");
       const newItemRef = await dbRef.push();
       await newItemRef.set(value);
       return Promise.resolve();

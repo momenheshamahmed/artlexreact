@@ -66,11 +66,9 @@ export default function MenuOpenTypeFeatures(props) {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setState({ ...state, [name]: event.target.checked });
-    props.onChange(state);
-
   };
   // useEffect(() => {
-  
+
   //   props.onChange(state);
 
   // }[state])
@@ -94,6 +92,9 @@ export default function MenuOpenTypeFeatures(props) {
     checked: {}
   })((props: CheckboxProps) => <Checkbox color="default" {...props} />);
 
+  useEffect(() => {
+    props.onChange(state);
+  }, [state]);
   return (
     <div>
       <div
@@ -113,8 +114,7 @@ export default function MenuOpenTypeFeatures(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <StyledMenuItem
-          style={{}}>
+        <StyledMenuItem style={{}}>
           <FormControlLabel
             control={
               <GreenCheckbox

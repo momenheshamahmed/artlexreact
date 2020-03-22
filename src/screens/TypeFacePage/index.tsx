@@ -104,7 +104,7 @@ const TypeFacePage: React.FC = () => {
                   : "App-navigation-item"
               }
             >
-              Font In Use
+              Characters
             </Typography>
           </Col>
           <Col>
@@ -115,13 +115,35 @@ const TypeFacePage: React.FC = () => {
                   : "App-navigation-item"
               }
             >
-              Pair Fonts
+              Buy Font
             </Typography>
           </Col>
           <Col>
             <Typography
               className={
                 activeSection === 3
+                  ? "App-navigation-item App-navigation-item--active"
+                  : "App-navigation-item"
+              }
+            >
+              Font In Use
+            </Typography>
+          </Col>
+          <Col>
+            <Typography
+              className={
+                activeSection === 4
+                  ? "App-navigation-item App-navigation-item--active"
+                  : "App-navigation-item"
+              }
+            >
+              Pair Fonts
+            </Typography>
+          </Col>
+          <Col>
+            <Typography
+              className={
+                activeSection === 5
                   ? "App-navigation-item App-navigation-item--active"
                   : "App-navigation-item"
               }

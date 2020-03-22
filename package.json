@@ -3,6 +3,9 @@
   "main": "src/index.tsx",
   "version": "0.1.0",
   "private": true,
+  "author": "Momen Hesham <momen@observer.design>",
+  "license": "Apache-2.0",
+  "description": "A wysiwyg on top of DraftJS.",
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/polyfill": "^7.8.7",
@@ -17,12 +20,13 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@tinymce/tinymce-react": "^3.5.0",
     "@types/draft-js": "^0.10.38",
     "@types/react-bootstrap": "^0.32.20",
     "@types/styled-components": "^5.0.0",
     "bootstrap": "4.3.1",
     "date-fns": "^2.0.0-beta.5",
-    "draft-js": "^0.11.4",
+    "draft-js": "0.11.2",
     "draft-js-export-html": "^1.4.1",
     "firebase": "^7.6.1",
     "formik": "^2.1.4",
@@ -36,11 +40,11 @@
     "mobx-react": "6.1.4",
     "moment": "^2.24.0",
     "popper.js": "1.16.0",
-    "react": "^16.13.0",
+    "react": "^16.7.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dnd": "^10.0.2",
     "react-dnd-html5-backend": "^10.0.2",
-    "react-dom": "^16.13.0",
+    "react-dom": "^16.7.0",
     "react-draft-wysiwyg": "^1.14.4",
     "react-dropzone": "^10.2.1",
     "react-html-parser": "^2.0.2",
@@ -117,7 +121,5 @@
     "tslint": "^5.13.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^3.6.0"
-  },
-  "author": "Momen Hesham <momen@observer.design>",
-  "license": "Apache-2.0"
+  }
 }

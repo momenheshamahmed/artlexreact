@@ -11,23 +11,33 @@ export interface Typeface {
 export interface TypefaceContent {
   websiteInternalURL: string;
   fileFont: string;
+  coverImage: string;
   fileSpecimenFont: string;
   fileUserTermsFont: string;
   typefaceCategory: string;
   typefaceName: string;
+  typefaceTestWords: string;
+  fontSize: string;
+  lineHeight: string;
+  leading: string;
   typefaceDescription: string;
+  specimenFilePdf: string;
+  specimenFileText: string;
+  userAgreementPdf: string;
+  userAgreementText: string;
+  pairFontImage: string;
   designerName: string;
   version: string;
   manufacturing: string;
   copyright: string;
   releaseDate: string;
-  storeUrl: string;
+  fullPackageImageStore: string;
+  fullPackageStoreUrl: string;
   familyStyles: string;
-  typefaceTestWords: string;
   galleryField: Array<string | File | null>;
-  charactersImage: boolean;
+  charactersImage: string;
   fontInUseField: Array<string | File | null>;
-  pairfonts: Array<string | object |null>;
+  pairfonts: Array<string | object | null>;
   typefaceLinkFacebook: string;
   typefaceLinkBehance: string;
   typefaceLinkDribbble: string;
@@ -45,5 +55,5 @@ export interface TypefaceContent {
   stylisticFive: boolean;
   stylisticSix: boolean;
   stylisticSeven: boolean;
-
 }
+

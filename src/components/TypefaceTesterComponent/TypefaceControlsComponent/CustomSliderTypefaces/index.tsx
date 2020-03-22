@@ -30,12 +30,14 @@ const CustomSlider = withStyles({
 })(Slider);
 
 interface Props {
+  key: string;
   name: string;
   onChange: (value: number) => void;
 }
 
 const CustomSliderTypefaces: React.FC<Props> = props => {
   const [value, setValue] = useState<number>(30);
+  const [eventControl, setEventControl] = useState(null);
   const handleSliderChange = (event: any, newValue: number) => {
     setValue(newValue);
   };
@@ -58,6 +60,8 @@ const CustomSliderTypefaces: React.FC<Props> = props => {
         </Col>
       </Row>
       <CustomSlider
+        key={props.key}
+        name={props.key}
         value={typeof value === "number" ? value : 0}
         onChange={handleSliderChange}
       />

@@ -28,6 +28,13 @@ const AdminCustomTypefacesForm: React.FC = () => {
           },
           {
             inContent: true,
+            key: "coverImage",
+            title: "Cover Image",
+            type: "text",
+            isRequired: false
+          },
+          {
+            inContent: true,
             key: "CustomTypefaceDescription",
             title: "CustomTypeface Description",
             type: "text",
@@ -94,7 +101,7 @@ const AdminCustomTypefacesForm: React.FC = () => {
             key: "specimenFile",
             title: "specimenFile",
             type: "pdf",
-            isRequired: true
+            isRequired: false
           },
           {
             inContent: true,

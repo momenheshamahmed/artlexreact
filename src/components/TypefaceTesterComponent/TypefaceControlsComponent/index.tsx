@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useObserver } from "mobx-react";
 import { Container, Row, Col } from "react-bootstrap";
 import MenuOpenTypeFeatures from "./MenuOpenTypeFeatures";
@@ -13,32 +13,43 @@ import CustomSliderTypefaces from "./CustomSliderTypefaces";
 
 const TypefaceControlsComponent: React.FC = props => {
   const [controls, setControls] = useState({});
-  let fonttSize = 20;
-  let leading: 20;
-  let lineHeight = 20;
-  
-  function handleFontSizeChange(newFontSize) {
-    fonttSize = newFontSize;
-    console.log("new fonnt", fonttSize);
-    props.onControlsChange(fonttSize);
+
+  function handleFontSizeChange(event) {
+    setControls({ ...controls, fontSize: event });
+    console.log("event font size here", event != null ? event : "no event yet");
+
+    // props.onControlsChange({
+    //   ...controls,
+    //   [event.target.name]: event.target.value
+    // });
   }
-  function handleLeadingeChange(newLeading) {
-    leading = newLeading;
+  function handleLeadingeChange(event) {
+    // leading = newLeading;
+    setControls({ ...controls, leading: event });
+
+    console.log("event leadning here", event != null ? event : "no event yet");
   }
-  function handleLineHeighteChange(newLineHeight) {
-    lineHeight = newLineHeight;
+  function handleLineHeighteChange(event) {
+    setControls({ ...controls, lineHeight: event });
+
+    console.log(
+      "event line-height here",
+      event != null ? event : "no event yet"
+    );
   }
 
   const onChangeopenTypeFeatures = openTypeFeatures => {
     setControls({ ...controls, openTypeFeatures });
+    console.log("open type features", openTypeFeatures);
   };
 
-  const onControlsChange = newValues => {
-    setControls({ ...controls, fonttSize, leading, lineHeight });
+  const onControlsChange = event => {
+    // setControls({ ...controls, [event.target.name]: event.target.value });
+    console.log("onControls Changeeed");
+  };
+  useEffect(() => {
     props.onControlsChange(controls);
-    console.log("new value", controls);
-  };
-
+  }, [controls]);
   return useObserver(() => (
     <>
       <Container fluid={true} onChange={onControlsChange}>
@@ -46,19 +57,22 @@ const TypefaceControlsComponent: React.FC = props => {
           <Col md={3}>
             <CustomSliderTypefaces
               onChange={handleFontSizeChange}
+              key="fontSize"
               name="Font Size"
             />
           </Col>
           <Col md={3}>
             <CustomSliderTypefaces
               onChange={handleLeadingeChange}
-              name="Font Size"
+              key="leading"
+              name="Leading"
             />
           </Col>
           <Col md={3}>
             <CustomSliderTypefaces
               onChange={handleLineHeighteChange}
-              name="Font Size"
+              key="lineHeight"
+              name="Line-Height"
             />
           </Col>
           <Col md={1}>

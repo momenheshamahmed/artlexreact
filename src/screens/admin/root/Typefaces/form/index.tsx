@@ -28,8 +28,44 @@ const AdminTypefacesForm: React.FC = () => {
           },
           {
             inContent: true,
+            key: "coverImage",
+            title: "Cover Image",
+            type: "image",
+            isRequired: true
+          },
+
+          {
+            inContent: true,
             key: "typefaceName",
             title: "Typeface Name",
+            type: "text",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "typefaceTestWords",
+            title: "Tester Words",
+            type: "textarea",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "fontSize",
+            title: "Font size",
+            type: "text",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "lineHeight",
+            title: "Line Height",
+            type: "text",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "leading",
+            title: "Leading",
             type: "text",
             isRequired: true
           },
@@ -38,14 +74,94 @@ const AdminTypefacesForm: React.FC = () => {
             key: "typefaceCategory",
             title: "Typeface Category",
             type: "selecttypfacecategory",
-            isRequired: true
+            isRequired: true,
+            helper: "Select Category"
           },
           {
             inContent: true,
             key: "typefaceDescription",
             title: "Typeface Description",
+            type: "textarea",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "specimenFilePdf",
+            title: "specimenFile",
+            type: "pdf",
+            isRequired: false
+          },
+          {
+            inContent: true,
+            key: "specimenFileText",
+            title: "specimenFile",
+            type: "text",
+            isRequired: false
+          },
+          {
+            inContent: true,
+            key: "userAgreementPdf",
+            title: "specimenFile",
+            type: "pdf",
+            isRequired: false
+          },
+          {
+            inContent: true,
+            key: "userAgreementText",
+            title: "specimenFile",
+            type: "text",
+            isRequired: false
+          },
+          {
+            inContent: true,
+            key: "galleryField",
+            title: "Gallery",
+            type: "gallery",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "charactersImage",
+            title: "characters",
+            type: "image",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "familyStyles",
+            title: "Family Styles Number",
             type: "text",
             isRequired: true
+          },
+          {
+            inContent: true,
+            key: "fullPackageImageStore",
+            title: "Fullpackage store image",
+            type: "image",
+            isRequired: true
+          },
+
+          {
+            inContent: true,
+            key: "fullPackageStoreUrl",
+            title: "Full package Store Url (gumroad)",
+            type: "text",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "pairFontImage",
+            title: "Pair Font Image",
+            type: "image",
+            isRequired: true
+          },
+
+          {
+            inContent: true,
+            key: "pairfonts",
+            title: "Pair fonts",
+            type: "pairfonts",
+            isRequired: false
           },
           {
             inContent: true,
@@ -81,48 +197,6 @@ const AdminTypefacesForm: React.FC = () => {
             title: "Release Date",
             type: "text",
             isRequired: true
-          },
-          {
-            inContent: true,
-            key: "storeUrl",
-            title: "Store Url",
-            type: "text",
-            isRequired: true
-          },
-          {
-            inContent: true,
-            key: "familyStyles",
-            title: "Family Styles Number",
-            type: "text",
-            isRequired: true
-          },
-          {
-            inContent: true,
-            key: "typefaceTestWords",
-            title: "Tester Words",
-            type: "textarea",
-            isRequired: true
-          },
-          {
-            inContent: true,
-            key: "galleryField",
-            title: "Gallery",
-            type: "gallery",
-            isRequired: true
-          },
-          {
-            inContent: true,
-            key: "charactersImage",
-            title: "characters",
-            type: "image",
-            isRequired: true
-          },
-          {
-            inContent: true,
-            key: "pairfonts",
-            title: "Pair fonts",
-            type: "pairfonts",
-            isRequired: false
           },
 
           {

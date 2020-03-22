@@ -219,41 +219,6 @@ export default function MiniDrawer() {
         </List>
         <Divider />
         <List>
-          <LinkStyled to="/admin/customtypefaces">
-            <ListItem key={"customtypefaces"}>
-              <ListItemIcon>
-                <FontDownloadIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Custom Typefaces"} />
-            </ListItem>
-          </LinkStyled>
-          <LinkStyled to="/admin/customfontsinuse">
-            <ListItem key={"Custom Fonts In Use"}>
-              <ListItemIcon>
-                <FontDownloadIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Custom Fonts In Use"} />
-            </ListItem>
-          </LinkStyled>
-          <LinkStyled to="/admin/customfontsfeaturedfullscreen">
-            <ListItem key={"Custom Typefaces Featured"}>
-              <ListItemIcon>
-                <FontDownloadIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Custom Typefaces Featured"} />
-            </ListItem>
-          </LinkStyled>
-          <LinkStyled to="/admin/customfontsfeaturedgrid">
-            <ListItem key={"Custom Typefaces Grid"}>
-              <ListItemIcon>
-                <FontDownloadIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Custom Typefaces Grid"} />
-            </ListItem>
-          </LinkStyled>
-        </List>
-        <Divider />
-        <List>
           <LinkStyled to="/admin/blog">
             <ListItem key={"Blog"}>
               <ListItemIcon>

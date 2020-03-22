@@ -45,6 +45,13 @@ const AdminBlogForm: React.FC = () => {
           },
           {
             inContent: true,
+            key: "relatedArticles",
+            title: "Select Related Articles",
+            type: "relatedarticles",
+            isRequired: true
+          },
+          {
+            inContent: true,
             key: "image1",
             title: "Your Cover Image",
             type: "image",
@@ -55,13 +62,6 @@ const AdminBlogForm: React.FC = () => {
             key: "richEditor1",
             title: "Write Your Content",
             type: "RichTextField",
-            isRequired: true
-          }
-          {
-            inContent: true,
-            key: "relatedArticles",
-            title: "Select Related Articles",
-            type: "relatedarticles",
             isRequired: true
           }
         ]}

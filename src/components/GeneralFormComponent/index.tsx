@@ -28,20 +28,10 @@ import { Languages } from "../../utils/translation";
 import { FontStore, TypefaceStore, BlogStore, CustomTypefaceStore } from "../../stores";
 import FileField from "../adminComponents/FileField";
 
-import {
-  EditorState,
-  ContentState,
-  convertToRaw,
-  convertFromRaw,
-  RawDraftContentState,
-  convertFromHTML
-} from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import PdfFileField from "../adminComponents/PdfFileField";
 
-const EMPTY_HTML = "<p></p>";
-
+import { Editor } from '@tinymce/tinymce-react';
+const EMPTY_HTML = "<p>Momen Hesham Ahmed Osman</p>";
 const MAXIMUM_IMAGE_SIZE = 2 * 1024 * 1024;
 
 const mapDataToFormData = <T extends BaseData>(data: T) => {
@@ -95,22 +85,18 @@ const generateEmptyData = <T extends BaseData>(
           data.content[lang][schemaItem.key] = null;
         } else if (schemaItem.type === "gallery") {
           data.content[lang][schemaItem.key] = [];
-        } 
+        }
         else if (schemaItem.type === "pairfonts") {
           data.content[lang][schemaItem.key] = [];
-        } 
+        }
         else if (schemaItem.type === "relatedarticles") {
           data.content[lang][schemaItem.key] = [];
-        } 
+        }
         else if (schemaItem.type === "switch") {
           data.content[lang][schemaItem.key] = Boolean(false);
         } else if (schemaItem.type === "RichTextField") {
           data.content[lang][schemaItem.key] = JSON.stringify(
-            convertToRaw(
-              ContentState.createFromBlockArray(
-                convertFromHTML(EMPTY_HTML).contentBlocks
-              )
-            )
+            EMPTY_HTML
           );
         } else {
           data.content[lang][schemaItem.key] = "";
@@ -124,22 +110,16 @@ const generateEmptyData = <T extends BaseData>(
       } else if (schemaItem.type === "gallery") {
         data[schemaItem.key] = [];
       }
-       else if (schemaItem.type === "pairfonts") {
+      else if (schemaItem.type === "pairfonts") {
         data[schemaItem.key] = [];
-      } 
-       else if (schemaItem.type === "relatedarticles") {
+      }
+      else if (schemaItem.type === "relatedarticles") {
         data[schemaItem.key] = [];
-      } 
+      }
       else if (schemaItem.type === "switch") {
         data[schemaItem.key] = Boolean(false);
       } else if (schemaItem.type === "RichTextField") {
-        data[schemaItem.key] = JSON.stringify(
-          convertToRaw(
-            ContentState.createFromBlockArray(
-              convertFromHTML(EMPTY_HTML).contentBlocks
-            )
-          )
-        );
+        data[schemaItem.key] = JSON.stringify(EMPTY_HTML);
       } else {
         data[schemaItem.key] = "";
       }
@@ -174,9 +154,9 @@ const uploadImagesFormData = async <T extends BaseData>(
                         item.key + lang
                       ] = await StorageStore.uploadImage(
                         (formData[item.key + lang] as unknown) as
-                          | File
-                          | string
-                          | null
+                        | File
+                        | string
+                        | null
                       );
                       resolve();
                     } catch (error) {
@@ -214,9 +194,9 @@ const uploadImagesFormData = async <T extends BaseData>(
                         item.key + lang
                       ] = await StorageStore.uploadImage(
                         (formData[item.key + lang] as unknown) as
-                          | File
-                          | string
-                          | null
+                        | File
+                        | string
+                        | null
                       );
                       resolve();
                     } catch (error) {
@@ -280,7 +260,7 @@ const uploadImagesFormData = async <T extends BaseData>(
       } catch (error) {
         console.error(error);
       }
-    } 
+    }
     else if (item.type === "woff") {
       promisesArray.push(
         new Promise(async (res, rej) => {
@@ -296,9 +276,9 @@ const uploadImagesFormData = async <T extends BaseData>(
                     try {
                       formData[item.key + lang] = await StorageStore.uploadFile(
                         (formData[item.key + lang] as unknown) as
-                          | File
-                          | string
-                          | null
+                        | File
+                        | string
+                        | null
                       );
                       resolve();
                     } catch (error) {
@@ -319,7 +299,7 @@ const uploadImagesFormData = async <T extends BaseData>(
           }
         })
       );
-    } 
+    }
     else if (item.type === "pdf") {
       promisesArray.push(
         new Promise(async (res, rej) => {
@@ -335,9 +315,9 @@ const uploadImagesFormData = async <T extends BaseData>(
                     try {
                       formData[item.key + lang] = await StorageStore.uploadPdfFile(
                         (formData[item.key + lang] as unknown) as
-                          | File
-                          | string
-                          | null
+                        | File
+                        | string
+                        | null
                       );
                       resolve();
                     } catch (error) {
@@ -358,7 +338,7 @@ const uploadImagesFormData = async <T extends BaseData>(
           }
         })
       );
-    } 
+    }
     else if (item.type === "woff2") {
       promisesArray.push(
         new Promise(async (res, rej) => {
@@ -374,9 +354,9 @@ const uploadImagesFormData = async <T extends BaseData>(
                     try {
                       formData[item.key + lang] = await StorageStore.uploadFile(
                         (formData[item.key + lang] as unknown) as
-                          | File
-                          | string
-                          | null
+                        | File
+                        | string
+                        | null
                       );
                       resolve();
                     } catch (error) {
@@ -405,7 +385,6 @@ const uploadImagesFormData = async <T extends BaseData>(
 
 const textValidationSchema = Yup.string().required();
 const imageValidationSchema = Yup.mixed()
-  .required()
   .test("fileFormat", "Images only (PNG / JPG)", (value: File | string) => {
     if (typeof value === "string") {
       return true;
@@ -427,7 +406,6 @@ const getFileExtension1 = (filename: string) => {
 };
 
 const fileValidationSchema = Yup.mixed()
-  .required()
   .test("fileFormat", "Fonts only (woff / woff2)", (value: File | string) => {
     if (typeof value === "string") {
       return true;
@@ -449,7 +427,6 @@ const fileValidationSchema = Yup.mixed()
     }
   );
 const pdfFileValidationSchema = Yup.mixed()
-  .required()
   .test("fileFormat", "files only (pdf)", (value: File | string) => {
     if (typeof value === "string") {
       return true;
@@ -482,14 +459,14 @@ const generateValidationSchema = <T extends BaseData>(
           validationSchema[value.key + suffix] = imageValidationSchema.clone();
         } else if (value.type === "image2") {
           validationSchema[value.key + suffix] = imageValidationSchema.clone();
-        } 
+        }
         else if (value.type === "woff") {
           validationSchema[value.key + suffix] = fileValidationSchema.clone();
         }
         else if (value.type === "pdf") {
           validationSchema[value.key + suffix] = pdfFileValidationSchema.clone();
         }
-         else if (value.type === "woff2") {
+        else if (value.type === "woff2") {
           validationSchema[value.key + suffix] = fileValidationSchema.clone();
         } else {
           if (value.isRequired) {
@@ -504,15 +481,14 @@ const generateValidationSchema = <T extends BaseData>(
         validationSchema[value.key] = imageValidationSchema.clone();
       } else if (value.type === "image2") {
         validationSchema[value.key] = imageValidationSchema.clone();
-      } 
+      }
       else if (value.type === "woff") {
         validationSchema[value.key] = fileValidationSchema.clone();
       }
       else if (value.type === "pdf") {
         validationSchema[value.key] = pdfFileValidationSchema.clone();
       }
-       else if (value.type === "woff2") 
-      {
+      else if (value.type === "woff2") {
         validationSchema[value.key] = fileValidationSchema.clone();
       } else {
         if (value.isRequired) {
@@ -543,34 +519,27 @@ const generateEmptyFormData = <T extends BaseData>(
         } else if (schemaItem.type === "image2") {
           emptyData[(schemaItem.key as string) + suffix] = null;
         }
-         else if (schemaItem.type === "woff") {
+        else if (schemaItem.type === "woff") {
           emptyData[(schemaItem.key as string) + suffix] = null;
-        } 
-         else if (schemaItem.type === "pdf") {
+        }
+        else if (schemaItem.type === "pdf") {
           emptyData[(schemaItem.key as string) + suffix] = null;
-        } 
+        }
         else if (schemaItem.type === "woff2") {
           emptyData[(schemaItem.key as string) + suffix] = null;
         } else if (schemaItem.type === "gallery") {
           emptyData[(schemaItem.key as string) + suffix] = [];
-        } 
+        }
         else if (schemaItem.type === "pairfonts") {
           emptyData[(schemaItem.key as string) + suffix] = [];
-        } 
+        }
         else if (schemaItem.type === "relatedarticles") {
           emptyData[(schemaItem.key as string) + suffix] = [];
-        } 
+        }
         else if (schemaItem.type === "switch") {
           emptyData[(schemaItem.key as string) + suffix] = Boolean(false);
         } else if (schemaItem.type === "RichTextField") {
-          console.log(ContentState);
-          emptyData[(schemaItem.key as string) + suffix] = JSON.stringify(
-            convertToRaw(
-              ContentState.createFromBlockArray(
-                convertFromHTML(EMPTY_HTML).contentBlocks
-              )
-            )
-          );
+          emptyData[(schemaItem.key as string) + suffix] = JSON.stringify(EMPTY_HTML);
         } else {
           emptyData[(schemaItem.key as string) + suffix] = "";
         }
@@ -594,10 +563,7 @@ const GeneralFormComponent = <T extends BaseData>(
   const [initialValues, setInitialValues] = useState(
     generateEmptyFormData(props.formData)
   );
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  useEffect(() => {
-    setEditorState(EditorState.createEmpty());
-  }, []);
+
   useEffect(() => {
     if (params && params.key) {
       if (params.key !== "new") {
@@ -757,7 +723,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 <Divider className="mt-2" />
                               </div>
                             );
-                          } 
+                          }
                           else if (data.type === "woff") {
                             return (
                               <div className="my-3">
@@ -782,7 +748,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 <Divider className="mt-2" />
                               </div>
                             );
-                          } 
+                          }
                           else if (data.type === "pdf") {
                             return (
                               <div className="my-3">
@@ -810,7 +776,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 <Divider className="mt-2" />
                               </div>
                             );
-                          } 
+                          }
                           else if (data.type === "woff2") {
                             return (
                               <div className="my-3">
@@ -856,13 +822,13 @@ const GeneralFormComponent = <T extends BaseData>(
                                       value
                                     )
                                     idButton={data.key + suffix}
-                                    idInput={`${data.key}`}
+                                  idInput={`${data.key}`}
                                   }
                                 />
                                 <Divider className="mt-2" />
                               </div>
                             );
-                          } 
+                          }
                           else if (data.type === "selecttypface") {
                             return (
                               <Field
@@ -888,23 +854,23 @@ const GeneralFormComponent = <T extends BaseData>(
                                   TypefaceStore.Typefaces.map(val => {
                                     return TypefaceStore.Typefaces.length >
                                       0 ? (
-                                      <MenuItem key={val.key} value={val}>
-                                        {val.content.en.typefaceName}
-                                      </MenuItem>
-                                    ) : (
-                                      <MenuItem
-                                        key="noitems"
-                                        value="noitems"
-                                        disabled={true}
-                                      >
-                                        Please go and typefaces first!
-                                      </MenuItem>
-                                    );
+                                        <MenuItem key={val.key} value={val}>
+                                          {val.content.en.typefaceName}
+                                        </MenuItem>
+                                      ) : (
+                                        <MenuItem
+                                          key="noitems"
+                                          value="noitems"
+                                          disabled={true}
+                                        >
+                                          Please go and typefaces first!
+                                        </MenuItem>
+                                      );
                                   })
                                 )}
                               </Field>
                             );
-                          } 
+                          }
                           else if (data.type === "selectcustomtypface") {
                             return (
                               <Field
@@ -930,23 +896,23 @@ const GeneralFormComponent = <T extends BaseData>(
                                   CustomTypefaceStore.CustomTypefaces.map(val => {
                                     return TypefaceStore.Typefaces.length >
                                       0 ? (
-                                      <MenuItem key={val.key} value={val}>
-                                        {val.content.en.CustomTypefaceName}
-                                      </MenuItem>
-                                    ) : (
-                                      <MenuItem
-                                        key="noitems"
-                                        value="noitems"
-                                        disabled={true}
-                                      >
-                                        Please go and typefaces first!
-                                      </MenuItem>
-                                    );
+                                        <MenuItem key={val.key} value={val}>
+                                          {val.content.en.CustomTypefaceName}
+                                        </MenuItem>
+                                      ) : (
+                                        <MenuItem
+                                          key="noitems"
+                                          value="noitems"
+                                          disabled={true}
+                                        >
+                                          Please go and typefaces first!
+                                        </MenuItem>
+                                      );
                                   })
                                 )}
                               </Field>
                             );
-                          } 
+                          }
                           else if (data.type === "selectarticle") {
                             return (
                               <Field
@@ -975,14 +941,14 @@ const GeneralFormComponent = <T extends BaseData>(
                                         {val.content.en.title}
                                       </MenuItem>
                                     ) : (
-                                      <MenuItem
-                                        key="noitems"
-                                        value="noitems"
-                                        disabled={true}
-                                      >
-                                        Please go and typefaces first!
-                                      </MenuItem>
-                                    );
+                                        <MenuItem
+                                          key="noitems"
+                                          value="noitems"
+                                          disabled={true}
+                                        >
+                                          Please go and typefaces first!
+                                        </MenuItem>
+                                      );
                                   })
                                 )}
                               </Field>
@@ -1013,6 +979,9 @@ const GeneralFormComponent = <T extends BaseData>(
                                 </MenuItem>
                                 <MenuItem key="premium" value="premium">
                                   Premium
+                                </MenuItem>
+                                <MenuItem key="custom" value="Custom">
+                                  Custom
                                 </MenuItem>
                                 {/* <MenuItem key="custom" value="custom">
                                   Custom
@@ -1048,7 +1017,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 </MenuItem>
                               </Field>
                             );
-                          } 
+                          }
                           else if (data.type === "pairfonts") {
                             return (
                               <FormControl>
@@ -1077,26 +1046,26 @@ const GeneralFormComponent = <T extends BaseData>(
                                     TypefaceStore.Typefaces.map(val => {
                                       return TypefaceStore.Typefaces.length >
                                         0 ? (
-                                        <MenuItem key={val.key} value={val}>
-                                          {val.content.en.typefaceName}
-                                        </MenuItem>
-                                      ) : (
-                                        <MenuItem
-                                          key="noitems"
-                                          value="noitems"
-                                          disabled={true}
-                                        >
-                                          Please go and typefaces first!
-                                        </MenuItem>
-                                      );
+                                          <MenuItem key={val.key} value={val.key}>
+                                            {val.content.en.typefaceName}
+                                          </MenuItem>
+                                        ) : (
+                                          <MenuItem
+                                            key="noitems"
+                                            value="noitems"
+                                          >
+                                            Please go and typefaces first!
+                                          </MenuItem>
+                                        );
                                     })
                                   )}
                                 </Field>
                               </FormControl>
                             );
-                          } 
+                          }
                           else if (data.type === "relatedarticles") {
                             return (
+
                               <FormControl>
                                 <Typography variant="h5" className="my-2">
                                   {data.title}
@@ -1118,29 +1087,33 @@ const GeneralFormComponent = <T extends BaseData>(
                                     name: `${data.key + suffix}`,
                                     id: `${data.key + suffix}`
                                   }}
-                                >
+                                >   
+                                <MenuItem
+                                key="noitems"
+                                value="noitems"
+                              >
+                                noitems
+                              </MenuItem>
                                   {useObserver(() =>
-                                    BlogStore.Blogs.map(val => {
-                                      return BlogStore.Blogs.length >
-                                        0 ? (
-                                        <MenuItem key={val.key} value={val}>
-                                          {val.content.en.title}
-                                        </MenuItem>
-                                      ) : (
-                                        <MenuItem
-                                          key="noitems"
-                                          value="noitems"
-                                          disabled={true}
-                                        >
-                                          Please go and add articles first!
-                                        </MenuItem>
-                                      );
-                                    })
+                        
+                                      BlogStore.Blogs.map(val => {
+                                        return (
+
+                              
+                                          <MenuItem key={val.key} value={val.key}>
+                                            {val.content.en.title}
+                                          </MenuItem>
+                                        )
+                                        
+                                      })
+
+                                   
                                   )}
+                                  
                                 </Field>
                               </FormControl>
                             );
-                          } 
+                          }
                           else if (data.type === "switch") {
                             const switchName = data.key + suffix;
 
@@ -1152,7 +1125,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                     component={Switch}
                                     error={
                                       (formikBag.errors as any)[
-                                        data.key + suffix
+                                      data.key + suffix
                                       ]
                                     }
                                   />
@@ -1161,39 +1134,31 @@ const GeneralFormComponent = <T extends BaseData>(
                               />
                             );
                           } else if (data.type === "RichTextField") {
-                            const [editorState, setEditorState] = useState(
-                              EditorState.createEmpty()
-                            );
                             return (
                               <>
-                                <Editor
-                                  // editorState={editorState}
-                                  // initialContentState={convertFromRaw(formikBag.values[data.key + suffix])}
-                                  // editorState={EditorState.createWithContent(JSON.parse(formikBag.values[data.key + suffix]))}
-                                  editorState={EditorState.createWithContent(
-                                    convertFromRaw(
-                                      JSON.parse(
-                                        formikBag.values[data.key + suffix]
-                                      )
-                                    )
-                                  )}
-                                  initialContentState={JSON.parse(
-                                    formikBag.values[data.key + suffix]
-                                  )}
-                                  onContentStateChange={(
-                                    contentState: RawDraftContentState
-                                  ) => {
-                                    formikBag.setFieldValue(
-                                      data.key + suffix,
-                                      JSON.stringify(contentState)
-                                    );
-                                  }}
-                                />
 
-                                {/* Export & Rendering HTML */}
-                                {/* {myHtml} */}
-                                {/* {stateToHTML(editorState.getCurrentContent())} */}
-                                {/* { ReactHtmlParser(myHtml) } */}
+            <Editor
+             apiKey="1ls0fy7xzwh9q28tb1rds897oizovdkfro0ec39sgejgxpvd"
+         initialValue={JSON.parse(formikBag.values[data.key + suffix])}
+         init={{
+           height: 500,
+           menubar: false,
+           plugins: [
+             'advlist autolink lists link image charmap print preview anchor',
+             'searchreplace visualblocks code fullscreen',
+             'insertdatetime media table paste code help wordcount',
+             'pageembed'
+           ],
+           toolbar:
+             'undo redo | formatselect | bold italic backcolor | \
+             alignleft aligncenter alignright alignjustify | \
+             bullist numlist outdent indent | removeformat | help | pageembed | link image'
+         }}
+         onEditorChange={(content, editor) => {
+          console.log('Content was updated:', content);
+          formikBag.setFieldValue(data.key + suffix, JSON.stringify(content))
+        }}
+       />
                               </>
                             );
                           } else if (data.type === "textarea") {
