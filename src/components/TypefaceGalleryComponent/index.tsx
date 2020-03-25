@@ -25,7 +25,7 @@ const TypfaceGalleryComponent: React.FC = props => {
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 3,
+      items: 4,
       slidesToSlide: 1 // optional, default to 1.
     },
     tablet: {
@@ -39,9 +39,17 @@ const TypfaceGalleryComponent: React.FC = props => {
       slidesToSlide: 1 // optional, default to 1.
     }
   };
+  const CustomImg = styled.div`
+    width:96%;
+    height: 400px;
+    overflow: hidden;
+    background-image: url(${props => props.ImgSrc});
+    background-position: center;
+    background-size: cover;
+  `;
 
   return useObserver(() => (
-    <Container fluid>
+    <Container fluid={true}>
       <Row>
         <Col md={12} className="text-center">
           <CustomButton
@@ -72,21 +80,8 @@ const TypfaceGalleryComponent: React.FC = props => {
             containerClass="carousel-container"
             removeArrowOnDeviceType={["tablet", "mobile"]}
           >
-            {[
-              {
-                imgSrc: Assets.Images.articleOne,
-                Title: "Momen 1"
-              },
-              {
-                imgSrc: Assets.Images.articleTwo,
-                Title: "Momen 2 "
-              },
-              {
-                imgSrc: Assets.Images.articleThree,
-                Title: "Momen 3"
-              }
-            ].map(data => (
-              <ImageGalleryComponent key={data.Title} imgData={data} />
+            {props.images.map(data => (
+              <CustomImg ImgSrc={data} alt={data.Title} key={data.Title} />
             ))}
           </Carousel>{" "}
         </div>

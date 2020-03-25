@@ -26,9 +26,6 @@ import { Link } from "react-router-dom";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
-
 import FontDownloadIcon from "@material-ui/icons/FontDownload";
 import DescriptionIcon from "@material-ui/icons/Description";
 
@@ -192,30 +189,6 @@ export default function MiniDrawer() {
               <ListItemText primary={"Fonts In Use"} />
             </ListItem>
           </LinkStyled>
-          <LinkStyled to="/admin/fontsfeaturedfullscreen">
-            <ListItem key={"Typefaces Featured"}>
-              <ListItemIcon>
-                <FontDownloadIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Typefaces Featured"} />
-            </ListItem>
-          </LinkStyled>
-          <LinkStyled to="/admin/fontsfeaturedgrid">
-            <ListItem key={"Typefaces Grid"}>
-              <ListItemIcon>
-                <FontDownloadIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Typefaces Grid"} />
-            </ListItem>
-          </LinkStyled>
-          <LinkStyled to="/admin/fontsfeaturedtester">
-            <ListItem key={"Typefaces Tester"}>
-              <ListItemIcon>
-                <FontDownloadIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Typefaces Tester"} />
-            </ListItem>
-          </LinkStyled>
         </List>
         <Divider />
         <List>
@@ -225,14 +198,6 @@ export default function MiniDrawer() {
                 <DescriptionIcon />
               </ListItemIcon>
               <ListItemText primary={"Blog"} />
-            </ListItem>
-          </LinkStyled>
-          <LinkStyled to="/admin/blogfeaturedarticle">
-            <ListItem key={"Featured Article"}>
-              <ListItemIcon>
-                <DescriptionIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Featured Article"} />
             </ListItem>
           </LinkStyled>
         </List>

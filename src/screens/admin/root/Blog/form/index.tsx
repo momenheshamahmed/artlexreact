@@ -31,6 +31,20 @@ const AdminBlogForm: React.FC = () => {
           },
           {
             inContent: true,
+            key: "sortArticle",
+            title: "Sorting",
+            type: "text",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "featuredHome",
+            title: "Featured Home?",
+            type: "switch",
+            isRequired: false,
+          },
+          {
+            inContent: true,
             key: "gridNumber",
             title: "Grid Number",
             type: "text",

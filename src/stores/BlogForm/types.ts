@@ -16,4 +16,6 @@ export interface BlogContent {
   articleCategory: string;
   richEditor1: string;
   relatedArticles: Array<string | object |null>;
+  sortArticle: string;
+  featuredHome: boolean;
 }

@@ -18,6 +18,7 @@ import {
 import ArticleThumbnial from "./ArticleThumbnial";
 import { Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { BlogStore } from "../../../stores";
 
 // tslint:disable-next-line: interface-name
 interface CarouselButtonGroupProps extends ButtonGroupProps {
@@ -30,9 +31,6 @@ const BlogSliderComponent: React.FC = props => {
   // *
   // *
 
-  const Title = styled.h1`
-    margin-bottom: 2vh;
-  `;
 
   const ButtonGroupStyled = styled.div`
     position: absolute;
@@ -63,7 +61,7 @@ const BlogSliderComponent: React.FC = props => {
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 3,
+      items: 4,
       slidesToSlide: 1 // optional, default to 1.
     },
     tablet: {
@@ -105,14 +103,13 @@ const BlogSliderComponent: React.FC = props => {
   };
 
   return useObserver(() => (
-
-    <Container fluid={true} className="position-relative mt-5 mb-5">
+    <Container fluid={true} className="position-relative">
       <Typography variant="h5" className="mb-5">
         Blog
       </Typography>
       <Carousel
-        swipeable={true}
-        draggable={true}
+        swipeable={false}
+        draggable={false}
         showDots={true}
         renderDotsOutside={true}
         customDot={<CustomDots />}
@@ -130,11 +127,15 @@ const BlogSliderComponent: React.FC = props => {
         renderButtonGroupOutside={true}
         customButtonGroup={<CarouselButtonGroup />}
       >
-        {props.Articles.map(
-          data => (
-            <ArticleThumbnial articleData={data} />
-          )
-        )}
+        {BlogStore.Blogs.sort((a, b) => {
+          a.content.en.sortArticle - b.content.en.sortArticle;
+        }).map(data => {
+          if (data.content.en.featuredHome === true) {
+            return <ArticleThumbnial articleData={data} />;
+          } else if (data.content.en.featuredHome === false) {
+            return null;
+          }
+        })}
       </Carousel>
     </Container>
   ));

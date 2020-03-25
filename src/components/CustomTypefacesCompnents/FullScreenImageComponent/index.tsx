@@ -40,29 +40,25 @@ const FullScreenImageComponent: React.FC<Props> = props => {
   `;
   return useObserver(() => (
     <>
-      {props.ImgSrc.slice(0, 2).map(image => {
-        return (
-          <Link
-            to={{
-              pathname: `/custom/${image.content.en.websiteInternalURL}`,
-              state: {
-                documentId: image.key
-              }
-            }}
-            key={image.key}
+      <Link
+        to={{
+          pathname: `/custom/${props.ImgSrc.content.en.websiteInternalURL}`,
+          state: {
+            documentId: props.key
+          }
+        }}
+        key={props.key}
+      >
+        <FullScreenImage urlImage={props.ImgSrc.content.en.coverImage}>
+          <CustomButton
+            variant="contained"
+            className="mt-3"
+            endIcon={<ArrowForwardIcon />}
           >
-            <FullScreenImage urlImage={image.content.en.coverImage}>
-              <CustomButton
-                variant="contained"
-                className="mt-3"
-                endIcon={<ArrowForwardIcon />}
-              >
-                View Custom Font
-              </CustomButton>
-            </FullScreenImage>
-          </Link>
-        );
-      })}
+            View Custom Font
+          </CustomButton>
+        </FullScreenImage>
+      </Link>
     </>
   ));
 };

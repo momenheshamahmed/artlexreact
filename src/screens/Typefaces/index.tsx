@@ -8,11 +8,21 @@ import { TypefaceStore } from "../../stores";
 const Typefaces: React.FC = () => {
   return useObserver(() => (
     <Container fluid={true} className="pt-5">
-      {
-        TypefaceStore.Typefaces.map(val => 
-          <TypefaceTesterComponent typeface={val} key={val.key} />
-        })
-      }
+      {TypefaceStore.Typefaces.sort(
+        (a, b) => a.content.en.typefaceSorting - b.content.en.typefaceSorting
+      ).map(val => {
+        if (val.content.en.typefaceCategory !== "Custom") {
+          return (
+            <>
+              <TypefaceTesterComponent typeface={val} key={val.key} />
+            </>
+          );
+        } else if (val.content.en.typefaceCategory === "Premium" || "Free") {
+          return console.log("HAHAHA!");
+        } else {
+          return <h1>NO FONTS HERE</h1>;
+        }
+      })}
     </Container>
   ));
 };

@@ -33,11 +33,17 @@ const AdminTypefacesForm: React.FC = () => {
             type: "image",
             isRequired: true
           },
-
           {
             inContent: true,
             key: "typefaceName",
             title: "Typeface Name",
+            type: "text",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "typefaceSorting",
+            title: "Typeface Sorting",
             type: "text",
             isRequired: true
           },
@@ -79,9 +85,64 @@ const AdminTypefacesForm: React.FC = () => {
           },
           {
             inContent: true,
+            key: "typefaceFeaturedFullScreen",
+            title: "Featured Fullscreen?",
+            type: "switch",
+            isRequired: false,
+            helper: "Select Category"
+          },
+          {
+            inContent: true,
+            key: "typefaceFeaturedGrid",
+            title: "Featured on Grid?",
+            type: "switch",
+            isRequired: false,
+            helper: "Select Category"
+          },
+          {
+            inContent: true,
+            key: "typefaceFeaturedGridNumber",
+            title: "Featured Grid Number",
+            type: "text",
+            isRequired: false,
+            helper: "Select Category"
+          },
+          {
+            inContent: true,
+            key: "typefaceFeaturedGridNumberCover",
+            title: "Featured Grid Image Cover",
+            type: "image",
+            isRequired: false,
+            helper: "image"
+          },
+          {
+            inContent: true,
+            key: "typefaceFeaturedGridNumberHover",
+            title: "Featured Grid Image Hover",
+            type: "image",
+            isRequired: false,
+            helper: "Select Category"
+          },
+          {
+            inContent: true,
+            key: "typefaceFeaturedTester",
+            title: "Featured Tester?",
+            type: "switch",
+            isRequired: false,
+            helper: "Select Category"
+          },
+          {
+            inContent: true,
             key: "typefaceDescription",
             title: "Typeface Description",
             type: "textarea",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "languagesSupported",
+            title: "Supported Languages?",
+            type: "languages",
             isRequired: true
           },
           {

@@ -8,8 +8,10 @@ const ImageGalleryComponent: React.FC = props => {
   // *
   // *
   const CustomImg = styled.div`
-    width: 400px;
+    width: 100%;
     height: 400px;
+    margin: 0 8px;
+
     overflow: hidden;
     background-image: url(${props => props.ImgSrc});
     background-position: center;
@@ -18,7 +20,6 @@ const ImageGalleryComponent: React.FC = props => {
 
   return useObserver(() => (
     <>
-      <CustomImg ImgSrc={props.imgData} alt="" />
     </>
   ));
 };

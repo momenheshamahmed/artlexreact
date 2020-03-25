@@ -14,23 +14,3 @@ export interface FontContent {
   fontImage: string;
   fontUrl: string;
 }
-// tslint:disable-next-line: interface-name
-
-// imgUrl: string;
-// typefaceurl: string;
-// typefacename?: string;
-// description?: string;
-// typefacelanguages?: string;
-// charactersenabled?: boolean;
-// family?: string;
-// familytext?: string;
-// release?: string;
-// releasedate?: string;
-// designername?: string;
-// designerlinks?: string;
-// version?: string;
-// manufuctring?: string;
-// copyright?: string;
-// date?: string;
-// fontWeights?: object[];
-// fontinuse?: FontinuseInterface[];

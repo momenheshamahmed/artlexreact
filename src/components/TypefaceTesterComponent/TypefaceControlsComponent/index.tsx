@@ -103,7 +103,7 @@ const TypefaceControlsComponent: React.FC = props => {
           </Col>
         </Row>
         <Row>
-          <TypfaceGalleryComponent />
+          <TypfaceGalleryComponent images={props.images} />
         </Row>
       </Container>
     </>

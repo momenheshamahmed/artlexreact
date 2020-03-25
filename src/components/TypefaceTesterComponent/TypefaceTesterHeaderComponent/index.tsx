@@ -18,7 +18,7 @@ const TypefaceTesterHeaderComponent: React.FC = props => {
           <Link
             to={{
               pathname: props.goto ? `/typefaces/${props.goto}` : "/",
-              state: { fontId: props.key }
+              state: { documentId: props.documentId ? props.documentId : "nofont!"}
             }}
           >
             Go To Font <ArrowForwardIcon />

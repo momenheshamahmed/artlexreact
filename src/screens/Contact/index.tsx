@@ -134,7 +134,7 @@ const [emailSent, setEmailSent] = useState(false)
     
   return useObserver(() => (
     <>
-      <FullScreenImage urlImage={Assets.Images.typefaceFullscreen} />
+      <FullScreenImage urlImage={Assets.Images.uploadPlaceholder} />
       <Container className="my-5">
         <Row>
           <ContactItem

@@ -2,37 +2,7 @@ import { v1 } from "uuid";
 import { storage } from "firebase";
 
 class StorageStore {
-  public uploadFontFile: (
-    font: File | string | null
-  ) => Promise<string> = font => {
-    return new Promise<string>((res, rej) => {
-      if (!font) {
-        rej("font is required");
-      } else if (typeof font === "string") {
-        res(font);
-      } else {
-        try {
-          const reader = new FileReader();
-          reader.onload = async e => {
-            if (e.target) {
-              const uid = v1();
-              const extention = font.type === "woff" ? "woff" : "woff2";
-              const storageRef = storage().ref(`typefaces/${uid}.${extention}`);
-              const result = await storageRef.put(
-                e.target.result as ArrayBuffer
-              );
-              res(await result.ref.getDownloadURL());
-            }
-          };
-          reader.onerror = () => rej("Could not read file");
-          reader.onabort = () => rej("File read aborted");
-          reader.readAsArrayBuffer(font);
-        } catch (error) {
-          rej(error);
-        }
-      }
-    });
-  };
+  
   public uploadImage: (
     image: File | string | null
   ) => Promise<string> = image => {
@@ -85,11 +55,11 @@ class StorageStore {
               const uid = v1();
               console.log(file);
               const extention =
-                file.type === "application/font-woff"
-                  ? "application/font-woff"
-                  : "application/font-woff2";
+                file.type === "woff"
+                  ? "woff"
+                  : "woff2";
               const storageRef = storage().ref(
-                `typefacesfiles/${uid}.${extention}`
+                `typefacesfiles/${file.name}/${uid}.${extention}`
               );
               const result = await storageRef.put(
                 e.target.result as ArrayBuffer

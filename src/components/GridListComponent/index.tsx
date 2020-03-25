@@ -16,63 +16,63 @@ const GridListComponent: React.FC = () => {
   const screenSize = useMediaQuery("(max-width:700px)");
   const tileData = [
     {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
+      img: Assets.Images.uploadPlaceholder,
+      hover: Assets.Images.uploadPlaceholder,
       title: "Image",
       author: "author",
       cols: 2,
       rows: 1
     },
     {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
+      img: Assets.Images.uploadPlaceholder,
+      hover: Assets.Images.uploadPlaceholder,
       title: "Image",
       author: "author",
       cols: 2,
       rows: 2
     },
     {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
+      img: Assets.Images.uploadPlaceholder,
+      hover: Assets.Images.uploadPlaceholder,
       title: "Image",
       author: "author",
       cols: 2,
       rows: 1
     },
     {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
+      img: Assets.Images.uploadPlaceholder,
+      hover: Assets.Images.uploadPlaceholder,
       title: "Image",
       author: "author",
       cols: 2,
       rows: 3
     },
     {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
+      img: Assets.Images.uploadPlaceholder,
+      hover: Assets.Images.uploadPlaceholder,
       title: "Image",
       author: "author",
       cols: 2,
       rows: 1
     },
     {
-      img: Assets.Images.typefaceStatic,
-      hover: Assets.Images.typefaceHover,
+      img: Assets.Images.uploadPlaceholder,
+      hover: Assets.Images.uploadPlaceholder,
       title: "Image",
       cols: 2,
     },
     {
-      img: Assets.Images.typefaceStatic,
+      img: Assets.Images.uploadPlaceholder,
       title: "Image",
       cols: 2,
     },
     {
-      img: Assets.Images.typefaceStatic,
+      img: Assets.Images.uploadPlaceholder,
       title: "Image",
       rows: 2
     },
     {
-      img: Assets.Images.typefaceStatic,
+      img: Assets.Images.uploadPlaceholder,
       title: "Image",
       cols: 1
     }

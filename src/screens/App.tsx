@@ -28,18 +28,11 @@ import {
   TypefaceStore,
   FontStore,
   FontsInUseStore,
-  FontsFeaturedFullScreenStore,
-  FontsFeaturedGridStore,
-  CustomTypefaceStore,
-  CustomFontsFeaturedFullScreenStore,
-  CustomFontsFeaturedGridStore,
-  BlogStore,
-  BlogFeaturedArticlesStore
+  BlogStore
 } from "../stores";
 import FooterComponent from "../components/FooterComponent/FooterComponent";
 import Typefaces from "./Typefaces";
 import ArticlePage from "./ArticlePage";
-import CustomTypeFacePage from "./CustomTypeFacePage";
 
 const App: React.FC = () => {
   const [direction] = useState("ltr");
@@ -49,9 +42,9 @@ const App: React.FC = () => {
     width: 70px;
   `;
   const LinkStyled = styled(Link)`
-    color: black;
+    color: black !important;
     &:hover {
-      color: black;
+      color: black !important;
       text-decoration: none;
     }
   `;
@@ -60,13 +53,7 @@ const App: React.FC = () => {
     TypefaceStore.watchTypefaces();
     FontStore.watchFonts();
     FontsInUseStore.watchFontsInUse();
-    FontsFeaturedFullScreenStore.watchFontsFeaturedFullscreen();
-    FontsFeaturedGridStore.watchFontsFeaturedGrid();
-    CustomTypefaceStore.watchCustomTypefaces();
-    CustomFontsFeaturedFullScreenStore.watchFontsFeaturedFullscreen();
-    CustomFontsFeaturedGridStore.watchFontsFeaturedGrid();
     BlogStore.watchBlogs();
-    BlogFeaturedArticlesStore.watchBlogFeaturedArticles();
   }, []);
 
   return (
@@ -153,7 +140,7 @@ const App: React.FC = () => {
           </Navbar>
           <Suspense fallback={<h1>loading route …</h1>}>
             <Switch>
-              <div className="mt-5">
+              <>
                 <Route exact={true} path="/">
                   <Home />
                 </Route>
@@ -178,10 +165,7 @@ const App: React.FC = () => {
                 <Route exact={true} path={`/typefaces/:typefaceId`}>
                   <TypeFacePage />
                 </Route>
-                <Route exact={true} path={`/custom/:customTypefaceId`}>
-                  <CustomTypeFacePage />
-                </Route>
-              </div>
+              </>
             </Switch>
           </Suspense>
           <Container fluid={true}>

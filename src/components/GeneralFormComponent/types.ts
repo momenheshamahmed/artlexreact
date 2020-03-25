@@ -28,18 +28,15 @@ export interface FormKeys<
     | "switch"
     | "woff"
     | "woff2"
-    | "date"
     | "pairfonts"
     | "selecttypface"
     | "selecttypfacecategory"
     | "RichTextField"
     | "selectarticlecategory"
     | "selectarticle"
-    | "image2"
-    | "selectcustomtypface"
     | "relatedarticles"
-    | "pdf";
+    | "pdf"
+    | "languages";
   isRequired?: boolean;
-  editorContent?: string;
   helper?: string;
 }

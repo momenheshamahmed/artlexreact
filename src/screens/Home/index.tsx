@@ -7,19 +7,13 @@ import Font from "./types";
 import BlogSliderComponent from "../../components/HomeComponents/BlogSlider";
 import FeaturedFontsThumbnialsComponent from "../../components/HomeComponents/FeaturedFontsThumbnials";
 import TypefaceTesterComponent from "../../components/TypefaceTesterComponent";
-import {
-  CustomFontsFeaturedFullScreenStore,
-  FontsFeaturedFullScreenStore,
-  FontsFeaturedGridStore,
-  CustomFontsFeaturedGridStore,
-  BlogFeaturedArticlesStore
-} from "../../stores";
 
 import { database } from "firebase";
 
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
+import { TypefaceStore } from "../../stores";
 
 //   Styles
 const FullScreenImage = styled.div`
@@ -52,83 +46,48 @@ const CustomButton = styled(Button)`
   }
 `;
 const Home: React.FC = () => {
-  const [featuredFonts, setFeaturedFonts] = useState(null);
-  useEffect(() => {
-    FontsFeaturedFullScreenStore.FontsFeaturedFullScreen.map(val => {
-      const adbRef = database()
-        .ref("/typefaces/")
-        .child(`${val.content.en.selectTypeface.key}`)
-        // .orderByChild("key")
-        // .equalTo(`${val.content.en.selectTypeface.key}`);
-      // adbRef.child(val.content.en.selectTypeface.key);
-      adbRef.on("value", snapshot => {
-        console.log("u in home", snapshot.val());
-      });
-    });
-  }, [FontsFeaturedFullScreenStore.FontsFeaturedFullScreen]);
-
   return useObserver(() => (
-    <div>
-      {FontsFeaturedFullScreenStore.FontsFeaturedFullScreen.map(val => {
-        return (
-          <Link
-            to={{
-              pathname: `/typefaces/${val.content.en.selectTypeface.content.en.websiteInternalURL}`,
-              state: {
-                documentId: val.key
-              }
-            }}
-            key={val.key}
-          >
-            <FullScreenImage urlImage={val.content.en.coverImage}>
-              <CustomButton
-                variant="contained"
-                className="mt-3"
-                endIcon={<ArrowForwardIcon />}
+    <div style={{ marginTop: 101 }}>
+      {TypefaceStore.Typefaces.map(val => {
+        if (val.content.en.typefaceFeaturedFullScreen === true) {
+          if (val.content.en.typefaceCategory === "Custom") {
+            return (
+              <Link
+                to={{
+                  pathname: `/typefaces/${val.content.en.websiteInternalURL}`,
+                  state: {
+                    documentId: val.key
+                  }
+                }}
+                key={val.key}
               >
-                View Typeface
-              </CustomButton>
-            </FullScreenImage>
-          </Link>
-        );
+                <FullScreenImage urlImage={val.content.en.coverImage}>
+                  <CustomButton
+                    variant="contained"
+                    className="mt-3"
+                    endIcon={<ArrowForwardIcon />}
+                  >
+                    View Typeface
+                  </CustomButton>
+                </FullScreenImage>
+              </Link>
+            );
+          }
+        }
       })}
-      {CustomFontsFeaturedFullScreenStore.CustomFontsFeaturedFullScreen.map(
-        val => {
-          return (
-            <Link
-              to={{
-                pathname: `/typefaces/${val.content.en.selectTypeface.content.en.websiteInternalURL}`,
-                state: {
-                  documentId: val.key
-                }
-              }}
-              key={val.key}
-            >
-              <FullScreenImage urlImage={val.content.en.coverImage}>
-                <CustomButton
-                  variant="contained"
-                  className="mt-3"
-                  endIcon={<ArrowForwardIcon />}
-                >
-                  View Typeface
-                </CustomButton>
-              </FullScreenImage>
-            </Link>
-          );
-        }
-      )}
+      <Container fluid={true}>
+        {TypefaceStore.Typefaces.map(val => {
+          if (val.content.en.typefaceFeaturedGrid === true) {
+            return <FeaturedFontsThumbnialsComponent item={val} />;
+          }
+        })}
 
-      <FeaturedFontsThumbnialsComponent
-        fontsFeatured={FontsFeaturedGridStore.FontsFeaturedGrid}
-        customFontsFeatured={
-          CustomFontsFeaturedGridStore.CustomFontsFeaturedGrid
-        }
-      />
-      <BlogSliderComponent
-        Articles={BlogFeaturedArticlesStore.BlogFeaturedArticles}
-      />
+        <>
+          <BlogSliderComponent />
+        </>
 
-      {/* <TypefaceTesterComponent /> */}
+        {/* <TypefaceTesterComponent /> */}
+      </Container>
     </div>
   ));
 };

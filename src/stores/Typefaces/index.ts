@@ -45,9 +45,10 @@ class TypefaceStore {
 
   @action
   public watchTypefaces = () => {
-    const dbRef = database().ref("/typefaces");
+    const dbRef = database().ref("/typefaces/");
     dbRef.on("value", snapshot => {
       const data: Record<string, Typeface> = snapshot.val();
+      console.log("typefaces data", data)
       if (data) {
         const mappedData: Typeface[] = Object.entries(data).map(entry => {
           return {

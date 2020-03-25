@@ -1,14 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap");
 
 body {
   margin: 0;
-  
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding-left: 0 !important;
   height: 100%;
   width: 100%;
   overflow-x: hidden;
+  cursor: url("./assets//images/cursor.png"), auto;
 }
 
 code {
@@ -23,9 +24,9 @@ code {
 
 * {
   box-sizing: border-box;
-  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif !important;
+  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif !important;
 }
 .react-multi-carousel-dot-list {
   position: relative !important;
@@ -52,11 +53,36 @@ p::selection {
   background: #00ff00;
   color: black;
 }
-.MuiFormControl-root, .MuiOutlinedInput-root {
- display: block !important;
- width: 100% !important;
+.MuiFormControl-root,
+.MuiOutlinedInput-root {
+  display: block !important;
+  width: 100% !important;
 }
 
-.dropdown-item.active, .dropdown-item:active {
+.dropdown-item.active,
+.dropdown-item:active {
   background: white !important;
+}
+.ql-video {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+  height: 500px;
+  max-height: 100%;
+}
+.ql-align-center {
+  text-align: center;
+}
+.App-navigation-item {
+  color: rgba(0, 0, 0, 0.5);
+}
+.App-navigation-item--active {
+  color: black;
+}
+.react-multiple-carousel__arrow,
+.react-multiple-carousel__arrow--left {
+  background: #00ff00 !important;
+}
+.react-multiple-carousel__arrow::before {
+  color: black !important;
 }
