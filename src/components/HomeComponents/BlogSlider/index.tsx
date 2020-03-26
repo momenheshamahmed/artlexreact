@@ -104,11 +104,11 @@ const BlogSliderComponent: React.FC = props => {
 
   return useObserver(() => (
     <Container fluid={true} className="position-relative">
-      <Typography variant="h5" className="mb-5">
+      <Typography variant="h5" className="my-5">
         Blog
       </Typography>
       <Carousel
-        swipeable={false}
+        swipeable={true}
         draggable={false}
         showDots={true}
         renderDotsOutside={true}

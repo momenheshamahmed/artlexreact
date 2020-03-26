@@ -148,28 +148,28 @@ const AdminTypefacesForm: React.FC = () => {
           {
             inContent: true,
             key: "specimenFilePdf",
-            title: "specimenFile",
+            title: "Specimen File",
             type: "pdf",
             isRequired: false
           },
           {
             inContent: true,
             key: "specimenFileText",
-            title: "specimenFile",
+            title: "Specimen file",
             type: "text",
             isRequired: false
           },
           {
             inContent: true,
             key: "userAgreementPdf",
-            title: "specimenFile",
+            title: "User Agreement File",
             type: "pdf",
             isRequired: false
           },
           {
             inContent: true,
             key: "userAgreementText",
-            title: "specimenFile",
+            title: "User Agreement",
             type: "text",
             isRequired: false
           },

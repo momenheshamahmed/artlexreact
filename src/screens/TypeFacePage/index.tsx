@@ -4,7 +4,13 @@ import { Container, Row, Col, Collapse } from "react-bootstrap";
 import FontInUseComponent from "../../components/TypefacePageComponents/FontInUseComponent";
 import PairFontsComponent from "../../components/TypefacePageComponents/PairFontsComponent";
 import useScrollSpy from "react-use-scrollspy";
-import { Typography, Button, Divider } from "@material-ui/core";
+import {
+  Typography,
+  Button,
+  Divider,
+  GridListTile,
+  GridList
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 import styled from "styled-components";
@@ -14,8 +20,8 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import GridListComponent from "../../components/GridListComponent";
 import { useLocation } from "react-router-dom";
 import { database } from "firebase";
-import { TypefaceStore } from "../../stores";
-
+import { TypefaceStore, FontsInUseStore } from "../../stores";
+// import Assets from "../../assets/index";
 const CustomButton = styled(Button)`
   background: #00ff00 !important;
   border-radius: 100px !important;
@@ -33,6 +39,32 @@ const CustomTag = styled(Typography)`
   &:nth-child(0) {
     margin-left: 0 !important;
   }
+`;
+const GreyTyppography = styled(Typography)`
+  color: "#7A7777" !important;
+`;
+
+const CustomAnchor = styled.a`
+  color: black;
+  margin-right: 10px;
+  transition: hover 0.4s;
+  &:hover {
+    color: #00ff00;
+    text-decoration: none;
+  }
+`;
+
+const FullScreenImage = styled.div`
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-image: url(${props => props.urlImage});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  text-align: right;
+  margin-top: 101px;
 `;
 
 const TypeFacePage: React.FC = () => {
@@ -107,14 +139,18 @@ const TypeFacePage: React.FC = () => {
     background-repeat: no-repeat;
   `;
   let { state } = useLocation();
-
+  console.log("state of font", state);
   return useObserver(() => (
     <>
-      <Container fluid={true} style={{ paddingTop: 101 }}>
-        {TypefaceStore.Typefaces.map(val => {
-          if (val.key === state.documentId) {
-            return (
-              <>
+      {TypefaceStore.Typefaces.map(val => {
+        if (val.key === state.documentId) {
+          return (
+            <>
+              {val.content.en.typefaceCategory === "Custom" ? (
+                <FullScreenImage urlImage={val.content.en.coverImage} />
+              ) : null}
+
+              <Container fluid={true}>
                 <Container
                   fluid={true}
                   sticky="top"
@@ -202,7 +238,11 @@ const TypeFacePage: React.FC = () => {
                 >
                   <Row>
                     <Col md={2}>
-                      <Typography variant="h6" component="h6">
+                      <Typography
+                        variant="h5"
+                        component="h5"
+                        className="font-weight-bold"
+                      >
                         {val.content.en.typefaceName}
                       </Typography>
                     </Col>
@@ -221,10 +261,18 @@ const TypeFacePage: React.FC = () => {
                       </CustomButton>
                     </Col>
                     <Col md={2}>
-                      <Typography>Family</Typography>
-                      <Typography>Family</Typography>
-                      <Typography>Family</Typography>
-                      <Typography>Family</Typography>
+                      <Typography variant="body1" style={{ color: "#717171" }}>
+                        Family
+                      </Typography>
+                      <Typography variant="h6">
+                        {val.content.en.familyStyles}
+                      </Typography>
+                      <Typography variant="body1" style={{ color: "#717171" }}>
+                        Release
+                      </Typography>
+                      <Typography variant="h6">
+                        {val.content.en.releaseDate}
+                      </Typography>
                     </Col>
                   </Row>
                 </Container>
@@ -256,6 +304,9 @@ const TypeFacePage: React.FC = () => {
                   className="mt-5 mb-5"
                   ref={sectionRefs[2]}
                 >
+                  <Typography variant="h6" component="h6" className="mb-3 mt-3">
+                    Buy Typeface Now
+                  </Typography>
                   <BuyTypefaceSection key="BuyTypefaceSection" />
                 </Container>
                 <Divider />
@@ -264,7 +315,36 @@ const TypeFacePage: React.FC = () => {
                   ref={sectionRefs[3]}
                   className="mt-5 mb-5"
                 >
-                  <GridListComponent />
+                  <Typography
+                    variant="h6"
+                    component="h6"
+                    className=" mb-3 mt-3"
+                  >
+                    FONT IN USE
+                  </Typography>
+
+                  <GridList cellHeight={200} cols={6} spacing={15}>
+                    {/* {tileData.slice(0, 2).map(tile => (
+                      <GridListTile key={tile.img} cols={1}>
+                        <img src={tile.img} alt={tile.title} />
+                      </GridListTile>
+                    ))} */}
+                    {FontsInUseStore.FontsInUse.map(font => {
+                      if (font.content.en.selectTypeface.key === val.key) {
+                        return (
+                          <GridListTile
+                            key={font.key}
+                            cols={font.content.en.imageGrid}
+                          >
+                            <img
+                              src={font.content.en.imageInUse}
+                              alt={font.content.en.selectTypeface.name}
+                            />
+                          </GridListTile>
+                        );
+                      }
+                    })}
+                  </GridList>
                 </Container>
                 <Divider />
                 <Container
@@ -272,7 +352,8 @@ const TypeFacePage: React.FC = () => {
                   ref={sectionRefs[4]}
                   className="mt-5 mb-5"
                 >
-                  <PairFontsComponent />
+                  <Typography>Pair Fonts Here</Typography>
+                  {/* <PairFontsComponent /> */}
                 </Container>
                 <Container fluid={true} ref={sectionRefs[5]} className="my-5">
                   <Container fluid={true}>
@@ -296,36 +377,128 @@ const TypeFacePage: React.FC = () => {
                             <Typography>Typeface Name</Typography>
                           </Col>
                           <Col className="text-right">
-                            <Typography>
+                            <GreyTyppography>
                               {val.content.en.typefaceName}
+                            </GreyTyppography>
+                          </Col>
+                        </CustomtRow>
+                        <Divider />
+                        <CustomtRow>
+                          <Col>
+                            <GreyTyppography>Designer Name</GreyTyppography>
+                          </Col>
+                          <Col className="text-right">
+                            <Typography>
+                              {val.content.en.designerName}
                             </Typography>
                           </Col>
                         </CustomtRow>
                         <Divider />
                         <CustomtRow>
                           <Col>
-                            <Typography>Typeface Name</Typography>
+                            <GreyTyppography>Designer Links</GreyTyppography>
+                          </Col>
+                          {/* <Col className="text-right">
+                            <Row>
+                              <Col>
+                                <CustomAnchor
+                                  href="https://facebook.com/protypefoundry"
+                                  target="_blank"
+                                >
+                                  <img
+                                    src={Assets.Images.facebook}
+                                    alt="protype facebook"
+                                  />
+                                </CustomAnchor>
+                                <CustomAnchor
+                                  href="https://facebook.com/protypefoundry"
+                                  target="_blank"
+                                >
+                                  <img
+                                    src={Assets.Images.instagram}
+                                    alt="protype instagram"
+                                  />
+                                </CustomAnchor>
+                                <CustomAnchor
+                                  href="https://facebook.com/protypefoundry"
+                                  target="_blank"
+                                >
+                                  <img
+                                    src={Assets.Images.pinterest}
+                                    alt="protype pinterest"
+                                  />
+                                </CustomAnchor>
+                                <CustomAnchor
+                                  href="https://facebook.com/protypefoundry"
+                                  target="_blank"
+                                >
+                                  <img
+                                    src={Assets.Images.linkedin}
+                                    alt="protype linkedin"
+                                  />
+                                </CustomAnchor>
+                                <CustomAnchor
+                                  href="https://facebook.com/protypefoundry"
+                                  target="_blank"
+                                >
+                                  <img
+                                    src={Assets.Images.behance}
+                                    alt="protype behance"
+                                  />
+                                </CustomAnchor>
+                                <CustomAnchor
+                                  href="https://facebook.com/protypefoundry"
+                                  target="_blank"
+                                >
+                                  <img
+                                    src={Assets.Images.twitter}
+                                    alt="protype twitter"
+                                  />
+                                </CustomAnchor>
+                              </Col>
+                            </Row>
+                          </Col> */}
+                        </CustomtRow>
+                        <Divider />
+                        <CustomtRow>
+                          <Col>
+                            <GreyTyppography>Version</GreyTyppography>
                           </Col>
                           <Col className="text-right">
-                            <Typography>Name</Typography>
+                            <Typography>{val.content.en.version}</Typography>
                           </Col>
                         </CustomtRow>
                         <Divider />
                         <CustomtRow>
                           <Col>
-                            <Typography>Typeface Name</Typography>
+                            <GreyTyppography>Manufacturing</GreyTyppography>
                           </Col>
                           <Col className="text-right">
-                            <Typography>Name</Typography>
+                            <Typography>
+                              {val.content.en.manufacturing}
+                            </Typography>
                           </Col>
                         </CustomtRow>
                         <Divider />
                         <CustomtRow>
                           <Col>
-                            <Typography>Typeface Name</Typography>
+                            <GreyTyppography>Copyright</GreyTyppography>
                           </Col>
                           <Col className="text-right">
-                            <Typography>Name</Typography>
+                            <Typography>
+                              {val.content.en.manufacturing}
+                            </Typography>
+                          </Col>
+                        </CustomtRow>
+                        <Divider />
+                        <CustomtRow>
+                          <Col>
+                            <GreyTyppography>Release Date</GreyTyppography>
+                          </Col>
+                          <Col className="text-right">
+                            <Typography>
+                              {val.content.en.releaseDate}
+                            </Typography>
                           </Col>
                         </CustomtRow>
                         <Divider />
@@ -350,10 +523,19 @@ const TypeFacePage: React.FC = () => {
                     <Collapse in={openTwo}>
                       <Container fluid={true}>
                         <CustomtRow>
-                          <CustomTag variant="body2">Language</CustomTag>
-                          <CustomTag variant="body2">Language</CustomTag>
-                          <CustomTag variant="body2">Language</CustomTag>
-                          <CustomTag variant="body2">Language</CustomTag>
+                          {val.content.en.languagesSupported.map(lang => {
+                            if (lang === "nolanguages") {
+                              return (
+                                <GreyTyppography variant="body2">
+                                  No Languages Supported!
+                                </GreyTyppography>
+                              );
+                            } else {
+                              return (
+                                <CustomTag variant="body2">{lang}</CustomTag>
+                              );
+                            }
+                          })}
                         </CustomtRow>
                       </Container>
                     </Collapse>
@@ -391,11 +573,11 @@ const TypeFacePage: React.FC = () => {
                     </ContactItemThree>
                   </Container>
                 </Container>
-              </>
-            );
-          }
-        })}
-      </Container>
+              </Container>
+            </>
+          );
+        }
+      })}
     </>
   ));
 };

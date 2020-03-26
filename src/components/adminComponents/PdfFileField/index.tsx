@@ -6,6 +6,8 @@ import { Typography, Button } from "@material-ui/core";
 
 const PdfFileField: React.FC<Props> = props => {
   const [file, setFile] = useState<File | string | null>(props.value);
+  const [fileName, setFileName] = useState<string | null>("no file yet");
+
   useEffect(() => {
     setFile(props.value);
   }, [props.value]);
@@ -22,6 +24,7 @@ const PdfFileField: React.FC<Props> = props => {
         onChange={value => {
           if (value.target.files && value.target.files[0]) {
             props.setValue(value.target.files[0]);
+            setFileName(value.target.files[0].name);
             const reader = new FileReader();
             reader.onload = function(e) {
               if (inputRef.current && e.target) {
@@ -43,6 +46,9 @@ const PdfFileField: React.FC<Props> = props => {
       >
         Upload file
       </Button>
+      <ul>
+        <li>{fileName ? fileName : "no file yet"}</li>
+      </ul>
       {props.error && (
         <Typography
           color="error"

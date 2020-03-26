@@ -9,7 +9,12 @@ export interface FontInUse {
 
 // tslint:disable-next-line: interface-name
 export interface FontInUseContent {
-  selectTypeface: Array<string | File | null>;
+  selectTypeface: SelectedFont;
   imageGrid: string;
   imageInUse: string;
+}
+// tslint:disable-next-line: interface-name
+export interface SelectedFont {
+  key: string;
+  name: string;
 }

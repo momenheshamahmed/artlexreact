@@ -6,6 +6,7 @@ import { Typography, Button } from "@material-ui/core";
 
 const FileField: React.FC<Props> = props => {
   const [file, setFile] = useState<File | string | null>(props.value);
+  const [fileName, setFileName] = useState<string | null>("no file yet");
   useEffect(() => {
     setFile(props.value);
   }, [props.value]);
@@ -23,29 +24,48 @@ const FileField: React.FC<Props> = props => {
       <input
         type="file"
         accept=".woff, .woff2"
-        id="fileInputFile"
-        style={{display: 'none'}}
+        id={`${props.idInput}`}
+        style={{ display: "none" }}
         ref={inputRef}
         onChange={value => {
           if (value.target.files && value.target.files[0]) {
             props.setValue(value.target.files[0]);
+            setFileName(value.target.files[0].name);
             const reader = new FileReader();
-            reader.onload = function (e) {
+            reader.onload = function(e) {
               if (inputRef.current && e.target) {
                 setFile(e.target.result as any);
               }
             };
-
             reader.readAsDataURL(value.target.files[0]);
           }
         }}
       />
-      <Button id="buttonFileField" variant="outlined" fullWidth={true} onClick={() => {
-        document.getElementById('fileInputFile').click()
-
-      }}>
-       Upload file
+      <Button
+        id={`${props.idButton}`}
+        variant="outlined"
+        fullWidth={true}
+        onClick={() => {
+          document.getElementById(`${props.idInput}`).click();
+        }}
+      >
+        Upload file
       </Button>
+      <ul>
+        <li>
+          {fileName ? fileName : "no file yet"}{" "}
+          {/* <Button
+            onClick={() => {
+
+              props.setValue("null");
+              console.log(props.value)
+              setFileName("no file")
+            }}
+          >
+            X
+          </Button> */}
+        </li>
+      </ul>
       {/* <img src={file ? file : Assets.Files.uploadPlaceholder} style={{width: "200px;"}}/> */}
       {props.error && (
         <Typography

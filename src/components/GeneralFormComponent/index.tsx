@@ -222,7 +222,7 @@ const languagesDropDown = [
 ];
 
 const EMPTY_HTML = "<p>write what ever you want!</p>";
-const MAXIMUM_IMAGE_SIZE = 2 * 1024 * 1024;
+const MAXIMUM_IMAGE_SIZE = 5 * 1024 * 1024;
 
 const mapDataToFormData = <T extends BaseData>(data: T) => {
   const formData: Record<string, any> = data;
@@ -349,7 +349,13 @@ const uploadImagesFormData = async <T extends BaseData>(
                       );
                       resolve();
                     } catch (error) {
-                      reject(error);
+                      if(item.isRequired !== true) {
+                        resolve();
+                        reject(error);
+                      }
+                      else { 
+                        reject(error);
+                      }
                     }
                   })
                 );
@@ -366,47 +372,7 @@ const uploadImagesFormData = async <T extends BaseData>(
           }
         })
       );
-    } else if (item.type === "image2") {
-      promisesArray.push(
-        new Promise(async (res, rej) => {
-          try {
-            if (item.inContent) {
-              const langs = Object.values(Languages).map(
-                lang => lang[0].toUpperCase() + lang.slice(1)
-              );
-              const imagesArray: Array<Promise<string>> = [];
-              langs.forEach(lang => {
-                imagesArray.push(
-                  new Promise(async (resolve, reject) => {
-                    try {
-                      formData[
-                        item.key + lang
-                      ] = await StorageStore.uploadImage(
-                        (formData[item.key + lang] as unknown) as
-                        | File
-                        | string
-                        | null
-                      );
-                      resolve();
-                    } catch (error) {
-                      reject(error);
-                    }
-                  })
-                );
-              });
-              await Promise.all(imagesArray);
-            } else {
-              (formData as any)[item.key] = await StorageStore.uploadImage(
-                (formData as any)[item.key]
-              );
-            }
-            res();
-          } catch (error) {
-            rej(error);
-          }
-        })
-      );
-    } else if (item.type === "gallery") {
+    }  else if (item.type === "gallery") {
       try {
         if (item.inContent) {
           const langs = Object.values(Languages).map(
@@ -490,7 +456,8 @@ const uploadImagesFormData = async <T extends BaseData>(
       );
     }
     else if (item.type === "pdf") {
-      promisesArray.push(
+
+    promisesArray.push(
         new Promise(async (res, rej) => {
           try {
             if (item.inContent) {
@@ -510,7 +477,11 @@ const uploadImagesFormData = async <T extends BaseData>(
                       );
                       resolve();
                     } catch (error) {
-                      reject(error);
+                      if(item.isRequired !== true) {
+                        resolve();
+                      } else {
+                        reject(error);
+                      }
                     }
                   })
                 );
@@ -527,6 +498,7 @@ const uploadImagesFormData = async <T extends BaseData>(
           }
         })
       );
+      
     }
     else if (item.type === "woff2") {
       promisesArray.push(
@@ -574,15 +546,15 @@ const uploadImagesFormData = async <T extends BaseData>(
 
 const textValidationSchema = Yup.string().required();
 const imageValidationSchema = Yup.mixed()
-  .test("fileFormat", "Images only (PNG / JPG)", (value: File | string) => {
+  .test("fileFormat", "Images only (PNG / JPG / GIF)", (value: File | string) => {
     if (typeof value === "string") {
       return true;
     }
-    return value && (value.type === "image/png" || value.type === "image/jpeg");
+    return value && (value.type === "image/png" || value.type === "image/jpeg" || value.type === "image/gif");
   })
   .test(
     "fileSize",
-    "Image size must be less than 1MB",
+    "Image size must be less than 2MB",
     (value: File | string) => {
       if (typeof value === "string") {
         return true;
@@ -607,7 +579,7 @@ const fileValidationSchema = Yup.mixed()
   })
   .test(
     "fileSize",
-    "Font size must be less than 1MB",
+    "Font size must be less than 2MB",
     (value: File | string) => {
       if (typeof value === "string") {
         return true;
@@ -645,15 +617,13 @@ const generateValidationSchema = <T extends BaseData>(
     if (value.inContent) {
       Object.values(Languages).forEach(lang => {
         const suffix = lang[0].toUpperCase() + lang.slice(1);
-        if (value.type === "image") {
-          validationSchema[value.key + suffix] = imageValidationSchema.clone();
-        } else if (value.type === "image2") {
+        if (value.type === "image" && value.isRequired === true) {
           validationSchema[value.key + suffix] = imageValidationSchema.clone();
         }
         else if (value.type === "woff") {
           validationSchema[value.key + suffix] = fileValidationSchema.clone();
         }
-        else if (value.type === "pdf") {
+        else if (value.type === "pdf" && value.isRequired === true) {
           validationSchema[value.key + suffix] = pdfFileValidationSchema.clone();
         }
         else if (value.type === "woff2") {
@@ -667,15 +637,13 @@ const generateValidationSchema = <T extends BaseData>(
         }
       });
     } else {
-      if (value.type === "image") {
+      if (value.type === "image" && value.isRequired === true) {
         validationSchema[value.key] = imageValidationSchema.clone();
-      } else if (value.type === "image2") {
-        validationSchema[value.key] = imageValidationSchema.clone();
-      }
+      } 
       else if (value.type === "woff") {
         validationSchema[value.key] = fileValidationSchema.clone();
       }
-      else if (value.type === "pdf") {
+      else if (value.type === "pdf" && value.isRequired === true) {
         validationSchema[value.key] = pdfFileValidationSchema.clone();
       }
       else if (value.type === "woff2") {
@@ -705,8 +673,6 @@ const generateEmptyFormData = <T extends BaseData>(
       langs.forEach(lang => {
         const suffix = lang.slice(0, 1).toUpperCase() + lang.slice(1);
         if (schemaItem.type === "image") {
-          emptyData[(schemaItem.key as string) + suffix] = null;
-        } else if (schemaItem.type === "image2") {
           emptyData[(schemaItem.key as string) + suffix] = null;
         }
         else if (schemaItem.type === "woff") {
@@ -938,6 +904,9 @@ const GeneralFormComponent = <T extends BaseData>(
                                       value
                                     )
                                   }
+                                  idButton={data.key + suffix}
+                                  idInput={`${data.key}`}
+
                                 />
                                 <Divider className="mt-2" />
                               </div>
@@ -955,12 +924,12 @@ const GeneralFormComponent = <T extends BaseData>(
                                     (formikBag.values as any)[data.key + suffix]
                                   }
                                   error={
-                                    data.isRequired === true ? (formikBag.errors as any)[data.key + suffix] : null
+                                    (formikBag.errors as any)[data.key + suffix]
                                   }
                                   setValue={value =>
                                     formikBag.setFieldValue(
                                       data.key + suffix,
-                                      (value ? value : null)
+                                      value
                                     )
                                   }
                                   idButton={data.key + suffix}
@@ -1048,7 +1017,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                   TypefaceStore.Typefaces.map(val => {
                                     return TypefaceStore.Typefaces.length >
                                       0 ? (
-                                        <MenuItem key={val.key} value={val.key}>
+                                        <MenuItem key={val.key} value={{key: val.key, name: val.content.en.typefaceName}}>
                                           {val.content.en.typefaceName}
                                         </MenuItem>
                                       ) : (

@@ -47,7 +47,7 @@ const ArticlePage: React.FC = props => {
           return (
             <>
               <StyledImg imgSrc={val.content.en.image1} />
-              <Container fluid={true} style={{ overflow: "hidden" }}>
+              <Container fluid={true} style={{ overflow: "hidden" }} className="qlContainer">
                 <h1>{val.content.en.title}</h1>
                 {ReactHtmlParser(JSON.parse(val.content.en.richEditor1))}
                 <Typography variant="h6" component="h6" className=" mb-3 mt-3">

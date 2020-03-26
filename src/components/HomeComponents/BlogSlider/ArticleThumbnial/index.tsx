@@ -19,11 +19,13 @@ const ArticleThumbnial: React.FC = props => {
     }
     margin: 0 8px;
   `;
-    const CustomImg = styled.div`
+  const CustomImg = styled.div`
     width: 100%;
     height: 400px;
     overflow: hidden;
-    background-image: url(${props => props.ImgSrc});
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(${props => `'${props.ImgSrc}'`});
+    /* background-image: url(${props => props.ImgSrc}); */
     background-position: center;
     background-size: cover;
   `;
@@ -50,14 +52,11 @@ const ArticleThumbnial: React.FC = props => {
     background: #c9eec9;
     padding: 1rem 2rem;
     border-radius: 100px;
+    color: black;
   `;
 
   return useObserver(() => (
     <Article>
-      <CustomImg
-        ImgSrc={props.articleData.content.en.image1}
-        alt={props.articleData.content.en.title}
-      />
       <Link
         to={{
           pathname: `/blog/${props.articleData.content.en.articleInternalURL}`,
@@ -66,13 +65,17 @@ const ArticleThumbnial: React.FC = props => {
           }
         }}
       >
+        <CustomImg
+          ImgSrc={props.articleData.content.en.image1}
+          alt={props.articleData.content.en.title}
+        />
         <CustomTitle variant="h5">
           {props.articleData.content.en.title}
         </CustomTitle>
+        <CustomTag variant="body2">
+          {props.articleData.content.en.articleCategory}
+        </CustomTag>
       </Link>
-      <CustomTag variant="body2">
-        {props.articleData.content.en.articleCategory}
-      </CustomTag>
     </Article>
   ));
 };

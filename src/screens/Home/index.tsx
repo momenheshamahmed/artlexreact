@@ -54,6 +54,28 @@ const Home: React.FC = () => {
             return (
               <Link
                 to={{
+                  pathname: `/custom/${val.content.en.websiteInternalURL}`,
+                  state: {
+                    documentId: val.key
+                  }
+                }}
+                key={val.key}
+              >
+                <FullScreenImage urlImage={val.content.en.coverImage}>
+                  <CustomButton
+                    variant="contained"
+                    className="mt-3"
+                    endIcon={<ArrowForwardIcon />}
+                  >
+                    View Typeface
+                  </CustomButton>
+                </FullScreenImage>
+              </Link>
+            );
+          } else if (val.content.en.typefaceCategory === "Premium" || "Free") {
+            return (
+              <Link
+                to={{
                   pathname: `/typefaces/${val.content.en.websiteInternalURL}`,
                   state: {
                     documentId: val.key

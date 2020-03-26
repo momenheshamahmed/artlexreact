@@ -47,7 +47,7 @@ const GalleryField: React.FC<Props> = props => {
         type="file"
         multiple={true}
         accept="image/png,image/jpeg"
-        id={props.idInput}
+        id={`${props.idInput}`}
         style={{ display: "none" }}
         ref={inputRef}
         onChange={value => {

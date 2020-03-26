@@ -24,7 +24,7 @@ const ImageField: React.FC<Props> = props => {
     >
       <input
         type="file"
-        accept="image/png,image/jpeg"
+        accept="image/png,image/jpeg,image/gif"
         id={props.idInput}
         style={{ display: "none" }}
         ref={inputRef}

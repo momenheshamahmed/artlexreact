@@ -7,7 +7,7 @@ import { TypefaceStore } from "../../stores";
 
 const Typefaces: React.FC = () => {
   return useObserver(() => (
-    <Container fluid={true} className="pt-5">
+    <Container fluid={true} className="pt-5" style={{marginTop: 101}}>
       {TypefaceStore.Typefaces.sort(
         (a, b) => a.content.en.typefaceSorting - b.content.en.typefaceSorting
       ).map(val => {

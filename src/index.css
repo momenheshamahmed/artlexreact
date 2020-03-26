@@ -86,3 +86,7 @@ p::selection {
 .react-multiple-carousel__arrow::before {
   color: black !important;
 }
+.qlContainer img {
+  width: 100% !important;
+  object-fit: contain !important;
+}

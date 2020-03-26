@@ -165,6 +165,9 @@ const App: React.FC = () => {
                 <Route exact={true} path={`/typefaces/:typefaceId`}>
                   <TypeFacePage />
                 </Route>
+                <Route exact={true} path={`/custom/:typefaceId`}>
+                  <TypeFacePage />
+                </Route>
               </>
             </Switch>
           </Suspense>
