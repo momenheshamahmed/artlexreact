@@ -1218,7 +1218,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                         return (
 
                               
-                                          <MenuItem key={val.key} value={val.key}>
+                                          <MenuItem key={val.key} value={val.content.en.articleInternalURL}>
                                             {val.content.en.title}
                                           </MenuItem>
                                         )

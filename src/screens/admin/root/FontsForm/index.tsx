@@ -15,8 +15,8 @@ const AdminFontsTable: React.FC = () => {
         tableData={[
           {
             inContent: true,
-            key: "ID",
-            title: "select Typeface",
+            key: "selectTypeface",
+            title: "ID",
             type: "text"
           }
         ]}

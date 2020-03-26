@@ -10,7 +10,12 @@ import ReactHtmlParser, {
   htmlparser2
 } from "react-html-parser";
 import { BlogStore } from "../../stores";
-import { Typography, GridList, useMediaQuery } from "@material-ui/core";
+import {
+  Typography,
+  GridList,
+  useMediaQuery,
+  GridListTile
+} from "@material-ui/core";
 
 const StyledImg = styled.div`
   width: 100%;
@@ -57,18 +62,30 @@ const ArticlePage: React.FC = props => {
                   cols={screenSize ? 1 : 6}
                   spacing={15}
                 >
-                  {/* {val.content.en.relatedArticles.map(tile => {
-                    return BlogStore.Blogs.map(article => {
-                      if (tile === article.key) {
-                        return console.log("fuck this console", tile);
-                      } else if (tile === "noarticles") {
-                        console.log("no fuckin articles", tile);
-                        return <h1>no articles here man</h1>;
-                      } else {
-                        console.log("Shiiiiiiit");
-                      }
-                    });
-                  })} */}
+                  {val.content.en.relatedArticles[0] !== "noarticles" ? (
+                    val.content.en.relatedArticles.map(type => {
+                      return BlogStore.Blogs.map(sec => {
+                        if (type === sec.content.en.articleInternalURL) {
+                          return (
+                            <GridListTile key={sec.key} cols={2}>
+                              <img
+                                src={sec.content.en.image1}
+                                alt={sec.content.en.title}
+                              />
+                            </GridListTile>
+                          );
+                        }
+                      });
+                    })
+                  ) : (
+                    <Typography
+                      variant="body1"
+                      component="body1"
+                      className=" mb-3 mt-3"
+                    >
+                      No Related Articles
+                    </Typography>
+                  )}
                 </GridList>
               </Container>
             </>

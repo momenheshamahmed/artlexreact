@@ -17,6 +17,7 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import { useLocation, useParams } from "react-router-dom";
 import { TypefaceStore, FontsInUseStore, FontStore } from "../../stores";
 import Assets from "../../assets";
+import Typefaces from "../../stores/Typefaces";
 const CustomButton = styled(Button)`
   background: #00ff00 !important;
   border-radius: 100px !important;
@@ -366,11 +367,22 @@ const TypeFacePage: React.FC = () => {
                       val.content.en.websiteInternalURL
                     ) {
                       return (
-                        <BuyFontContainer fluid={true} color={"#F7F7F7"}>
+                        <BuyFontContainer
+                          fluid={true}
+                          color={
+                            weight.content.en.backgroundColor
+                              ? weight.content.en.backgroundColor
+                              : "#f7f7f7"
+                          }
+                        >
                           <TextAndButton>
                             <WeightPreview>
                               <ImgWeight
-                                img={Assets.Images.uploadPlaceholder}
+                                img={
+                                  weight.content.en.fontImage
+                                    ? weight.content.en.fontImage
+                                    : Assets.Images.uploadPlaceholder
+                                }
                               />
                             </WeightPreview>
                             <Col className="text-right align-middle">
@@ -378,9 +390,22 @@ const TypeFacePage: React.FC = () => {
                                 variant="contained"
                                 color="primary"
                                 endIcon={<AddIcon />}
-                                backgroundColor="black"
-                                textColor="white"
-                                svgColor="white"
+                                backgroundColor={
+                                  weight.content.en.buttonColor
+                                    ? weight.content.en.buttonColor
+                                    : "black"
+                                }
+                                textColor={
+                                  weight.content.en.textColor
+                                    ? weight.content.en.textColor
+                                    : "white"
+                                }
+                                svgColor={
+                                  weight.content.en.textColor
+                                    ? weight.content.en.textColor
+                                    : "white"
+                                }
+                                href=""
                               >
                                 Add to Cart
                               </CustomButtonWeight>
@@ -408,11 +433,6 @@ const TypeFacePage: React.FC = () => {
                   </Typography>
 
                   <GridList cellHeight={200} cols={6} spacing={15}>
-                    {/* {tileData.slice(0, 2).map(tile => (
-                      <GridListTile key={tile.img} cols={1}>
-                        <img src={tile.img} alt={tile.title} />
-                      </GridListTile>
-                    ))} */}
                     {FontsInUseStore.FontsInUse.map(font => {
                       if (
                         font.content.en.selectTypeface ===
@@ -439,9 +459,59 @@ const TypeFacePage: React.FC = () => {
                   ref={sectionRefs[4]}
                   className="mt-5 mb-5"
                 >
-                  <Typography>Pair Fonts Here</Typography>
+                  <Typography
+                    variant="h6"
+                    component="h6"
+                    className=" mb-3 mt-3"
+                  >
+                    Pair Fonts
+                  </Typography>
+                  <GridList cellHeight={200} cols={6} spacing={15}>
+                    {val.content.en.pairfonts[0] !== "noitems" ? (
+                      val.content.en.pairfonts.map(type => {
+                        return TypefaceStore.Typefaces.map(sec => {
+                          if (type === sec.content.en.websiteInternalURL) {
+                            return (
+                              <GridListTile key={sec.key} cols={2}>
+                                <img
+                                  src={sec.content.en.coverImage}
+                                  alt={sec.content.en.typefaceName}
+                                />
+                              </GridListTile>
+                            );
+                          }
+                        });
+                      })
+                    ) : (
+                      <Typography
+                        variant="body1"
+                        component="body1"
+                        className=" mb-3 mt-3"
+                      >
+                        No Pair Fonts
+                      </Typography>
+                    )}
+                    {/* {TypefaceStore.Typefaces.map(test => {
+                      return val.content.en.pairfonts.map(test2 => {
+                        if (test2) {
+                          if (test.content.en.websiteInternalURL === test2) {
+                            return <h1>{test2}</h1>;
+                          } else if (test2 === "noitems") {
+                            return (
+                              <Typography variant="h6">
+                                No Pair Fonts!
+                              </Typography>
+                            );
+                          } else {
+                            return null;
+                          }
+                        }
+                      });
+                    })} */}
+                  </GridList>
                   {/* <PairFontsComponent /> */}
                 </Container>
+                <Divider />
                 <Container fluid={true} ref={sectionRefs[5]} className="my-5">
                   <Container fluid={true}>
                     <ContactItem

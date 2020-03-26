@@ -19,21 +19,13 @@ const AdminFontsForm: React.FC = () => {
             type: "selecttypface",
             isRequired: true
           },
-          {
-            inContent: true,
-            key: "fontWeight",
-            title: "Font Weight",
-            type: "text",
-            isRequired: true
 
-          },
           {
             inContent: true,
             key: "fontImage",
             title: "Font Image",
             type: "image",
             isRequired: true
-
           },
           {
             inContent: true,
@@ -41,8 +33,35 @@ const AdminFontsForm: React.FC = () => {
             title: "Font Url",
             type: "text",
             isRequired: true
-
           },
+          {
+            inContent: true,
+            key: "backgroundColor",
+            title: "Background Color",
+            type: "text",
+            isRequired: false
+          },
+          {
+            inContent: true,
+            key: "buttonColor",
+            title: "Font Weight",
+            type: "text",
+            isRequired: false
+          },
+          {
+            inContent: true,
+            key: "textColor",
+            title: "Font Weight",
+            type: "text",
+            isRequired: false
+          },
+          {
+            inContent: true,
+            key: "fontWeight",
+            title: "Font Weight",
+            type: "text",
+            isRequired: false
+          }
         ]}
       />
     </div>

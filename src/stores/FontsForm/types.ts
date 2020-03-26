@@ -13,4 +13,7 @@ export interface FontContent {
   fontWeight: string;
   fontImage: string;
   fontUrl: string;
+  backgroundColor: string;
+  buttonColor: string;
+  textColor: string;
 }
