@@ -8,7 +8,7 @@ const CustomTypefaces: React.FC = () => {
       {TypefaceStore.Typefaces.length > 0 ? (
         TypefaceStore.Typefaces.map(val => {
           if (val.content.en.typefaceCategory === "Custom") {
-            return <FullScreenImageComponent ImgSrc={val} key={val.key} />;
+            return <FullScreenImageComponent ImgSrc={val} key={val.key}/>;
           }
         })
       ) : (

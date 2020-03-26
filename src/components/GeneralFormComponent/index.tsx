@@ -1017,7 +1017,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                   TypefaceStore.Typefaces.map(val => {
                                     return TypefaceStore.Typefaces.length >
                                       0 ? (
-                                        <MenuItem key={val.key} value={{key: val.key, name: val.content.en.typefaceName}}>
+                                        <MenuItem key={val.key} value={val.content.en.websiteInternalURL}>
                                           {val.content.en.typefaceName}
                                         </MenuItem>
                                       ) : (
@@ -1172,7 +1172,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                           </MenuItem>
                                   {useObserver(() =>
                                     TypefaceStore.Typefaces.map(val => {
-                                      return (<MenuItem key={val.key} value={val.key}>
+                                      return (<MenuItem key={val.key} value={val.content.en.websiteInternalURL}>
                                           {val.content.en.typefaceName}
                                         </MenuItem>)                                  
                                     })

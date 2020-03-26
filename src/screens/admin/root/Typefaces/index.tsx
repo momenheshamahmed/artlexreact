@@ -15,6 +15,12 @@ const AdminTypefacesTable: React.FC = () => {
         tableData={[
           {
             inContent: true,
+            key: "websiteInternalURL",
+            title: "ID",
+            type: "text"
+          },
+          {
+            inContent: true,
             key: "typefaceName",
             title: "Typeface Name",
             type: "text"

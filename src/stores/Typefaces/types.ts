@@ -50,6 +50,9 @@ export interface TypefaceContent {
   typefaceLinkBehance: string;
   typefaceLinkDribbble: string;
   typefaceLinkTwitter: string;
+  typefaceLinkInstgram: string;
+  typefaceLinkPinterest: string;
+  typefaceLinkLinkedin: string;
   typefaceLinkWebsite: string;
   standardLigatures: boolean;
   contextuaLalternates: boolean;

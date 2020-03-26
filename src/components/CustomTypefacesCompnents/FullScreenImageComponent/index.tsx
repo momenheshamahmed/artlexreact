@@ -44,7 +44,7 @@ const FullScreenImageComponent: React.FC<Props> = props => {
         to={{
           pathname: `/custom/${props.ImgSrc.content.en.websiteInternalURL}`,
           state: {
-            documentId: props.key
+            documentId: props.ImgSrc.key
           }
         }}
         key={props.key}

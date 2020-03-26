@@ -118,6 +118,19 @@ const FooterComponent: React.FC = () => {
                 href="https://facebook.com/protypefoundry"
                 target="_blank"
               >
+                <img src={Assets.Images.behance} alt="protype behance" />
+              </CustomAnchor>
+              <CustomAnchor
+                href="https://facebook.com/protypefoundry"
+                target="_blank"
+              >
+                <img src={Assets.Images.dribbble} alt="protype behance" />
+              </CustomAnchor>
+
+              <CustomAnchor
+                href="https://facebook.com/protypefoundry"
+                target="_blank"
+              >
                 <img src={Assets.Images.pinterest} alt="protype pinterest" />
               </CustomAnchor>
               <CustomAnchor
@@ -126,12 +139,7 @@ const FooterComponent: React.FC = () => {
               >
                 <img src={Assets.Images.linkedin} alt="protype linkedin" />
               </CustomAnchor>
-              <CustomAnchor
-                href="https://facebook.com/protypefoundry"
-                target="_blank"
-              >
-                <img src={Assets.Images.behance} alt="protype behance" />
-              </CustomAnchor>
+
               <CustomAnchor
                 href="https://facebook.com/protypefoundry"
                 target="_blank"

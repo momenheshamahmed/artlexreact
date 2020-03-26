@@ -1,8 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useObserver } from "mobx-react";
 import { Container, Row, Col, Collapse } from "react-bootstrap";
-import FontInUseComponent from "../../components/TypefacePageComponents/FontInUseComponent";
-import PairFontsComponent from "../../components/TypefacePageComponents/PairFontsComponent";
 import useScrollSpy from "react-use-scrollspy";
 import {
   Typography,
@@ -15,13 +13,10 @@ import AddIcon from "@material-ui/icons/Add";
 
 import styled from "styled-components";
 import TypfaceGalleryComponent from "../../components/TypefaceGalleryComponent";
-import BuyTypefaceSection from "../../components/TypefacePageComponents/BuyTypefaceSection";
 import GetAppIcon from "@material-ui/icons/GetApp";
-import GridListComponent from "../../components/GridListComponent";
-import { useLocation } from "react-router-dom";
-import { database } from "firebase";
-import { TypefaceStore, FontsInUseStore } from "../../stores";
-// import Assets from "../../assets/index";
+import { useLocation, useParams } from "react-router-dom";
+import { TypefaceStore, FontsInUseStore, FontStore } from "../../stores";
+import Assets from "../../assets";
 const CustomButton = styled(Button)`
   background: #00ff00 !important;
   border-radius: 100px !important;
@@ -30,6 +25,7 @@ const CustomButton = styled(Button)`
     margin-left: 1.5rem !important;
   }
 `;
+
 const CustomTag = styled(Typography)`
   background: #000;
   color: white;
@@ -43,7 +39,6 @@ const CustomTag = styled(Typography)`
 const GreyTyppography = styled(Typography)`
   color: "#7A7777" !important;
 `;
-
 const CustomAnchor = styled.a`
   color: black;
   margin-right: 10px;
@@ -53,7 +48,6 @@ const CustomAnchor = styled.a`
     text-decoration: none;
   }
 `;
-
 const FullScreenImage = styled.div`
   width: 100vw;
   height: 100vh;
@@ -67,7 +61,39 @@ const FullScreenImage = styled.div`
   margin-top: 101px;
 `;
 
+const BuyFontContainer = styled(Container)`
+  background: ${props => props.color};
+  padding: 1rem;
+  margin: 1rem 0;
+`;
+const TextAndButton = styled(Row)`
+  align-items: center;
+`;
+const ImgWeight = styled.div`
+  width: 100%;
+  height: 72px;
+  overflow: hidden;
+  background-image: url(${props => props.img});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  text-align: right;
+`;
+const CustomButtonWeight = styled(Button)`
+  background: ${props => props.backgroundColor} !important;
+  border-radius: 100px !important;
+  color: ${props => props.textColor} !important;
+  & span svg {
+    margin-left: 1.5rem !important;
+    fill: ${props => props.svgColor};
+  }
+`;
+const WeightPreview = styled(Col)`
+  height: 100%;
+`;
+
 const TypeFacePage: React.FC = () => {
+  const { typefaceId } = useParams();
   useEffect(() => {
     // tslint:disable-next-line: no-bitwise
     const $style = document.createElement("style");
@@ -138,12 +164,11 @@ const TypeFacePage: React.FC = () => {
     background-size: cover;
     background-repeat: no-repeat;
   `;
-  let { state } = useLocation();
-  console.log("state of font", state);
+  // let { state } = useLocation();
   return useObserver(() => (
     <>
       {TypefaceStore.Typefaces.map(val => {
-        if (val.key === state.documentId) {
+        if (val.content.en.websiteInternalURL === typefaceId) {
           return (
             <>
               {val.content.en.typefaceCategory === "Custom" ? (
@@ -307,7 +332,66 @@ const TypeFacePage: React.FC = () => {
                   <Typography variant="h6" component="h6" className="mb-3 mt-3">
                     Buy Typeface Now
                   </Typography>
-                  <BuyTypefaceSection key="BuyTypefaceSection" />
+                  {/* Full Package Container */}
+                  <BuyFontContainer fluid={true} color={"#000"}>
+                    <TextAndButton>
+                      <WeightPreview>
+                        <ImgWeight
+                          img={
+                            val.content.en.fullPackageImageStore
+                              ? val.content.en.fullPackageImageStore
+                              : Assets.Images.uploadPlaceholder
+                          }
+                        />
+                      </WeightPreview>
+                      <Col className="text-right align-middle">
+                        <CustomButtonWeight
+                          variant="contained"
+                          color="primary"
+                          endIcon={<AddIcon />}
+                          backgroundColor="#00FF00"
+                          textColor="#000"
+                          svgColor="#000"
+                          href={val.content.en.fullPackageStoreUrl}
+                        >
+                          Add to Cart
+                        </CustomButtonWeight>
+                      </Col>
+                    </TextAndButton>
+                  </BuyFontContainer>
+                  {/* Other Weights */}
+                  {FontStore.Fonts.map(weight => {
+                    if (
+                      weight.content.en.selectTypeface ===
+                      val.content.en.websiteInternalURL
+                    ) {
+                      return (
+                        <BuyFontContainer fluid={true} color={"#F7F7F7"}>
+                          <TextAndButton>
+                            <WeightPreview>
+                              <ImgWeight
+                                img={Assets.Images.uploadPlaceholder}
+                              />
+                            </WeightPreview>
+                            <Col className="text-right align-middle">
+                              <CustomButtonWeight
+                                variant="contained"
+                                color="primary"
+                                endIcon={<AddIcon />}
+                                backgroundColor="black"
+                                textColor="white"
+                                svgColor="white"
+                              >
+                                Add to Cart
+                              </CustomButtonWeight>
+                            </Col>
+                          </TextAndButton>
+                        </BuyFontContainer>
+                      );
+                    } else {
+                      return console.log("NO WEIGHTS NOW");
+                    }
+                  })}
                 </Container>
                 <Divider />
                 <Container
@@ -330,7 +414,10 @@ const TypeFacePage: React.FC = () => {
                       </GridListTile>
                     ))} */}
                     {FontsInUseStore.FontsInUse.map(font => {
-                      if (font.content.en.selectTypeface.key === val.key) {
+                      if (
+                        font.content.en.selectTypeface ===
+                        val.content.en.websiteInternalURL
+                      ) {
                         return (
                           <GridListTile
                             key={font.key}
@@ -398,66 +485,113 @@ const TypeFacePage: React.FC = () => {
                           <Col>
                             <GreyTyppography>Designer Links</GreyTyppography>
                           </Col>
-                          {/* <Col className="text-right">
-                            <Row>
-                              <Col>
-                                <CustomAnchor
-                                  href="https://facebook.com/protypefoundry"
-                                  target="_blank"
-                                >
-                                  <img
-                                    src={Assets.Images.facebook}
-                                    alt="protype facebook"
-                                  />
-                                </CustomAnchor>
-                                <CustomAnchor
-                                  href="https://facebook.com/protypefoundry"
-                                  target="_blank"
-                                >
-                                  <img
-                                    src={Assets.Images.instagram}
-                                    alt="protype instagram"
-                                  />
-                                </CustomAnchor>
-                                <CustomAnchor
-                                  href="https://facebook.com/protypefoundry"
-                                  target="_blank"
-                                >
-                                  <img
-                                    src={Assets.Images.pinterest}
-                                    alt="protype pinterest"
-                                  />
-                                </CustomAnchor>
-                                <CustomAnchor
-                                  href="https://facebook.com/protypefoundry"
-                                  target="_blank"
-                                >
-                                  <img
-                                    src={Assets.Images.linkedin}
-                                    alt="protype linkedin"
-                                  />
-                                </CustomAnchor>
-                                <CustomAnchor
-                                  href="https://facebook.com/protypefoundry"
-                                  target="_blank"
-                                >
-                                  <img
-                                    src={Assets.Images.behance}
-                                    alt="protype behance"
-                                  />
-                                </CustomAnchor>
-                                <CustomAnchor
-                                  href="https://facebook.com/protypefoundry"
-                                  target="_blank"
-                                >
-                                  <img
-                                    src={Assets.Images.twitter}
-                                    alt="protype twitter"
-                                  />
-                                </CustomAnchor>
+
+                          <Row>
+                            {val.content.en.typefaceLinkBehance !== "" ||
+                            val.content.en.typefaceLinkDribbble !== "" ||
+                            val.content.en.typefaceLinkFacebook !== "" ||
+                            val.content.en.typefaceLinkInstgram !== "" ||
+                            val.content.en.typefaceLinkLinkedin !== "" ||
+                            val.content.en.typefaceLinkPinterest !== "" ||
+                            val.content.en.typefaceLinkTwitter !== "" ||
+                            val.content.en.typefaceLinkWebsite !== "" ? (
+                              <Col className="text-right">
+                                {val.content.en.typefaceLinkFacebook ? (
+                                  <CustomAnchor
+                                    href="https://facebook.com/protypefoundry"
+                                    target="_blank"
+                                  >
+                                    <img
+                                      src={Assets.Images.facebook}
+                                      alt="protype facebook"
+                                    />
+                                  </CustomAnchor>
+                                ) : null}
+                                {val.content.en.typefaceLinkInstgram ? (
+                                  <CustomAnchor
+                                    href="https://facebook.com/protypefoundry"
+                                    target="_blank"
+                                  >
+                                    <img
+                                      src={Assets.Images.instagram}
+                                      alt="protype facebook"
+                                    />
+                                  </CustomAnchor>
+                                ) : null}
+                                {val.content.en.typefaceLinkBehance ? (
+                                  <CustomAnchor
+                                    href="https://facebook.com/protypefoundry"
+                                    target="_blank"
+                                  >
+                                    <img
+                                      src={Assets.Images.behance}
+                                      alt="protype facebook"
+                                    />
+                                  </CustomAnchor>
+                                ) : null}
+                                {val.content.en.typefaceLinkDribbble ? (
+                                  <CustomAnchor
+                                    href="https://facebook.com/protypefoundry"
+                                    target="_blank"
+                                  >
+                                    <img
+                                      src={Assets.Images.dribbble}
+                                      alt="protype facebook"
+                                    />
+                                  </CustomAnchor>
+                                ) : null}
+                                {val.content.en.typefaceLinkPinterest ? (
+                                  <CustomAnchor
+                                    href="https://facebook.com/protypefoundry"
+                                    target="_blank"
+                                  >
+                                    <img
+                                      src={Assets.Images.pinterest}
+                                      alt="protype facebook"
+                                    />
+                                  </CustomAnchor>
+                                ) : null}
+
+                                {val.content.en.typefaceLinkLinkedin ? (
+                                  <CustomAnchor
+                                    href="https://facebook.com/protypefoundry"
+                                    target="_blank"
+                                  >
+                                    <img
+                                      src={Assets.Images.linkedin}
+                                      alt="protype facebook"
+                                    />
+                                  </CustomAnchor>
+                                ) : null}
+                                {val.content.en.typefaceLinkTwitter ? (
+                                  <CustomAnchor
+                                    href="https://facebook.com/protypefoundry"
+                                    target="_blank"
+                                  >
+                                    <img
+                                      src={Assets.Images.twitter}
+                                      alt="protype facebook"
+                                    />
+                                  </CustomAnchor>
+                                ) : null}
+                                {val.content.en.typefaceLinkWebsite ? (
+                                  <CustomAnchor
+                                    href="https://facebook.com/protypefoundry"
+                                    target="_blank"
+                                  >
+                                    <img
+                                      src={Assets.Images.website}
+                                      alt="protype facebook"
+                                    />
+                                  </CustomAnchor>
+                                ) : null}
                               </Col>
-                            </Row>
-                          </Col> */}
+                            ) : (
+                              <Typography>
+                                No links for this designer!
+                              </Typography>
+                            )}
+                          </Row>
                         </CustomtRow>
                         <Divider />
                         <CustomtRow>

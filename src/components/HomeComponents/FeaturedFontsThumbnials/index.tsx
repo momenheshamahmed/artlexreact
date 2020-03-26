@@ -33,7 +33,11 @@ const FeaturedFontsThumbnialsComponent: React.FC = props => {
         >
           <Link
             to={{
-              pathname: `/typefaces/${props.item.content.en.websiteInternalURL}`,
+              pathname: `${
+                props.item.content.en.typefaceCategory === "Custom"
+                  ? `/custom/${props.item.content.en.websiteInternalURL}`
+                  : `/typefaces/${props.item.content.en.websiteInternalURL}`
+              }`,
               state: {
                 documentId: props.item.key
               }
@@ -55,6 +59,7 @@ const FeaturedFontsThumbnialsComponent: React.FC = props => {
             />
           </Link>
         </GridListTile>
+        }
       </GridList>
     </Container>
   ));

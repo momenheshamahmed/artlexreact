@@ -7,6 +7,8 @@ class Images {
   public static linkedin = require("./linkedin.svg");
   public static pinterest = require("./pinterest.svg");
   public static behance = require("./behance.svg");
+  public static dribbble = require("./dribbble.svg");
+  public static website = require("./website.svg");
 }
 
 export default Images;

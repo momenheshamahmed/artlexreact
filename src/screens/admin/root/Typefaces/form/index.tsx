@@ -290,6 +290,27 @@ const AdminTypefacesForm: React.FC = () => {
           },
           {
             inContent: true,
+            key: "typefaceLinkInstgram",
+            title: "Designer Instagram",
+            type: "text",
+            isRequired: false
+          },
+          {
+            inContent: true,
+            key: "typefaceLinkPinterest",
+            title: "Designer Pinterest",
+            type: "text",
+            isRequired: false
+          },
+          {
+            inContent: true,
+            key: "typefaceLinkLinkedin",
+            title: "Designer Linkedin",
+            type: "text",
+            isRequired: false
+          },
+          {
+            inContent: true,
             key: "typefaceLinkWebsite",
             title: "Designer Website",
             type: "text",

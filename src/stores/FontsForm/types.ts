@@ -9,7 +9,7 @@ export interface Font {
 
 // tslint:disable-next-line: interface-name
 export interface FontContent {
-  selectTypeface: Array<string | File | null>;
+  selectTypeface: string;
   fontWeight: string;
   fontImage: string;
   fontUrl: string;

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useObserver } from "mobx-react";
 import { Container } from "react-bootstrap";
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { database } from "firebase";
 import ReactHtmlParser, {
   processNodes,
@@ -10,13 +10,7 @@ import ReactHtmlParser, {
   htmlparser2
 } from "react-html-parser";
 import { BlogStore } from "../../stores";
-import GridListComponent from "../../components/GridListComponent";
-import {
-  Typography,
-  GridList,
-  GridListTile,
-  useMediaQuery
-} from "@material-ui/core";
+import { Typography, GridList, useMediaQuery } from "@material-ui/core";
 
 const StyledImg = styled.div`
   width: 100%;
@@ -37,17 +31,22 @@ const CustomImg = styled.div`
   background: url(${props => props.src});
 `;
 const ArticlePage: React.FC = props => {
-  let { state } = useLocation();
+  const { articleId } = useParams();
+  // let { state } = useLocation();
   const screenSize = useMediaQuery("(max-width:700px)");
 
   return useObserver(() => (
     <>
       {BlogStore.Blogs.map(val => {
-        if (val.key === state.documentId) {
+        if (val.content.en.articleInternalURL === articleId) {
           return (
             <>
               <StyledImg imgSrc={val.content.en.image1} />
-              <Container fluid={true} style={{ overflow: "hidden" }} className="qlContainer">
+              <Container
+                fluid={true}
+                style={{ overflow: "hidden" }}
+                className="qlContainer"
+              >
                 <h1>{val.content.en.title}</h1>
                 {ReactHtmlParser(JSON.parse(val.content.en.richEditor1))}
                 <Typography variant="h6" component="h6" className=" mb-3 mt-3">
@@ -74,13 +73,13 @@ const ArticlePage: React.FC = props => {
               </Container>
             </>
           );
-        } else if (val.key !== state.documentId) {
+        } else if (val.content.en.articleInternalURL !== articleId) {
           console.log("HAHAHA!");
         } else {
           console.log("Sorry no article here by this name!");
         }
       })}
-      {BlogStore.Blogs.map(article => {
+      {/* {BlogStore.Blogs.map(article => {
         if (article.key === state.documentId) {
           return article.content.en.relatedArticles.map(rar => {
             console.log("this is related article key", rar);
@@ -93,7 +92,7 @@ const ArticlePage: React.FC = props => {
             }
           });
         }
-      })}
+      })} */}
     </>
   ));
 };
