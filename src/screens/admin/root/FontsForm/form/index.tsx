@@ -44,14 +44,14 @@ const AdminFontsForm: React.FC = () => {
           {
             inContent: true,
             key: "buttonColor",
-            title: "Font Weight",
+            title: "Button Color",
             type: "text",
             isRequired: false
           },
           {
             inContent: true,
             key: "textColor",
-            title: "Font Weight",
+            title: "Text Color",
             type: "text",
             isRequired: false
           },

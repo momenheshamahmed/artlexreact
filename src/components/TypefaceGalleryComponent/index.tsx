@@ -40,7 +40,7 @@ const TypfaceGalleryComponent: React.FC = props => {
     }
   };
   const CustomImg = styled.div`
-    width:96%;
+    width:100%;
     height: 400px;
     overflow: hidden;
     background-image: url(${props => props.ImgSrc});

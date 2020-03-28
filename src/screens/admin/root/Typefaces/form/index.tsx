@@ -24,7 +24,7 @@ const AdminTypefacesForm: React.FC = () => {
             key: "fileFont",
             title: "Typeface File",
             type: "woff",
-            isRequired: true
+            isRequired: false
           },
           {
             inContent: true,
@@ -54,27 +54,27 @@ const AdminTypefacesForm: React.FC = () => {
             type: "textarea",
             isRequired: true
           },
-          {
-            inContent: true,
-            key: "fontSize",
-            title: "Font size",
-            type: "text",
-            isRequired: true
-          },
-          {
-            inContent: true,
-            key: "lineHeight",
-            title: "Line Height",
-            type: "text",
-            isRequired: true
-          },
-          {
-            inContent: true,
-            key: "leading",
-            title: "Leading",
-            type: "text",
-            isRequired: true
-          },
+          // {
+          //   inContent: true,
+          //   key: "fontSize",
+          //   title: "Font size",
+          //   type: "text",
+          //   isRequired: false
+          // },
+          // {
+          //   inContent: true,
+          //   key: "lineHeight",
+          //   title: "Line Height",
+          //   type: "text",
+          //   isRequired: false
+          // },
+          // {
+          //   inContent: true,
+          //   key: "leading",
+          //   title: "Leading",
+          //   type: "text",
+          //   isRequired: false
+          // },
           {
             inContent: true,
             key: "typefaceCategory",

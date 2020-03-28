@@ -5,10 +5,7 @@ import { Container, Row, Col, Collapse, Form } from "react-bootstrap";
 
 import TypefaceTesterHeaderComponent from "./TypefaceTesterHeaderComponent";
 import TypefaceControlsComponent from "./TypefaceControlsComponent";
-const TesterContainer = styled(Container)`
-  margin-top: 4vh;
-  margin-bottom: 4vh;
-`;
+
 const TextAreaContainer = styled.div`
   width: 100%;
   height: auto;
@@ -24,11 +21,11 @@ const TypefaceControls = styled.div`
 
 const TextArea = styled.textarea`
   width: 100%;
-  height: 200px;
+  height: 70vh;
   overflow: hidden;
   border: none;
 `;
-const TypefaceTesterComponent: React.FC = props => {
+const TypefaceTesterComponentInsidePage: React.FC = props => {
   const [changeText, setChangeText] = useState(
     props.typeface.content.en.typefaceTestWords
   );
@@ -89,21 +86,9 @@ const TypefaceTesterComponent: React.FC = props => {
 
   function onControlsChange(event) {
     setControls(event);
-    console.log("tester parent value is here man", controls);
   }
   return (
-    <TesterContainer fluid={true}>
-      <Row>
-        <TypefaceTesterHeaderComponent
-          typefaceName={props.typeface.content.en.typefaceName}
-          goto={
-            props.typeface.content.en.websiteInternalURL
-              ? props.typeface.content.en.websiteInternalURL
-              : "/"
-          }
-          documentId={props.typeface.key}
-        />
-      </Row>
+    <Container fluid={true}>
       <Row>
         <Col>
           <TextAreaContainer>
@@ -258,7 +243,7 @@ const TypefaceTesterComponent: React.FC = props => {
           </TextAreaContainer>
         </Col>
       </Row>
-    </TesterContainer>
+    </Container>
   );
 };
-export default TypefaceTesterComponent;
+export default TypefaceTesterComponentInsidePage;

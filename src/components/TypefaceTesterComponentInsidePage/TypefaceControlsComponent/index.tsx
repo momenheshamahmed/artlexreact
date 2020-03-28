@@ -157,9 +157,6 @@ const TypefaceControlsComponent: React.FC = props => {
             </IconButton>
           </Col>
         </Row>
-        <Row>
-          <TypfaceGalleryComponent images={props.images} />
-        </Row>
       </Container>
     </>
   ));

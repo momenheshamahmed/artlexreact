@@ -5,10 +5,6 @@ import App from "./screens/App";
 import * as serviceWorker from "./serviceWorker";
 import { initializeApp } from "firebase";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-import DateFnsUtils from '@date-io/date-fns';
-
 const firebaseConfig = {
   apiKey: "AIzaSyAoDUj8-Z80SI56awjDLEreHIQrvsb2X4g",
   authDomain: "protypefoundry.firebaseapp.com",
@@ -20,12 +16,7 @@ const firebaseConfig = {
   measurementId: "G-Z6985VMKD3"
 };
 initializeApp(firebaseConfig);
-ReactDOM.render(
-  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-    <App />
-  </MuiPickersUtilsProvider>,
-  document.getElementById("root")
-);
+ReactDOM.render(<App />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef } from "react";
 import { useObserver } from "mobx-react";
 import { Container, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import Assets from "../../assets/index";
-import Font from "./types";
 import BlogSliderComponent from "../../components/HomeComponents/BlogSlider";
-import FeaturedFontsThumbnialsComponent from "../../components/HomeComponents/FeaturedFontsThumbnials";
-import TypefaceTesterComponent from "../../components/TypefaceTesterComponent";
-
-import { database } from "firebase";
-
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { Link } from "react-router-dom";
-import { Button } from "@material-ui/core";
+
+import {
+  Button,
+  GridListTile,
+  GridList,
+  useMediaQuery
+} from "@material-ui/core";
 import { TypefaceStore } from "../../stores";
+import TypefaceTesterComponent from "../../components/TypefaceTesterComponent";
 
 //   Styles
 const FullScreenImage = styled.div`
@@ -32,6 +33,19 @@ const FullScreenImage = styled.div`
     transition: 1s;
   }
 `;
+
+const CustomImg = styled.div`
+  width: 100%;
+  height: 100%;
+  background-image: url(${props => props.src});
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: background-image 0.4s;
+  &:hover {
+    background-image: url(${props => props.hover});
+  }
+`;
 const CustomButton = styled(Button)`
   background: #00ff00 !important;
   border-radius: 100px !important;
@@ -45,7 +59,18 @@ const CustomButton = styled(Button)`
     margin-left: 0.5rem !important;
   }
 `;
+const CustomButtonPreveiw = styled(Button)`
+  background: #00ff00 !important;
+  border-radius: 100px !important;
+  color: black !important;
+  & span svg {
+    margin-left: 1.5rem !important;
+  }
+`;
 const Home: React.FC = () => {
+  const screenSize = useMediaQuery("(max-width:700px)");
+  const imgSrcHover = useRef<HTMLImageElement>(null);
+
   return useObserver(() => (
     <div style={{ marginTop: 101 }}>
       {TypefaceStore.Typefaces.map(val => {
@@ -97,18 +122,82 @@ const Home: React.FC = () => {
           }
         }
       })}
+      <Container fluid={true} className="my-5">
+        <GridList cellHeight={300} cols={screenSize ? 1 : 3} spacing={16}>
+          {TypefaceStore.Typefaces.map(item => {
+            if (item.content.en.typefaceFeaturedGrid === true) {
+              return (
+                <GridListTile
+                  key={item.key}
+                  cols={screenSize ? 1 : item.content.en.gridNumber || 1}
+                >
+                  <Link
+                    to={{
+                      pathname: `${
+                        item.content.en.typefaceCategory === "Custom"
+                          ? `/custom/${item.content.en.websiteInternalURL}`
+                          : `/typefaces/${item.content.en.websiteInternalURL}`
+                      }`,
+                      state: {
+                        documentId: item.key
+                      }
+                    }}
+                  >
+                    <CustomImg
+                      src={
+                        item.content.en.typefaceFeaturedGridNumberCover
+                          ? item.content.en.typefaceFeaturedGridNumberCover
+                          : Assets.Images.uploadPlaceholder
+                      }
+                      hover={
+                        item.content.en.typefaceFeaturedGridNumberHover
+                          ? item.content.en.typefaceFeaturedGridNumberHover
+                          : Assets.Images.uploadPlaceholder
+                      }
+                      alt={item.content.en.typefaceName}
+                      ref={imgSrcHover}
+                    />
+                  </Link>
+                </GridListTile>
+              );
+            }
+          })}
+        </GridList>
+      </Container>
       <Container fluid={true}>
-        {TypefaceStore.Typefaces.map(val => {
-          if (val.content.en.typefaceFeaturedGrid === true) {
-            return <FeaturedFontsThumbnialsComponent item={val} />;
-          }
-        })}
-
         <>
           <BlogSliderComponent />
         </>
-
-        {/* <TypefaceTesterComponent /> */}
+        {TypefaceStore.Typefaces.sort(
+          (a, b) => a.content.en.typefaceSorting - b.content.en.typefaceSorting
+        )
+          .slice(0, 2)
+          .map(val => {
+            if (
+              val.content.en.typefaceCategory !== "Custom" &&
+              val.content.en.typefaceFeaturedTester === true
+            ) {
+              return (
+                <>
+                  <TypefaceTesterComponent typeface={val} key={val.key} />
+                </>
+              );
+            } else if (
+              (val.content.en.typefaceCategory === "Premium" || "Free") &&
+              val.content.en.typefaceFeaturedTester === true
+            ) {
+              return console.log("HAHAHA!");
+            }
+          })}{" "}
+      </Container>
+      <Container className="text-center">
+        <CustomButtonPreveiw
+          variant="contained"
+          className="mt-3"
+          endIcon={<ArrowForwardIcon />}
+        >
+          Preview More Fonts
+        </CustomButtonPreveiw>
       </Container>
     </div>
   ));

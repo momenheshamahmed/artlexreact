@@ -6,7 +6,6 @@ import { LinkContainer } from "react-router-bootstrap";
 import styled from "styled-components";
 // Screens
 import AdminRoot from "./admin/root";
-
 // import Home from "./Home";
 // import CustomTypefaces from "./CustomTypefaces";
 // import Blog from "./Blog";
@@ -19,6 +18,7 @@ const Blog = lazy(() => import("./Blog"));
 const Contact = lazy(() => import("./Contact"));
 const ProtypeServices = lazy(() => import("./ProtypeServices"));
 const TypeFacePage = lazy(() => import("./TypeFacePage"));
+const NotFound = lazy(() => import("./NotFound"));
 
 // Assets
 import Assets from "../assets";
@@ -36,7 +36,6 @@ import ArticlePage from "./ArticlePage";
 
 const App: React.FC = () => {
   const [direction] = useState("ltr");
-
   // Styled
   const Logo = styled.img`
     width: 70px;
@@ -62,7 +61,6 @@ const App: React.FC = () => {
         <Route path="/admin">
           <AdminRoot />
         </Route>
-
         <Route path="/">
           <Navbar expand="md" fixed="top" bg="white" className="py-4">
             <Container fluid={true}>
@@ -175,6 +173,7 @@ const App: React.FC = () => {
             <FooterComponent />
           </Container>
         </Route>
+        {/* <Route exact={true} path="*" component={NotFound} /> */}
       </Switch>
     </BrowserRouter>
   );

@@ -36,7 +36,9 @@ const FooterComponent: React.FC = () => {
           </Typography>
         </Col>
         <Col md="4">
-          <Typography variant="h6" className="font-weight-bold">Typefaces</Typography>
+          <Typography variant="h6" className="font-weight-bold">
+            Typefaces
+          </Typography>
           <Row>
             <Col>
               <Typography variant="body2" className="mt-1">
@@ -69,7 +71,9 @@ const FooterComponent: React.FC = () => {
           </Row>
         </Col>
         <Col md="2">
-          <Typography variant="h6" className="font-weight-bold">Pages</Typography>
+          <Typography variant="h6" className="font-weight-bold">
+            Pages
+          </Typography>
           <Row>
             <Col>
               <Typography variant="body2" className="mt-1">
@@ -91,7 +95,9 @@ const FooterComponent: React.FC = () => {
           </Row>
         </Col>
         <Col md="3">
-          <Typography variant="h6" className="font-weight-bold">Email Us</Typography>
+          <Typography variant="h6" className="font-weight-bold">
+            Email Us
+          </Typography>
           <Typography variant="body1">
             <CustomAnchor href="mailto: hi@protype.studio?subject=Hello &body=Let's start writing ....">
               info@protypef.co
@@ -149,6 +155,9 @@ const FooterComponent: React.FC = () => {
             </Col>
           </Row>
         </Col>
+      </Row>
+      <Row>
+        <Typography>Designed & Developed By Momen Hesham</Typography>
       </Row>
     </Container>
   ));

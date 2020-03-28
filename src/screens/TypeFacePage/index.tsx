@@ -14,10 +14,11 @@ import AddIcon from "@material-ui/icons/Add";
 import styled from "styled-components";
 import TypfaceGalleryComponent from "../../components/TypefaceGalleryComponent";
 import GetAppIcon from "@material-ui/icons/GetApp";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, Redirect } from "react-router-dom";
 import { TypefaceStore, FontsInUseStore, FontStore } from "../../stores";
 import Assets from "../../assets";
 import Typefaces from "../../stores/Typefaces";
+import TypefaceTesterComponentInsidePage from "../../components/TypefaceTesterComponentInsidePage";
 const CustomButton = styled(Button)`
   background: #00ff00 !important;
   border-radius: 100px !important;
@@ -95,20 +96,6 @@ const WeightPreview = styled(Col)`
 
 const TypeFacePage: React.FC = () => {
   const { typefaceId } = useParams();
-  useEffect(() => {
-    // tslint:disable-next-line: no-bitwise
-    const $style = document.createElement("style");
-    document.head.appendChild($style);
-
-    $style.innerHTML = `
-    @font-face {
-      font-family: 'Liu Jian Mao Cao';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: local('Liu Jian Mao Cao Regular'), local('LiuJianMaoCao-Regular'), url(https://fonts.gstatic.com/s/changa/v9/2-c79JNi2YuVOUcOarRPgnNGooxCZy2xcjnj9ytf.woff2) format('woff2');    }
-`;
-  }, []);
 
   const sectionRefs = [
     useRef(null),
@@ -157,6 +144,7 @@ const TypeFacePage: React.FC = () => {
       color: ${!openThree ? "#fff" : "#000"};
     }
   `;
+
   const CharacterImage = styled.div`
     width: 100%;
     height: 100vh;
@@ -171,10 +159,24 @@ const TypeFacePage: React.FC = () => {
       {TypefaceStore.Typefaces.map(val => {
         if (val.content.en.websiteInternalURL === typefaceId) {
           return (
-            <>
+            <div
+              style={{
+                marginTop: 101
+              }}
+            >
               {val.content.en.typefaceCategory === "Custom" ? (
-                <FullScreenImage urlImage={val.content.en.coverImage} />
-              ) : null}
+                <FullScreenImage
+                  urlImage={val.content.en.coverImage}
+                  style={{
+                    marginTop: 101
+                  }}
+                />
+              ) : (
+                <TypefaceTesterComponentInsidePage
+                  typeface={val}
+                  key={val.key}
+                />
+              )}
 
               <Container fluid={true}>
                 <Container
@@ -210,17 +212,20 @@ const TypeFacePage: React.FC = () => {
                         Characters
                       </Typography>
                     </Col>
-                    <Col>
-                      <Typography
-                        className={
-                          activeSection === 2
-                            ? "App-navigation-item App-navigation-item--active"
-                            : "App-navigation-item"
-                        }
-                      >
-                        Buy Font
-                      </Typography>
-                    </Col>
+                    {val.content.en.typefaceCategory !== "Custom" ? (
+                      <Col>
+                        <Typography
+                          className={
+                            activeSection === 2
+                              ? "App-navigation-item App-navigation-item--active"
+                              : "App-navigation-item"
+                          }
+                        >
+                          Buy Font
+                        </Typography>
+                      </Col>
+                    ) : null}
+
                     <Col>
                       <Typography
                         className={
@@ -324,100 +329,109 @@ const TypeFacePage: React.FC = () => {
                     <CharacterImage img={val.content.en.charactersImage} />
                   </>{" "}
                 </Container>
-                <Divider />
-                <Container
-                  fluid={true}
-                  className="mt-5 mb-5"
-                  ref={sectionRefs[2]}
-                >
-                  <Typography variant="h6" component="h6" className="mb-3 mt-3">
-                    Buy Typeface Now
-                  </Typography>
-                  {/* Full Package Container */}
-                  <BuyFontContainer fluid={true} color={"#000"}>
-                    <TextAndButton>
-                      <WeightPreview>
-                        <ImgWeight
-                          img={
-                            val.content.en.fullPackageImageStore
-                              ? val.content.en.fullPackageImageStore
-                              : Assets.Images.uploadPlaceholder
-                          }
-                        />
-                      </WeightPreview>
-                      <Col className="text-right align-middle">
-                        <CustomButtonWeight
-                          variant="contained"
-                          color="primary"
-                          endIcon={<AddIcon />}
-                          backgroundColor="#00FF00"
-                          textColor="#000"
-                          svgColor="#000"
-                          href={val.content.en.fullPackageStoreUrl}
-                        >
-                          Add to Cart
-                        </CustomButtonWeight>
-                      </Col>
-                    </TextAndButton>
-                  </BuyFontContainer>
-                  {/* Other Weights */}
-                  {FontStore.Fonts.map(weight => {
-                    if (
-                      weight.content.en.selectTypeface ===
-                      val.content.en.websiteInternalURL
-                    ) {
-                      return (
-                        <BuyFontContainer
-                          fluid={true}
-                          color={
-                            weight.content.en.backgroundColor
-                              ? weight.content.en.backgroundColor
-                              : "#f7f7f7"
-                          }
-                        >
-                          <TextAndButton>
-                            <WeightPreview>
-                              <ImgWeight
-                                img={
-                                  weight.content.en.fontImage
-                                    ? weight.content.en.fontImage
-                                    : Assets.Images.uploadPlaceholder
-                                }
-                              />
-                            </WeightPreview>
-                            <Col className="text-right align-middle">
-                              <CustomButtonWeight
-                                variant="contained"
-                                color="primary"
-                                endIcon={<AddIcon />}
-                                backgroundColor={
-                                  weight.content.en.buttonColor
-                                    ? weight.content.en.buttonColor
-                                    : "black"
-                                }
-                                textColor={
-                                  weight.content.en.textColor
-                                    ? weight.content.en.textColor
-                                    : "white"
-                                }
-                                svgColor={
-                                  weight.content.en.textColor
-                                    ? weight.content.en.textColor
-                                    : "white"
-                                }
-                                href=""
-                              >
-                                Add to Cart
-                              </CustomButtonWeight>
-                            </Col>
-                          </TextAndButton>
-                        </BuyFontContainer>
-                      );
-                    } else {
-                      return console.log("NO WEIGHTS NOW");
-                    }
-                  })}
-                </Container>
+                {val.content.en.typefaceCategory !== "Custom" ? (
+                  <>
+                    <Divider />
+                    <Container
+                      fluid={true}
+                      className="mt-5 mb-5"
+                      ref={sectionRefs[2]}
+                    >
+                      <Typography
+                        variant="h6"
+                        component="h6"
+                        className="mb-3 mt-3"
+                      >
+                        Buy Typeface Now
+                      </Typography>
+                      {/* Full Package Container */}
+                      <BuyFontContainer fluid={true} color={"#000"}>
+                        <TextAndButton>
+                          <WeightPreview>
+                            <ImgWeight
+                              img={
+                                val.content.en.fullPackageImageStore
+                                  ? val.content.en.fullPackageImageStore
+                                  : Assets.Images.uploadPlaceholder
+                              }
+                            />
+                          </WeightPreview>
+                          <Col className="text-right align-middle">
+                            <CustomButtonWeight
+                              variant="contained"
+                              color="primary"
+                              endIcon={<AddIcon />}
+                              backgroundColor="#00FF00"
+                              textColor="#000"
+                              svgColor="#000"
+                              href={val.content.en.fullPackageStoreUrl}
+                            >
+                              Add to Cart
+                            </CustomButtonWeight>
+                          </Col>
+                        </TextAndButton>
+                      </BuyFontContainer>
+                      {/* Other Weights */}
+                      {FontStore.Fonts.map(weight => {
+                        if (
+                          weight.content.en.selectTypeface ===
+                          val.content.en.websiteInternalURL
+                        ) {
+                          return (
+                            <BuyFontContainer
+                              fluid={true}
+                              color={
+                                weight.content.en.backgroundColor
+                                  ? weight.content.en.backgroundColor
+                                  : "#f7f7f7"
+                              }
+                            >
+                              <TextAndButton>
+                                <WeightPreview>
+                                  <ImgWeight
+                                    img={
+                                      weight.content.en.fontImage
+                                        ? weight.content.en.fontImage
+                                        : Assets.Images.uploadPlaceholder
+                                    }
+                                  />
+                                </WeightPreview>
+                                <Col className="text-right align-middle">
+                                  <CustomButtonWeight
+                                    variant="contained"
+                                    color="primary"
+                                    endIcon={<AddIcon />}
+                                    backgroundColor={
+                                      weight.content.en.buttonColor
+                                        ? weight.content.en.buttonColor
+                                        : "black"
+                                    }
+                                    textColor={
+                                      weight.content.en.textColor
+                                        ? weight.content.en.textColor
+                                        : "white"
+                                    }
+                                    svgColor={
+                                      weight.content.en.textColor
+                                        ? weight.content.en.textColor
+                                        : "white"
+                                    }
+                                    href=""
+                                  >
+                                    Add to Cart
+                                  </CustomButtonWeight>
+                                </Col>
+                              </TextAndButton>
+                            </BuyFontContainer>
+                          );
+                        } else {
+                          return console.log("NO WEIGHTS NOW");
+                        }
+                      })}
+                    </Container>
+                  </>
+                ) : null}
+
                 <Divider />
                 <Container
                   fluid={true}
@@ -466,7 +480,13 @@ const TypeFacePage: React.FC = () => {
                   >
                     Pair Fonts
                   </Typography>
-                  <GridList cellHeight={200} cols={6} spacing={15}>
+                  <GridList
+                    cellHeight={
+                      val.content.en.pairfonts[0] !== "noitems" ? 400 : 20
+                    }
+                    cols={6}
+                    spacing={15}
+                  >
                     {val.content.en.pairfonts[0] !== "noitems" ? (
                       val.content.en.pairfonts.map(type => {
                         return TypefaceStore.Typefaces.map(sec => {
@@ -483,11 +503,7 @@ const TypeFacePage: React.FC = () => {
                         });
                       })
                     ) : (
-                      <Typography
-                        variant="body1"
-                        component="body1"
-                        className=" mb-3 mt-3"
-                      >
+                      <Typography variant="body1" className=" mb-3 mt-3">
                         No Pair Fonts
                       </Typography>
                     )}
@@ -727,58 +743,76 @@ const TypeFacePage: React.FC = () => {
                     <Collapse in={openTwo}>
                       <Container fluid={true}>
                         <CustomtRow>
-                          {val.content.en.languagesSupported.map(lang => {
-                            if (lang === "nolanguages") {
-                              return (
-                                <GreyTyppography variant="body2">
-                                  No Languages Supported!
-                                </GreyTyppography>
-                              );
-                            } else {
+                          {val.content.en.languagesSupported[0] !==
+                          "nolanguages" ? (
+                            val.content.en.languagesSupported.map(lang => {
                               return (
                                 <CustomTag variant="body2">{lang}</CustomTag>
                               );
-                            }
-                          })}
+                            })
+                          ) : (
+                            <GreyTyppography variant="body2">
+                              No Languages Supported!
+                            </GreyTyppography>
+                          )}
                         </CustomtRow>
                       </Container>
                     </Collapse>
                   </Container>
-                  <Container fluid={true}>
-                    <ContactItemThree
-                      // onClick={() => setOpenThree(!openThree)}
-                      aria-controls="example-collapse-text"
-                      fluid={true}
-                      aria-expanded={openThree}
-                    >
-                      <Col>
-                        <Typography>ask for a proposal</Typography>
-                      </Col>
-                      <Col className="text-right">
-                        {" "}
-                        <GetAppIcon />
-                      </Col>
-                    </ContactItemThree>
-                  </Container>
-                  <Container fluid={true}>
-                    <ContactItemThree
-                      // onClick={() => setOpenThree(!openThree)}
-                      aria-controls="example-collapse-text"
-                      fluid={true}
-                      aria-expanded={openThree}
-                    >
-                      <Col>
-                        <Typography>User Agreement</Typography>
-                      </Col>
-                      <Col className="text-right">
-                        {" "}
-                        <GetAppIcon />
-                      </Col>
-                    </ContactItemThree>
-                  </Container>
+                  {val.content.en.specimenFilePdf ||
+                  val.content.en.specimenFileText ? (
+                    <Container fluid={true}>
+                      <ContactItemThree
+                        onClick={() =>
+                          window.open(
+                            val.content.en.specimenFilePdf
+                              ? val.content.en.specimenFilePdf
+                              : val.content.en.specimenFileText
+                          )
+                        }
+                        aria-controls="example-collapse-text"
+                        fluid={true}
+                      >
+                        <Col>
+                          <Typography>Download PDF Specimen</Typography>
+                        </Col>
+                        <Col className="text-right">
+                          {" "}
+                          <GetAppIcon />
+                        </Col>
+                      </ContactItemThree>
+                    </Container>
+                  ) : null}
+
+                  {val.content.en.typefaceCategory !== "Custom" ? (
+                    val.content.en.userAgreementPdf ||
+                    val.content.en.userAgreementText ? (
+                      <Container fluid={true}>
+                        <ContactItemThree
+                          onClick={() => {
+                            window.open(
+                              val.content.en.specimenFilePdf
+                                ? val.content.en.userAgreementPdf
+                                : val.content.en.userAgreementText
+                            );
+                          }}
+                          aria-controls="example-collapse-text"
+                          fluid={true}
+                        >
+                          <Col>
+                            <Typography>font end-user agreement</Typography>
+                          </Col>
+                          <Col className="text-right">
+                            {" "}
+                            <GetAppIcon />
+                          </Col>
+                        </ContactItemThree>
+                      </Container>
+                    ) : null
+                  ) : null}
                 </Container>
               </Container>
-            </>
+            </div>
           );
         }
       })}

@@ -38,7 +38,7 @@ const BlogSliderComponent: React.FC = props => {
     right: 15px;
     display: flex;
     width: 50%;
-    justify-content: end;
+    justify-content: flex-end;
   `;
   const ButtonCarouselIcon = styled.div`
     width: 10%;

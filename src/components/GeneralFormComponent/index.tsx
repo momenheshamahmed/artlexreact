@@ -437,8 +437,13 @@ const uploadImagesFormData = async <T extends BaseData>(
                       );
                       resolve();
                     } catch (error) {
-                      reject(error);
-                    }
+                      if(item.isRequired !== true) {
+                        resolve();
+                        reject(error);
+                      }
+                      else { 
+                        reject(error);
+                      }                    }
                   })
                 );
               });
@@ -521,8 +526,13 @@ const uploadImagesFormData = async <T extends BaseData>(
                       );
                       resolve();
                     } catch (error) {
-                      reject(error);
-                    }
+                      if(item.isRequired !== true) {
+                        resolve();
+                        reject(error);
+                      }
+                      else { 
+                        reject(error);
+                      }                    }
                   })
                 );
               });
@@ -567,6 +577,7 @@ const getFileExtension1 = (filename: string) => {
 };
 
 const fileValidationSchema = Yup.mixed()
+  .notRequired()
   .test("fileFormat", "Fonts only (woff / woff2)", (value: File | string) => {
     if (typeof value === "string") {
       return true;
@@ -620,13 +631,13 @@ const generateValidationSchema = <T extends BaseData>(
         if (value.type === "image" && value.isRequired === true) {
           validationSchema[value.key + suffix] = imageValidationSchema.clone();
         }
-        else if (value.type === "woff") {
+        else if (value.type === "woff" && value.isRequired === true) {
           validationSchema[value.key + suffix] = fileValidationSchema.clone();
         }
         else if (value.type === "pdf" && value.isRequired === true) {
           validationSchema[value.key + suffix] = pdfFileValidationSchema.clone();
         }
-        else if (value.type === "woff2") {
+        else if (value.type === "woff2" && value.isRequired === true) {
           validationSchema[value.key + suffix] = fileValidationSchema.clone();
         } else {
           if (value.isRequired) {
@@ -640,13 +651,13 @@ const generateValidationSchema = <T extends BaseData>(
       if (value.type === "image" && value.isRequired === true) {
         validationSchema[value.key] = imageValidationSchema.clone();
       } 
-      else if (value.type === "woff") {
+      else if (value.type === "woff" && value.isRequired === true) {
         validationSchema[value.key] = fileValidationSchema.clone();
       }
       else if (value.type === "pdf" && value.isRequired === true) {
         validationSchema[value.key] = pdfFileValidationSchema.clone();
       }
-      else if (value.type === "woff2") {
+      else if (value.type === "woff2" && value.isRequired === true) {
         validationSchema[value.key] = fileValidationSchema.clone();
       } else {
         if (value.isRequired) {
@@ -1339,7 +1350,6 @@ const GeneralFormComponent = <T extends BaseData>(
                             value={JSON.parse(formikBag.values[data.key + suffix])} 
                             onChange={(val) => {
                               formikBag.setFieldValue(data.key + suffix, JSON.stringify(val)) 
-                              console.log(data.key + suffix)
                             }}
                    />
                               </>
