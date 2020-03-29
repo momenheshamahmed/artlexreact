@@ -55,7 +55,7 @@ const TypefaceControlsComponent: React.FC = props => {
               onChange={handleFontSizeChange}
               key="fontSize"
               name="Font Size"
-              initialNumber={props.fontSizeServer}
+              initialNumber={90}
             />
           </Col>
           <Col md={3}>
@@ -63,18 +63,20 @@ const TypefaceControlsComponent: React.FC = props => {
               onChange={handleLeadingeChange}
               key="leading"
               name="Leading"
-              initialNumber={props.leadingServer}
+              initialNumber={0}
+              max={150}
             />
           </Col>
-          <Col md={3} className="text-center">
+          <Col md={3}>
             <CustomSliderTypefaces
               onChange={handleLineHeighteChange}
               key="lineHeight"
               name="Line-Height"
-              initialNumber={props.lineHeightServer}
+              initialNumber={0}
+              max={150}
             />
           </Col>
-          <Col md={1} className="text-center">
+          <Col md={1} xs={4} className="text-center">
             <MenuAlign
               customText={
                 <svg
@@ -100,7 +102,7 @@ const TypefaceControlsComponent: React.FC = props => {
               onChange={onChangeAlign}
             />
           </Col>
-          <Col md={1} className="text-center">
+          <Col md={1} xs={4} className="text-center">
             <MenuOpenTypeFeatures
               showstandardLigatures={props.showstandardLigatures}
               showcontextuaLalternates={props.contextuaLalternates}
@@ -139,7 +141,7 @@ const TypefaceControlsComponent: React.FC = props => {
               }
             />
           </Col>
-          <Col md={1} className="text-center">
+          <Col md={1} xs={4} className="text-center">
             <IconButton>
               <svg
                 width="53"

@@ -7,14 +7,16 @@ import {
   Button,
   Divider,
   GridListTile,
-  GridList
+  GridList,
+  useMediaQuery,
+  IconButton
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 import styled from "styled-components";
 import TypfaceGalleryComponent from "../../components/TypefaceGalleryComponent";
 import GetAppIcon from "@material-ui/icons/GetApp";
-import { useLocation, useParams, Redirect } from "react-router-dom";
+import { useLocation, useParams, Redirect, Link } from "react-router-dom";
 import { TypefaceStore, FontsInUseStore, FontStore } from "../../stores";
 import Assets from "../../assets";
 import Typefaces from "../../stores/Typefaces";
@@ -94,7 +96,17 @@ const WeightPreview = styled(Col)`
   height: 100%;
 `;
 
+const StyledLink = styled(Link)`
+  color: black;
+  &:hover {
+    color: black;
+    text-decoration: none;
+  }
+`;
+
 const TypeFacePage: React.FC = () => {
+  const screenSize = useMediaQuery("(max-width:700px)");
+
   const { typefaceId } = useParams();
 
   const sectionRefs = [
@@ -152,6 +164,14 @@ const TypeFacePage: React.FC = () => {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    @media (max-width: 768px) {
+      height: 50vh;
+      background-size: contain;
+    }
+  `;
+  const PairFontImg = styled.img`
+    object-fit: cover;
+    object-position: center;
   `;
   // let { state } = useLocation();
   return useObserver(() => (
@@ -179,88 +199,90 @@ const TypeFacePage: React.FC = () => {
               )}
 
               <Container fluid={true}>
-                <Container
-                  fluid={true}
-                  sticky="top"
-                  className="sticky-top bg-white py-4 text-center"
-                  expand="lg"
-                  style={{
-                    top: "100px",
-                    boxShadow: "0px 4px 25px rgba(0, 0, 0, 0.05)"
-                  }}
-                >
-                  <Row>
-                    <Col>
-                      <Typography
-                        className={
-                          activeSection === 0
-                            ? "App-navigation-item App-navigation-item--active"
-                            : "App-navigation-item"
-                        }
-                      >
-                        Gallery
-                      </Typography>
-                    </Col>
-                    <Col>
-                      <Typography
-                        className={
-                          activeSection === 1
-                            ? "App-navigation-item App-navigation-item--active"
-                            : "App-navigation-item"
-                        }
-                      >
-                        Characters
-                      </Typography>
-                    </Col>
-                    {val.content.en.typefaceCategory !== "Custom" ? (
+                {screenSize ? null : (
+                  <Container
+                    fluid={true}
+                    sticky="top"
+                    className="sticky-top bg-white py-4 text-center"
+                    expand="lg"
+                    style={{
+                      top: "100px",
+                      boxShadow: "0px 4px 25px rgba(0, 0, 0, 0.05)"
+                    }}
+                  >
+                    <Row>
                       <Col>
                         <Typography
                           className={
-                            activeSection === 2
+                            activeSection === 0
                               ? "App-navigation-item App-navigation-item--active"
                               : "App-navigation-item"
                           }
                         >
-                          Buy Font
+                          Gallery
                         </Typography>
                       </Col>
-                    ) : null}
+                      <Col>
+                        <Typography
+                          className={
+                            activeSection === 1
+                              ? "App-navigation-item App-navigation-item--active"
+                              : "App-navigation-item"
+                          }
+                        >
+                          Characters
+                        </Typography>
+                      </Col>
+                      {val.content.en.typefaceCategory !== "Custom" ? (
+                        <Col>
+                          <Typography
+                            className={
+                              activeSection === 2
+                                ? "App-navigation-item App-navigation-item--active"
+                                : "App-navigation-item"
+                            }
+                          >
+                            Buy Font
+                          </Typography>
+                        </Col>
+                      ) : null}
 
-                    <Col>
-                      <Typography
-                        className={
-                          activeSection === 3
-                            ? "App-navigation-item App-navigation-item--active"
-                            : "App-navigation-item"
-                        }
-                      >
-                        Font In Use
-                      </Typography>
-                    </Col>
-                    <Col>
-                      <Typography
-                        className={
-                          activeSection === 4
-                            ? "App-navigation-item App-navigation-item--active"
-                            : "App-navigation-item"
-                        }
-                      >
-                        Pair Fonts
-                      </Typography>
-                    </Col>
-                    <Col>
-                      <Typography
-                        className={
-                          activeSection === 5
-                            ? "App-navigation-item App-navigation-item--active"
-                            : "App-navigation-item"
-                        }
-                      >
-                        Info
-                      </Typography>
-                    </Col>
-                  </Row>
-                </Container>
+                      <Col>
+                        <Typography
+                          className={
+                            activeSection === 3
+                              ? "App-navigation-item App-navigation-item--active"
+                              : "App-navigation-item"
+                          }
+                        >
+                          Font In Use
+                        </Typography>
+                      </Col>
+                      <Col>
+                        <Typography
+                          className={
+                            activeSection === 4
+                              ? "App-navigation-item App-navigation-item--active"
+                              : "App-navigation-item"
+                          }
+                        >
+                          Pair Fonts
+                        </Typography>
+                      </Col>
+                      <Col>
+                        <Typography
+                          className={
+                            activeSection === 5
+                              ? "App-navigation-item App-navigation-item--active"
+                              : "App-navigation-item"
+                          }
+                        >
+                          Info
+                        </Typography>
+                      </Col>
+                    </Row>
+                  </Container>
+                )}
 
                 <Container
                   fluid={true}
@@ -291,7 +313,7 @@ const TypeFacePage: React.FC = () => {
                         Add to Cart
                       </CustomButton>
                     </Col>
-                    <Col md={2}>
+                    <Col md={2} xs={12}>
                       <Typography variant="body1" style={{ color: "#717171" }}>
                         Family
                       </Typography>
@@ -357,17 +379,31 @@ const TypeFacePage: React.FC = () => {
                             />
                           </WeightPreview>
                           <Col className="text-right align-middle">
-                            <CustomButtonWeight
-                              variant="contained"
-                              color="primary"
-                              endIcon={<AddIcon />}
-                              backgroundColor="#00FF00"
-                              textColor="#000"
-                              svgColor="#000"
-                              href={val.content.en.fullPackageStoreUrl}
-                            >
-                              Add to Cart
-                            </CustomButtonWeight>
+                            {screenSize ? (
+                              <IconButton
+                                style={{
+                                  backgroundColor: "#00FF00",
+                                  color: "#000",
+                                  fill: "#000"
+                                }}
+                                target="_blank"
+                                href={val.content.en.fullPackageStoreUrl}
+                              >
+                                <AddIcon />
+                              </IconButton>
+                            ) : (
+                              <CustomButtonWeight
+                                variant="contained"
+                                color="primary"
+                                endIcon={<AddIcon />}
+                                backgroundColor="#00FF00"
+                                textColor="#000"
+                                svgColor="#000"
+                                href={val.content.en.fullPackageStoreUrl}
+                              >
+                                Add to Cart
+                              </CustomButtonWeight>
+                            )}
                           </Col>
                         </TextAndButton>
                       </BuyFontContainer>
@@ -397,29 +433,50 @@ const TypeFacePage: React.FC = () => {
                                   />
                                 </WeightPreview>
                                 <Col className="text-right align-middle">
-                                  <CustomButtonWeight
-                                    variant="contained"
-                                    color="primary"
-                                    endIcon={<AddIcon />}
-                                    backgroundColor={
-                                      weight.content.en.buttonColor
-                                        ? weight.content.en.buttonColor
-                                        : "black"
-                                    }
-                                    textColor={
-                                      weight.content.en.textColor
-                                        ? weight.content.en.textColor
-                                        : "white"
-                                    }
-                                    svgColor={
-                                      weight.content.en.textColor
-                                        ? weight.content.en.textColor
-                                        : "white"
-                                    }
-                                    href=""
-                                  >
-                                    Add to Cart
-                                  </CustomButtonWeight>
+                                  {screenSize ? (
+                                    <IconButton
+                                      style={{
+                                        backgroundColor: weight.content.en
+                                          .buttonColor
+                                          ? weight.content.en.buttonColor
+                                          : "black",
+                                        color: weight.content.en.textColor
+                                          ? weight.content.en.textColor
+                                          : "white",
+                                        fill: weight.content.en.textColor
+                                          ? weight.content.en.textColor
+                                          : "white"
+                                      }}
+                                      target="_blank"
+                                      href={val.content.en.fullPackageStoreUrl}
+                                    >
+                                      <AddIcon />
+                                    </IconButton>
+                                  ) : (
+                                    <CustomButtonWeight
+                                      variant="contained"
+                                      color="primary"
+                                      endIcon={<AddIcon />}
+                                      backgroundColor={
+                                        weight.content.en.buttonColor
+                                          ? weight.content.en.buttonColor
+                                          : "black"
+                                      }
+                                      textColor={
+                                        weight.content.en.textColor
+                                          ? weight.content.en.textColor
+                                          : "white"
+                                      }
+                                      svgColor={
+                                        weight.content.en.textColor
+                                          ? weight.content.en.textColor
+                                          : "white"
+                                      }
+                                      href={val.content.en.fullPackageStoreUrl}
+                                    >
+                                      Add to Cart
+                                    </CustomButtonWeight>
+                                  )}
                                 </Col>
                               </TextAndButton>
                             </BuyFontContainer>
@@ -446,7 +503,11 @@ const TypeFacePage: React.FC = () => {
                     FONT IN USE
                   </Typography>
 
-                  <GridList cellHeight={200} cols={6} spacing={15}>
+                  <GridList
+                    cellHeight={200}
+                    cols={screenSize ? 1 : 6}
+                    spacing={15}
+                  >
                     {FontsInUseStore.FontsInUse.map(font => {
                       if (
                         font.content.en.selectTypeface ===
@@ -484,7 +545,7 @@ const TypeFacePage: React.FC = () => {
                     cellHeight={
                       val.content.en.pairfonts[0] !== "noitems" ? 400 : 20
                     }
-                    cols={6}
+                    cols={screenSize ? 2 : 6}
                     spacing={15}
                   >
                     {val.content.en.pairfonts[0] !== "noitems" ? (
@@ -492,11 +553,22 @@ const TypeFacePage: React.FC = () => {
                         return TypefaceStore.Typefaces.map(sec => {
                           if (type === sec.content.en.websiteInternalURL) {
                             return (
-                              <GridListTile key={sec.key} cols={2}>
-                                <img
-                                  src={sec.content.en.coverImage}
-                                  alt={sec.content.en.typefaceName}
-                                />
+                              <GridListTile
+                                key={sec.key}
+                                cols={screenSize ? 2 : 2}
+                              >
+                                <StyledLink
+                                  to={
+                                    sec.content.en.websiteInternalURL
+                                      ? `/typefaces/${sec.content.en.websiteInternalURL}`
+                                      : "/"
+                                  }
+                                >
+                                  <PairFontImg
+                                    src={sec.content.en.pairFontImage}
+                                    alt={sec.content.en.typefaceName}
+                                  />
+                                </StyledLink>
                               </GridListTile>
                             );
                           }
@@ -546,10 +618,13 @@ const TypeFacePage: React.FC = () => {
                     <Collapse in={open}>
                       <Container fluid={true}>
                         <CustomtRow>
-                          <Col>
+                          <Col xs={12}>
                             <Typography>Typeface Name</Typography>
                           </Col>
-                          <Col className="text-right">
+                          <Col
+                            xs={12}
+                            className={screenSize ? "text-left" : "text-right"}
+                          >
                             <GreyTyppography>
                               {val.content.en.typefaceName}
                             </GreyTyppography>
@@ -557,10 +632,12 @@ const TypeFacePage: React.FC = () => {
                         </CustomtRow>
                         <Divider />
                         <CustomtRow>
-                          <Col>
+                          <Col xs={12}>
                             <GreyTyppography>Designer Name</GreyTyppography>
                           </Col>
-                          <Col className="text-right">
+                          <Col
+                            className={screenSize ? "text-left" : "text-right"}
+                          >
                             <Typography>
                               {val.content.en.designerName}
                             </Typography>
@@ -568,11 +645,11 @@ const TypeFacePage: React.FC = () => {
                         </CustomtRow>
                         <Divider />
                         <CustomtRow>
-                          <Col>
+                          <Col xs={12}>
                             <GreyTyppography>Designer Links</GreyTyppography>
                           </Col>
 
-                          <Row>
+                          <>
                             {val.content.en.typefaceLinkBehance !== "" ||
                             val.content.en.typefaceLinkDribbble !== "" ||
                             val.content.en.typefaceLinkFacebook !== "" ||
@@ -581,7 +658,12 @@ const TypeFacePage: React.FC = () => {
                             val.content.en.typefaceLinkPinterest !== "" ||
                             val.content.en.typefaceLinkTwitter !== "" ||
                             val.content.en.typefaceLinkWebsite !== "" ? (
-                              <Col className="text-right">
+                              <Col
+                                xs={12}
+                                className={
+                                  screenSize ? "text-left" : "text-right"
+                                }
+                              >
                                 {val.content.en.typefaceLinkFacebook ? (
                                   <CustomAnchor
                                     href="https://facebook.com/protypefoundry"
@@ -677,23 +759,27 @@ const TypeFacePage: React.FC = () => {
                                 No links for this designer!
                               </Typography>
                             )}
-                          </Row>
+                          </>
                         </CustomtRow>
                         <Divider />
                         <CustomtRow>
-                          <Col>
+                          <Col xs={12}>
                             <GreyTyppography>Version</GreyTyppography>
                           </Col>
-                          <Col className="text-right">
+                          <Col
+                            className={screenSize ? "text-left" : "text-right"}
+                          >
                             <Typography>{val.content.en.version}</Typography>
                           </Col>
                         </CustomtRow>
                         <Divider />
                         <CustomtRow>
-                          <Col>
+                          <Col xs={12}>
                             <GreyTyppography>Manufacturing</GreyTyppography>
                           </Col>
-                          <Col className="text-right">
+                          <Col
+                            className={screenSize ? "text-left" : "text-right"}
+                          >
                             <Typography>
                               {val.content.en.manufacturing}
                             </Typography>
@@ -701,10 +787,12 @@ const TypeFacePage: React.FC = () => {
                         </CustomtRow>
                         <Divider />
                         <CustomtRow>
-                          <Col>
+                          <Col xs={12}>
                             <GreyTyppography>Copyright</GreyTyppography>
                           </Col>
-                          <Col className="text-right">
+                          <Col
+                            className={screenSize ? "text-left" : "text-right"}
+                          >
                             <Typography>
                               {val.content.en.manufacturing}
                             </Typography>
@@ -712,10 +800,12 @@ const TypeFacePage: React.FC = () => {
                         </CustomtRow>
                         <Divider />
                         <CustomtRow>
-                          <Col>
+                          <Col xs={12}>
                             <GreyTyppography>Release Date</GreyTyppography>
                           </Col>
-                          <Col className="text-right">
+                          <Col
+                            className={screenSize ? "text-left" : "text-right"}
+                          >
                             <Typography>
                               {val.content.en.releaseDate}
                             </Typography>

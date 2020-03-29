@@ -1,7 +1,7 @@
 import React from "react";
 import { useObserver } from "mobx-react";
 import styled from "styled-components";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
@@ -10,14 +10,9 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 // Assets
 import Assets from "../../../assets/index";
 
-import {
-  ButtonGroupProps,
-  ArrowProps,
-  DotProps
-} from "react-multi-carousel/lib/types";
+import { ButtonGroupProps, DotProps } from "react-multi-carousel/lib/types";
 import ArticleThumbnial from "./ArticleThumbnial";
 import { Typography } from "@material-ui/core";
-import { Link } from "react-router-dom";
 import { BlogStore } from "../../../stores";
 
 // tslint:disable-next-line: interface-name
@@ -30,7 +25,6 @@ const BlogSliderComponent: React.FC = props => {
   // Styles
   // *
   // *
-
 
   const ButtonGroupStyled = styled.div`
     position: absolute;
@@ -46,6 +40,9 @@ const BlogSliderComponent: React.FC = props => {
     vertical-align: center;
     text-align: center;
     cursor: pointer;
+    @media (max-width: 768px) {
+      width: 25%;
+    }
   `;
 
   const CustomDotStyled = styled.div`
@@ -56,6 +53,9 @@ const BlogSliderComponent: React.FC = props => {
     cursor: pointer;
     background-color: ${props =>
       props.IsActive ? "rgba(0, 0, 0, 1)" : "rgba(0, 0, 0, 0.4)"};
+    @media (max-width: 768px) {
+      width: 32px;
+    }
   `;
 
   const responsive = {
@@ -103,7 +103,7 @@ const BlogSliderComponent: React.FC = props => {
   };
 
   return useObserver(() => (
-    <Container fluid={true} className="position-relative">
+    <div className="position-relative">
       <Typography variant="h5" className="my-5">
         Blog
       </Typography>
@@ -137,7 +137,7 @@ const BlogSliderComponent: React.FC = props => {
           }
         })}
       </Carousel>
-    </Container>
+    </div>
   ));
 };
 export default BlogSliderComponent;

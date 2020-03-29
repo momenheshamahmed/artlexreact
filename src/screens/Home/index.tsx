@@ -195,6 +195,7 @@ const Home: React.FC = () => {
           variant="contained"
           className="mt-3"
           endIcon={<ArrowForwardIcon />}
+          href="/typefaces"
         >
           Preview More Fonts
         </CustomButtonPreveiw>

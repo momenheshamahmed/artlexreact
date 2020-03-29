@@ -6,17 +6,16 @@ import styled from "styled-components";
 import { Button, Typography, withStyles } from "@material-ui/core";
 
 import AddIcon from "@material-ui/icons/Add";
-import { Formik, Form, Field, FormikHelpers, FormikProps  } from "formik";
+import { Formik, Form, Field, FormikHelpers, FormikProps } from "formik";
 import { TextField } from "formik-material-ui";
 
-import * as emailjs from 'emailjs-com'
+import * as emailjs from "emailjs-com";
 
 interface IFormValues {
-  firstName: string
-  email: string
-  message: string
+  firstName: string;
+  email: string;
+  message: string;
 }
-
 
 const CustomTypefaces: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -54,69 +53,69 @@ const CustomTypefaces: React.FC = () => {
       color: ${!openThree ? "#fff" : "#000"};
     }
   `;
-const CssTextField = withStyles({
-  root: {
-    '& label.Mui-focused': {
-      color: 'black',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: 'black',
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: '#757575',
+  const CssTextField = withStyles({
+    root: {
+      "& label.Mui-focused": {
+        color: "black"
       },
-      '&:hover fieldset': {
-        borderColor: '#000',
+      "& .MuiInput-underline:after": {
+        borderBottomColor: "black"
       },
-      '&.Mui-focused fieldset': {
-        borderColor: '#757575',
+      "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+          borderColor: "#757575"
+        },
+        "&:hover fieldset": {
+          borderColor: "#000"
+        },
+        "&.Mui-focused fieldset": {
+          borderColor: "#757575"
+        }
+      }
+    }
+  })(TextField);
+  const CustomButton = withStyles({
+    root: {
+      boxShadow: "none",
+      textTransform: "none",
+      fontSize: 18,
+      padding: "12px 24px",
+      border: "1px solid",
+      lineHeight: 1.5,
+      color: "white",
+      backgroundColor: "#000",
+      borderColor: "#000",
+      textTransform: "uppercase",
+      marginTop: 15,
+      fontFamily: [
+        "-apple-system",
+        "BlinkMacSystemFont",
+        '"Segoe UI"',
+        "Roboto",
+        '"Helvetica Neue"',
+        "Arial",
+        "sans-serif",
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"'
+      ].join(","),
+      "&:hover": {
+        backgroundColor: "#000",
+        borderColor: "#000",
+        boxShadow: "none"
       },
-    },
-  },
-})(TextField);
-const CustomButton = withStyles({
-  root: {
-    boxShadow: 'none',
-    textTransform: 'none',
-    fontSize: 18,
-    padding: '12px 24px',
-    border: '1px solid',
-    lineHeight: 1.5,
-    color: "white",
-    backgroundColor: '#000',
-    borderColor: '#000',
-    textTransform: "uppercase",
-    marginTop: 15,  
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-    '&:hover': {
-      backgroundColor: '#000',
-      borderColor: '#000',
-      boxShadow: 'none',
-    },
-    '&:active': {
-      boxShadow: 'none',
-      backgroundColor: 'green',
-      borderColor: 'green',
-    },
-    '&:focus': {
-      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
-    },
-  },
-})(Button);
+      "&:active": {
+        boxShadow: "none",
+        backgroundColor: "green",
+        borderColor: "green"
+      },
+      "&:focus": {
+        boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)"
+      }
+    }
+  })(Button);
 
-const [emailSent, setEmailSent] = useState(false)
+  const [emailSent, setEmailSent] = useState(false);
 
   const FullScreenImage = styled.div`
     width: 100vw;
@@ -129,9 +128,8 @@ const [emailSent, setEmailSent] = useState(false)
     background-size: cover;
     text-align: right;
     padding: 10vh;
-
   `;
-    
+
   return useObserver(() => (
     <>
       <FullScreenImage urlImage={Assets.Images.uploadPlaceholder} />
@@ -153,33 +151,36 @@ const [emailSent, setEmailSent] = useState(false)
             <Container>
               <CustomtRow>
                 <Formik
-       initialValues={{ firstName: "", email: "", message: "" }}
-       onSubmit={(values: IFormValues, actions: FormikHelpers<IFormValues>) => {
-         actions.setSubmitting(true)
-         setTimeout(() => {
-           emailjs.send(
-             "gmail" // Email service as defined in EmailJS setting
-             "template_fQRMbBug", // Email template ID provided by EmailJS
-             {
-               from_name: values.firstName,
-               to_name: "momenheshamzaza@gmail.com",
-               reply_to: values.email,
-               message_html: values.message,
-             },
-             "user_PTCm89pSOkpRGXWRjnRuB" // EmailJS user ID
-           )
-           .then(() => {
-               setEmailSent(true)
-               actions.setSubmitting(false)
-               actions.resetForm()
-             })
-           .catch(() => {
-               actions.setSubmitting(false)
-               alert('Error sending email...')
-             })
-         }, 1000)
-        }}
-
+                  initialValues={{ firstName: "", email: "", message: "" }}
+                  onSubmit={(
+                    values: IFormValues,
+                    actions: FormikHelpers<IFormValues>
+                  ) => {
+                    actions.setSubmitting(true);
+                    setTimeout(() => {
+                      emailjs
+                        .send(
+                          "gmail", // Email service as defined in EmailJS setting
+                          "template_fQRMbBug", // Email template ID provided by EmailJS
+                          {
+                            from_name: values.firstName,
+                            to_name: "momenheshamzaza@gmail.com",
+                            reply_to: values.email,
+                            message_html: values.message
+                          },
+                          "user_PTCm89pSOkpRGXWRjnRuB" // EmailJS user ID
+                        )
+                        .then(() => {
+                          setEmailSent(true);
+                          actions.setSubmitting(false);
+                          actions.resetForm();
+                        })
+                        .catch(() => {
+                          actions.setSubmitting(false);
+                          alert("Error sending email...");
+                        });
+                    }, 1000);
+                  }}
                   render={formikBag => (
                     <Form style={{ width: "100%" }}>
                       <Field

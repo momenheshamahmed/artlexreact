@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 import { BlogStore } from "../../../stores";
 const ContainerBlogGrid = styled(Container)`
   padding-top: 5vh;
-  padding-bottom: 5vh;
 `;
 const CustomImg = styled.div`
   position: relative;

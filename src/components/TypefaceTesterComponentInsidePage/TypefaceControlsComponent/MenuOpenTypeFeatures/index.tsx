@@ -2,7 +2,13 @@ import React, { useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Menu, { MenuProps } from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { FormControlLabel, Checkbox, CheckboxProps, Typography, IconButton } from "@material-ui/core";
+import {
+  FormControlLabel,
+  Checkbox,
+  CheckboxProps,
+  Typography,
+  IconButton
+} from "@material-ui/core";
 
 const StyledMenu = withStyles({
   paper: {
@@ -93,18 +99,18 @@ export default function MenuOpenTypeFeatures(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {props.standardLigatures === true ||
-        props.contextuaLalternates === true ||
-        props.discretionLigatures === true ||
-        props.swash === true ||
-        props.fractions === true ||
-        props.stylisticOne === true ||
-        props.stylisticTwo === true ||
-        props.stylisticThree === true ||
-        props.stylisticFour === true ||
-        props.stylisticFive === true ||
-        props.stylisticSix === true ||
-        props.stylisticSeven === true ? (
+        {props.showstandardLigatures === true ||
+        props.showcontextuaLalternates === true ||
+        props.showdiscretionLigatures === true ||
+        props.showswash === true ||
+        props.showfractions === true ||
+        props.showstylisticOne === true ||
+        props.showstylisticTwo === true ||
+        props.showstylisticThree === true ||
+        props.showstylisticFour === true ||
+        props.showstylisticFive === true ||
+        props.showstylisticSix === true ||
+        props.showstylisticSeven === true ? (
           <>
             {props.showstandardLigatures === true ? (
               <StyledMenuItem>
@@ -120,7 +126,7 @@ export default function MenuOpenTypeFeatures(props) {
                 />
               </StyledMenuItem>
             ) : null}
-            {props.contextuaLalternates === true ? (
+            {props.showcontextuaLalternates === true ? (
               <StyledMenuItem>
                 <FormControlLabel
                   control={
@@ -134,7 +140,7 @@ export default function MenuOpenTypeFeatures(props) {
                 />
               </StyledMenuItem>
             ) : null}
-            {props.discretionLigatures === true ? (
+            {props.showdiscretionLigatures === true ? (
               <StyledMenuItem>
                 <FormControlLabel
                   control={
@@ -148,7 +154,7 @@ export default function MenuOpenTypeFeatures(props) {
                 />
               </StyledMenuItem>
             ) : null}
-            {props.swash === true ? (
+            {props.showswash === true ? (
               <StyledMenuItem>
                 <FormControlLabel
                   control={
@@ -162,7 +168,7 @@ export default function MenuOpenTypeFeatures(props) {
                 />
               </StyledMenuItem>
             ) : null}
-            {props.fractions === true ? (
+            {props.showfractions === true ? (
               <StyledMenuItem>
                 <FormControlLabel
                   control={
@@ -176,7 +182,7 @@ export default function MenuOpenTypeFeatures(props) {
                 />
               </StyledMenuItem>
             ) : null}
-            {props.stylisticOne === true ? (
+            {props.showstylisticOne === true ? (
               <StyledMenuItem>
                 <FormControlLabel
                   control={
@@ -190,7 +196,7 @@ export default function MenuOpenTypeFeatures(props) {
                 />
               </StyledMenuItem>
             ) : null}
-            {props.stylisticTwo === true ? (
+            {props.showstylisticTwo === true ? (
               <StyledMenuItem>
                 <FormControlLabel
                   control={
@@ -204,7 +210,7 @@ export default function MenuOpenTypeFeatures(props) {
                 />
               </StyledMenuItem>
             ) : null}
-            {props.stylisticThree === true ? (
+            {props.showstylisticThree === true ? (
               <StyledMenuItem>
                 <FormControlLabel
                   control={
@@ -218,7 +224,7 @@ export default function MenuOpenTypeFeatures(props) {
                 />
               </StyledMenuItem>
             ) : null}
-            {props.stylisticFour === true ? (
+            {props.showstylisticFour === true ? (
               <StyledMenuItem>
                 <FormControlLabel
                   control={
@@ -232,7 +238,7 @@ export default function MenuOpenTypeFeatures(props) {
                 />
               </StyledMenuItem>
             ) : null}
-            {props.stylisticFive === true ? (
+            {props.showstylisticFive === true ? (
               <StyledMenuItem>
                 <FormControlLabel
                   control={
@@ -246,7 +252,7 @@ export default function MenuOpenTypeFeatures(props) {
                 />
               </StyledMenuItem>
             ) : null}
-            {props.stylisticSix === true ? (
+            {props.showstylisticSix === true ? (
               <StyledMenuItem>
                 <FormControlLabel
                   control={
@@ -260,7 +266,7 @@ export default function MenuOpenTypeFeatures(props) {
                 />
               </StyledMenuItem>
             ) : null}
-            {props.stylisticSeven === true ? (
+            {props.showstylisticSeven === true ? (
               <StyledMenuItem>
                 <FormControlLabel
                   control={

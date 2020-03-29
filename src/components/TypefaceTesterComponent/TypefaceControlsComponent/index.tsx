@@ -4,14 +4,23 @@ import { Container, Row, Col } from "react-bootstrap";
 import MenuOpenTypeFeatures from "./MenuOpenTypeFeatures";
 import MenuAlign from "./MenuAlign";
 
-import { Typography, IconButton } from "@material-ui/core";
-import FormatAlignCenterIcon from "@material-ui/icons/FormatAlignCenter";
-import GetAppIcon from "@material-ui/icons/GetApp";
+import { useMediaQuery, IconButton } from "@material-ui/core";
 import TypfaceGalleryComponent from "../../TypefaceGalleryComponent";
 
 import CustomSliderTypefaces from "./CustomSliderTypefaces";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
+const StyledLink = styled(Link)`
+  color: black;
+  &:hover {
+    color: black;
+    text-decoration: none;
+  }
+`;
 const TypefaceControlsComponent: React.FC = props => {
+  const screenSize = useMediaQuery("(max-width:700px)");
+
   const [controls, setControls] = useState(props.controls);
 
   function handleFontSizeChange(event) {
@@ -55,7 +64,7 @@ const TypefaceControlsComponent: React.FC = props => {
               onChange={handleFontSizeChange}
               key="fontSize"
               name="Font Size"
-              initialNumber={props.fontSizeServer}
+              initialNumber={90}
             />
           </Col>
           <Col md={3}>
@@ -63,18 +72,20 @@ const TypefaceControlsComponent: React.FC = props => {
               onChange={handleLeadingeChange}
               key="leading"
               name="Leading"
-              initialNumber={props.leadingServer}
+              initialNumber={0}
+              max={150}
             />
           </Col>
-          <Col md={3} className="text-center">
+          <Col md={3}>
             <CustomSliderTypefaces
               onChange={handleLineHeighteChange}
               key="lineHeight"
               name="Line-Height"
-              initialNumber={props.lineHeightServer}
+              initialNumber={0}
+              max={150}
             />
           </Col>
-          <Col md={1} className="text-center">
+          <Col md={1} xs={4} className="text-center">
             <MenuAlign
               customText={
                 <svg
@@ -100,7 +111,7 @@ const TypefaceControlsComponent: React.FC = props => {
               onChange={onChangeAlign}
             />
           </Col>
-          <Col md={1} className="text-center">
+          <Col md={1} xs={4} className="text-center">
             <MenuOpenTypeFeatures
               showstandardLigatures={props.showstandardLigatures}
               showcontextuaLalternates={props.contextuaLalternates}
@@ -139,27 +150,31 @@ const TypefaceControlsComponent: React.FC = props => {
               }
             />
           </Col>
-          <Col md={1} className="text-center">
+          <Col md={1} xs={4} className="text-center">
             <IconButton>
-              <svg
-                width="53"
-                height="53"
-                viewBox="0 0 53 53"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle cx="26.5" cy="26.5" r="26.5" fill="#171717" />
-                <path
-                  d="M20 35H34V33H20V35ZM34 24H30V18H24V24H20L27 31L34 24Z"
-                  fill="#00FF00"
-                />
-              </svg>
+              <StyledLink to={props.goto ? `/typefaces/${props.goto}` : "/"}>
+                <svg
+                  width="53"
+                  height="53"
+                  viewBox="0 0 53 53"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle cx="26.5" cy="26.5" r="26.5" fill="#171717" />
+                  <path
+                    d="M20 35H34V33H20V35ZM34 24H30V18H24V24H20L27 31L34 24Z"
+                    fill="#00FF00"
+                  />
+                </svg>
+              </StyledLink>
             </IconButton>
           </Col>
         </Row>
-        <Row>
-          <TypfaceGalleryComponent images={props.images} />
-        </Row>
+        {screenSize ? null : (
+          <Row>
+            <TypfaceGalleryComponent images={props.images} />
+          </Row>
+        )}
       </Container>
     </>
   ));

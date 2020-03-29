@@ -7,6 +7,8 @@ import AuthStore from "../../../stores/Auth";
 import { CircularProgress, Container } from "@material-ui/core";
 
 import MiniDrawer from "../../../components/adminComponents/Drawer";
+import AdminProtypeServicesForm from "./ProtypeServices/form";
+import AdminProtypeServicesTable from "./ProtypeServices";
 const AdminLogin = lazy(() => import("../login"));
 const AdminTypefacesForm = lazy(() => import("./typefaces/form"));
 const AdminTypefacesTable = lazy(() => import("./typefaces"));
@@ -72,6 +74,12 @@ const AdminRoot = () => {
                     </Route>
                     <Route exact={true} path="/admin/blog">
                       <AdminBlogTable />
+                    </Route>
+                    <Route path="/admin/services/:key">
+                      <AdminProtypeServicesForm />
+                    </Route>
+                    <Route exact={true} path="/admin/services">
+                      <AdminProtypeServicesTable />
                     </Route>
                   </Switch>
                 </div>

@@ -4,14 +4,8 @@ import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import styled from "styled-components";
-// Screens
 import AdminRoot from "./admin/root";
-// import Home from "./Home";
-// import CustomTypefaces from "./CustomTypefaces";
-// import Blog from "./Blog";
-// import Contact from "./Contact";
-// import ProtypeServices from "./ProtypeServices";
-// import TypeFacePage from "./TypeFacePage";
+
 const Home = lazy(() => import("./Home"));
 const CustomTypefaces = lazy(() => import("./CustomTypefaces"));
 const Blog = lazy(() => import("./Blog"));
@@ -28,11 +22,13 @@ import {
   TypefaceStore,
   FontStore,
   FontsInUseStore,
-  BlogStore
+  BlogStore,
+  ProtypeServices as ProtypeServicesStore
 } from "../stores";
 import FooterComponent from "../components/FooterComponent/FooterComponent";
 import Typefaces from "./Typefaces";
 import ArticlePage from "./ArticlePage";
+import ScrollToTop from "./scrollTop";
 
 const App: React.FC = () => {
   const [direction] = useState("ltr");
@@ -53,10 +49,13 @@ const App: React.FC = () => {
     FontStore.watchFonts();
     FontsInUseStore.watchFontsInUse();
     BlogStore.watchBlogs();
+    ProtypeServicesStore.watchProtypeServicess();
   }, []);
 
   return (
     <BrowserRouter>
+    <ScrollToTop />
+
       <Switch>
         <Route path="/admin">
           <AdminRoot />
@@ -78,9 +77,9 @@ const App: React.FC = () => {
                   <LinkContainer to={"/custom"}>
                     <Nav.Link eventKey="custom">{"Custom"}</Nav.Link>
                   </LinkContainer>
-                  {/* <LinkContainer to={"/services"}>
+                  <LinkContainer to={"/services"}>
                     <Nav.Link eventKey="services">{"Services"}</Nav.Link>
-                  </LinkContainer> */}
+                  </LinkContainer>
                   <LinkContainer to={"/blog"}>
                     <Nav.Link eventKey="blog">{"Blog"}</Nav.Link>
                   </LinkContainer>
@@ -154,6 +153,7 @@ const App: React.FC = () => {
                 <Route exact={true} path="/blog">
                   <Blog />
                 </Route>
+
                 <Route exact={true} path={`/blog/:articleId`}>
                   <ArticlePage />
                 </Route>

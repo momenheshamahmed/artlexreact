@@ -5,6 +5,7 @@ import { Container, Row, Col, Collapse, Form } from "react-bootstrap";
 
 import TypefaceTesterHeaderComponent from "./TypefaceTesterHeaderComponent";
 import TypefaceControlsComponent from "./TypefaceControlsComponent";
+import { IconButton, useMediaQuery } from "@material-ui/core";
 const TesterContainer = styled(Container)`
   margin-top: 4vh;
   margin-bottom: 4vh;
@@ -29,6 +30,8 @@ const TextArea = styled.textarea`
   border: none;
 `;
 const TypefaceTesterComponent: React.FC = props => {
+  const screenSize = useMediaQuery("(max-width:700px)");
+  const [open, setOpen] = useState(false);
   const [changeText, setChangeText] = useState(
     props.typeface.content.en.typefaceTestWords
   );
@@ -37,7 +40,6 @@ const TypefaceTesterComponent: React.FC = props => {
   };
   const $style = document.createElement("style");
   document.head.appendChild($style);
-
   $style.innerHTML = `
     @font-face {
       font-family: '${props.typeface.content.en.typefaceName}';  
@@ -53,23 +55,10 @@ const TypefaceTesterComponent: React.FC = props => {
         font-family: '${props.typeface.content.en.typefaceName}' !important;
       }
 `;
-  // useEffect(() => {
-  //   // tslint:disable-next-line: no-bitwise
-
-  // }, []);
-  // src: local('Spicy Rice'), local('SpicyRice-Regular'), url(https://fonts.gstatic.com/s/spicyrice/v8/uK_24rSEd-Uqwk4jY1RyKvi8Ww.woff2) format('woff2');
   const [controls, setControls] = useState({
-    fontSize: 10,
-    lineHeight:
-      props.typeface.content.en.lineHeight !== undefined &&
-      props.typeface.content.en.lineHeight !== ""
-        ? props.typeface.content.en.lineHeight
-        : 1,
-    leading:
-      props.typeface.content.en.leading !== undefined &&
-      props.typeface.content.en.leading !== undefined
-        ? props.typeface.content.en.laeding
-        : 2,
+    fontSize: 90,
+    lineHeight: 0,
+    leading: 0,
     openTypeFeatures: {
       standardLigatures: false,
       contextuaLalternates: false,
@@ -111,6 +100,7 @@ const TypefaceTesterComponent: React.FC = props => {
               className={props.typeface.content.en.typefaceName}
               value={changeText}
               style={{
+                paddingTop: 40,
                 fontSize:
                   typeof controls.fontSize === "number"
                     ? controls.fontSize
@@ -125,12 +115,12 @@ const TypefaceTesterComponent: React.FC = props => {
                 ${
                   controls.align !== undefined && controls.align === "a"
                     ? "left"
-                    : "left" ||
-                      (controls.align !== undefined && controls.align === "b")
-                    ? "center"
-                    : "left" ||
+                    : "left" |
                       (controls.align !== undefined && controls.align === "c")
                     ? "right"
+                    : "left" |
+                      (controls.align !== undefined && controls.align === "b")
+                    ? "center"
                     : "left"
                 }
                 `,
@@ -213,47 +203,129 @@ const TypefaceTesterComponent: React.FC = props => {
               onChange={handleChange}
             />
             <TypefaceControls>
-              <TypefaceControlsComponent
-                onControlsChange={onControlsChange}
-                controls={controls ? controls : null}
-                images={props.typeface.content.en.galleryField}
-                showstandardLigatures={
-                  props.typeface.content.en.standardLigatures
-                }
-                showcontextuaLalternates={
-                  props.typeface.content.en.contextuaLalternates
-                }
-                showdiscretionLigatures={
-                  props.typeface.content.en.discretionLigatures
-                }
-                showswash={props.typeface.content.en.swash}
-                showfractions={props.typeface.content.en.fractions}
-                showstylisticOne={props.typeface.content.en.stylisticOne}
-                showstylisticTwo={props.typeface.content.en.stylisticTwo}
-                showstylisticThree={props.typeface.content.en.stylisticThree}
-                showstylisticFour={props.typeface.content.en.stylisticFour}
-                showstylisticFive={props.typeface.content.en.stylisticFive}
-                showstylisticSix={props.typeface.content.en.stylisticSix}
-                showstylisticSeven={props.typeface.content.en.stylisticSeven}
-                fontSizeServer={
-                  props.typeface.content.en.fontSize !== undefined &&
-                  props.typeface.content.en.fontSize !== ""
-                    ? props.typeface.content.en.fontSize
-                    : 10
-                }
-                lineHeightServer={
-                  props.typeface.content.en.leading !== undefined &&
-                  props.typeface.content.en.leading !== ""
-                    ? props.typeface.content.en.leading
-                    : 1
-                }
-                leadingServer={
-                  props.typeface.content.en.lineHeight !== undefined &&
-                  props.typeface.content.en.lineHeight !== ""
-                    ? props.typeface.content.en.lineHeight
-                    : 3
-                }
-              />
+              {screenSize ? (
+                <>
+                  <Row>
+                    <Col md={12} className="text-center">
+                      <IconButton
+                        onClick={() => setOpen(!open)}
+                        aria-controls="example-collapse-text"
+                        aria-expanded={open}
+                        className="mt-3"
+                      >
+                        <svg
+                          width="32"
+                          height="32"
+                          viewBox="0 0 32 32"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect width="32" height="32" fill="#F7F7F7" />
+                          <g clip-path="url(#clip0)">
+                            <path
+                              d="M22 21.2H28M7 26.6V18.2V26.6ZM7 13.4V5V13.4ZM16 26.6V15.8V26.6ZM16 11V5V11ZM25 26.6V20.6V26.6ZM25 15.8V5V15.8ZM4 18.8H10H4ZM12.4 10.4H19.6H12.4Z"
+                              stroke="black"
+                              stroke-width="2"
+                            />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0">
+                              <rect
+                                x="4"
+                                y="5"
+                                width="24"
+                                height="21.6"
+                                fill="white"
+                              />
+                            </clipPath>
+                          </defs>
+                        </svg>
+                      </IconButton>
+                    </Col>
+                  </Row>
+                  <Collapse in={open}>
+                    <div id="example-collapse-text" className="mt-3">
+                      <TypefaceControlsComponent
+                        onControlsChange={onControlsChange}
+                        controls={controls ? controls : null}
+                        images={props.typeface.content.en.galleryField}
+                        showstandardLigatures={
+                          props.typeface.content.en.standardLigatures
+                        }
+                        showcontextuaLalternates={
+                          props.typeface.content.en.contextuaLalternates
+                        }
+                        showdiscretionLigatures={
+                          props.typeface.content.en.discretionLigatures
+                        }
+                        showswash={props.typeface.content.en.swash}
+                        showfractions={props.typeface.content.en.fractions}
+                        showstylisticOne={
+                          props.typeface.content.en.stylisticOne
+                        }
+                        showstylisticTwo={
+                          props.typeface.content.en.stylisticTwo
+                        }
+                        showstylisticThree={
+                          props.typeface.content.en.stylisticThree
+                        }
+                        showstylisticFour={
+                          props.typeface.content.en.stylisticFour
+                        }
+                        showstylisticFive={
+                          props.typeface.content.en.stylisticFive
+                        }
+                        showstylisticSix={
+                          props.typeface.content.en.stylisticSix
+                        }
+                        showstylisticSeven={
+                          props.typeface.content.en.stylisticSeven
+                        }
+                        fontSizeServer={90}
+                        lineHeightServer={0}
+                        leadingServer={0}
+                        goto={
+                          props.typeface.content.en.websiteInternalURL
+                            ? props.typeface.content.en.websiteInternalURL
+                            : "/"
+                        }
+                      />{" "}
+                    </div>
+                  </Collapse>
+                </>
+              ) : (
+                <TypefaceControlsComponent
+                  onControlsChange={onControlsChange}
+                  controls={controls ? controls : null}
+                  images={props.typeface.content.en.galleryField}
+                  showstandardLigatures={
+                    props.typeface.content.en.standardLigatures
+                  }
+                  showcontextuaLalternates={
+                    props.typeface.content.en.contextuaLalternates
+                  }
+                  showdiscretionLigatures={
+                    props.typeface.content.en.discretionLigatures
+                  }
+                  showswash={props.typeface.content.en.swash}
+                  showfractions={props.typeface.content.en.fractions}
+                  showstylisticOne={props.typeface.content.en.stylisticOne}
+                  showstylisticTwo={props.typeface.content.en.stylisticTwo}
+                  showstylisticThree={props.typeface.content.en.stylisticThree}
+                  showstylisticFour={props.typeface.content.en.stylisticFour}
+                  showstylisticFive={props.typeface.content.en.stylisticFive}
+                  showstylisticSix={props.typeface.content.en.stylisticSix}
+                  showstylisticSeven={props.typeface.content.en.stylisticSeven}
+                  fontSizeServer={90}
+                  lineHeightServer={0}
+                  leadingServer={0}
+                  goto={
+                    props.typeface.content.en.websiteInternalURL
+                      ? props.typeface.content.en.websiteInternalURL
+                      : "/"
+                  }
+                />
+              )}
             </TypefaceControls>
           </TextAreaContainer>
         </Col>

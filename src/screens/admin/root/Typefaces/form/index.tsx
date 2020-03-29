@@ -54,27 +54,6 @@ const AdminTypefacesForm: React.FC = () => {
             type: "textarea",
             isRequired: true
           },
-          // {
-          //   inContent: true,
-          //   key: "fontSize",
-          //   title: "Font size",
-          //   type: "text",
-          //   isRequired: false
-          // },
-          // {
-          //   inContent: true,
-          //   key: "lineHeight",
-          //   title: "Line Height",
-          //   type: "text",
-          //   isRequired: false
-          // },
-          // {
-          //   inContent: true,
-          //   key: "leading",
-          //   title: "Leading",
-          //   type: "text",
-          //   isRequired: false
-          // },
           {
             inContent: true,
             key: "typefaceCategory",
@@ -321,85 +300,96 @@ const AdminTypefacesForm: React.FC = () => {
             key: "standardLigatures",
             title: "Standard Ligatures",
             type: "switch",
-            isRequired: false
+            isRequired: false,
+            helper: "Standard"
           },
-
           {
             inContent: true,
             key: "contextuaLalternates",
             title: "contextual alternates",
             type: "switch",
-            isRequired: false
+            isRequired: false,
+            helper: "Select Category"
           },
           {
             inContent: true,
             key: "discretionLigatures",
             title: "discretion ligatures",
             type: "switch",
-            isRequired: false
+            isRequired: false,
+            helper: "Select Category"
           },
           {
             inContent: true,
             key: "swash",
             title: "swash",
             type: "switch",
-            isRequired: false
+            isRequired: false,
+            helper: "Select Category"
           },
           {
             inContent: true,
             key: "fractions",
             title: "fractions",
             type: "switch",
-            isRequired: false
+            isRequired: false,
+            helper: "Select Category"
           },
           {
             inContent: true,
             key: "stylisticOne",
             title: "Stylistic 1",
             type: "switch",
-            isRequired: false
+            isRequired: false,
+            helper: "Select Category"
           },
           {
             inContent: true,
             key: "stylisticTwo",
             title: "Stylistic 2",
             type: "switch",
-            isRequired: false
+            isRequired: false,
+            helper: "Select Category"
           },
           {
             inContent: true,
             key: "stylisticThree",
             title: "Stylistic 3",
             type: "switch",
-            isRequired: false
+            isRequired: false,
+            helper: "Select Category"
           },
           {
             inContent: true,
             key: "stylisticFour",
             title: "Stylistic 4",
             type: "switch",
-            isRequired: false
+            isRequired: false,
+            helper: "Select Category"
           },
           {
             inContent: true,
             key: "stylisticFive",
             title: "Stylistic 5",
             type: "switch",
-            isRequired: false
+            isRequired: false,
+            helper: "Select Category"
           },
           {
             inContent: true,
             key: "stylisticSix",
             title: "Stylistic 6",
             type: "switch",
-            isRequired: false
+            isRequired: false,
+            helper: "Select Category"
           },
           {
             inContent: true,
             key: "stylisticSeven",
             title: "Stylistic 7",
             type: "switch",
-            isRequired: false
+            isRequired: false,
+            helper: "Select Category"
           }
         ]}
       />
