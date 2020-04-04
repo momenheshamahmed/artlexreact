@@ -5,11 +5,8 @@ import { useObserver } from "mobx-react";
 import AuthStore from "../../../stores/Auth";
 
 import { CircularProgress, Container } from "@material-ui/core";
-
+import MiniDrawer from "../../../components/adminComponents/Drawer";
 // import MiniDrawer from "../../../components/adminComponents/Drawer";
-const MiniDrawer = lazy(() =>
-  import("../../../components/adminComponents/Drawer")
-);
 const AdminLogin = lazy(() => import("../login"));
 const AdminTypefacesForm = lazy(() => import("./typefaces/form"));
 const AdminTypefacesTable = lazy(() => import("./typefaces"));

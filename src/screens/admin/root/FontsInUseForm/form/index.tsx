@@ -22,6 +22,13 @@ const AdminFontsInUseForm: React.FC = () => {
           },
           {
             inContent: true,
+            key: "imageSorting",
+            title: "Sorting",
+            type: "text",
+            isRequired: true
+          },
+          {
+            inContent: true,
             key: "imageGridCols",
             title: "Grid Number Cols",
             type: "text",
@@ -40,8 +47,7 @@ const AdminFontsInUseForm: React.FC = () => {
             title: "Image",
             type: "image",
             isRequired: true
-          },
-
+          }
         ]}
       />
     </div>

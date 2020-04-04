@@ -509,7 +509,10 @@ const TypeFacePage: React.FC = () => {
                     cols={screenSize ? 1 : 3}
                     spacing={15}
                   >
-                    {FontsInUseStore.FontsInUse.map(font => {
+                    {FontsInUseStore.FontsInUse.sort(
+                      (a, b) =>
+                        a.content.en.imageSorting - b.content.en.imageSorting
+                    ).map(font => {
                       if (
                         font.content.en.selectTypeface ===
                         val.content.en.websiteInternalURL
@@ -518,7 +521,7 @@ const TypeFacePage: React.FC = () => {
                           <GridListTile
                             key={font.key}
                             cols={font.content.en.imageGridCols}
-                            cols={font.content.en.imageGridRows}
+                            rows={font.content.en.imageGridRows}
                           >
                             <img
                               src={font.content.en.imageInUse}
@@ -547,7 +550,7 @@ const TypeFacePage: React.FC = () => {
                     cellHeight={
                       val.content.en.pairfonts[0] !== "noitems" ? 400 : 20
                     }
-                    cols={screenSize ? 2 : 6}
+                    cols={screenSize ? 2 : 4}
                     spacing={15}
                   >
                     {val.content.en.pairfonts[0] !== "noitems" ? (

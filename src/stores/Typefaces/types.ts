@@ -17,6 +17,7 @@ export interface TypefaceContent {
   typefaceName: string;
   typefaceCategory: string;
   typefaceSorting: string;
+  showInFooter: boolean;
   typefaceFeaturedFullScreen: boolean;
   typefaceFeaturedGrid: boolean;
   typefaceFeaturedTester: boolean;

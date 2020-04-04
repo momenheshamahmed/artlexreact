@@ -64,6 +64,14 @@ const AdminTypefacesForm: React.FC = () => {
           },
           {
             inContent: true,
+            key: "showInFooter",
+            title: "Show in Footer?",
+            type: "switch",
+            isRequired: false,
+            helper: "Select Category"
+          },
+          {
+            inContent: true,
             key: "typefaceFeaturedFullScreen",
             title: "Featured Fullscreen?",
             type: "switch",
@@ -178,7 +186,7 @@ const AdminTypefacesForm: React.FC = () => {
             key: "fullPackageImageStore",
             title: "Fullpackage store image",
             type: "image",
-            isRequired: true
+            isRequired: false
           },
 
           {
@@ -186,7 +194,7 @@ const AdminTypefacesForm: React.FC = () => {
             key: "fullPackageStoreUrl",
             title: "Full package Store Url (gumroad)",
             type: "text",
-            isRequired: true
+            isRequired: false
           },
           {
             inContent: true,

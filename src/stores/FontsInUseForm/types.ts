@@ -10,6 +10,7 @@ export interface FontInUse {
 // tslint:disable-next-line: interface-name
 export interface FontInUseContent {
   selectTypeface: string;
+  imageSorting: string;
   imageGridCols: string;
   imageGridRows: string;
   imageInUse: string;

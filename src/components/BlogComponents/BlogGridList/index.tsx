@@ -20,8 +20,7 @@ const CustomImg = styled.div`
   width: 100%;
   height: 100%;
   color: black;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(${props => `'${props.src}'`});
+  background: url(${props => `'${props.src}'`});
   &:hover {
     -webkit-line-clamp: 3;
   }

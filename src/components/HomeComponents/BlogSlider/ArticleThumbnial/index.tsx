@@ -23,8 +23,7 @@ const ArticleThumbnial: React.FC = props => {
     width: 100%;
     height: 400px;
     overflow: hidden;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(${props => `'${props.ImgSrc}'`});
+    background: url(${props => `'${props.ImgSrc}'`});
     /* background-image: url(${props => props.ImgSrc}); */
     background-position: center;
     background-size: cover;
@@ -66,7 +65,7 @@ const ArticleThumbnial: React.FC = props => {
         }}
       >
         <CustomImg
-          ImgSrc={props.articleData.content.en.image1}
+          ImgSrc={props.articleData.content.en.thumbnialImage}
           alt={props.articleData.content.en.title}
         />
         <CustomTitle variant="h5">

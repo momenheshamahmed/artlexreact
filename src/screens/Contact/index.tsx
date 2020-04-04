@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { Button, Typography, withStyles } from "@material-ui/core";
 
 import AddIcon from "@material-ui/icons/Add";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+
 import { Formik, Form, Field, FormikHelpers, FormikProps } from "formik";
 import { TextField } from "formik-material-ui";
 
@@ -26,6 +28,7 @@ const CustomTypefaces: React.FC = () => {
     padding: 30px;
     width: 100%;
   `;
+
   const ContactItem = styled(CustomtRow)`
     border-bottom: 1px black solid;
     cursor: pointer;
@@ -114,7 +117,24 @@ const CustomTypefaces: React.FC = () => {
       }
     }
   })(Button);
-
+  const CustomtRowLink = styled(Row)`
+    padding: 30px 30px 30px 0;
+    border-bottom: 0.1px solid #dfdfdf;
+    &:hover {
+      background: #fcfcfc;
+    }
+  `;
+  const CustomLink = styled.a`
+    width: calc(100% - 60px);
+    display: block;
+    margin: 0 auto;
+    color: black;
+    text-transform: capitalize;
+    &:hover {
+      color: black;
+      text-decoration: none;
+    }
+  `;
   const [emailSent, setEmailSent] = useState(false);
 
   const FullScreenImage = styled.div`
@@ -231,7 +251,7 @@ const CustomTypefaces: React.FC = () => {
             aria-expanded={openTwo}
           >
             <Col>
-              <Typography>ask for a proposal</Typography>
+              <Typography>ask for proposal / collaboration </Typography>
             </Col>
             <Col className="text-right">
               {" "}
@@ -239,14 +259,32 @@ const CustomTypefaces: React.FC = () => {
             </Col>
           </ContactItemTwo>
           <Collapse in={openTwo}>
-            <Container>
-              <CustomtRow>
-                Anim pariatur cliche reprehenderit, enim eiusmod high life
-                accusamus terry richardson ad squid. Nihil anim keffiyeh
-                helvetica, craft beer labore wes anderson cred nesciunt sapiente
-                ea proident.
-              </CustomtRow>
-            </Container>
+            <div style={{ width: "100%" }}>
+              <CustomLink href="mailto: hi@protype.studio?subject=Hello &body=Let's start writing ....">
+                <CustomtRowLink>
+                  <Col>collaborations</Col>
+                  <Col className="text-right">
+                    <ArrowForwardIcon />
+                  </Col>
+                </CustomtRowLink>
+              </CustomLink>
+              <CustomLink href="https://docs.google.com/forms/d/1go0_F9IGbqfXdnEZhosEW_LmV7eZ6H_c2qZsboHkLFc/prefill">
+                <CustomtRowLink>
+                  <Col>proposal</Col>
+                  <Col className="text-right">
+                    <ArrowForwardIcon />
+                  </Col>
+                </CustomtRowLink>
+              </CustomLink>
+              <CustomLink href="https://docs.google.com/forms/d/1QXWRN9Y2fgAh7moxbegZyyaL4omOV5XHC7XR0R41Mu0/prefill">
+                <CustomtRowLink>
+                  <Col>font submission</Col>
+                  <Col className="text-right">
+                    <ArrowForwardIcon />
+                  </Col>
+                </CustomtRowLink>
+              </CustomLink>
+            </div>
           </Collapse>
         </Row>
         <Row>
@@ -256,7 +294,7 @@ const CustomTypefaces: React.FC = () => {
             aria-expanded={openThree}
           >
             <Col>
-              <Typography>ask for a proposal</Typography>
+              <Typography>Policy / Frequently Q&A </Typography>
             </Col>
             <Col className="text-right">
               {" "}
@@ -264,14 +302,40 @@ const CustomTypefaces: React.FC = () => {
             </Col>
           </ContactItemThree>
           <Collapse in={openThree}>
-            <Container>
-              <CustomtRow>
-                Anim pariatur cliche reprehenderit, enim eiusmod high life
-                accusamus terry richardson ad squid. Nihil anim keffiyeh
-                helvetica, craft beer labore wes anderson cred nesciunt sapiente
-                ea proident.
-              </CustomtRow>
-            </Container>
+            <div style={{ width: "100%" }}>
+              <CustomLink href="https://docs.google.com/document/d/1Gq78BRmwves5JGtXd2afzeyqWU_AGMH7O-HWtJYDp9I/edit?usp=sharing">
+                <CustomtRowLink>
+                  <Col>Frequently Questions and Answers </Col>
+                  <Col className="text-right">
+                    <ArrowForwardIcon />
+                  </Col>
+                </CustomtRowLink>
+              </CustomLink>
+              <CustomLink href="https://docs.google.com/document/d/1HRK0KoAY8Mo_kxAowxaDC_3EZY85RCO9jadGQR-RJQU/edit?usp=sharing">
+                <CustomtRowLink>
+                  <Col>Privacy Policy </Col>
+                  <Col className="text-right">
+                    <ArrowForwardIcon />
+                  </Col>
+                </CustomtRowLink>
+              </CustomLink>
+              <CustomLink href="https://docs.google.com/document/d/18CMw6vNGoBR3WT6u63RbBaizitIjiE3OswpBhZDPs-Q/edit?usp=sharing">
+                <CustomtRowLink>
+                  <Col>Refund Policy </Col>
+                  <Col className="text-right">
+                    <ArrowForwardIcon />
+                  </Col>
+                </CustomtRowLink>
+              </CustomLink>
+              <CustomLink href="https://docs.google.com/document/d/1vyNS--288aDh3xMYIFQNuTdeG-s475YtMwrSXIJRN60/edit">
+                <CustomtRowLink>
+                  <Col>Licensing </Col>
+                  <Col className="text-right">
+                    <ArrowForwardIcon />
+                  </Col>
+                </CustomtRowLink>
+              </CustomLink>
+            </div>
           </Collapse>
         </Row>
       </Container>
