@@ -60,7 +60,7 @@ const BlogGridList: React.FC = () => {
   return useObserver(() => (
     <ContainerBlogGrid fluid={true}>
       <GridList
-        cellHeight={200}
+        cellHeight={400}
         spacing={16}
         cols={screenSize ? 1 : 4}
         rows={screenSize ? 1 : 4}
@@ -73,16 +73,16 @@ const BlogGridList: React.FC = () => {
             cols={
               screenSize
                 ? 1
-                : (tile.content.en.gridNumber > 4
+                : (tile.content.en.gridNumberCols > 4
                     ? 4
-                    : tile.content.en.gridNumber) || 1
+                    : tile.content.en.gridNumberCols) || 1
             }
             rows={
               screenSize
                 ? 1
-                : (tile.content.en.gridNumber > 4
+                : (tile.content.en.gridNumberRows > 4
                     ? 4
-                    : tile.content.en.gridNumber) || 1
+                    : tile.content.en.gridNumberRows) || 1
             }
           >
             <Link
@@ -94,7 +94,7 @@ const BlogGridList: React.FC = () => {
               }}
             >
               <CustomImg
-                src={tile.content.en.image1}
+                src={tile.content.en.thumbnialImage}
                 alt={tile.content.en.title}
                 ref={imgSrcHover}
               >

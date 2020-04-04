@@ -54,7 +54,7 @@ const TypefaceTesterComponentInsidePage: React.FC = props => {
 `;
   const [controls, setControls] = useState({
     fontSize: 90,
-    lineHeight: 0,
+    lineHeight: 1,
     leading: 0,
     openTypeFeatures: {
       standardLigatures: false,
@@ -89,13 +89,13 @@ const TypefaceTesterComponentInsidePage: React.FC = props => {
                 fontSize:
                   typeof controls.fontSize === "number"
                     ? controls.fontSize
-                    : 30,
+                    : 90,
                 lineHeight:
                   typeof controls.lineHeight === "number"
                     ? controls.lineHeight
-                    : 10,
+                    : 1,
                 letterSpacing:
-                  typeof controls.leading === "number" ? controls.leading : 10,
+                  typeof controls.leading === "number" ? controls.leading : 0,
                 textAlign: `
                 ${
                   controls.align !== undefined && controls.align === "a"
@@ -267,7 +267,7 @@ const TypefaceTesterComponentInsidePage: React.FC = props => {
                           props.typeface.content.en.stylisticSeven
                         }
                         fontSizeServer={50}
-                        lineHeightServer={3}
+                        lineHeightServer={1}
                         leadingServer={1}
                         goto={
                           props.typeface.content.en.websiteInternalURL

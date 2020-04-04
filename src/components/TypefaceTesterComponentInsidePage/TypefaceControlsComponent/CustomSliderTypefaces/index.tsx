@@ -34,6 +34,8 @@ interface Props {
   name: string;
   initialNumber: number;
   max?: number;
+  min?: number;
+  step?: number;
   onChange: (value: number) => void;
 }
 
@@ -67,6 +69,8 @@ const CustomSliderTypefaces: React.FC<Props> = props => {
         value={typeof value === "number" ? value : 0}
         onChange={handleSliderChange}
         max={props.max ? props.max : 100}
+        min={props.min ? props.min : 0}
+        step={props.step ? props.step : 0.5}
       />
     </div>
   ));

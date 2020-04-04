@@ -18,6 +18,9 @@ const FullScreenImageComponent: React.FC<Props> = props => {
     background-position: center;
     background-attachment: fixed;
     background-size: cover;
+    @media (max-width: 768px) {
+      background-size: contain;
+    }
     text-align: right;
     padding: 10vh;
     &:hover button {

@@ -4,6 +4,7 @@ import { database } from "firebase";
 
 class TypefaceStore {
   @observable public Typefaces: Typeface[] = [];
+  @observable public loading: boolean = true;
 
   @action
   public addTypeface = async (value: Omit<Typeface, "key">): Promise<void> => {
@@ -48,7 +49,7 @@ class TypefaceStore {
     const dbRef = database().ref("/typefaces/");
     dbRef.on("value", snapshot => {
       const data: Record<string, Typeface> = snapshot.val();
-      console.log("typefaces data", data)
+      console.log("typefaces data", data);
       if (data) {
         const mappedData: Typeface[] = Object.entries(data).map(entry => {
           return {
@@ -57,6 +58,7 @@ class TypefaceStore {
           };
         });
         this.Typefaces = mappedData;
+        this.loading = false;
       }
     });
   };

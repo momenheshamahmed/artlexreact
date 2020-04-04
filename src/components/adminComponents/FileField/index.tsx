@@ -54,16 +54,7 @@ const FileField: React.FC<Props> = props => {
       <ul>
         <li>
           {fileName ? fileName : "no file yet"}{" "}
-          {/* <Button
-            onClick={() => {
 
-              props.setValue("null");
-              console.log(props.value)
-              setFileName("no file")
-            }}
-          >
-            X
-          </Button> */}
         </li>
       </ul>
       {/* <img src={file ? file : Assets.Files.uploadPlaceholder} style={{width: "200px;"}}/> */}

@@ -3,8 +3,9 @@ import { useObserver } from "mobx-react";
 import styled from "styled-components";
 import Assets from "../../assets";
 import { Container, Row, Col } from "react-bootstrap";
-import { Typography } from "@material-ui/core";
+import { Typography, IconButton } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { TypefaceStore } from "../../stores";
 
 const FooterComponent: React.FC = () => {
   const LinkStyled = styled(Link)`
@@ -33,52 +34,94 @@ const FooterComponent: React.FC = () => {
   `;
   return useObserver(() => (
     <>
-      <Container fluid={true} className="mt-5 py-5">
+      <Container className="mt-5 py-5">
+        <Row className="text-center my-2" style={{ justifyContent: "center" }}>
+          <IconButton
+            onClick={() =>
+              window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "smooth"
+              })
+            }
+          >
+            <svg
+              width="53"
+              height="53"
+              viewBox="0 0 53 53"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="26.5" cy="26.5" r="26.5" fill="#00FF00" />
+              <path
+                d="M18 26.5L19.41 27.91L25 22.33V34.5H27V22.33L32.59 27.91L34 26.5L26 18.5L18 26.5Z"
+                fill="black"
+              />
+            </svg>
+          </IconButton>
+        </Row>
         <Row>
-          <Col md="3">
+          <Col md={{ span: 3, order: 1 }} xs={{ order: 4 }}>
             <img src={Assets.Images.logo} width="72px" />
             <Typography variant="body2" className="mt-3">
               {" "}
               Protype Foundry © 2019-2020. <br />
               All rights reserved.
             </Typography>
+            <Typography variant="caption">
+              👨🏻‍💻{" "}
+              <a href="https://www.linkedin.com/in/momenheshamahmed">
+                {" "}
+                Momen Hesham
+              </a>{" "}
+            </Typography>
           </Col>
-          <Col md="4">
+          <Col md={{ span: 4, order: 2 }} xs={{ order: 1 }}>
             <Typography variant="h6" className="font-weight-bold">
               Typefaces
             </Typography>
             <Row>
               <Col>
-                <Typography variant="body2" className="mt-1">
-                  <LinkStyled to="/">Fonts / sadasd </LinkStyled>
-                </Typography>
-                <Typography variant="body2" className="mt-1">
-                  <LinkStyled to="/">Fonts / sadasd </LinkStyled>
-                </Typography>
-                <Typography variant="body2" className="mt-1">
-                  <LinkStyled to="/">Fonts / sadasd </LinkStyled>
-                </Typography>
-                <Typography variant="body2" className="mt-1">
-                  <LinkStyled to="/">Fonts / sadasd </LinkStyled>
-                </Typography>
+                {TypefaceStore.Typefaces.sort(
+                  (a, b) =>
+                    a.content.en.typefaceSorting - b.content.en.typefaceSorting
+                )
+                  .slice(0, 3)
+                  .map((val, index) => {
+                    return (
+                      <Typography variant="body2" className="mt-1" key={index}>
+                        <LinkStyled
+                          to={val.content.en.typefaceLinkWebsite}
+                          className="font-weight-bold"
+                        >
+                          {val.content.en.typefaceName}
+                        </LinkStyled>
+                      </Typography>
+                    );
+                  })}
               </Col>
               <Col>
-                <Typography variant="body2" className="mt-1">
-                  <LinkStyled to="/">Fonts / sadasd </LinkStyled>
-                </Typography>
-                <Typography variant="body2" className="mt-1">
-                  <LinkStyled to="/">Fonts / sadasd </LinkStyled>
-                </Typography>
-                <Typography variant="body2" className="mt-1">
-                  <LinkStyled to="/">Fonts / sadasd </LinkStyled>
-                </Typography>
-                <Typography variant="body2" className="mt-1">
-                  <LinkStyled to="/">Fonts / sadasd </LinkStyled>
-                </Typography>
+                {TypefaceStore.Typefaces.sort(
+                  (a, b) =>
+                    a.content.en.typefaceSorting - b.content.en.typefaceSorting
+                )
+                  .slice(4, 7)
+                  .map((val, index) => {
+                    return (
+                      <Typography variant="body2" className="mt-1" key={index}>
+                        <LinkStyled
+                          to={val.content.en.typefaceLinkWebsite}
+                          className="font-weight-bold"
+                        >
+                          {val.content.en.typefaceName}
+                        </LinkStyled>
+                      </Typography>
+                    );
+                  })}
               </Col>
             </Row>
           </Col>
-          <Col md="2">
+          <Col md={{ span: 2, order: 2 }} xs={{ order: 2 }}>
             <Typography variant="h6" className="font-weight-bold">
               Pages
             </Typography>
@@ -102,7 +145,7 @@ const FooterComponent: React.FC = () => {
               </Col>
             </Row>
           </Col>
-          <Col md="3">
+          <Col md={{ span: 3, order: 3 }} xs={{ order: 3 }}>
             <Typography variant="h6" className="font-weight-bold">
               Email Us
             </Typography>
@@ -140,13 +183,6 @@ const FooterComponent: React.FC = () => {
                 >
                   <img src={Assets.Images.dribbble} alt="protype behance" />
                 </CustomAnchor>
-
-                <CustomAnchor
-                  href="https://facebook.com/protypefoundry"
-                  target="_blank"
-                >
-                  <img src={Assets.Images.pinterest} alt="protype pinterest" />
-                </CustomAnchor>
                 <CustomAnchor
                   href="https://facebook.com/protypefoundry"
                   target="_blank"
@@ -165,9 +201,6 @@ const FooterComponent: React.FC = () => {
           </Col>
         </Row>
       </Container>
-      <MomenHesham>
-        <Typography>Designed & Developed By Momen Hesham</Typography>
-      </MomenHesham>
     </>
   ));
 };

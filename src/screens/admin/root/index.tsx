@@ -6,9 +6,10 @@ import AuthStore from "../../../stores/Auth";
 
 import { CircularProgress, Container } from "@material-ui/core";
 
-import MiniDrawer from "../../../components/adminComponents/Drawer";
-import AdminProtypeServicesForm from "./ProtypeServices/form";
-import AdminProtypeServicesTable from "./ProtypeServices";
+// import MiniDrawer from "../../../components/adminComponents/Drawer";
+const MiniDrawer = lazy(() =>
+  import("../../../components/adminComponents/Drawer")
+);
 const AdminLogin = lazy(() => import("../login"));
 const AdminTypefacesForm = lazy(() => import("./typefaces/form"));
 const AdminTypefacesTable = lazy(() => import("./typefaces"));
@@ -18,6 +19,8 @@ const AdminFontsInUseTable = lazy(() => import("./FontsInUseForm"));
 const AdminFontsInUseForm = lazy(() => import("./FontsInUseForm/form"));
 const AdminBlogForm = lazy(() => import("./Blog/form"));
 const AdminBlogTable = lazy(() => import("./Blog"));
+const AdminProtypeServicesForm = lazy(() => import("./ProtypeServices/form"));
+const AdminProtypeServicesTable = lazy(() => import("./ProtypeServices"));
 
 const AdminRoot = () => {
   useEffect(() => {
@@ -38,15 +41,15 @@ const AdminRoot = () => {
       </Container>
     ) : AuthStore.isAuthenticated ? (
       <BrowserRouter>
-        <Suspense fallback={<h1>loading route …</h1>}>
-          <Switch>
-            {/* <Route to="/admin">
+        <Switch>
+          {/* <Route to="/admin">
             <Redirect to="/admin/typefaces" />
           </Route> */}
+          <Route to="/admin">
             <Route to="/admin">
-              <Route to="/admin">
-                <MiniDrawer key="minidrawer" />
-                <div className="pt-3">
+              <MiniDrawer key="minidrawer" />
+              <div className="pt-3">
+                <Suspense fallback={<div>loading route …</div>}>
                   <Switch>
                     <Route path="/admin/login">
                       <Redirect to="/admin" />
@@ -82,11 +85,11 @@ const AdminRoot = () => {
                       <AdminProtypeServicesTable />
                     </Route>
                   </Switch>
-                </div>
-              </Route>
+                </Suspense>
+              </div>
             </Route>
-          </Switch>
-        </Suspense>
+          </Route>
+        </Switch>
       </BrowserRouter>
     ) : (
       <Switch>

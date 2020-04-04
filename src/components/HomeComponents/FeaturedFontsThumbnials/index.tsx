@@ -26,7 +26,7 @@ const FeaturedFontsThumbnialsComponent: React.FC = props => {
 
   return useObserver(() => (
     <Container fluid={true} className="my-5">
-      <GridList cellHeight={300} cols={screenSize ? 1 : 3} spacing={16}>
+      <GridList cellHeight={400} cols={screenSize ? 1 : 3} spacing={16}>
         <GridListTile
           key={props.item.key}
           cols={screenSize ? 1 : props.item.content.en.gridNumber || 1}

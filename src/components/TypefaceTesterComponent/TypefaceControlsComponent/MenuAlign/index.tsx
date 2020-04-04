@@ -56,8 +56,7 @@ export default function MenuAlign(props) {
   const [selectedValue, setSelectedValue] = React.useState("a");
   const handleChangeRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(event.target.value);
-    console.log("handleChange Radio button", selectedValue);
-    console.log("handleChange vaule Radio button", event.target.value);
+    ("handleChange Radio button", selectedValue);
   };
   useEffect(() => {
     props.onChange(selectedValue);

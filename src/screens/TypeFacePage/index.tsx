@@ -166,11 +166,12 @@ const TypeFacePage: React.FC = () => {
     background-repeat: no-repeat;
     @media (max-width: 768px) {
       height: 50vh;
-      background-size: contain;
+      background-size: cover;
     }
   `;
   const PairFontImg = styled.img`
     object-fit: cover;
+    width: 100%;
     object-position: center;
   `;
   // let { state } = useLocation();
@@ -408,7 +409,7 @@ const TypeFacePage: React.FC = () => {
                         </TextAndButton>
                       </BuyFontContainer>
                       {/* Other Weights */}
-                      {FontStore.Fonts.map(weight => {
+                      {FontStore.Fonts.map((weight, index) => {
                         if (
                           weight.content.en.selectTypeface ===
                           val.content.en.websiteInternalURL
@@ -504,8 +505,8 @@ const TypeFacePage: React.FC = () => {
                   </Typography>
 
                   <GridList
-                    cellHeight={200}
-                    cols={screenSize ? 1 : 6}
+                    cellHeight={400}
+                    cols={screenSize ? 1 : 3}
                     spacing={15}
                   >
                     {FontsInUseStore.FontsInUse.map(font => {
@@ -516,7 +517,8 @@ const TypeFacePage: React.FC = () => {
                         return (
                           <GridListTile
                             key={font.key}
-                            cols={font.content.en.imageGrid}
+                            cols={font.content.en.imageGridCols}
+                            cols={font.content.en.imageGridRows}
                           >
                             <img
                               src={font.content.en.imageInUse}

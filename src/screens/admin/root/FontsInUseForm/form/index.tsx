@@ -22,8 +22,15 @@ const AdminFontsInUseForm: React.FC = () => {
           },
           {
             inContent: true,
-            key: "imageGrid",
-            title: "Grid Number",
+            key: "imageGridCols",
+            title: "Grid Number Cols",
+            type: "text",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "imageGridRows",
+            title: "Grid Number Rows",
             type: "text",
             isRequired: true
           },

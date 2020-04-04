@@ -47,7 +47,6 @@ const StyledMenuItem = withStyles(theme => ({
 }))(MenuItem);
 
 export default function MenuOpenTypeFeatures(props) {
-  console.log("open type features here", props.openTypeFeatures);
   const [state, setState] = React.useState(props.openTypeFeatures);
   const handleChange = (name: string) => (
     event: React.ChangeEvent<HTMLInputElement>

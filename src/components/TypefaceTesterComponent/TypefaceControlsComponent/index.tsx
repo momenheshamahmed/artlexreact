@@ -25,7 +25,6 @@ const TypefaceControlsComponent: React.FC = props => {
 
   function handleFontSizeChange(event) {
     setControls({ ...controls, fontSize: event });
-    console.log("event font size here", event != null ? event : "no event yet");
 
     // props.onControlsChange({
     //   ...controls,
@@ -46,15 +45,11 @@ const TypefaceControlsComponent: React.FC = props => {
 
   const onChangeAlign = align => {
     setControls({ ...controls, align });
-    console.log("align is?", align);
   };
   useEffect(() => {
     props.onControlsChange(controls);
   }, [controls]);
 
-  // fontSizeServer={props.typeface.content.en.fontSize}
-  // lineHeightServer={props.typeface.content.en.lineHeight}
-  // leadingServer={props.typeface.content.en.leading}
   return useObserver(() => (
     <>
       <Container fluid={true}>
@@ -65,24 +60,29 @@ const TypefaceControlsComponent: React.FC = props => {
               key="fontSize"
               name="Font Size"
               initialNumber={90}
+              max={150}
             />
           </Col>
           <Col md={3}>
             <CustomSliderTypefaces
               onChange={handleLeadingeChange}
-              key="leading"
-              name="Leading"
+              key="Tracking"
+              name="Tracking"
               initialNumber={0}
-              max={150}
+              min={-5}
+              max={10}
+              step={0.1}
             />
           </Col>
           <Col md={3}>
             <CustomSliderTypefaces
               onChange={handleLineHeighteChange}
               key="lineHeight"
-              name="Line-Height"
-              initialNumber={0}
-              max={150}
+              name="Leading"
+              initialNumber={1}
+              min={0}
+              max={3}
+              step={0.1}
             />
           </Col>
           <Col md={1} xs={4} className="text-center">
@@ -114,17 +114,17 @@ const TypefaceControlsComponent: React.FC = props => {
           <Col md={1} xs={4} className="text-center">
             <MenuOpenTypeFeatures
               showstandardLigatures={props.showstandardLigatures}
-              showcontextuaLalternates={props.contextuaLalternates}
-              showdiscretionLigatures={props.discretionLigatures}
-              showswash={props.swash}
-              showfractions={props.fractions}
-              showstylisticOne={props.stylisticOne}
-              showstylisticTwo={props.stylisticTwo}
-              showstylisticThree={props.stylisticThree}
-              showstylisticFour={props.stylisticFour}
-              showstylisticFive={props.stylisticFive}
-              showstylisticSix={props.stylisticSix}
-              showstylisticSeven={props.stylisticSeven}
+              showcontextuaLalternates={props.showcontextuaLalternates}
+              showdiscretionLigatures={props.showdiscretionLigatures}
+              showswash={props.showswash}
+              showfractions={props.showfractions}
+              showstylisticOne={props.showstylisticOne}
+              showstylisticTwo={props.showstylisticTwo}
+              showstylisticThree={props.showstylisticThree}
+              showstylisticFour={props.showstylisticFour}
+              showstylisticFive={props.showstylisticFive}
+              showstylisticSix={props.showstylisticSix}
+              showstylisticSeven={props.showstylisticSeven}
               onChange={onChangeopenTypeFeatures}
               openTypeFeatures={controls.openTypeFeatures}
               customText={
@@ -162,7 +162,7 @@ const TypefaceControlsComponent: React.FC = props => {
                 >
                   <circle cx="26.5" cy="26.5" r="26.5" fill="#171717" />
                   <path
-                    d="M20 35H34V33H20V35ZM34 24H30V18H24V24H20L27 31L34 24Z"
+                    d="M26 20L26 24L20 24L20 30L26 30L26 34L33 27L26 20Z"
                     fill="#00FF00"
                   />
                 </svg>

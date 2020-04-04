@@ -34,18 +34,6 @@ const FullScreenImage = styled.div`
   }
 `;
 
-const CustomImg = styled.div`
-  width: 100%;
-  height: 100%;
-  background-image: url(${props => props.src});
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  transition: background-image 0.4s;
-  &:hover {
-    background-image: url(${props => props.hover});
-  }
-`;
 const CustomButton = styled(Button)`
   background: #00ff00 !important;
   border-radius: 100px !important;
@@ -65,6 +53,57 @@ const CustomButtonPreveiw = styled(Button)`
   color: black !important;
   & span svg {
     margin-left: 1.5rem !important;
+  }
+`;
+const GridListCustom = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  display: flex;
+  flex-wrap: wrap;
+`;
+const GridListTileCustom = styled.div`
+  /* flex: 1 0 calc(33% - 16px);
+  margin: 8px;
+  &:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+  } */
+  width: 100%;
+  margin-top: 0.5%;
+
+  @media (min-width: 48rem) {
+    width: 49%;
+    &:nth-child(odd) {
+      margin-right: 0.1%;
+    }
+  }
+
+  @media (min-width: 62rem) {
+    width: 32.8%;
+    &:not(:nth-child(3n)) {
+      margin-right: 0.1%;
+    }
+  }
+
+  &:before {
+    content: "";
+    float: left;
+    padding-top: 100%;
+  }
+`;
+const CustomImg = styled.div`
+  width: 100%;
+  height: 100%;
+  background-image: url(${props => props.src});
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  &:hover {
+    background-image: url(${props => props.hover});
   }
 `;
 const Home: React.FC = () => {
@@ -123,14 +162,11 @@ const Home: React.FC = () => {
         }
       })}
       <Container fluid={true} className="my-5">
-        <GridList cellHeight={300} cols={screenSize ? 1 : 3} spacing={16}>
+        <GridListCustom>
           {TypefaceStore.Typefaces.map(item => {
             if (item.content.en.typefaceFeaturedGrid === true) {
               return (
-                <GridListTile
-                  key={item.key}
-                  cols={screenSize ? 1 : item.content.en.gridNumber || 1}
-                >
+                <GridListTileCustom key={item.key}>
                   <Link
                     to={{
                       pathname: `${
@@ -158,11 +194,11 @@ const Home: React.FC = () => {
                       ref={imgSrcHover}
                     />
                   </Link>
-                </GridListTile>
+                </GridListTileCustom>
               );
             }
           })}
-        </GridList>
+        </GridListCustom>
       </Container>
       <Container fluid={true}>
         <>
@@ -170,27 +206,25 @@ const Home: React.FC = () => {
         </>
         {TypefaceStore.Typefaces.sort(
           (a, b) => a.content.en.typefaceSorting - b.content.en.typefaceSorting
-        )
-          .slice(0, 2)
-          .map(val => {
-            if (
-              val.content.en.typefaceCategory !== "Custom" &&
-              val.content.en.typefaceFeaturedTester === true
-            ) {
-              return (
-                <>
-                  <TypefaceTesterComponent typeface={val} key={val.key} />
-                </>
-              );
-            } else if (
-              (val.content.en.typefaceCategory === "Premium" || "Free") &&
-              val.content.en.typefaceFeaturedTester === true
-            ) {
-              return console.log("HAHAHA!");
-            }
-          })}{" "}
+        ).map(val => {
+          if (
+            val.content.en.typefaceCategory !== "Custom" &&
+            val.content.en.typefaceFeaturedTester === true
+          ) {
+            return (
+              <>
+                <TypefaceTesterComponent typeface={val} key={val.key} />
+              </>
+            );
+          } else if (
+            (val.content.en.typefaceCategory === "Premium" || "Free") &&
+            val.content.en.typefaceFeaturedTester === true
+          ) {
+            return console.log("HAHAHA!");
+          }
+        })}{" "}
       </Container>
-      <Container className="text-center">
+      <Container fluid={true} className="text-center">
         <CustomButtonPreveiw
           variant="contained"
           className="mt-3"

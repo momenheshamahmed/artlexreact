@@ -45,8 +45,15 @@ const AdminBlogForm: React.FC = () => {
           },
           {
             inContent: true,
-            key: "gridNumber",
-            title: "Grid Number",
+            key: "gridNumberCols",
+            title: "Grid Number Cols",
+            type: "text",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "gridNumberRows",
+            title: "Grid Number Rows",
             type: "text",
             isRequired: true
           },
@@ -68,6 +75,13 @@ const AdminBlogForm: React.FC = () => {
             inContent: true,
             key: "image1",
             title: "Your Cover Image",
+            type: "image",
+            isRequired: true
+          },
+          {
+            inContent: true,
+            key: "thumbnialImage",
+            title: "Your Thumbnial Image",
             type: "image",
             isRequired: true
           },

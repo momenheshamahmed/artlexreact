@@ -57,7 +57,7 @@ const TypefaceTesterComponent: React.FC = props => {
 `;
   const [controls, setControls] = useState({
     fontSize: 90,
-    lineHeight: 0,
+    lineHeight: 1,
     leading: 0,
     openTypeFeatures: {
       standardLigatures: false,
@@ -78,7 +78,6 @@ const TypefaceTesterComponent: React.FC = props => {
 
   function onControlsChange(event) {
     setControls(event);
-    console.log("tester parent value is here man", controls);
   }
   return (
     <TesterContainer fluid={true}>
@@ -104,13 +103,13 @@ const TypefaceTesterComponent: React.FC = props => {
                 fontSize:
                   typeof controls.fontSize === "number"
                     ? controls.fontSize
-                    : 30,
+                    : 90,
                 lineHeight:
                   typeof controls.lineHeight === "number"
                     ? controls.lineHeight
-                    : 10,
+                    : 1,
                 letterSpacing:
-                  typeof controls.leading === "number" ? controls.leading : 10,
+                  typeof controls.leading === "number" ? controls.leading : 0,
                 textAlign: `
                 ${
                   controls.align !== undefined && controls.align === "a"
@@ -282,8 +281,8 @@ const TypefaceTesterComponent: React.FC = props => {
                           props.typeface.content.en.stylisticSeven
                         }
                         fontSizeServer={90}
-                        lineHeightServer={0}
-                        leadingServer={0}
+                        lineHeightServer={1}
+                        leadingServer={1}
                         goto={
                           props.typeface.content.en.websiteInternalURL
                             ? props.typeface.content.en.websiteInternalURL
@@ -317,7 +316,7 @@ const TypefaceTesterComponent: React.FC = props => {
                   showstylisticSix={props.typeface.content.en.stylisticSix}
                   showstylisticSeven={props.typeface.content.en.stylisticSeven}
                   fontSizeServer={90}
-                  lineHeightServer={0}
+                  lineHeightServer={1}
                   leadingServer={0}
                   goto={
                     props.typeface.content.en.websiteInternalURL

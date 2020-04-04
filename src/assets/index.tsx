@@ -1,7 +1,9 @@
 import Images from "./images";
+import Fonts from "./fonts";
 
 class Assets {
-  static Images = Images;
+  public static Images = Images;
+  public static Fonts = Fonts;
 }
 
 export default Assets;
