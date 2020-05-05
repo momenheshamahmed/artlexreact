@@ -169,12 +169,18 @@ const TypeFacePage: React.FC = () => {
       background-size: cover;
     }
   `;
-  const PairFontImg = styled.img`
-    object-fit: cover;
+  const PairFontImg = styled.div`
     width: 100%;
-    object-position: center;
+    height: 100%;
+    background-image: url(${props => props.src});
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    @media (max-width: 768px) {
+      height: 50vh;
+      background-size: cover;
+    }
   `;
-  // let { state } = useLocation();
   return useObserver(() => (
     <>
       {TypefaceStore.Typefaces.map(val => {
@@ -560,7 +566,7 @@ const TypeFacePage: React.FC = () => {
                             return (
                               <GridListTile
                                 key={sec.key}
-                                cols={screenSize ? 2 : 2}
+                                cols={screenSize ? 4 : 1}
                               >
                                 <StyledLink
                                   to={

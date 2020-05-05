@@ -111,7 +111,10 @@ const ArticlePage: React.FC = props => {
                       return BlogStore.Blogs.map(sec => {
                         if (type === sec.content.en.articleInternalURL) {
                           return (
-                            <GridListTile key={sec.key} cols={2}>
+                            <GridListTile
+                              key={sec.key}
+                              cols={screenSize ? 4 : 1}
+                            >
                               <Link
                                 to={{
                                   pathname: `/blog/${sec.content.en.articleInternalURL}`,

@@ -173,12 +173,12 @@ const FooterComponent: React.FC = () => {
                 >
                   <img src={Assets.Images.dribbble} alt="protype behance" />
                 </CustomAnchor>
-                {/* <CustomAnchor
-                  href="https://facebook.com/protypefoundry"
+                <CustomAnchor
+                  href="https://www.linkedin.com/company/protypetf"
                   target="_blank"
                 >
                   <img src={Assets.Images.linkedin} alt="protype linkedin" />
-                </CustomAnchor> */}
+                </CustomAnchor>
                 <CustomAnchor
                   href="https://twitter.com/Protypetf"
                   target="_blank"
