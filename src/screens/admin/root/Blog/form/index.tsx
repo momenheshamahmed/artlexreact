@@ -1,8 +1,6 @@
 import React from "react";
 import { useObserver } from "mobx-react";
 import GeneralFormComponent from "../../../../../components/GeneralFormComponent";
-import { EditorState } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
 
 import BlogStore from "../../../../../stores/BlogForm/index";
 import { Blog } from "../../../../../stores/BlogForm/types";
@@ -41,7 +39,7 @@ const AdminBlogForm: React.FC = () => {
             key: "featuredHome",
             title: "Featured Home?",
             type: "switch",
-            isRequired: false,
+            isRequired: false
           },
           {
             inContent: true,

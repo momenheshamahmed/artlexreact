@@ -71,3 +71,5 @@ node_modules/
 # dist build folder
 dist/
 "sendgrid.env" 
+
+build/

@@ -128,7 +128,7 @@ const BlogSliderComponent: React.FC = props => {
         customButtonGroup={<CarouselButtonGroup />}
       >
         {BlogStore.Blogs.sort((a, b) => {
-          a.content.en.sortArticle - b.content.en.sortArticle;
+          return a.content.en.sortArticle - b.content.en.sortArticle;
         }).map(data => {
           if (data.content.en.featuredHome === true) {
             return <ArticleThumbnial articleData={data} />;

@@ -11,8 +11,8 @@ export interface Blog {
 export interface BlogContent {
   articleInternalURL: string;
   title: string;
-  gridNumberCols: string;
-  gridNumberRows: string;
+  gridNumberCols: number;
+  gridNumberRows: number;
   image1: string;
   thumbnialImage: string;
   articleCategory: string;
