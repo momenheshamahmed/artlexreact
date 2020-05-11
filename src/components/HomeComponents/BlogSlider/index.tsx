@@ -104,7 +104,7 @@ const BlogSliderComponent: React.FC = props => {
 
   return useObserver(() => (
     <div className="position-relative">
-      <Typography variant="h5" className="my-5">
+      <Typography variant="h4" className="my-5 font-weight-bold">
         Blog
       </Typography>
       <Carousel

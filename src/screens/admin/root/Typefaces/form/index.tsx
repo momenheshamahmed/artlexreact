@@ -169,6 +169,13 @@ const AdminTypefacesForm: React.FC = () => {
           },
           {
             inContent: true,
+            key: "embededVideo",
+            title: "Embeded Video",
+            type: "RichTextFieldEmbeded",
+            isRequired: false
+          },
+          {
+            inContent: true,
             key: "charactersImage",
             title: "characters",
             type: "image",

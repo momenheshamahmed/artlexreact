@@ -282,11 +282,18 @@ const generateEmptyData = <T extends BaseData>(
         }
         else if (schemaItem.type === "switch") {
           data.content[lang][schemaItem.key] = Boolean(false);
-        } else if (schemaItem.type === "RichTextField") {
+        } 
+        else if (schemaItem.type === "RichTextField") {
           data.content[lang][schemaItem.key] = JSON.stringify(
             EMPTY_HTML
           );
-        } else {
+        } 
+        else if (schemaItem.type === "RichTextFieldEmbeded") {
+          data.content[lang][schemaItem.key] = JSON.stringify(
+            EMPTY_HTML
+          );
+        } 
+        else {
           data.content[lang][schemaItem.key] = "";
         }
       });
@@ -307,9 +314,14 @@ const generateEmptyData = <T extends BaseData>(
       }
       else if (schemaItem.type === "switch") {
         data[schemaItem.key] = Boolean(false);
-      } else if (schemaItem.type === "RichTextField") {
+      }
+       else if (schemaItem.type === "RichTextField") {
         data[schemaItem.key] = JSON.stringify(EMPTY_HTML);
-      } else {
+      } 
+       else if (schemaItem.type === "RichTextFieldEmbeded") {
+        data[schemaItem.key] = JSON.stringify(EMPTY_HTML);
+      } 
+      else {
         data[schemaItem.key] = "";
       }
     }
@@ -708,9 +720,14 @@ const generateEmptyFormData = <T extends BaseData>(
         }
         else if (schemaItem.type === "switch") {
           emptyData[(schemaItem.key as string) + suffix] = Boolean(false);
-        } else if (schemaItem.type === "RichTextField") {
+        } 
+        else if (schemaItem.type === "RichTextField") {
           emptyData[(schemaItem.key as string) + suffix] = JSON.stringify(EMPTY_HTML);
-        } else {
+        }
+        else if (schemaItem.type === "RichTextFieldEmbeded") {
+          emptyData[(schemaItem.key as string) + suffix] = JSON.stringify(EMPTY_HTML);
+        }
+         else {
           emptyData[(schemaItem.key as string) + suffix] = "";
         }
       });
@@ -1312,7 +1329,8 @@ const GeneralFormComponent = <T extends BaseData>(
                                 label={data.title}
                               />
                             );
-                          } else if (data.type === "RichTextField") {
+                          } 
+                          else if (data.type === "RichTextField") {
                             const modulesQuill = {toolbar: [  ['bold', 'italic', 'underline', 'strike'],     
                             ['blockquote', 'code-block'],
                           
@@ -1354,7 +1372,34 @@ const GeneralFormComponent = <T extends BaseData>(
                    />
                               </>
                             );
-                          } else if (data.type === "textarea") {
+                          } 
+                          else if (data.type === "RichTextFieldEmbeded") {
+                            const modulesQuill = {toolbar: [   
+         
+                            [ 'video'],
+                                ]}
+                            const formatsQuill = [
+                              'video', ''
+                            ]
+                            return (
+                              <>
+
+
+
+                            <ReactQuill
+                            modules={
+                              modulesQuill
+                            }
+                            formats={formatsQuill}
+                            value={JSON.parse(formikBag.values[data.key + suffix])} 
+                            onChange={(val) => {
+                              formikBag.setFieldValue(data.key + suffix, JSON.stringify(val)) 
+                            }}
+                   />
+                              </>
+                            );
+                          } 
+                          else if (data.type === "textarea") {
                             return (
                               <Field
                                 name={data.key + suffix}

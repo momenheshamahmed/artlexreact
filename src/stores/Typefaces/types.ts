@@ -44,6 +44,7 @@ export interface TypefaceContent {
   fullPackageStoreUrl: string;
   familyStyles: string;
   galleryField: Array<string | File | null>;
+  embededVideo: string;
   charactersImage: string;
   fontInUseField: Array<string | File | null>;
   pairfonts: Array<string | object | null>;

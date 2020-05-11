@@ -87,7 +87,6 @@ const ArticlePage: React.FC = props => {
             <>
               <StyledImg imgSrc={val.content.en.image1} />
               <Container
-                fluid={true}
                 style={{ overflow: "hidden" }}
                 className="qlContainer"
               >
@@ -100,7 +99,7 @@ const ArticlePage: React.FC = props => {
                 <GridList
                   cellHeight={
                     val.content.en.relatedArticles[0] !== "noarticles"
-                      ? 400
+                      ? 300
                       : 20
                   }
                   cols={screenSize ? 1 : 4}
@@ -124,7 +123,7 @@ const ArticlePage: React.FC = props => {
                                 }}
                               >
                                 <CustomImgRelated
-                                  src={sec.content.en.image1}
+                                  src={sec.content.en.thumbnialImage}
                                   alt={sec.content.en.title}
                                 >
                                   <CustomTitle variant="h5">

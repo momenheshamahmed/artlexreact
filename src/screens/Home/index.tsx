@@ -1,21 +1,16 @@
 import React, { useRef } from "react";
 import { useObserver } from "mobx-react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import styled from "styled-components";
 import Assets from "../../assets/index";
 import BlogSliderComponent from "../../components/HomeComponents/BlogSlider";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { Link } from "react-router-dom";
 
-import {
-  Button,
-  GridListTile,
-  GridList,
-  useMediaQuery
-} from "@material-ui/core";
+import { Button, useMediaQuery, Typography } from "@material-ui/core";
 import { TypefaceStore } from "../../stores";
 import TypefaceTesterComponent from "../../components/TypefaceTesterComponent";
-
+import TickerComponent from "../../components/Ticker";
 //   Styles
 const FullScreenImage = styled.div`
   width: 100vw;
@@ -73,7 +68,7 @@ const GridListTileCustom = styled.div`
     padding-bottom: 100%;
   } */
   width: 100%;
-  margin-top: 0.5%;
+  margin-top: 5%;
 
   @media (min-width: 48rem) {
     width: 49%;
@@ -93,6 +88,16 @@ const GridListTileCustom = styled.div`
     content: "";
     float: left;
     padding-top: 100%;
+  }
+`;
+const TypeFaceNameAndFamily = styled.div`
+  padding: 10px;
+  text-align: center;
+  & h6 {
+    color: #000;
+  }
+  & p {
+    color: rgba(0, 0, 0, 0.5) !important;
   }
 `;
 const CustomImg = styled.div`
@@ -161,7 +166,11 @@ const Home: React.FC = () => {
           }
         }
       })}
+      <TickerComponent />
       <Container fluid={true} className="my-5">
+        <Typography variant="h4" className="my-5 font-weight-bold">
+          Typefaces
+        </Typography>
         <GridListCustom>
           {TypefaceStore.Typefaces.map(item => {
             if (item.content.en.typefaceFeaturedGrid === true) {
@@ -194,6 +203,14 @@ const Home: React.FC = () => {
                       ref={imgSrcHover}
                     />
                   </Link>
+                  <TypeFaceNameAndFamily>
+                    <Typography variant="h6">
+                      {item.content.en.typefaceName}
+                    </Typography>
+                    <Typography variant="body2">
+                      {item.content.en.familyStyles}
+                    </Typography>
+                  </TypeFaceNameAndFamily>
                 </GridListTileCustom>
               );
             }

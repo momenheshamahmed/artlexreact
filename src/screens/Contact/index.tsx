@@ -210,7 +210,7 @@ const CustomTypefaces: React.FC = () => {
                         fullWidth={true}
                         name="firstName"
                         type="email"
-                        label="Momen Hesham"
+                        label="Name"
                       />
                       <Field
                         component={CssTextField}

@@ -34,7 +34,7 @@ const App: React.FC = () => {
   const [direction] = useState("ltr");
   // Styled
   const Logo = styled.img`
-    width: 70px;
+    width: 88px;
   `;
   const LinkStyled = styled(Link)`
     color: black !important;
@@ -61,8 +61,8 @@ const App: React.FC = () => {
             <AdminRoot />
           </Route>
           <Route path="/">
-            <Navbar expand="md" fixed="top" bg="white" className="py-4">
-              <Container fluid={true}>
+            <Navbar expand="md" fixed="top" bg="white" className="py-5">
+              <Container>
                 <Navbar.Brand>
                   <Link to="/">
                     <Logo src={Assets.Images.logo} alt="Logo" />
@@ -94,7 +94,7 @@ const App: React.FC = () => {
                             <LinkStyled
                               to={{
                                 pathname: "/contact",
-                                state: { contactIs: "sendessmessgae" }
+                                state: { contactUs: "sendessmessgae" }
                               }}
                             >
                               {"Send us a message"}
@@ -108,7 +108,7 @@ const App: React.FC = () => {
                             <LinkStyled
                               to={{
                                 pathname: "/contact",
-                                state: { contactIs: "discount" }
+                                state: { contactUs: "discount" }
                               }}
                             >
                               {"Get a discount"}
@@ -122,7 +122,7 @@ const App: React.FC = () => {
                             <LinkStyled
                               to={{
                                 pathname: "/contact",
-                                state: { contactIs: "requestcustomfont" }
+                                state: { contactUs: "requestcustomfont" }
                               }}
                             >
                               {"Request custom font"}

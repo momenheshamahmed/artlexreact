@@ -32,6 +32,7 @@ export interface FormKeys<
     | "selecttypface"
     | "selecttypfacecategory"
     | "RichTextField"
+    | "RichTextFieldEmbeded"
     | "selectarticlecategory"
     | "selectarticle"
     | "relatedarticles"

@@ -76,6 +76,7 @@ const GalleryField: React.FC<Props> = props => {
           ? images.map((image, index) => (
               <>
                 <img
+                  draggable="false"
                   src={image ? image : Assets.Images.uploadPlaceholder}
                   style={{ width: "200px" }}
                 />

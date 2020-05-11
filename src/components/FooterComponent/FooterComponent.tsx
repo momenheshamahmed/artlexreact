@@ -62,7 +62,9 @@ const FooterComponent: React.FC = () => {
         </Row>
         <Row>
           <Col md={{ span: 4, order: 2 }} xs={{ order: 1 }}>
-            <Typography variant="h6">Typefaces</Typography>
+            <Typography variant="h6">
+              <LinkStyled to="/typefaces">Typefaces</LinkStyled>
+            </Typography>
             <Row>
               <Col>
                 {TypefaceStore.Typefaces.sort(
@@ -109,15 +111,11 @@ const FooterComponent: React.FC = () => {
                       );
                     }
                   })}
-                <Typography>
-                  <LinkStyled to={"/typefaces"} className="font-weight-bold">
-                    More Typefaces
-                  </LinkStyled>
-                </Typography>
               </Col>
             </Row>
           </Col>
           <Col md={{ span: 2, order: 2 }} xs={{ order: 2 }}>
+            <Typography variant="h6">Pages</Typography>
             <Row>
               <Col>
                 <Typography variant="body2" className="mt-1">
@@ -126,23 +124,23 @@ const FooterComponent: React.FC = () => {
                 <Typography variant="body2" className="mt-1">
                   <LinkStyled to="/">News / Blog</LinkStyled>
                 </Typography>
-                <Typography variant="body1" className="mt-2 font-weight-bold">
-                  Contact Us
+                <Typography variant="body2" className="mt-1">
+                  <LinkStyled to="/">Policies/Q&A</LinkStyled>
                 </Typography>
-                <Typography variant="body1">
-                  <CustomAnchor href="mailto: hi@protype.studio?subject=Hello &body=Let's start writing ....">
-                    info@protypef.co
-                  </CustomAnchor>
+                <Typography variant="body2" className="mt-1">
+                  <LinkStyled to="/">Licensing </LinkStyled>
                 </Typography>
               </Col>
             </Row>
           </Col>
-          <Col md={{ span: 3, order: 3 }} xs={{ order: 3 }}>
-            <Typography variant="body2" className="mt-1">
-              <LinkStyled to="/">Policies/Q&A </LinkStyled>
+          <Col md={{ span: 3, order: 4 }} xs={{ order: 4 }}>
+            <Typography variant="body1" className="mt-2 font-weight-bold">
+              Contact Us
             </Typography>
-            <Typography variant="body2" className="mt-1">
-              <LinkStyled to="/">Licensing </LinkStyled>
+            <Typography variant="body1">
+              <CustomAnchor href="mailto: hi@protype.studio?subject=Hello &body=Let's start writing ....">
+                info@protypef.co
+              </CustomAnchor>
             </Typography>
             <Typography variant="body1" className="my-2 font-weight-bold">
               Social Media
@@ -153,55 +151,55 @@ const FooterComponent: React.FC = () => {
                   href="https://www.facebook.com/ProtypeTF"
                   target="_blank"
                 >
-                  <img src={Assets.Images.facebook} alt="protype facebook" />
+                  <img draggable="false" width="24" src={Assets.Images.facebook} alt="protype facebook" />
                 </CustomAnchor>
                 <CustomAnchor
                   href="https://www.instagram.com/protypetf"
                   target="_blank"
                 >
-                  <img src={Assets.Images.instagram} alt="protype instagram" />
+                  <img draggable="false" width="24" src={Assets.Images.instagram} alt="protype instagram" />
                 </CustomAnchor>
                 <CustomAnchor
                   href="https://www.behance.net/Protype/"
                   target="_blank"
                 >
-                  <img src={Assets.Images.behance} alt="protype behance" />
+                  <img draggable="false" width="24" src={Assets.Images.behance} alt="protype behance" />
                 </CustomAnchor>
                 <CustomAnchor
                   href="https://dribbble.com/protype"
                   target="_blank"
                 >
-                  <img src={Assets.Images.dribbble} alt="protype behance" />
+                  <img draggable="false" width="24" src={Assets.Images.dribbble} alt="protype behance" />
                 </CustomAnchor>
                 <CustomAnchor
                   href="https://www.linkedin.com/company/protypetf"
                   target="_blank"
                 >
-                  <img src={Assets.Images.linkedin} alt="protype linkedin" />
+                  <img draggable="false" width="24" src={Assets.Images.linkedin} alt="protype linkedin" />
                 </CustomAnchor>
                 <CustomAnchor
                   href="https://twitter.com/Protypetf"
                   target="_blank"
                 >
-                  <img src={Assets.Images.twitter} alt="protype twitter" />
+                  <img draggable="false" width="24" src={Assets.Images.twitter} alt="protype twitter" />
                 </CustomAnchor>
               </Col>
             </Row>
           </Col>
-          <Col md={{ span: 3, order: 4 }} xs={{ order: 4 }}>
+          <Col md={{ span: 3, order: 1 }} xs={{ order: 1 }}>
             <img src={Assets.Images.logo} width="72px" />
             <Typography variant="body2" className="mt-3">
               {" "}
               Protype Foundry © 2019-2020. <br />
               All rights reserved.
             </Typography>
-            <Typography variant="caption">
+            {/* <Typography variant="caption">
               👨🏻‍💻{" "}
               <a href="https://www.linkedin.com/in/momenheshamahmed">
                 {" "}
                 Momen Hesham
               </a>{" "}
-            </Typography>
+            </Typography> */}
           </Col>
         </Row>
       </Container>

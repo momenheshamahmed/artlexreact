@@ -4,11 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import MenuOpenTypeFeatures from "./MenuOpenTypeFeatures";
 import MenuAlign from "./MenuAlign";
 
-import { Typography, IconButton } from "@material-ui/core";
-import FormatAlignCenterIcon from "@material-ui/icons/FormatAlignCenter";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import TypfaceGalleryComponent from "../../TypefaceGalleryComponent";
-
+import { IconButton } from "@material-ui/core";
 import CustomSliderTypefaces from "./CustomSliderTypefaces";
 
 const TypefaceControlsComponent: React.FC = props => {
