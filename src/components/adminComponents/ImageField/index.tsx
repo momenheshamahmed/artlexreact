@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import React, { useRef, useState, useEffect } from "react";
 import { Props } from "./types";
 import "./index.css";
@@ -6,7 +5,7 @@ import { Typography, Button } from "@material-ui/core";
 import styled from "styled-components";
 
 const ImageField: React.FC<Props> = props => {
-  const [image, setImage] = useState<any>(props.value);
+  const [image, setImage] = useState<File | string | null>(props.value);
   const styledImage = styled.img`
     display: (${props => (props.src !== null ? "inline" : "none")});
   `;

@@ -3,12 +3,10 @@ import { useObserver } from "mobx-react";
 import styled, { keyframes } from "styled-components";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { TickerStore } from "../../stores";
 
 const TickerComponent: React.FC = () => {
-  const LinkStyled = styled.a`
+  const LinkStyled = styled(Link)`
     color: black;
-    text-decoration: none;
     &:hover {
       color: black;
     }
@@ -42,6 +40,7 @@ const TickerComponent: React.FC = () => {
     animation-name: ${TickerAnimation};
     animation-duration: 30s;
     &:hover {
+      animation-play-state: paused;
       cursor: pointer;
     }
   `;
@@ -60,19 +59,12 @@ const TickerComponent: React.FC = () => {
       <div>
         <TickerWrap>
           <Ticker>
-            {TickerStore.Tickers.sort(
-              (a, b) => a.content.en.order - b.content.en.order
-            ).map(val => {
-              return (
-                <>
-                  <TickerItem>
-                    <LinkStyled href={val.content.en.href} target="_blank">
-                      {val.content.en.title}
-                    </LinkStyled>
-                  </TickerItem>{" "}
-                </>
-              );
-            })}
+            <TickerItem>
+              <LinkStyled to="/">Letterpress chambray brunch.</LinkStyled>
+            </TickerItem>
+            <TickerItem>Letterpress chambray brunch.</TickerItem>
+            <TickerItem>Letterpress chambray brunch.</TickerItem>
+            <TickerItem>Letterpress chambray brunch.</TickerItem>
           </Ticker>
         </TickerWrap>
       </div>

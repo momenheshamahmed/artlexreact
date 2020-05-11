@@ -8,16 +8,14 @@ import { CircularProgress, Container } from "@material-ui/core";
 import MiniDrawer from "../../../components/adminComponents/Drawer";
 // import MiniDrawer from "../../../components/adminComponents/Drawer";
 const AdminLogin = lazy(() => import("../login"));
-const AdminTypefacesForm = lazy(() => import("./Typefaces/form"));
-const AdminTypefacesTable = lazy(() => import("./Typefaces"));
+const AdminTypefacesForm = lazy(() => import("./typefaces/form"));
+const AdminTypefacesTable = lazy(() => import("./typefaces"));
 const AdminFontsForm = lazy(() => import("./FontsForm/form"));
 const AdminFontsTable = lazy(() => import("./FontsForm"));
 const AdminFontsInUseTable = lazy(() => import("./FontsInUseForm"));
 const AdminFontsInUseForm = lazy(() => import("./FontsInUseForm/form"));
 const AdminBlogForm = lazy(() => import("./Blog/form"));
 const AdminBlogTable = lazy(() => import("./Blog"));
-const AdminTickerForm = lazy(() => import("./Ticker/form"));
-const AdminTickerTable = lazy(() => import("./Ticker"));
 const AdminProtypeServicesForm = lazy(() => import("./ProtypeServices/form"));
 const AdminProtypeServicesTable = lazy(() => import("./ProtypeServices"));
 
@@ -76,12 +74,6 @@ const AdminRoot = () => {
                     </Route>
                     <Route exact={true} path="/admin/blog">
                       <AdminBlogTable />
-                    </Route>
-                    <Route path="/admin/ticker/:key">
-                      <AdminTickerForm />
-                    </Route>
-                    <Route exact={true} path="/admin/ticker">
-                      <AdminTickerTable />
                     </Route>
                     <Route path="/admin/services/:key">
                       <AdminProtypeServicesForm />

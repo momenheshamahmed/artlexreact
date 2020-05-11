@@ -11,7 +11,6 @@ import ReactHtmlParser, {
   convertNodeToElement,
   htmlparser2
 } from "react-html-parser";
-import NavBar from "../../components/NavBar";
 const PortypeServices: React.FC = () => {
   const responsive = {
     desktop: {
@@ -38,83 +37,79 @@ const PortypeServices: React.FC = () => {
   `;
 
   return useObserver(() => (
-    <>
-      <NavBar />
+    <div style={{ marginTop: 101 }}>
+      {ProtypeServices.ProtypeServicess ? (
+        ProtypeServices.ProtypeServicess.map(val => {
+          return (
+            <>
+              <Carousel
+                swipeable={true}
+                draggable={true}
+                showDots={false}
+                renderDotsOutside={false}
+                responsive={responsive}
+                ssr={false} // means to render carousel on server-side.
+                infinite={true}
+                autoPlaySpeed={1000}
+                keyBoardControl={true}
+                customTransition="all .5"
+                transitionDuration={500}
+                containerClass="carousel-container"
+                removeArrowOnDeviceType={["tablet", "mobile"]}
+                itemClass="carousel-item-padding-40-px"
+                arrows={true}
+              >
+                {val.content.en.gallery1.map(data => {
+                  return (
+                    <CustomImgServices
+                      src={data}
+                      key={data}
+                      draggable="false"
+                    />
+                  );
+                })}
+              </Carousel>
+              <Container style={{ margin: "24 0" }}>
+                {ReactHtmlParser(JSON.parse(val.content.en.richEditor1))}
+              </Container>
 
-      <div style={{ marginTop: 101 }}>
-        {ProtypeServices.ProtypeServicess ? (
-          ProtypeServices.ProtypeServicess.map(val => {
-            return (
-              <>
-                <Carousel
-                  swipeable={true}
-                  draggable={true}
-                  showDots={false}
-                  renderDotsOutside={false}
-                  responsive={responsive}
-                  ssr={false} // means to render carousel on server-side.
-                  infinite={true}
-                  autoPlaySpeed={1000}
-                  keyBoardControl={true}
-                  customTransition="all .5"
-                  transitionDuration={500}
-                  containerClass="carousel-container"
-                  removeArrowOnDeviceType={["tablet", "mobile"]}
-                  itemClass="carousel-item-padding-40-px"
-                  arrows={true}
-                >
-                  {val.content.en.gallery1.map(data => {
-                    return (
-                      <CustomImgServices
-                        src={data}
-                        key={data}
-                        draggable="false"
-                      />
-                    );
-                  })}
-                </Carousel>
-                <Container style={{ margin: "24 0" }}>
-                  {ReactHtmlParser(JSON.parse(val.content.en.richEditor1))}
-                </Container>
-
-                <Carousel
-                  swipeable={true}
-                  draggable={true}
-                  showDots={false}
-                  renderDotsOutside={false}
-                  responsive={responsive}
-                  ssr={false} // means to render carousel on server-side.
-                  infinite={true}
-                  autoPlaySpeed={1000}
-                  keyBoardControl={true}
-                  customTransition="all .5"
-                  transitionDuration={500}
-                  containerClass="carousel-container"
-                  removeArrowOnDeviceType={["tablet", "mobile"]}
-                  itemClass="carousel-item-padding-40-px"
-                  arrows={true}
-                >
-                  {val.content.en.gallery2.map(data => {
-                    return (
-                      <CustomImgServices
-                        src={data}
-                        key={data}
-                        draggable="false"
-                      />
-                    );
-                  })}
-                </Carousel>
-                <Container style={{ margin: "24 0" }}>
-                  {ReactHtmlParser(JSON.parse(val.content.en.richEditor2))}
-                </Container>
-              </>
-            );
-          })
-        ) : (
-          <h1>Loading ....</h1>
-        )}
-      </div>
-    </>
+              <Carousel
+                swipeable={true}
+                draggable={true}
+                showDots={false}
+                renderDotsOutside={false}
+                responsive={responsive}
+                ssr={false} // means to render carousel on server-side.
+                infinite={true}
+                autoPlaySpeed={1000}
+                keyBoardControl={true}
+                customTransition="all .5"
+                transitionDuration={500}
+                containerClass="carousel-container"
+                removeArrowOnDeviceType={["tablet", "mobile"]}
+                itemClass="carousel-item-padding-40-px"
+                arrows={true}
+              >
+                {val.content.en.gallery2.map(data => {
+                  return (
+                    <CustomImgServices
+                      src={data}
+                      key={data}
+                      draggable="false"
+                    />
+                  );
+                })}
+              </Carousel>
+              <Container style={{ margin: "24 0" }}>
+                {ReactHtmlParser(JSON.parse(val.content.en.richEditor2))}
+              </Container>
+            </>
+          );
+        })
+      ) : (
+        <h1>Loading ....</h1>
+      )}
+    </div>
   ));
 };
 export default PortypeServices;

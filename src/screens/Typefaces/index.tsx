@@ -6,14 +6,15 @@ import TypefaceTesterComponent from "../../components/TypefaceTesterComponent";
 import { TypefaceStore } from "../../stores";
 import SwipeableViews from "react-swipeable-views";
 import {
+  withStyles,
   Theme,
+  createStyles,
   Typography,
   Box,
+  makeStyles,
   Tabs,
   Tab
 } from "@material-ui/core";
-import { makeStyles, withStyles, createStyles } from "@material-ui/core/styles";
-import NavBar from "../../components/NavBar";
 
 interface StyledTabsProps {
   value: number;
@@ -116,89 +117,83 @@ const Typefaces: React.FC = () => {
     setValue(index);
   };
   return useObserver(() => (
-    <>
-      <NavBar />
-
-      <Container fluid={true} className="pt-5" style={{ marginTop: 120 }}>
-        <Container fluid={true}>
-          <TabsHeader fluid={true}>
-            <CustomText>Filter By</CustomText>
-            <StyledTabs
-              value={value}
-              onChange={handleChange}
-              aria-label="styled tabs example"
-            >
-              <StyledTab
-                label="All"
-                {...a11yProps(0)}
-                style={{
-                  backgroundColor: value === 0 ? "#00FF00" : "white",
-                  border: value !== 0 ? "1px solid black" : "none"
-                }}
-              />
-              <StyledTab
-                label="Free"
-                {...a11yProps(1)}
-                style={{
-                  backgroundColor: value === 1 ? "#00FF00" : "white",
-                  border: value !== 1 ? "1px solid black" : "none"
-                }}
-              />
-              <StyledTab
-                label="Premium"
-                {...a11yProps(2)}
-                style={{
-                  backgroundColor: value === 2 ? "#00FF00" : "white",
-                  border: value !== 2 ? "1px solid black" : "none"
-                }}
-              />
-            </StyledTabs>
-          </TabsHeader>
-        </Container>
-        <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
-          <TabPanel value={value} index={0}>
-            {TypefaceStore.Typefaces.sort(
-              (a, b) =>
-                a.content.en.typefaceSorting - b.content.en.typefaceSorting
-            ).map(val => {
+    <Container fluid={true} className="pt-5" style={{ marginTop: 120 }}>
+      <TabsHeader fluid={true}>
+        <CustomText>Filter By</CustomText>
+        <StyledTabs
+          value={value}
+          onChange={handleChange}
+          aria-label="styled tabs example"
+        >
+          <StyledTab
+            label="All"
+            {...a11yProps(0)}
+            style={{
+              backgroundColor: value === 0 ? "#00FF00" : "white",
+              border: value !== 0 ? "1px solid black" : "none"
+            }}
+          />
+          <StyledTab
+            label="Free"
+            {...a11yProps(1)}
+            style={{
+              backgroundColor: value === 1 ? "#00FF00" : "white",
+              border: value !== 1 ? "1px solid black" : "none"
+            }}
+          />
+          <StyledTab
+            label="Premium"
+            {...a11yProps(2)}
+            style={{
+              backgroundColor: value === 2 ? "#00FF00" : "white",
+              border: value !== 2 ? "1px solid black" : "none"
+            }}
+          />
+        </StyledTabs>
+      </TabsHeader>
+      <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
+        <TabPanel value={value} index={0}>
+          {TypefaceStore.Typefaces.sort(
+            (a, b) =>
+              a.content.en.typefaceSorting - b.content.en.typefaceSorting
+          ).map(val => {
+            return (
+              <>
+                <TypefaceTesterComponent typeface={val} key={val.key} />
+              </>
+            );
+          })}
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          {TypefaceStore.Typefaces.sort(
+            (a, b) =>
+              a.content.en.typefaceSorting - b.content.en.typefaceSorting
+          ).map(val => {
+            if (val.content.en.typefaceCategory === "free") {
               return (
                 <>
                   <TypefaceTesterComponent typeface={val} key={val.key} />
                 </>
               );
-            })}
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            {TypefaceStore.Typefaces.sort(
-              (a, b) =>
-                a.content.en.typefaceSorting - b.content.en.typefaceSorting
-            ).map(val => {
-              if (val.content.en.typefaceCategory === "free") {
-                return (
-                  <>
-                    <TypefaceTesterComponent typeface={val} key={val.key} />
-                  </>
-                );
-              }
-            })}
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            {TypefaceStore.Typefaces.sort(
-              (a, b) =>
-                a.content.en.typefaceSorting - b.content.en.typefaceSorting
-            ).map(val => {
-              if (val.content.en.typefaceCategory === "premium") {
-                return (
-                  <>
-                    <TypefaceTesterComponent typeface={val} key={val.key} />
-                  </>
-                );
-              }
-            })}
-          </TabPanel>
-        </SwipeableViews>
-      </Container>
-    </>
+            }
+          })}
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          {TypefaceStore.Typefaces.sort(
+            (a, b) =>
+              a.content.en.typefaceSorting - b.content.en.typefaceSorting
+          ).map(val => {
+            if (val.content.en.typefaceCategory === "premium") {
+              return (
+                <>
+                  <TypefaceTesterComponent typeface={val} key={val.key} />
+                </>
+              );
+            }
+          })}
+        </TabPanel>
+      </SwipeableViews>
+    </Container>
   ));
 };
 export default Typefaces;

@@ -1,6 +1,8 @@
 import React, { useState, useLayoutEffect } from "react";
 import { useObserver } from "mobx-react";
 import styled from "styled-components";
+import { Row, Col } from "react-bootstrap";
+import { Typography, Slider, withStyles } from "@material-ui/core";
 
 const TextAreaComponent: React.FC = props => {
   // props.onChange(value);
@@ -18,7 +20,9 @@ const TextAreaComponent: React.FC = props => {
   }, [props.fontSize]);
   return useObserver(() => (
     <div>
-      <TextArea fontSize={typeof myFontSize === "number" ? myFontSize : 20}>
+      <TextArea
+        fontSize={typeof myFontSize === "number" ? myFontSize : 20}
+      >
         {props.words ? props.words : "lorem ipsum"}
       </TextArea>
     </div>

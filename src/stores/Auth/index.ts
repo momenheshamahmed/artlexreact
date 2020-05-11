@@ -1,4 +1,3 @@
-
 import { observable, action } from "mobx";
 import { auth, Unsubscribe } from "firebase";
 

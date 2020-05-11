@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import React, { useRef, useState, useEffect } from "react";
 import { Props } from "./types";
 import Assets from "../../../assets";
@@ -11,7 +10,7 @@ const GalleryField: React.FC<Props> = props => {
   );
   useEffect(() => {
     const processImages = async () => {
-      const processedImages: any[] | ((prevState: (string | File)[]) => (string | File)[]) = [];
+      const processedImages = [];
       const promisesArray = props.value.map((image, index) => {
         return new Promise(res => {
           if (typeof image === "string") {

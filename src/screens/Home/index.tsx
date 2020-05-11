@@ -11,12 +11,12 @@ import { Button, useMediaQuery, Typography } from "@material-ui/core";
 import { TypefaceStore } from "../../stores";
 import TypefaceTesterComponent from "../../components/TypefaceTesterComponent";
 import TickerComponent from "../../components/Ticker";
-import NavBar from "../../components/NavBar";
 //   Styles
 const FullScreenImage = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  background-image: url(${customprops => customprops.urlImage});
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
@@ -33,7 +33,7 @@ const CustomButton = styled(Button)`
   background: #00ff00 !important;
   border-radius: 100px !important;
   color: black !important;
-  font-size: 0.7rem;
+  font-size: 2rem;
   font-weight: bold;
   transform: translateX(70vh);
   transition: 1s;
@@ -68,7 +68,7 @@ const GridListTileCustom = styled.div`
     padding-bottom: 100%;
   } */
   width: 100%;
-  margin-bottom: 5%;
+  margin-top: 5%;
 
   @media (min-width: 48rem) {
     width: 49%;
@@ -116,153 +116,142 @@ const Home: React.FC = () => {
   const imgSrcHover = useRef<HTMLImageElement>(null);
 
   return useObserver(() => (
-    <>
-      <NavBar />
-      <div style={{ marginTop: 120 }}>
-        {TypefaceStore.Typefaces.map(val => {
-          if (val.content.en.typefaceFeaturedFullScreen === true) {
-            if (val.content.en.typefaceCategory === "Custom") {
-              return (
-                <Link
-                  to={{
-                    pathname: `/custom/${val.content.en.websiteInternalURL}`,
-                    state: {
-                      documentId: val.key
-                    }
-                  }}
-                  key={val.key}
-                >
-                  <FullScreenImage
-                    style={{ backgroundImage: val.content.en.coverImage }}
+    <div style={{ marginTop: 101 }}>
+      {TypefaceStore.Typefaces.map(val => {
+        if (val.content.en.typefaceFeaturedFullScreen === true) {
+          if (val.content.en.typefaceCategory === "Custom") {
+            return (
+              <Link
+                to={{
+                  pathname: `/custom/${val.content.en.websiteInternalURL}`,
+                  state: {
+                    documentId: val.key
+                  }
+                }}
+                key={val.key}
+              >
+                <FullScreenImage urlImage={val.content.en.coverImage}>
+                  <CustomButton
+                    variant="contained"
+                    className="mt-3"
+                    endIcon={<ArrowForwardIcon />}
                   >
-                    <CustomButton
-                      variant="contained"
-                      className="mt-3"
-                      endIcon={<ArrowForwardIcon />}
-                    >
-                      View Typeface
-                    </CustomButton>
-                  </FullScreenImage>
-                </Link>
-              );
-            } else if (
-              val.content.en.typefaceCategory === "Premium" ||
-              "Free"
-            ) {
-              return (
-                <Link
-                  to={{
-                    pathname: `/typefaces/${val.content.en.websiteInternalURL}`,
-                    state: {
-                      documentId: val.key
-                    }
-                  }}
-                  key={val.key}
-                >
-                  <FullScreenImage
-                    style={{ backgroundImage: val.content.en.coverImage }}
+                    View Typeface
+                  </CustomButton>
+                </FullScreenImage>
+              </Link>
+            );
+          } else if (val.content.en.typefaceCategory === "Premium" || "Free") {
+            return (
+              <Link
+                to={{
+                  pathname: `/typefaces/${val.content.en.websiteInternalURL}`,
+                  state: {
+                    documentId: val.key
+                  }
+                }}
+                key={val.key}
+              >
+                <FullScreenImage urlImage={val.content.en.coverImage}>
+                  <CustomButton
+                    variant="contained"
+                    className="mt-3"
+                    endIcon={<ArrowForwardIcon />}
                   >
-                    <CustomButton
-                      variant="contained"
-                      className="mt-3"
-                      endIcon={<ArrowForwardIcon />}
-                    >
-                      View Typeface
-                    </CustomButton>
-                  </FullScreenImage>
-                </Link>
-              );
-            }
+                    View Typeface
+                  </CustomButton>
+                </FullScreenImage>
+              </Link>
+            );
           }
-        })}
-        <TickerComponent />
-        <Container fluid={true} className="my-5">
-          <Typography variant="h4" className="my-5w font-weight-bold">
-            Typefaces
-          </Typography>
-          <GridListCustom>
-            {TypefaceStore.Typefaces.map(item => {
-              if (item.content.en.typefaceFeaturedGrid === true) {
-                return (
-                  <GridListTileCustom key={item.key}>
-                    <Link
-                      to={{
-                        pathname: `${
-                          item.content.en.typefaceCategory === "Custom"
-                            ? `/custom/${item.content.en.websiteInternalURL}`
-                            : `/typefaces/${item.content.en.websiteInternalURL}`
-                        }`,
-                        state: {
-                          documentId: item.key
-                        }
-                      }}
-                    >
-                      <CustomImg
-                        src={
-                          item.content.en.typefaceFeaturedGridNumberCover
-                            ? item.content.en.typefaceFeaturedGridNumberCover
-                            : Assets.Images.uploadPlaceholder
-                        }
-                        hover={
-                          item.content.en.typefaceFeaturedGridNumberHover
-                            ? item.content.en.typefaceFeaturedGridNumberHover
-                            : Assets.Images.uploadPlaceholder
-                        }
-                        alt={item.content.en.typefaceName}
-                        ref={imgSrcHover}
-                      />
-                    </Link>
-                    <TypeFaceNameAndFamily>
-                      <Typography variant="h6">
-                        {item.content.en.typefaceName}
-                      </Typography>
-                      <Typography variant="body2">
-                        {item.content.en.familyStyles}
-                      </Typography>
-                    </TypeFaceNameAndFamily>
-                  </GridListTileCustom>
-                );
-              }
-            })}
-          </GridListCustom>
-        </Container>
-        <Container fluid={true}>
-          <>
-            <BlogSliderComponent />
-          </>
-          {TypefaceStore.Typefaces.sort(
-            (a, b) =>
-              a.content.en.typefaceSorting - b.content.en.typefaceSorting
-          ).map(val => {
-            if (
-              val.content.en.typefaceCategory !== "Custom" &&
-              val.content.en.typefaceFeaturedTester === true
-            ) {
+        }
+      })}
+      <TickerComponent />
+      <Container fluid={true} className="my-5">
+        <Typography variant="h4" className="my-5 font-weight-bold">
+          Typefaces
+        </Typography>
+        <GridListCustom>
+          {TypefaceStore.Typefaces.map(item => {
+            if (item.content.en.typefaceFeaturedGrid === true) {
               return (
-                <>
-                  <TypefaceTesterComponent typeface={val} key={val.key} />
-                </>
+                <GridListTileCustom key={item.key}>
+                  <Link
+                    to={{
+                      pathname: `${
+                        item.content.en.typefaceCategory === "Custom"
+                          ? `/custom/${item.content.en.websiteInternalURL}`
+                          : `/typefaces/${item.content.en.websiteInternalURL}`
+                      }`,
+                      state: {
+                        documentId: item.key
+                      }
+                    }}
+                  >
+                    <CustomImg
+                      src={
+                        item.content.en.typefaceFeaturedGridNumberCover
+                          ? item.content.en.typefaceFeaturedGridNumberCover
+                          : Assets.Images.uploadPlaceholder
+                      }
+                      hover={
+                        item.content.en.typefaceFeaturedGridNumberHover
+                          ? item.content.en.typefaceFeaturedGridNumberHover
+                          : Assets.Images.uploadPlaceholder
+                      }
+                      alt={item.content.en.typefaceName}
+                      ref={imgSrcHover}
+                    />
+                  </Link>
+                  <TypeFaceNameAndFamily>
+                    <Typography variant="h6">
+                      {item.content.en.typefaceName}
+                    </Typography>
+                    <Typography variant="body2">
+                      {item.content.en.familyStyles}
+                    </Typography>
+                  </TypeFaceNameAndFamily>
+                </GridListTileCustom>
               );
-            } else if (
-              (val.content.en.typefaceCategory === "Premium" || "Free") &&
-              val.content.en.typefaceFeaturedTester === true
-            ) {
-              return console.log("HAHAHA!");
             }
-          })}{" "}
-        </Container>
-        <Container fluid={true} className="text-center">
-          <CustomButtonPreveiw
-            variant="contained"
-            className="mt-3"
-            endIcon={<ArrowForwardIcon />}
-            href="/typefaces"
-          >
-            Preview More Fonts
-          </CustomButtonPreveiw>
-        </Container>
-      </div>
-    </>
+          })}
+        </GridListCustom>
+      </Container>
+      <Container fluid={true}>
+        <>
+          <BlogSliderComponent />
+        </>
+        {TypefaceStore.Typefaces.sort(
+          (a, b) => a.content.en.typefaceSorting - b.content.en.typefaceSorting
+        ).map(val => {
+          if (
+            val.content.en.typefaceCategory !== "Custom" &&
+            val.content.en.typefaceFeaturedTester === true
+          ) {
+            return (
+              <>
+                <TypefaceTesterComponent typeface={val} key={val.key} />
+              </>
+            );
+          } else if (
+            (val.content.en.typefaceCategory === "Premium" || "Free") &&
+            val.content.en.typefaceFeaturedTester === true
+          ) {
+            return console.log("HAHAHA!");
+          }
+        })}{" "}
+      </Container>
+      <Container fluid={true} className="text-center">
+        <CustomButtonPreveiw
+          variant="contained"
+          className="mt-3"
+          endIcon={<ArrowForwardIcon />}
+          href="/typefaces"
+        >
+          Preview More Fonts
+        </CustomButtonPreveiw>
+      </Container>
+    </div>
   ));
 };
 export default Home;

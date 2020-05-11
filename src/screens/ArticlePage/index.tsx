@@ -16,12 +16,11 @@ import {
   GridListTile,
   Divider
 } from "@material-ui/core";
-import NavBarArticle from "../../components/NavBarArticle";
 
 const StyledImg = styled.div`
   width: 100%;
   height: 70vh;
-  margin: 120px 0 3vh 0;
+  margin: 101px 0 3vh 0;
   background-image: url(${props => props.imgSrc});
   background-color: black;
   background-size: cover;
@@ -75,11 +74,6 @@ const CustomTitle = styled(Typography)`
     -webkit-line-clamp: 3;
   }
 `;
-const FirstTitle = styled.h1`
-  @media (min-width: 768px) {
-    display: none;
-  }
-`;
 const ArticlePage: React.FC = props => {
   const { articleId } = useParams();
   // let { state } = useLocation();
@@ -91,10 +85,12 @@ const ArticlePage: React.FC = props => {
         if (val.content.en.articleInternalURL === articleId) {
           return (
             <>
-              <NavBarArticle data={val} key={val.key} />
               <StyledImg imgSrc={val.content.en.image1} />
-              <Container style={{ overflow: "hidden" }} className="qlContainer">
-                <FirstTitle>{val.content.en.title}</FirstTitle>
+              <Container
+                style={{ overflow: "hidden" }}
+                className="qlContainer"
+              >
+                <h1>{val.content.en.title}</h1>
                 {ReactHtmlParser(JSON.parse(val.content.en.richEditor1))}
                 <Divider className="my-3" />
                 <Typography variant="h6" component="h6" className=" mb-3 mt-3">

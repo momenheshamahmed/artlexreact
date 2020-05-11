@@ -2,8 +2,7 @@ import React, { useState, useLayoutEffect } from "react";
 import { useObserver } from "mobx-react";
 import styled from "styled-components";
 import { Row, Col } from "react-bootstrap";
-import { Typography, Slider } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
+import { Typography, Slider, withStyles } from "@material-ui/core";
 
 const CustomSlider = withStyles({
   root: {

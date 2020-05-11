@@ -1,7 +1,10 @@
-/*eslint-disable*/
 // Packages
 import React, { useEffect, useState, lazy, Suspense } from "react";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
+import styled from "styled-components";
+
 const AdminRoot = lazy(() => import("./admin/root"));
 const Home = lazy(() => import("./Home"));
 const CustomTypefaces = lazy(() => import("./CustomTypefaces"));
@@ -21,18 +24,25 @@ import {
   FontStore,
   FontsInUseStore,
   BlogStore,
-  ProtypeServices as ProtypeServicesStore,
-  TickerStore
+  ProtypeServices as ProtypeServicesStore
 } from "../stores";
 import FooterComponent from "../components/FooterComponent/FooterComponent";
 
 import ScrollToTop from "./scrollTop";
-import { Container } from "react-bootstrap";
 
-const App: React.FC = props => {
+const App: React.FC = () => {
   const [direction] = useState("ltr");
   // Styled
-
+  const Logo = styled.img`
+    width: 88px;
+  `;
+  const LinkStyled = styled(Link)`
+    color: black !important;
+    &:hover {
+      color: black !important;
+      text-decoration: none;
+    }
+  `;
   // Mobx
   useEffect(() => {
     TypefaceStore.watchTypefaces();
@@ -40,7 +50,6 @@ const App: React.FC = props => {
     FontsInUseStore.watchFontsInUse();
     BlogStore.watchBlogs();
     ProtypeServicesStore.watchProtypeServicess();
-    TickerStore.watchTickers();
   }, []);
 
   return (
@@ -52,6 +61,80 @@ const App: React.FC = props => {
             <AdminRoot />
           </Route>
           <Route path="/">
+            <Navbar expand="md" fixed="top" bg="white" className="py-5">
+              <Container>
+                <Navbar.Brand>
+                  <Link to="/">
+                    <Logo src={Assets.Images.logo} alt="Logo" />
+                  </Link>
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                  <Nav className="ml-auto" defaultActiveKey="/">
+                    <LinkContainer to={"/typefaces"}>
+                      <Nav.Link eventKey="typefaces">{"Typefaces"}</Nav.Link>
+                    </LinkContainer>
+                    <LinkContainer to={"/custom"}>
+                      <Nav.Link eventKey="custom">{"Custom"}</Nav.Link>
+                    </LinkContainer>
+                    <LinkContainer to={"/services"}>
+                      <Nav.Link eventKey="services">{"Services"}</Nav.Link>
+                    </LinkContainer>
+                    <LinkContainer to={"/blog"}>
+                      <Nav.Link eventKey="blog">{"Blog"}</Nav.Link>
+                    </LinkContainer>
+                    <NavDropdown
+                      alignRight={true}
+                      title="Contact"
+                      id="collasible-nav-dropdown"
+                    >
+                      <NavDropdown.Item>
+                        <LinkContainer to={"/contact"}>
+                          <Nav.Link eventKey="contact">
+                            <LinkStyled
+                              to={{
+                                pathname: "/contact",
+                                state: { contactUs: "sendessmessgae" }
+                              }}
+                            >
+                              {"Send us a message"}
+                            </LinkStyled>
+                          </Nav.Link>
+                        </LinkContainer>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item>
+                        <LinkContainer to={"/contact"}>
+                          <Nav.Link eventKey="contact">
+                            <LinkStyled
+                              to={{
+                                pathname: "/contact",
+                                state: { contactUs: "discount" }
+                              }}
+                            >
+                              {"Get a discount"}
+                            </LinkStyled>
+                          </Nav.Link>
+                        </LinkContainer>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item>
+                        <LinkContainer to={"/contact"}>
+                          <Nav.Link eventKey="contact">
+                            <LinkStyled
+                              to={{
+                                pathname: "/contact",
+                                state: { contactUs: "requestcustomfont" }
+                              }}
+                            >
+                              {"Request custom font"}
+                            </LinkStyled>
+                          </Nav.Link>
+                        </LinkContainer>
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  </Nav>
+                </Navbar.Collapse>
+              </Container>
+            </Navbar>
             <Suspense fallback={<div>loading route …</div>}>
               <Switch>
                 <Route exact={true} path="/">

@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import React, { useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Menu, { MenuProps } from "@material-ui/core/Menu";

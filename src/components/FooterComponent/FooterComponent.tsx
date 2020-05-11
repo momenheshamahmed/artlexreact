@@ -69,7 +69,6 @@ const FooterComponent: React.FC = () => {
               <Col>
                 {TypefaceStore.Typefaces.sort(
                   (a, b) =>
-                    // @ts-ignore
                     a.content.en.typefaceSorting - b.content.en.typefaceSorting
                 )
                   .filter(val => val.content.en.showInFooter)
@@ -93,7 +92,6 @@ const FooterComponent: React.FC = () => {
               <Col>
                 {TypefaceStore.Typefaces.sort(
                   (a, b) =>
-                  // @ts-ignore
                     a.content.en.typefaceSorting - b.content.en.typefaceSorting
                 )
                   .filter(val => val.content.en.showInFooter)
@@ -153,67 +151,37 @@ const FooterComponent: React.FC = () => {
                   href="https://www.facebook.com/ProtypeTF"
                   target="_blank"
                 >
-                  <img
-                    draggable="false"
-                    width="24"
-                    src={Assets.Images.facebook}
-                    alt="protype facebook"
-                  />
+                  <img draggable="false" width="24" src={Assets.Images.facebook} alt="protype facebook" />
                 </CustomAnchor>
                 <CustomAnchor
                   href="https://www.instagram.com/protypetf"
                   target="_blank"
                 >
-                  <img
-                    draggable="false"
-                    width="24"
-                    src={Assets.Images.instagram}
-                    alt="protype instagram"
-                  />
+                  <img draggable="false" width="24" src={Assets.Images.instagram} alt="protype instagram" />
                 </CustomAnchor>
                 <CustomAnchor
                   href="https://www.behance.net/Protype/"
                   target="_blank"
                 >
-                  <img
-                    draggable="false"
-                    width="24"
-                    src={Assets.Images.behance}
-                    alt="protype behance"
-                  />
+                  <img draggable="false" width="24" src={Assets.Images.behance} alt="protype behance" />
                 </CustomAnchor>
                 <CustomAnchor
                   href="https://dribbble.com/protype"
                   target="_blank"
                 >
-                  <img
-                    draggable="false"
-                    width="24"
-                    src={Assets.Images.dribbble}
-                    alt="protype behance"
-                  />
+                  <img draggable="false" width="24" src={Assets.Images.dribbble} alt="protype behance" />
                 </CustomAnchor>
                 <CustomAnchor
                   href="https://www.linkedin.com/company/protypetf"
                   target="_blank"
                 >
-                  <img
-                    draggable="false"
-                    width="24"
-                    src={Assets.Images.linkedin}
-                    alt="protype linkedin"
-                  />
+                  <img draggable="false" width="24" src={Assets.Images.linkedin} alt="protype linkedin" />
                 </CustomAnchor>
                 <CustomAnchor
                   href="https://twitter.com/Protypetf"
                   target="_blank"
                 >
-                  <img
-                    draggable="false"
-                    width="24"
-                    src={Assets.Images.twitter}
-                    alt="protype twitter"
-                  />
+                  <img draggable="false" width="24" src={Assets.Images.twitter} alt="protype twitter" />
                 </CustomAnchor>
               </Col>
             </Row>

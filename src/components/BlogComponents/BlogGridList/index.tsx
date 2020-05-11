@@ -1,5 +1,3 @@
-/* eslint-disable */
-/* tslint:disable */
 import React, { useRef, useState } from "react";
 import { useObserver } from "mobx-react";
 import styled, { useTheme } from "styled-components";
@@ -8,13 +6,15 @@ import {
   GridList,
   GridListTile,
   useMediaQuery,
+  withStyles,
   Theme,
+  createStyles,
   Typography,
   Box,
+  makeStyles,
   Tabs,
   Tab
 } from "@material-ui/core";
-import { makeStyles, createStyles, withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { BlogStore } from "../../../stores";
 import SwipeableViews from "react-swipeable-views";
@@ -25,6 +25,7 @@ const CustomImg = styled.div`
   width: 100%;
   height: 100%;
   color: black;
+  background: url(${props => `'${props.src}'`});
   &:hover {
     -webkit-line-clamp: 3;
   }
@@ -163,7 +164,7 @@ const BlogGridList: React.FC = () => {
   const handleChangeIndex = (index: number) => {
     setValue(index);
   };
-  // @ts-ignore
+
   return useObserver(() => (
     <Container fluid={true}>
       <TabsHeader fluid={true}>
@@ -176,7 +177,6 @@ const BlogGridList: React.FC = () => {
           <StyledTab
             label="All"
             {...a11yProps(0)}
-            // @ts-ignore
             style={{
               backgroundColor: value === 0 ? "#00FF00" : "white",
               border: value !== 0 ? "1px solid black" : "none"
@@ -185,7 +185,6 @@ const BlogGridList: React.FC = () => {
           <StyledTab
             label="Articles"
             {...a11yProps(1)}
-            // @ts-ignore
             style={{
               backgroundColor: value === 1 ? "#00FF00" : "white",
               border: value !== 1 ? "1px solid black" : "none"
@@ -194,7 +193,6 @@ const BlogGridList: React.FC = () => {
           <StyledTab
             label="News"
             {...a11yProps(2)}
-            // @ts-ignore
             style={{
               backgroundColor: value === 2 ? "#00FF00" : "white",
               border: value !== 2 ? "1px solid black" : "none"
@@ -205,32 +203,28 @@ const BlogGridList: React.FC = () => {
 
       <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
         <TabPanel value={value} index={0}>
-          <GridList cellHeight={400} spacing={16} cols={screenSize ? 1 : 4}>
+          <GridList
+            cellHeight={400}
+            spacing={16}
+            cols={screenSize ? 1 : 4}
+            rows={screenSize ? 1 : 4}
+          >
             {BlogStore.Blogs.sort(
-              // @ts-ignore
-
               (a, b) => a.content.en.sortArticle - b.content.en.sortArticle
             ).map(tile => (
-              // @ts-ignore
-
               <GridListTile
                 key={tile.key}
                 cols={
                   screenSize
                     ? 1
-                    : // @ts-ignore
-
-                      (tile.content.en.gridNumberCols > 4
+                    : (tile.content.en.gridNumberCols > 4
                         ? 4
                         : tile.content.en.gridNumberCols) || 1
                 }
-                // @ts-ignore
                 rows={
                   screenSize
                     ? 1
-                    : // @ts-ignore
-
-                      (tile.content.en.gridNumberRows > 4
+                    : (tile.content.en.gridNumberRows > 4
                         ? 4
                         : tile.content.en.gridNumberRows) || 1
                 }
@@ -244,8 +238,7 @@ const BlogGridList: React.FC = () => {
                   }}
                 >
                   <CustomImg
-                    style={{ backgroundImage: tile.content.en.thumbnialImage }}
-                    // @ts-ignore
+                    src={tile.content.en.thumbnialImage}
                     alt={tile.content.en.title}
                     ref={imgSrcHover}
                   >
@@ -262,9 +255,13 @@ const BlogGridList: React.FC = () => {
           </GridList>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <GridList cellHeight={400} spacing={16} cols={screenSize ? 1 : 4}>
+          <GridList
+            cellHeight={400}
+            spacing={16}
+            cols={screenSize ? 1 : 4}
+            rows={screenSize ? 1 : 4}
+          >
             {BlogStore.Blogs.sort(
-              // @ts-ignore
               (a, b) => a.content.en.sortArticle - b.content.en.sortArticle
             ).map(tile => {
               if (tile.content.en.articleCategory === "articles") {
@@ -295,10 +292,7 @@ const BlogGridList: React.FC = () => {
                       }}
                     >
                       <CustomImg
-                        style={{
-                          backgroundImage: tile.content.en.thumbnialImage
-                        }}
-                        // @ts-ignore
+                        src={tile.content.en.thumbnialImage}
                         alt={tile.content.en.title}
                         ref={imgSrcHover}
                       >
@@ -321,9 +315,9 @@ const BlogGridList: React.FC = () => {
             cellHeight={400}
             spacing={16}
             cols={screenSize ? 1 : 4}
+            rows={screenSize ? 1 : 4}
           >
             {BlogStore.Blogs.sort(
-              // @ts-ignore
               (a, b) => a.content.en.sortArticle - b.content.en.sortArticle
             ).map(tile => {
               if (tile.content.en.articleCategory === "news") {
@@ -354,10 +348,7 @@ const BlogGridList: React.FC = () => {
                       }}
                     >
                       <CustomImg
-                        style={{
-                          backgroundImage: tile.content.en.thumbnialImage
-                        }}
-                        // @ts-ignore
+                        src={tile.content.en.thumbnialImage}
                         alt={tile.content.en.title}
                         ref={imgSrcHover}
                       >
