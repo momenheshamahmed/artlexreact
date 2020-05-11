@@ -212,6 +212,17 @@ export default function MiniDrawer() {
             </ListItem>
           </LinkStyled>
         </List>
+        <Divider />
+        <List>
+          <LinkStyled to="/admin/ticker">
+            <ListItem key={"Ticker"}>
+              <ListItemIcon>
+                <DescriptionIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Ticker"} />
+            </ListItem>
+          </LinkStyled>
+        </List>
       </Drawer>
     </div>
   );

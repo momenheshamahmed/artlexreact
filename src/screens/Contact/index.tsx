@@ -3,7 +3,8 @@ import { useObserver } from "mobx-react";
 import Assets from "../../assets/index";
 import { Collapse, Row, Container, Col } from "react-bootstrap";
 import styled from "styled-components";
-import { Button, Typography, withStyles } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles"
 
 import AddIcon from "@material-ui/icons/Add";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
@@ -12,6 +13,7 @@ import { Formik, Form, Field, FormikHelpers, FormikProps } from "formik";
 import { TextField } from "formik-material-ui";
 
 import * as emailjs from "emailjs-com";
+import NavBar from "../../components/NavBar";
 
 interface IFormValues {
   firstName: string;
@@ -152,6 +154,8 @@ const CustomTypefaces: React.FC = () => {
 
   return useObserver(() => (
     <>
+      <NavBar />
+
       <FullScreenImage urlImage={Assets.Images.uploadPlaceholder} />
       <Container className="my-5">
         <Row>

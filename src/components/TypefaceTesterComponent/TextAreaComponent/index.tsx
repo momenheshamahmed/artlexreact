@@ -1,8 +1,6 @@
 import React, { useState, useLayoutEffect } from "react";
 import { useObserver } from "mobx-react";
 import styled from "styled-components";
-import { Row, Col } from "react-bootstrap";
-import { Typography, Slider, withStyles } from "@material-ui/core";
 
 const TextAreaComponent: React.FC = props => {
   // props.onChange(value);

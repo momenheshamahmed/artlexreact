@@ -26,6 +26,7 @@ import ReactHtmlParser, {
   convertNodeToElement,
   htmlparser2
 } from "react-html-parser";
+import NavBar from '../../components/NavBar';
 
 const CustomButton = styled(Button)`
   background: #00ff00 !important;
@@ -189,6 +190,8 @@ const TypeFacePage: React.FC = () => {
   `;
   return useObserver(() => (
     <>
+      <NavBar />
+
       {TypefaceStore.Typefaces.map(val => {
         if (val.content.en.websiteInternalURL === typefaceId) {
           return (
