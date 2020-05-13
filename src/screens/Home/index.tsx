@@ -17,6 +17,7 @@ const FullScreenImage = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  background-image: url(${customprops => customprops.urlImage});
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
@@ -132,9 +133,7 @@ const Home: React.FC = () => {
                   }}
                   key={val.key}
                 >
-                  <FullScreenImage
-                    style={{ backgroundImage: val.content.en.coverImage }}
-                  >
+                  <FullScreenImage urlImage={val.content.en.coverImage}>
                     <CustomButton
                       variant="contained"
                       className="mt-3"
@@ -159,9 +158,7 @@ const Home: React.FC = () => {
                   }}
                   key={val.key}
                 >
-                  <FullScreenImage
-                    style={{ backgroundImage: val.content.en.coverImage }}
-                  >
+                  <FullScreenImage urlImage={val.content.en.coverImage}>
                     <CustomButton
                       variant="contained"
                       className="mt-3"

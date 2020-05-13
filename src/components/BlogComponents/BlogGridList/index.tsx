@@ -25,6 +25,7 @@ const CustomImg = styled.div`
   width: 100%;
   height: 100%;
   color: black;
+  background: url(${props => `${props.src}`});
   &:hover {
     -webkit-line-clamp: 3;
   }
@@ -165,13 +166,15 @@ const BlogGridList: React.FC = () => {
   };
   // @ts-ignore
   return useObserver(() => (
-    <Container fluid={true}>
+    <Container fluid={true} className="pt-5" style={{ marginTop: 120 }}>
       <TabsHeader fluid={true}>
         <CustomText>Filter By</CustomText>
         <StyledTabs
           value={value}
           onChange={handleChange}
           aria-label="styled tabs example"
+          variant="scrollable"
+          scrollButtons="auto"
         >
           <StyledTab
             label="All"
@@ -244,7 +247,7 @@ const BlogGridList: React.FC = () => {
                   }}
                 >
                   <CustomImg
-                    style={{ backgroundImage: tile.content.en.thumbnialImage }}
+                    src={tile.content.en.thumbnialImage}
                     // @ts-ignore
                     alt={tile.content.en.title}
                     ref={imgSrcHover}
@@ -295,9 +298,7 @@ const BlogGridList: React.FC = () => {
                       }}
                     >
                       <CustomImg
-                        style={{
-                          backgroundImage: tile.content.en.thumbnialImage
-                        }}
+                        src={tile.content.en.thumbnialImage}
                         // @ts-ignore
                         alt={tile.content.en.title}
                         ref={imgSrcHover}
@@ -317,11 +318,7 @@ const BlogGridList: React.FC = () => {
           </GridList>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <GridList
-            cellHeight={400}
-            spacing={16}
-            cols={screenSize ? 1 : 4}
-          >
+          <GridList cellHeight={400} spacing={16} cols={screenSize ? 1 : 4}>
             {BlogStore.Blogs.sort(
               // @ts-ignore
               (a, b) => a.content.en.sortArticle - b.content.en.sortArticle
@@ -354,9 +351,7 @@ const BlogGridList: React.FC = () => {
                       }}
                     >
                       <CustomImg
-                        style={{
-                          backgroundImage: tile.content.en.thumbnialImage
-                        }}
+                        src={tile.content.en.thumbnialImage}
                         // @ts-ignore
                         alt={tile.content.en.title}
                         ref={imgSrcHover}

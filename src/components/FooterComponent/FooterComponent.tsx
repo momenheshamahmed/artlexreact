@@ -61,7 +61,7 @@ const FooterComponent: React.FC = () => {
           </IconButton>
         </Row>
         <Row>
-          <Col md={{ span: 4, order: 2 }} xs={{ order: 1 }}>
+          <Col md={{ span: 4 }}>
             <Typography variant="h6">
               <LinkStyled to="/typefaces">Typefaces</LinkStyled>
             </Typography>
@@ -93,7 +93,7 @@ const FooterComponent: React.FC = () => {
               <Col>
                 {TypefaceStore.Typefaces.sort(
                   (a, b) =>
-                  // @ts-ignore
+                    // @ts-ignore
                     a.content.en.typefaceSorting - b.content.en.typefaceSorting
                 )
                   .filter(val => val.content.en.showInFooter)
@@ -116,7 +116,7 @@ const FooterComponent: React.FC = () => {
               </Col>
             </Row>
           </Col>
-          <Col md={{ span: 2, order: 2 }} xs={{ order: 2 }}>
+          <Col md={{ span: 2 }}>
             <Typography variant="h6">Pages</Typography>
             <Row>
               <Col>
@@ -135,7 +135,7 @@ const FooterComponent: React.FC = () => {
               </Col>
             </Row>
           </Col>
-          <Col md={{ span: 3, order: 4 }} xs={{ order: 4 }}>
+          <Col md={{ span: 3 }}>
             <Typography variant="body1" className="mt-2 font-weight-bold">
               Contact Us
             </Typography>
@@ -218,7 +218,7 @@ const FooterComponent: React.FC = () => {
               </Col>
             </Row>
           </Col>
-          <Col md={{ span: 3, order: 1 }} xs={{ order: 1 }}>
+          <Col md={{ span: 3 }}>
             <img src={Assets.Images.logo} width="72px" />
             <Typography variant="body2" className="mt-3">
               {" "}

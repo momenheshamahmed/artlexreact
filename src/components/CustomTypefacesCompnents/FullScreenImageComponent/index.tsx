@@ -13,6 +13,7 @@ const FullScreenImageComponent: React.FC<Props> = props => {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    background-image: url(${customprops => customprops.urlImage});
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
@@ -48,9 +49,7 @@ const FullScreenImageComponent: React.FC<Props> = props => {
         }}
         key={props.key}
       >
-        <FullScreenImage
-          style={{ backgroundImage: props.ImgSrc.content.en.coverImage }}
-        >
+        <FullScreenImage urlImage={props.ImgSrc.content.en.coverImage}>
           <CustomButton
             variant="contained"
             className="mt-3"

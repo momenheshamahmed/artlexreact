@@ -10,17 +10,14 @@
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/polyfill": "^7.8.7",
     "@babel/runtime": "^7.8.7",
-    "@material-ui/core": "^4.9.13",
+    "@material-ui/core": "^4.9.5",
     "@material-ui/icons": "4.5.1",
     "@reach/router": "^1.2.1",
     "@types/draft-js": "^0.10.38",
     "@types/react-bootstrap": "^0.32.20",
     "@types/styled-components": "^5.0.0",
     "bootstrap": "4.3.1",
-    "customize-cra": "^0.9.1",
     "depcheck": "^0.9.2",
-    "draft-js": "0.11.2",
-    "draft-js-export-html": "^1.4.1",
     "firebase": "^7.6.1",
     "formik": "^2.1.4",
     "formik-material-ui": "1.0.0",
@@ -56,25 +53,15 @@
   },
   "scripts": {
     "clear-build-cache": "rm -rf .cache/ dist/",
-    "build-parcel": "parcel build public/index.html",
+    "build": "parcel build public/index.html",
     "dev": "parcel public/index.html",
     "dev:mock": "cross-env PET_MOCK=mock parcel src/index.html",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
-    "typecheck": "tsc --noEmit",
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
-    "eject": "react-scripts eject",
-    "deploy": "./bin/deploy.sh"
+    "typecheck": "tsc --noEmit"
   },
   "eslintConfig": {
     "extends": "react-app"
-  },
-  "parserOptions": {
-    "ecmaFeatures": {
-      "legacyDecorators": true
-    }
   },
   "browserslist": {
     "production": [
@@ -113,19 +100,15 @@
     "@types/react-swipeable-views": "^0.13.0",
     "@types/uuid": "3.4.6",
     "@types/yup": "0.26.26",
-    "babel-plugin-import": "^1.13.0",
     "babel-plugin-styled-components": "^1.10.7",
-    "babel-plugin-transform-imports": "^2.0.0",
     "babel-preset-env": "^1.7.0",
     "cross-env": "^5.2.0",
     "emailjs-com": "^2.4.1",
     "firebase-tools": "7.8.1",
     "parcel-bundler": "^1.12.4",
     "prettier": "^1.16.1",
-    "react-app-rewired": "^2.1.6",
     "tslint": "^5.13.1",
     "tslint-config-prettier": "^1.18.0",
-    "tslint-react": "^3.6.0",
-    "webpack-bundle-analyzer": "^3.7.0"
+    "tslint-react": "^3.6.0"
   }
 }
