@@ -18,7 +18,7 @@ const TypefaceTesterHeaderComponent: React.FC = props => {
     <Container fluid={true}>
       <Row>
         <Col className="text-left">
-          <Typography variant="h5">
+          <Typography variant="h4" className="font-weight-bold">
             {props.typefaceName ? props.typefaceName : "NO FONT NAME!"}
           </Typography>
         </Col>

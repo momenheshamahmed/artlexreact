@@ -21,7 +21,7 @@ const CustomButton = styled(Button)`
   }
 `;
 const TypfaceGalleryComponent: React.FC = props => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },

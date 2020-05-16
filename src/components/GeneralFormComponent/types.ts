@@ -32,11 +32,13 @@ export interface FormKeys<
     | "selecttypface"
     | "selecttypfacecategory"
     | "RichTextField"
+    | "RichTextFieldEmbeded"
     | "selectarticlecategory"
     | "selectarticle"
     | "relatedarticles"
     | "pdf"
-    | "languages";
+    | "languages"
+    | "divider";
   isRequired?: boolean;
   helper?: string;
 }

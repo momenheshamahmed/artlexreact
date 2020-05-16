@@ -29,7 +29,7 @@ const FullScreenImageComponent: React.FC<Props> = props => {
     background: #00ff00 !important;
     border-radius: 100px !important;
     color: black !important;
-    font-size: 2rem;
+    font-size: 0.7rem;
     font-weight: bold;
     transform: translateX(70vh);
     transition: 1s;

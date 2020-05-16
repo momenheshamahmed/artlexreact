@@ -104,7 +104,7 @@ const BlogSliderComponent: React.FC = props => {
 
   return useObserver(() => (
     <div className="position-relative">
-      <Typography variant="h5" className="my-5">
+      <Typography variant="h4" className="my-5 font-weight-bold">
         Blog
       </Typography>
       <Carousel
@@ -128,7 +128,7 @@ const BlogSliderComponent: React.FC = props => {
         customButtonGroup={<CarouselButtonGroup />}
       >
         {BlogStore.Blogs.sort((a, b) => {
-          a.content.en.sortArticle - b.content.en.sortArticle;
+          return a.content.en.sortArticle - b.content.en.sortArticle;
         }).map(data => {
           if (data.content.en.featuredHome === true) {
             return <ArticleThumbnial articleData={data} />;

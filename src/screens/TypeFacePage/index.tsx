@@ -21,6 +21,13 @@ import { TypefaceStore, FontsInUseStore, FontStore } from "../../stores";
 import Assets from "../../assets";
 import Typefaces from "../../stores/Typefaces";
 import TypefaceTesterComponentInsidePage from "../../components/TypefaceTesterComponentInsidePage";
+import ReactHtmlParser, {
+  processNodes,
+  convertNodeToElement,
+  htmlparser2
+} from "react-html-parser";
+import NavBar from '../../components/NavBar';
+
 const CustomButton = styled(Button)`
   background: #00ff00 !important;
   border-radius: 100px !important;
@@ -62,7 +69,7 @@ const FullScreenImage = styled.div`
   background-attachment: fixed;
   background-size: cover;
   text-align: right;
-  margin-top: 101px;
+  margin-top: 120px;
 `;
 
 const BuyFontContainer = styled(Container)`
@@ -183,19 +190,21 @@ const TypeFacePage: React.FC = () => {
   `;
   return useObserver(() => (
     <>
+      <NavBar />
+
       {TypefaceStore.Typefaces.map(val => {
         if (val.content.en.websiteInternalURL === typefaceId) {
           return (
             <div
               style={{
-                marginTop: 101
+                marginTop: 120
               }}
             >
               {val.content.en.typefaceCategory === "Custom" ? (
                 <FullScreenImage
                   urlImage={val.content.en.coverImage}
                   style={{
-                    marginTop: 101
+                    marginTop: 120
                   }}
                 />
               ) : (
@@ -213,7 +222,7 @@ const TypeFacePage: React.FC = () => {
                     className="sticky-top bg-white py-4 text-center"
                     expand="lg"
                     style={{
-                      top: "100px",
+                      top: "155px",
                       boxShadow: "0px 4px 25px rgba(0, 0, 0, 0.05)"
                     }}
                   >
@@ -311,14 +320,32 @@ const TypeFacePage: React.FC = () => {
                       <Typography>
                         {val.content.en.typefaceDescription}
                       </Typography>
-                      <CustomButton
-                        variant="contained"
-                        className="mt-3"
-                        endIcon={<AddIcon />}
-                        href="https://gum.co/CmZzm?wanted=true"
-                      >
-                        Add to Cart
-                      </CustomButton>
+                      {val.content.en.typefaceCategory === "Custom" ? (
+                        <CustomButton
+                          variant="contained"
+                          className="mt-3"
+                          endIcon={<AddIcon />}
+                          href="https://gum.co/CmZzm?wanted=true"
+                        >
+                          <StyledLink
+                            to={{
+                              pathname: "/contact",
+                              state: { contactUs: "requestcustomfont" }
+                            }}
+                          >
+                            Contact us
+                          </StyledLink>
+                        </CustomButton>
+                      ) : (
+                        <CustomButton
+                          variant="contained"
+                          className="mt-3"
+                          endIcon={<AddIcon />}
+                          href="https://gum.co/CmZzm?wanted=true"
+                        >
+                          Add to Cart
+                        </CustomButton>
+                      )}
                     </Col>
                     <Col md={2} xs={12}>
                       <Typography variant="body1" style={{ color: "#717171" }}>
@@ -341,6 +368,9 @@ const TypeFacePage: React.FC = () => {
                     key="TypfaceGalleryComponent"
                     images={val.content.en.galleryField}
                   />
+                </Container>
+                <Container fluid={true}>
+                  {ReactHtmlParser(JSON.parse(val.content.en.embededVideo))}
                 </Container>
                 <Container
                   fluid={true}
@@ -530,6 +560,7 @@ const TypeFacePage: React.FC = () => {
                             rows={font.content.en.imageGridRows}
                           >
                             <img
+                              draggable="false"
                               src={font.content.en.imageInUse}
                               alt={font.content.en.selectTypeface.name}
                             />
@@ -681,6 +712,7 @@ const TypeFacePage: React.FC = () => {
                                     target="_blank"
                                   >
                                     <img
+                                      draggable="false"
                                       src={Assets.Images.facebook}
                                       alt="protype facebook"
                                     />
@@ -692,6 +724,7 @@ const TypeFacePage: React.FC = () => {
                                     target="_blank"
                                   >
                                     <img
+                                      draggable="false"
                                       src={Assets.Images.instagram}
                                       alt="protype facebook"
                                     />
@@ -703,6 +736,7 @@ const TypeFacePage: React.FC = () => {
                                     target="_blank"
                                   >
                                     <img
+                                      draggable="false"
                                       src={Assets.Images.behance}
                                       alt="protype facebook"
                                     />
@@ -714,6 +748,7 @@ const TypeFacePage: React.FC = () => {
                                     target="_blank"
                                   >
                                     <img
+                                      draggable="false"
                                       src={Assets.Images.dribbble}
                                       alt="protype facebook"
                                     />
@@ -725,6 +760,7 @@ const TypeFacePage: React.FC = () => {
                                     target="_blank"
                                   >
                                     <img
+                                      draggable="false"
                                       src={Assets.Images.pinterest}
                                       alt="protype facebook"
                                     />
@@ -737,6 +773,7 @@ const TypeFacePage: React.FC = () => {
                                     target="_blank"
                                   >
                                     <img
+                                      draggable="false"
                                       src={Assets.Images.linkedin}
                                       alt="protype facebook"
                                     />
@@ -748,6 +785,7 @@ const TypeFacePage: React.FC = () => {
                                     target="_blank"
                                   >
                                     <img
+                                      draggable="false"
                                       src={Assets.Images.twitter}
                                       alt="protype facebook"
                                     />
@@ -759,6 +797,7 @@ const TypeFacePage: React.FC = () => {
                                     target="_blank"
                                   >
                                     <img
+                                      draggable="false"
                                       src={Assets.Images.website}
                                       alt="protype facebook"
                                     />

@@ -13,12 +13,17 @@ const StyledLink = styled(Link)`
     text-decoration: none;
   }
 `;
+const CustomSpan = styled.span`
+  @media (max-width: 700px) {
+    display: none;
+  }
+`;
 const TypefaceTesterHeaderComponent: React.FC = props => {
   return useObserver(() => (
     <Container fluid={true}>
       <Row>
-        <Col className="text-left" style={{marginTop: 5}}>
-          <Typography variant="h5">
+        <Col className="text-left" style={{ marginTop: 5 }}>
+          <Typography variant="h5" className="font-weight-bold">
             {props.typefaceName ? props.typefaceName : "NO FONT NAME!"}
           </Typography>
         </Col>
@@ -34,7 +39,8 @@ const TypefaceTesterHeaderComponent: React.FC = props => {
                   }
                 }}
               >
-                Go To Font {"   "} <ArrowForwardIcon />
+                <CustomSpan>Go To Font {"   "}</CustomSpan>
+                <ArrowForwardIcon />
               </StyledLink>
             </Typography>
           </IconButton>

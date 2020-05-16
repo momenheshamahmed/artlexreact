@@ -191,7 +191,7 @@ export default function MenuOpenTypeFeatures(props) {
                       value="stylisticOne"
                     />
                   }
-                  label="stylistic"
+                  label="ss1"
                 />
               </StyledMenuItem>
             ) : null}
@@ -205,7 +205,7 @@ export default function MenuOpenTypeFeatures(props) {
                       value="stylisticTwo"
                     />
                   }
-                  label="stylistic"
+                  label="ss2"
                 />
               </StyledMenuItem>
             ) : null}
@@ -219,7 +219,7 @@ export default function MenuOpenTypeFeatures(props) {
                       value="stylisticThree"
                     />
                   }
-                  label="stylistic"
+                  label="ss3"
                 />
               </StyledMenuItem>
             ) : null}
@@ -233,7 +233,7 @@ export default function MenuOpenTypeFeatures(props) {
                       value="stylisticFour"
                     />
                   }
-                  label="stylistic"
+                  label="ss4"
                 />
               </StyledMenuItem>
             ) : null}
@@ -247,7 +247,7 @@ export default function MenuOpenTypeFeatures(props) {
                       value="stylisticFive"
                     />
                   }
-                  label="stylistic"
+                  label="ss5"
                 />
               </StyledMenuItem>
             ) : null}
@@ -261,7 +261,7 @@ export default function MenuOpenTypeFeatures(props) {
                       value="stylisticSix"
                     />
                   }
-                  label="stylistic"
+                  label="ss6"
                 />
               </StyledMenuItem>
             ) : null}
@@ -275,7 +275,7 @@ export default function MenuOpenTypeFeatures(props) {
                       value="stylisticSeven"
                     />
                   }
-                  label="stylistic"
+                  label="ss7"
                 />
               </StyledMenuItem>
             ) : null}

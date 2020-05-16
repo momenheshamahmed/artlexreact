@@ -110,3 +110,27 @@ p::selection {
 .MuiButton-contained {
   box-shadow: none !important;
 }
+img,
+svg {
+  -webkit-user-drag: none !important;
+  -moz-user-drag: none !important;
+  -moz-user-select: none !important;
+  -webkit-user-drag: none !important;
+  -webkit-user-select: none !important;
+  -ms-user-select: none !important;
+}
+nav .nav-link {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+nav .active {
+  color: black !important;
+}
+@media screen and (max-width: 700px) {
+  nav .nav-link {
+    display: block !important;
+    width: 100% !important;
+  }
+  .navbar-collapse {
+    margin-top: 10px !important;
+  }
+}
