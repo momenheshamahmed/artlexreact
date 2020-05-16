@@ -37,7 +37,8 @@ export interface FormKeys<
     | "selectarticle"
     | "relatedarticles"
     | "pdf"
-    | "languages";
+    | "languages"
+    | "divider";
   isRequired?: boolean;
   helper?: string;
 }

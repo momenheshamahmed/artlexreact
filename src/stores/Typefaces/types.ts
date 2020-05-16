@@ -9,45 +9,60 @@ export interface Typeface {
 
 // tslint:disable-next-line: interface-name
 export interface TypefaceContent {
+  // basic info
+  dividerforbasicinfo: string;
   websiteInternalURL: string;
-  fileFont: string;
-  coverImage: string;
-  fileSpecimenFont: string;
-  fileUserTermsFont: string;
   typefaceName: string;
+  typefaceDescription: string;
+  familyStyles: string;
   typefaceCategory: string;
   typefaceSorting: string;
-  showInFooter: boolean;
-  typefaceFeaturedFullScreen: boolean;
-  typefaceFeaturedGrid: boolean;
+  fileFont: string;
+  // font tester specs
+  dividerfortester: string;
   typefaceFeaturedTester: boolean;
-  typefaceFeaturedGridNumber: string;
-  typefaceFeaturedGridNumberCover: string;
-  typefaceFeaturedGridNumberHover: string;
   typefaceTestWords: string;
+  /* next three lines are hard coded*/
   fontSize: string;
   lineHeight: string;
   leading: string;
-  typefaceDescription: string;
+  // if the fone is featured on fullscreen or it is custom font
+  dividerforfullscreen: string;
+  coverImage: string;
+  typefaceFeaturedFullScreen: boolean;
+  // images fields
+  dividerforimages: string;
+  galleryField: Array<string | File | null>;
+  embededVideo: string;
+  charactersImage: string;
+  // for all fonts, if featured in grid on home
+  dividerforfeatured: string;
+  typefaceFeaturedGrid: boolean;
+  typefaceFeaturedGridNumberCover: string;
+  typefaceFeaturedGridNumberHover: string;
+  showInFooter: boolean;
+  // store info
+  dividerforstore: string;
+  fullPackageImageStore: string;
+  fullPackageStoreUrl: string;
+  // pair font info
+  dividerforpair: string;
+  pairFontImage: string;
+  pairfonts: Array<string | object | null>;
+  // lang supported and files (speciment & end-user agreement)
+  dividerforlangfiles: string;
   languagesSupported: Array<string | object |null>;
   specimenFilePdf: string;
   specimenFileText: string;
   userAgreementPdf: string;
   userAgreementText: string;
-  pairFontImage: string;
-  designerName: string;
+  // font info and designer info
+  dividerforinfo: string;
   version: string;
   manufacturing: string;
   copyright: string;
   releaseDate: string;
-  fullPackageImageStore: string;
-  fullPackageStoreUrl: string;
-  familyStyles: string;
-  galleryField: Array<string | File | null>;
-  embededVideo: string;
-  charactersImage: string;
-  fontInUseField: Array<string | File | null>;
-  pairfonts: Array<string | object | null>;
+  designerName: string;
   typefaceLinkFacebook: string;
   typefaceLinkBehance: string;
   typefaceLinkDribbble: string;
@@ -56,6 +71,8 @@ export interface TypefaceContent {
   typefaceLinkPinterest: string;
   typefaceLinkLinkedin: string;
   typefaceLinkWebsite: string;
+  // typeface open type features
+  dividerforfeatures: string;
   standardLigatures: boolean;
   contextuaLalternates: boolean;
   discretionLigatures: boolean;

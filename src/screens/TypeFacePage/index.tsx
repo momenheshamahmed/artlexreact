@@ -69,7 +69,7 @@ const FullScreenImage = styled.div`
   background-attachment: fixed;
   background-size: cover;
   text-align: right;
-  margin-top: 101px;
+  margin-top: 120px;
 `;
 
 const BuyFontContainer = styled(Container)`
@@ -197,14 +197,14 @@ const TypeFacePage: React.FC = () => {
           return (
             <div
               style={{
-                marginTop: 101
+                marginTop: 120
               }}
             >
               {val.content.en.typefaceCategory === "Custom" ? (
                 <FullScreenImage
                   urlImage={val.content.en.coverImage}
                   style={{
-                    marginTop: 101
+                    marginTop: 120
                   }}
                 />
               ) : (
@@ -222,7 +222,7 @@ const TypeFacePage: React.FC = () => {
                     className="sticky-top bg-white py-4 text-center"
                     expand="lg"
                     style={{
-                      top: "160px",
+                      top: "155px",
                       boxShadow: "0px 4px 25px rgba(0, 0, 0, 0.05)"
                     }}
                   >

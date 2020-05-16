@@ -51,12 +51,6 @@ const FileField: React.FC<Props> = props => {
       >
         Upload file
       </Button>
-      <ul>
-        <li>
-          {fileName ? fileName : "no file yet"}{" "}
-
-        </li>
-      </ul>
       {/* <img src={file ? file : Assets.Files.uploadPlaceholder} style={{width: "200px;"}}/> */}
       {props.error && (
         <Typography

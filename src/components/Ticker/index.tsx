@@ -1,8 +1,6 @@
 import React from "react";
 import { useObserver } from "mobx-react";
 import styled, { keyframes } from "styled-components";
-import { Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { TickerStore } from "../../stores";
 
 const TickerComponent: React.FC = () => {

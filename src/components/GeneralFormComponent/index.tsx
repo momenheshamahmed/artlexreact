@@ -9,13 +9,10 @@ import {
   MenuItem,
   FormControlLabel,
   Typography,
-  Divider,
-  InputLabel,
   FormControl
 } from "@material-ui/core";
 import { Formik, Form, Field } from "formik";
 import { TextField, Select, Switch } from "formik-material-ui";
-import { DatePicker } from "formik-material-ui-pickers";
 import ImageField from "../adminComponents/ImageField";
 import GalleryField from "../adminComponents/GalleryField";
 import * as Yup from "yup";
@@ -25,7 +22,7 @@ import { useParams, useHistory } from "react-router";
 import { BaseData } from "./types";
 import { Props, FormKeys } from "./types";
 import { Languages } from "../../utils/translation";
-import { FontStore, TypefaceStore, BlogStore } from "../../stores";
+import { TypefaceStore, BlogStore } from "../../stores";
 import FileField from "../adminComponents/FileField";
 
 import PdfFileField from "../adminComponents/PdfFileField";
@@ -819,6 +816,7 @@ const GeneralFormComponent = <T extends BaseData>(
                         multiline={true}
                         rows={12}
                         fullWidth={true}
+                        helperText={data.helper}
                       />
                     );
                   } else {
@@ -832,6 +830,7 @@ const GeneralFormComponent = <T extends BaseData>(
                         required={true}
                         label={data.title}
                         error={(formikBag.errors as any)[data.key]}
+                        helperText={data.helper}
                       />
                     );
                   }
@@ -866,8 +865,7 @@ const GeneralFormComponent = <T extends BaseData>(
                           if (data.type === "image") {
                             return (
                               <div className="my-3">
-                                <Divider />
-                                <Typography variant="h5" className="my-2">
+                                <Typography variant="body1" className="my-2">
                                   {data.title}
                                 </Typography>
 
@@ -887,14 +885,12 @@ const GeneralFormComponent = <T extends BaseData>(
                                   idButton={data.key + suffix}
                                   idInput={`${data.key}`}
                                 />
-                                <Divider className="mt-2" />
                               </div>
                             );
                           } else if (data.type === "woff") {
                             return (
                               <div className="my-3">
-                                <Divider />
-                                <Typography variant="h5" className="my-2">
+                                <Typography variant="body1" className="my-2">
                                   {data.title}
                                 </Typography>
                                 <FileField
@@ -913,14 +909,12 @@ const GeneralFormComponent = <T extends BaseData>(
                                   idButton={data.key + suffix}
                                   idInput={`${data.key}`}
                                 />
-                                <Divider className="mt-2" />
                               </div>
                             );
                           } else if (data.type === "pdf") {
                             return (
                               <div className="my-3">
-                                <Divider />
-                                <Typography variant="h5" className="my-2">
+                                <Typography variant="body1" className="my-2">
                                   {data.title}
                                 </Typography>
                                 <PdfFileField
@@ -939,14 +933,12 @@ const GeneralFormComponent = <T extends BaseData>(
                                   idButton={data.key + suffix}
                                   idInput={`${data.key}`}
                                 />
-                                <Divider className="mt-2" />
                               </div>
                             );
                           } else if (data.type === "woff2") {
                             return (
                               <div className="my-3">
-                                <Divider />
-                                <Typography variant="h5" className="my-2">
+                                <Typography variant="body1" className="my-2">
                                   {data.title}
                                 </Typography>
 
@@ -964,14 +956,12 @@ const GeneralFormComponent = <T extends BaseData>(
                                     )
                                   }
                                 />
-                                <Divider className="mt-2" />
                               </div>
                             );
                           } else if (data.type === "gallery") {
                             return (
                               <div className="my-3">
-                                <Divider />
-                                <Typography variant="h5" className="my-2">
+                                <Typography variant="body1" className="my-2">
                                   {data.title}
                                 </Typography>
                                 <GalleryField
@@ -990,7 +980,6 @@ const GeneralFormComponent = <T extends BaseData>(
                                   idButton={data.key + suffix}
                                   idInput={`${data.key}`}
                                 />
-                                <Divider className="mt-2" />
                               </div>
                             );
                           } else if (data.type === "selecttypface") {
@@ -1013,6 +1002,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 error={
                                   (formikBag.errors as any)[data.key + suffix]
                                 }
+                                helperText={data.helper}
                               >
                                 {/* eslint-disable */}
                                 {useObserver(() =>
@@ -1060,6 +1050,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 error={
                                   (formikBag.errors as any)[data.key + suffix]
                                 }
+                                helperText={data.helper}
                               >
                                 {useObserver(() =>
                                   BlogStore.Blogs.map(val => {
@@ -1100,6 +1091,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 error={
                                   (formikBag.errors as any)[data.key + suffix]
                                 }
+                                helperText={data.helper}
                               >
                                 <MenuItem key="free" value="free">
                                   Free
@@ -1126,7 +1118,6 @@ const GeneralFormComponent = <T extends BaseData>(
                                 select={true}
                                 style={{ overflow: "hidden" }}
                                 variant="outlined"
-                                helperText="Please select Category"
                                 margin="normal"
                                 InputLabelProps={{
                                   shrink: true
@@ -1135,6 +1126,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 error={
                                   (formikBag.errors as any)[data.key + suffix]
                                 }
+                                helperText={data.helper}
                               >
                                 <MenuItem key="articles" value="articles">
                                   articles
@@ -1147,7 +1139,7 @@ const GeneralFormComponent = <T extends BaseData>(
                           } else if (data.type === "pairfonts") {
                             return (
                               <FormControl>
-                                <Typography variant="h5" className="my-2">
+                                <Typography variant="body1" className="my-2">
                                   {data.title}
                                 </Typography>
                                 <Field
@@ -1167,6 +1159,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                     name: `${data.key + suffix}`,
                                     id: `${data.key + suffix}`
                                   }}
+                                  helperText={data.helper}
                                 >
                                   <MenuItem key="noitems" value="noitems">
                                     Please go and typefaces first!
@@ -1191,7 +1184,7 @@ const GeneralFormComponent = <T extends BaseData>(
                           } else if (data.type === "relatedarticles") {
                             return (
                               <FormControl>
-                                <Typography variant="h5" className="my-2">
+                                <Typography variant="body1" className="my-2">
                                   {data.title}
                                 </Typography>
                                 <Field
@@ -1211,6 +1204,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                     name: `${data.key + suffix}`,
                                     id: `${data.key + suffix}`
                                   }}
+                                  helperText={data.helper}
                                 >
                                   <MenuItem key="noarticles" value="noarticles">
                                     no articles!
@@ -1235,7 +1229,7 @@ const GeneralFormComponent = <T extends BaseData>(
                           } else if (data.type === "languages") {
                             return (
                               <FormControl>
-                                <Typography variant="h5" className="my-2">
+                                <Typography variant="body1" className="my-2">
                                   {data.title}
                                 </Typography>
                                 <Field
@@ -1255,6 +1249,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                     name: `${data.key + suffix}`,
                                     id: `${data.key + suffix}`
                                   }}
+                                  helperText={data.helper}
                                 >
                                   <MenuItem
                                     key="nolanguages"
@@ -1296,6 +1291,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                         e.target.checked
                                       );
                                     }}
+                                    helperText={data.helper}
                                   />
                                 }
                                 label={data.title}
@@ -1376,6 +1372,19 @@ const GeneralFormComponent = <T extends BaseData>(
                                 />
                               </>
                             );
+                          } else if (data.type === "divider") {
+                            return (
+                              <div className="my-4">
+                                <Typography variant="h4">
+                                  {data.title}
+                                </Typography>
+                                {data.helper !== null ? (
+                                  <Typography variant="body2">
+                                    {data.helper}
+                                  </Typography>
+                                ) : null}
+                              </div>
+                            );
                           } else if (data.type === "textarea") {
                             return (
                               <Field
@@ -1392,6 +1401,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 multiline={true}
                                 rows={12}
                                 fullWidth={true}
+                                helperText={data.helper}
                               />
                             );
                           } else {
@@ -1407,6 +1417,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 error={
                                   (formikBag.errors as any)[data.key + suffix]
                                 }
+                                helperText={data.helper}
                               />
                             );
                           }
