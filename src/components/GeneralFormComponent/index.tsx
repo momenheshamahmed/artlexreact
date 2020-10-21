@@ -22,7 +22,7 @@ import { useParams, useHistory } from "react-router";
 import { BaseData } from "./types";
 import { Props, FormKeys } from "./types";
 import { Languages } from "../../utils/translation";
-import { TypefaceStore, BlogStore } from "../../stores";
+import { BlogStore } from "../../stores";
 import FileField from "../adminComponents/FileField";
 
 import PdfFileField from "../adminComponents/PdfFileField";
@@ -982,132 +982,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 />
                               </div>
                             );
-                          } else if (data.type === "selecttypface") {
-                            return (
-                              <Field
-                                name={data.key + suffix}
-                                component={TextField}
-                                type="text"
-                                placeholder={data.title}
-                                required={data.isRequired}
-                                select={true}
-                                style={{ overflow: "hidden" }}
-                                variant="outlined"
-                                helperText="Please select Typeface"
-                                margin="normal"
-                                InputLabelProps={{
-                                  shrink: true
-                                }}
-                                label={data.title}
-                                error={
-                                  (formikBag.errors as any)[data.key + suffix]
-                                }
-                                helperText={data.helper}
-                              >
-                                {/* eslint-disable */}
-                                {useObserver(() =>
-                                  TypefaceStore.Typefaces.map(val => {
-                                    return TypefaceStore.Typefaces.length >
-                                      0 ? (
-                                      <MenuItem
-                                        key={val.key}
-                                        value={
-                                          val.content.en.websiteInternalURL
-                                        }
-                                      >
-                                        {val.content.en.typefaceName}
-                                      </MenuItem>
-                                    ) : (
-                                      <MenuItem
-                                        key="noitems"
-                                        value="noitems"
-                                        disabled={true}
-                                      >
-                                        Please go and typefaces first!
-                                      </MenuItem>
-                                    );
-                                  })
-                                )}
-                              </Field>
-                            );
-                          } else if (data.type === "selectarticle") {
-                            return (
-                              <Field
-                                name={data.key + suffix}
-                                component={TextField}
-                                type="text"
-                                placeholder={data.title}
-                                required={data.isRequired}
-                                select={true}
-                                style={{ overflow: "hidden" }}
-                                variant="outlined"
-                                helperText="Please select Typeface"
-                                margin="normal"
-                                InputLabelProps={{
-                                  shrink: true
-                                }}
-                                label={data.title}
-                                error={
-                                  (formikBag.errors as any)[data.key + suffix]
-                                }
-                                helperText={data.helper}
-                              >
-                                {useObserver(() =>
-                                  BlogStore.Blogs.map(val => {
-                                    return BlogStore.Blogs.length > 0 ? (
-                                      <MenuItem key={val.key} value={val}>
-                                        {val.content.en.title}
-                                      </MenuItem>
-                                    ) : (
-                                      <MenuItem
-                                        key="noitems"
-                                        value="noitems"
-                                        disabled={true}
-                                      >
-                                        Please go and typefaces first!
-                                      </MenuItem>
-                                    );
-                                  })
-                                )}
-                              </Field>
-                            );
-                          } else if (data.type === "selecttypfacecategory") {
-                            return (
-                              <Field
-                                name={data.key + suffix}
-                                component={TextField}
-                                type="text"
-                                placeholder={data.title}
-                                required={data.isRequired}
-                                select={true}
-                                style={{ overflow: "hidden" }}
-                                variant="outlined"
-                                helperText="Please select Typeface"
-                                margin="normal"
-                                InputLabelProps={{
-                                  shrink: true
-                                }}
-                                label={data.title}
-                                error={
-                                  (formikBag.errors as any)[data.key + suffix]
-                                }
-                                helperText={data.helper}
-                              >
-                                <MenuItem key="free" value="free">
-                                  Free
-                                </MenuItem>
-                                <MenuItem key="premium" value="premium">
-                                  Premium
-                                </MenuItem>
-                                <MenuItem key="custom" value="Custom">
-                                  Custom
-                                </MenuItem>
-                                {/* <MenuItem key="custom" value="custom">
-                                  Custom
-                                </MenuItem> */}
-                              </Field>
-                            );
-                          } else if (data.type === "selectarticlecategory") {
+                          }   else if (data.type === "selectarticlecategory") {
                             return (
                               <Field
                                 name={data.key + suffix}
@@ -1136,52 +1011,7 @@ const GeneralFormComponent = <T extends BaseData>(
                                 </MenuItem>
                               </Field>
                             );
-                          } else if (data.type === "pairfonts") {
-                            return (
-                              <FormControl>
-                                <Typography variant="body1" className="my-2">
-                                  {data.title}
-                                </Typography>
-                                <Field
-                                  component={Select}
-                                  variant="outlined"
-                                  type="text"
-                                  name={data.key + suffix}
-                                  select={true}
-                                  style={{ overflow: "hidden" }}
-                                  // label={data.title}
-                                  required={data.isRequired}
-                                  error={
-                                    (formikBag.errors as any)[data.key + suffix]
-                                  }
-                                  multiple={true}
-                                  inputProps={{
-                                    name: `${data.key + suffix}`,
-                                    id: `${data.key + suffix}`
-                                  }}
-                                  helperText={data.helper}
-                                >
-                                  <MenuItem key="noitems" value="noitems">
-                                    Please go and typefaces first!
-                                  </MenuItem>
-                                  {useObserver(() =>
-                                    TypefaceStore.Typefaces.map(val => {
-                                      return (
-                                        <MenuItem
-                                          key={val.key}
-                                          value={
-                                            val.content.en.websiteInternalURL
-                                          }
-                                        >
-                                          {val.content.en.typefaceName}
-                                        </MenuItem>
-                                      );
-                                    })
-                                  )}
-                                </Field>
-                              </FormControl>
-                            );
-                          } else if (data.type === "relatedarticles") {
+                          }  else if (data.type === "relatedarticles") {
                             return (
                               <FormControl>
                                 <Typography variant="body1" className="my-2">

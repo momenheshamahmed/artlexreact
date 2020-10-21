@@ -43,14 +43,6 @@ const NavBar: React.FC = props => {
             </Nav.Link>
             <Nav.Link
               as={Link}
-              to="/typefaces"
-              eventKey="typefaces"
-              active={location.pathname === "/typefaces"}
-            >
-              {"Typefaces"}
-            </Nav.Link>
-            <Nav.Link
-              as={Link}
               to="/custom"
               eventKey="custom"
               active={location.pathname === "/custom"}

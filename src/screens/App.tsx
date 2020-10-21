@@ -4,24 +4,17 @@ import React, { useEffect, useState, lazy, Suspense } from "react";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 const AdminRoot = lazy(() => import("./admin/root"));
 const Home = lazy(() => import("./Home"));
-const CustomTypefaces = lazy(() => import("./CustomTypefaces"));
 const Blog = lazy(() => import("./Blog"));
 const Contact = lazy(() => import("./Contact"));
-const ProtypeServices = lazy(() => import("./ProtypeServices"));
-const TypeFacePage = lazy(() => import("./TypeFacePage"));
 const NotFound = lazy(() => import("./NotFound"));
-const Typefaces = lazy(() => import("./Typefaces"));
 const ArticlePage = lazy(() => import("./ArticlePage"));
 // Assets
 import Assets from "../assets";
 
 // Stores
 import {
-  TypefaceStore,
-  FontStore,
-  FontsInUseStore,
   BlogStore,
-  ProtypeServices as ProtypeServicesStore,
+  artlexServices as artlexServicesStore,
   TickerStore
 } from "../stores";
 import FooterComponent from "../components/FooterComponent/FooterComponent";
@@ -35,11 +28,8 @@ const App: React.FC = props => {
 
   // Mobx
   useEffect(() => {
-    TypefaceStore.watchTypefaces();
-    FontStore.watchFonts();
-    FontsInUseStore.watchFontsInUse();
     BlogStore.watchBlogs();
-    ProtypeServicesStore.watchProtypeServicess();
+    artlexServicesStore.watchartlexServicess();
     TickerStore.watchTickers();
   }, []);
 
@@ -57,15 +47,6 @@ const App: React.FC = props => {
                 <Route exact={true} path="/">
                   <Home />
                 </Route>
-                <Route exact={true} path="/typefaces">
-                  <Typefaces />
-                </Route>
-                <Route exact={true} path="/services">
-                  <ProtypeServices />
-                </Route>
-                <Route exact={true} path="/custom">
-                  <CustomTypefaces />
-                </Route>
                 <Route exact={true} path="/blog">
                   <Blog />
                 </Route>
@@ -75,12 +56,6 @@ const App: React.FC = props => {
                 </Route>
                 <Route exact={true} path="/contact">
                   <Contact />
-                </Route>
-                <Route exact={true} path={`/typefaces/:typefaceId`}>
-                  <TypeFacePage />
-                </Route>
-                <Route exact={true} path={`/custom/:typefaceId`}>
-                  <TypeFacePage />
                 </Route>
               </Switch>
             </Suspense>

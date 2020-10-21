@@ -1,14 +1,5 @@
 {
   "projects": {
-    "default": "protypefoundry"
-  },
-  "targets": {
-    "protypefoundry": {
-      "hosting": {
-        "protypebeta": [
-          "protypebeta"
-        ]
-      }
-    }
+    "default": "artlex-208d2"
   }
 }

@@ -5,15 +5,16 @@ import App from "./screens/App";
 import * as serviceWorker from "./serviceWorker";
 import { initializeApp } from "firebase";
 import "bootstrap/dist/css/bootstrap.min.css";
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAoDUj8-Z80SI56awjDLEreHIQrvsb2X4g",
-  authDomain: "protypefoundry.firebaseapp.com",
-  databaseURL: "https://protypefoundry.firebaseio.com",
-  projectId: "protypefoundry",
-  storageBucket: "protypefoundry.appspot.com",
-  messagingSenderId: "584848193106",
-  appId: "1:584848193106:web:1ed4ebe6f012e9c519918b",
-  measurementId: "G-Z6985VMKD3"
+  apiKey: "AIzaSyBhGlxQnja1bl8fJCABV2mTPwv3oCwqPak",
+  authDomain: "artlex-208d2.firebaseapp.com",
+  databaseURL: "https://artlex-208d2.firebaseio.com",
+  projectId: "artlex-208d2",
+  storageBucket: "artlex-208d2.appspot.com",
+  messagingSenderId: "1039017923805",
+  appId: "1:1039017923805:web:08f7d5a73e36831b5d7734",
+  measurementId: "G-5ZQFY7S6MJ"
 };
 initializeApp(firebaseConfig);
 ReactDOM.render(<App />, document.getElementById("root"));

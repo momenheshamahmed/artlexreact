@@ -8,18 +8,10 @@ import { CircularProgress, Container } from "@material-ui/core";
 import MiniDrawer from "../../../components/adminComponents/Drawer";
 // import MiniDrawer from "../../../components/adminComponents/Drawer";
 const AdminLogin = lazy(() => import("../login"));
-const AdminTypefacesForm = lazy(() => import("./Typefaces/form"));
-const AdminTypefacesTable = lazy(() => import("./Typefaces"));
-const AdminFontsForm = lazy(() => import("./FontsForm/form"));
-const AdminFontsTable = lazy(() => import("./FontsForm"));
-const AdminFontsInUseTable = lazy(() => import("./FontsInUseForm"));
-const AdminFontsInUseForm = lazy(() => import("./FontsInUseForm/form"));
 const AdminBlogForm = lazy(() => import("./Blog/form"));
 const AdminBlogTable = lazy(() => import("./Blog"));
 const AdminTickerForm = lazy(() => import("./Ticker/form"));
 const AdminTickerTable = lazy(() => import("./Ticker"));
-const AdminProtypeServicesForm = lazy(() => import("./ProtypeServices/form"));
-const AdminProtypeServicesTable = lazy(() => import("./ProtypeServices"));
 
 const AdminRoot = () => {
   useEffect(() => {
@@ -41,9 +33,7 @@ const AdminRoot = () => {
     ) : AuthStore.isAuthenticated ? (
       <BrowserRouter>
         <Switch>
-          {/* <Route to="/admin">
-            <Redirect to="/admin/typefaces" />
-          </Route> */}
+   
           <Route to="/admin">
             <Route to="/admin">
               <MiniDrawer key="minidrawer" />
@@ -52,25 +42,7 @@ const AdminRoot = () => {
                   <Switch>
                     <Route path="/admin/login">
                       <Redirect to="/admin" />
-                    </Route>
-                    <Route path="/admin/typefaces/:key">
-                      <AdminTypefacesForm />
-                    </Route>
-                    <Route exact={true} path="/admin/typefaces">
-                      <AdminTypefacesTable />
-                    </Route>
-                    <Route path="/admin/fonts/:key">
-                      <AdminFontsForm />
-                    </Route>
-                    <Route exact={true} path="/admin/fonts">
-                      <AdminFontsTable />
-                    </Route>
-                    <Route path="/admin/fontsinuse/:key">
-                      <AdminFontsInUseForm />
-                    </Route>
-                    <Route exact={true} path="/admin/fontsinuse">
-                      <AdminFontsInUseTable />
-                    </Route>
+                    </Route>      
                     <Route path="/admin/blog/:key">
                       <AdminBlogForm />
                     </Route>
@@ -82,12 +54,6 @@ const AdminRoot = () => {
                     </Route>
                     <Route exact={true} path="/admin/ticker">
                       <AdminTickerTable />
-                    </Route>
-                    <Route path="/admin/services/:key">
-                      <AdminProtypeServicesForm />
-                    </Route>
-                    <Route exact={true} path="/admin/services">
-                      <AdminProtypeServicesTable />
                     </Route>
                   </Switch>
                 </Suspense>

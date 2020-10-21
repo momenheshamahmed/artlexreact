@@ -3,8 +3,7 @@
     "rules": "database.rules.json"
   },
   "hosting": {
-    "public": "dist",
-    "target": "protypebeta", 
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",

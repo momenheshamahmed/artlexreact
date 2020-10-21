@@ -137,7 +137,7 @@ export default function MiniDrawer() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap={true}>
-            Protype Foundry
+            artlex
           </Typography>
         </Toolbar>
       </AppBar>
@@ -165,32 +165,7 @@ export default function MiniDrawer() {
         </div>
         <Divider />
         <List>
-          <LinkStyled to="/admin/typefaces">
-            <ListItem key={"Typefaces"}>
-              <ListItemIcon>
-                <FontDownloadIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Typefaces"} />
-            </ListItem>
-          </LinkStyled>
-          <LinkStyled to="/admin/fonts">
-            <ListItem key={"Fonts"}>
-              <ListItemIcon>
-                <FontDownloadIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Fonts"} />
-            </ListItem>
-          </LinkStyled>
-          <LinkStyled to="/admin/fontsinuse">
-            <ListItem key={"Fonts In Use"}>
-              <ListItemIcon>
-                <FontDownloadIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Fonts In Use"} />
-            </ListItem>
-          </LinkStyled>
-        </List>
-        <Divider />
+
         <List>
           <LinkStyled to="/admin/blog">
             <ListItem key={"Blog"}>

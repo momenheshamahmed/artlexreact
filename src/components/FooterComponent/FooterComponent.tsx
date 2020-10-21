@@ -5,7 +5,6 @@ import Assets from "../../assets";
 import { Container, Row, Col } from "react-bootstrap";
 import { Typography, IconButton } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { TypefaceStore } from "../../stores";
 
 const FooterComponent: React.FC = () => {
   const LinkStyled = styled(Link)`
@@ -61,61 +60,7 @@ const FooterComponent: React.FC = () => {
           </IconButton>
         </Row>
         <Row>
-          <Col md={{ span: 4 }}>
-            <Typography variant="h6">
-              <LinkStyled to="/typefaces">Typefaces</LinkStyled>
-            </Typography>
-            <Row>
-              <Col>
-                {TypefaceStore.Typefaces.sort(
-                  (a, b) =>
-                    // @ts-ignore
-                    a.content.en.typefaceSorting - b.content.en.typefaceSorting
-                )
-                  .filter(val => val.content.en.showInFooter)
-                  .slice(0, 3)
-                  .map((val, index) => {
-                    if (val.content.en.showInFooter) {
-                      return (
-                        <Typography
-                          variant="body2"
-                          className="mt-1"
-                          key={index}
-                        >
-                          <LinkStyled to={val.content.en.typefaceLinkWebsite}>
-                            {val.content.en.typefaceName}
-                          </LinkStyled>
-                        </Typography>
-                      );
-                    }
-                  })}
-              </Col>
-              <Col>
-                {TypefaceStore.Typefaces.sort(
-                  (a, b) =>
-                    // @ts-ignore
-                    a.content.en.typefaceSorting - b.content.en.typefaceSorting
-                )
-                  .filter(val => val.content.en.showInFooter)
-                  .slice(4, 6)
-                  .map((val, index) => {
-                    if (val.content.en.showInFooter) {
-                      return (
-                        <Typography
-                          variant="body2"
-                          className="mt-1"
-                          key={index}
-                        >
-                          <LinkStyled to={val.content.en.typefaceLinkWebsite}>
-                            {val.content.en.typefaceName}
-                          </LinkStyled>
-                        </Typography>
-                      );
-                    }
-                  })}
-              </Col>
-            </Row>
-          </Col>
+       
           <Col md={{ span: 2 }}>
             <Typography variant="h6">Pages</Typography>
             <Row>
@@ -140,8 +85,8 @@ const FooterComponent: React.FC = () => {
               Contact Us
             </Typography>
             <Typography variant="body1">
-              <CustomAnchor href="mailto: hi@protype.studio?subject=Hello &body=Let's start writing ....">
-                info@protypef.co
+              <CustomAnchor href="mailto: hi@artlex.studio?subject=Hello &body=Let's start writing ....">
+                info@artlexf.co
               </CustomAnchor>
             </Typography>
             <Typography variant="body1" className="my-2 font-weight-bold">
@@ -150,69 +95,69 @@ const FooterComponent: React.FC = () => {
             <Row>
               <Col>
                 <CustomAnchor
-                  href="https://www.facebook.com/ProtypeTF"
+                  href="https://www.facebook.com/artlexTF"
                   target="_blank"
                 >
                   <img
                     draggable="false"
                     width="24"
                     src={Assets.Images.facebook}
-                    alt="protype facebook"
+                    alt="artlex facebook"
                   />
                 </CustomAnchor>
                 <CustomAnchor
-                  href="https://www.instagram.com/protypetf"
+                  href="https://www.instagram.com/artlextf"
                   target="_blank"
                 >
                   <img
                     draggable="false"
                     width="24"
                     src={Assets.Images.instagram}
-                    alt="protype instagram"
+                    alt="artlex instagram"
                   />
                 </CustomAnchor>
                 <CustomAnchor
-                  href="https://www.behance.net/Protype/"
+                  href="https://www.behance.net/artlex/"
                   target="_blank"
                 >
                   <img
                     draggable="false"
                     width="24"
                     src={Assets.Images.behance}
-                    alt="protype behance"
+                    alt="artlex behance"
                   />
                 </CustomAnchor>
                 <CustomAnchor
-                  href="https://dribbble.com/protype"
+                  href="https://dribbble.com/artlex"
                   target="_blank"
                 >
                   <img
                     draggable="false"
                     width="24"
                     src={Assets.Images.dribbble}
-                    alt="protype behance"
+                    alt="artlex behance"
                   />
                 </CustomAnchor>
                 <CustomAnchor
-                  href="https://www.linkedin.com/company/protypetf"
+                  href="https://www.linkedin.com/company/artlextf"
                   target="_blank"
                 >
                   <img
                     draggable="false"
                     width="24"
                     src={Assets.Images.linkedin}
-                    alt="protype linkedin"
+                    alt="artlex linkedin"
                   />
                 </CustomAnchor>
                 <CustomAnchor
-                  href="https://twitter.com/Protypetf"
+                  href="https://twitter.com/artlextf"
                   target="_blank"
                 >
                   <img
                     draggable="false"
                     width="24"
                     src={Assets.Images.twitter}
-                    alt="protype twitter"
+                    alt="artlex twitter"
                   />
                 </CustomAnchor>
               </Col>
@@ -222,7 +167,7 @@ const FooterComponent: React.FC = () => {
             <img src={Assets.Images.logo} width="72px" />
             <Typography variant="body2" className="mt-3">
               {" "}
-              Protype Foundry © 2019-2020. <br />
+              artlex © 2019-2020. <br />
               All rights reserved.
             </Typography>
             {/* <Typography variant="caption">

@@ -5,7 +5,7 @@
       "maxAgeSeconds": 3600
     },
     {
-      "origin": ["https://beta.protype.studio"],
+      "origin": ["https://beta.artlex.studio"],
       "method": ["GET"],
       "maxAgeSeconds": 3600
     }

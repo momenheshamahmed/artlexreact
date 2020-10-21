@@ -21,7 +21,7 @@ interface IFormValues {
   message: string;
 }
 
-const CustomTypefaces: React.FC = () => {
+const ContactUs: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [openTwo, setOpenTwo] = useState(false);
   const [openThree, setOpenThree] = useState(false);
@@ -264,7 +264,7 @@ const CustomTypefaces: React.FC = () => {
           </ContactItemTwo>
           <Collapse in={openTwo}>
             <div style={{ width: "100%" }}>
-              <CustomLink href="mailto: hi@protype.studio?subject=Hello &body=Let's start writing ....">
+              <CustomLink href="mailto: hi@artlex.studio?subject=Hello &body=Let's start writing ....">
                 <CustomtRowLink>
                   <Col>collaborations</Col>
                   <Col className="text-right">
@@ -346,4 +346,4 @@ const CustomTypefaces: React.FC = () => {
     </>
   ));
 };
-export default CustomTypefaces;
+export default ContactUs;
