@@ -5,6 +5,7 @@ import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 const AdminRoot = lazy(() => import("./admin/root"));
 const Home = lazy(() => import("./Home"));
 const Blog = lazy(() => import("./Blog"));
+const Gallery = lazy(() => import("./Gallery"));
 const Contact = lazy(() => import("./Contact"));
 const NotFound = lazy(() => import("./NotFound"));
 const ArticlePage = lazy(() => import("./ArticlePage"));
@@ -14,7 +15,6 @@ import Assets from "../assets";
 // Stores
 import {
   BlogStore,
-  artlexServices as artlexServicesStore,
   TickerStore
 } from "../stores";
 import FooterComponent from "../components/FooterComponent/FooterComponent";
@@ -29,7 +29,6 @@ const App: React.FC = props => {
   // Mobx
   useEffect(() => {
     BlogStore.watchBlogs();
-    artlexServicesStore.watchartlexServicess();
     TickerStore.watchTickers();
   }, []);
 
@@ -49,6 +48,9 @@ const App: React.FC = props => {
                 </Route>
                 <Route exact={true} path="/blog">
                   <Blog />
+                </Route>
+                <Route exact={true} path="/gallery">
+                  <Gallery />
                 </Route>
 
                 <Route exact={true} path={`/blog/:articleId`}>

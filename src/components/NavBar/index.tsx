@@ -48,71 +48,7 @@ const NavBar: React.FC = props => {
               active={location.pathname === "/custom"}
             >
               {"Custom"}
-            </Nav.Link>
-            <Nav.Link
-              as={Link}
-              to="/services"
-              eventKey="services"
-              active={location.pathname === "/services"}
-            >
-              {"Services"}
-            </Nav.Link>
-            <Nav.Link
-              as={Link}
-              to="/blog"
-              eventKey="blog"
-              active={location.pathname === "/blog"}
-            >
-              {"Blog"}
-            </Nav.Link>
-            <NavDropdown
-              alignRight={true}
-              title="Contact"
-              id="collasible-nav-dropdown"
-            >
-              <NavDropdown.Item>
-                <LinkContainer to={"/contact"}>
-                  <Nav.Link eventKey="contact">
-                    <LinkStyled
-                      to={{
-                        pathname: "/contact",
-                        state: { contactUs: "sendessmessgae" }
-                      }}
-                    >
-                      {"Send us a message"}
-                    </LinkStyled>
-                  </Nav.Link>
-                </LinkContainer>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <LinkContainer to={"/contact"}>
-                  <Nav.Link eventKey="contact">
-                    <LinkStyled
-                      to={{
-                        pathname: "/contact",
-                        state: { contactUs: "discount" }
-                      }}
-                    >
-                      {"Get a discount"}
-                    </LinkStyled>
-                  </Nav.Link>
-                </LinkContainer>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
-                <LinkContainer to={"/contact"}>
-                  <Nav.Link eventKey="contact">
-                    <LinkStyled
-                      to={{
-                        pathname: "/contact",
-                        state: { contactUs: "requestcustomfont" }
-                      }}
-                    >
-                      {"Request custom font"}
-                    </LinkStyled>
-                  </Nav.Link>
-                </LinkContainer>
-              </NavDropdown.Item>
-            </NavDropdown>
+            </Nav.Link>      
           </Nav>
         </Navbar.Collapse>
       </Container>
